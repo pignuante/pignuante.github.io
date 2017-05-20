@@ -13,6 +13,7 @@ author:
 copyright:
   year:             2017
   name:             Pignu Ante
+version:            v1.0.0
 
 # Google-analytics
 google-analytics:
@@ -20,7 +21,7 @@ google-analytics:
 
 # Disqus
 disqus:
-  id:               "Pignu"
+  id:               "hanyulryu"
 
 # URL
 url:                "https://pignuante.github.io" # the base hostname & protocol for your site
@@ -49,6 +50,8 @@ nav:
     url:            "/archive"
     #  - name:           "Study"
     #    url:            "/study"
+    #  - name:           "ToDo"
+    #    url:            "/ToDo"
   - name:           "Tags"
     url:            "/tags"
   - name:           "Github"

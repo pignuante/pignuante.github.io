@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tryhelloworld level 1 (2)"
+title: "TryHelloWorld Level 1 (2)"
 description: "tryhelloworld 알고리즘 level1 (2)"
 date: 2017-05-31
 tags: [algorithm,python]

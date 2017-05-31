@@ -95,7 +95,7 @@ c8		A[i+1] = key
 
      ​
 
-4. 예제 코드(python)
+4. 예제 코드 python
 
    ```python
    def insertSort(x):

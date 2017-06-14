@@ -27,9 +27,9 @@ comments: true
    <br>
 
 - 간단한 사용법
-  ![fileWatcher001](../images/fileWatcher001.png)
+  ![fileWatcher001](https://github.com/pignuante/pignuante.github.io/blob/master/images/fileWatcher001.png?raw=true)
 
-  ![fileWatcher002](../images/fileWatcher002.png)
+  ![fileWatcher002](https://github.com/pignuante/pignuante.github.io/blob/master/images/fileWatcher002.png?raw=true)
   기본적으로 `scss`파일을 만들면 자동으로 `file watcher`에서 설정하겠냐는 메세지가 뜬다.<br>
   ​
 
@@ -56,7 +56,7 @@ comments: true
 
   6. 여기서 나는 컴파일을 지금 폴더가 아닌 지금 파일의 형제폴더인 `css`폴더로 컴파일이 되게 하기 위해서 명령어를 살짝 바꿧다.
 
-     ![fileWatcher003](../images/fileWatcher003.png)
+     ![fileWatcher003](https://github.com/pignuante/pignuante.github.io/blob/master/images/fileWatcher003.png?raw=true)
 
      위에서 언급된 명령어가 같은 폴더에 컴파일이 되고 있으므로 컴파일될 위치만 재설정하면 되는 간단한 명령어이다.
 

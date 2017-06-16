@@ -60,7 +60,7 @@ def jumpCase(num):
   f(3) & = f(2) + f(1)  \\
   f(4) & = f(3) + f(2)  \\
   &\ \ \ \ \ \ \ \ \  \vdots 				\\
-  f(n) & = \sum_{x=1}^{n}f(x)
+  f(n) & = \sum_{x=1}^{n-1}f(x)
   \end{align}
   $$
 

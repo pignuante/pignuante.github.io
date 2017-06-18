@@ -8,7 +8,16 @@ _drafts
 .idea/
 
 
-# Created by https://www.gitignore.io/api/macos
+
+# Created by https://www.gitignore.io/api/vim,git,ruby,macos,python,jekyll
+
+### Git ###
+*.orig
+
+### Jekyll ###
+_site/
+.sass-cache/
+.jekyll-metadata
 
 ### macOS ###
 *.DS_Store
@@ -36,15 +45,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-# End of https://www.gitignore.io/api/macos
-
-# Created by https://www.gitignore.io/api/ruby,rails,python,jekyll
-
-### Jekyll ###
-_site/
-.sass-cache/
-.jekyll-metadata
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -146,61 +146,18 @@ ENV/
 # mkdocs documentation
 /site
 
-### Rails ###
-*.rbc
-capybara-*.html
-.rspec
-/log
-/tmp
-/db/*.sqlite3
-     /db/*.sqlite3-journal
-     /public/system
-     /coverage/
-     /spec/tmp
-    *.orig
-    rerun.txt
-    pickle-email-*.html
-
-# TODO Comment out this rule if you are OK with secrets being uploaded to the repo
-config/initializers/secret_token.rb
-
-# Only include if you have production secrets in this file, which is no longer a Rails default
-# config/secrets.yml
-
-# dotenv
-# TODO Comment out this rule if environment variables can be committed
-
-## Environment normalization:
-/.bundle
-/vendor/bundle
-
-# these should all be checked in to normalize the environment:
-# Gemfile.lock, .ruby-version, .ruby-gemset
-
-# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
-.rvmrc
-
-# if using bower-rails ignore default bower_components path bower.json files
-/vendor/assets/bower_components
-    *.bowerrc
-    bower.json
-
-# Ignore pow environment settings
-.powenv
-
-# Ignore Byebug command history file.
-.byebug_history
-
 ### Ruby ###
-    *.gem
-    /.config
-    /InstalledFiles
-    /pkg/
-    /spec/reports/
-    /spec/examples.txt
-    /test/tmp/
-    /test/version_tmp/
-    /tmp/
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
 
 # Used by dotenv library to load environment variables.
 # .env
@@ -208,9 +165,9 @@ config/initializers/secret_token.rb
 ## Specific to RubyMotion:
 .dat*
 .repl_history
-    *.bridgesupport
-    build-iPhoneOS/
-    build-iPhoneSimulator/
+*.bridgesupport
+build-iPhoneOS/
+build-iPhoneSimulator/
 
 ## Specific to RubyMotion (use of CocoaPods):
 #
@@ -228,6 +185,7 @@ config/initializers/secret_token.rb
 
 ## Environment normalization:
 /.bundle/
+/vendor/bundle
 /lib/bundler/man/
 
 # for a library or gem, you might want to ignore these files since the code is
@@ -237,5 +195,20 @@ config/initializers/secret_token.rb
 # .ruby-gemset
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
 
-# End of https://www.gitignore.io/api/ruby,rails,python,jekyll
+### Vim ###
+# swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+# End of https://www.gitignore.io/api/vim,git,ruby,macos,python,jekyll

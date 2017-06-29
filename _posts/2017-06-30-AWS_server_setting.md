@@ -19,7 +19,7 @@ comments: true
 
 #### 01. 사용법
 
-- 우선 [AWS](https://aws.amazon.com/ko)에서 회원가입을 한다.[^2] 
+- 우선 [AWS](https://aws.amazon.com/ko)에서 회원가입을 한다.[^2]
 
   > - **기본**
   >
@@ -37,49 +37,41 @@ comments: true
 - [EC2 설정 페이지](https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#)에 이동
 
   `Launch Instance`버튼을 눌러 **Instance**를 세로 생성한다.
-<<<<<<< HEAD
+  ​
   ![aws01](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws01.png?raw=true)
-=======
-  ![aws01](../images/aws01.png)
->>>>>>> origin/master
-
-  1. **Choose an Amazon Machine Image (AMI)**
+  =======
+1.   **Choose an Amazon Machine Image (AMI)**
      여러가지 버전의 OS를 제공해주지만 우리는 *ubuntu Server*를 이용해서 설치하자. 다음버튼을 누른다.
 
-  2. **Choose an Instance Type**
+2. **Choose an Instance Type**
 
      `Free tier eligible`[^3]이라 적혀있는 `General purpose`를 누르고 다음을 선택한다.
 
-  3. **Configure Instance Details**
+3. **Configure Instance Details**
 
      설정을 변경할 것이 없다.
 
-  4. **Add Storage**
+4. **Add Storage**
 
      설정을 변경할 것이 없다.
 
-  5. **Add Tags**
+5. **Add Tags**
 
      설정을 변경할 것이 없다.
 
-  6. **Configure Security Group**
-<<<<<<< HEAD
-     ![aws02](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws02.png?raw=true)
-=======
-     ![aws02](../images/aws02.png)
->>>>>>> origin/master
-
+6. **Configure Security Group**
+        ![aws02](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws02.png?raw=true)
+     =======
      좌하단의 `Add Rule`버튼을 눌러서 우리가 사용할 *8000* 번 포트를 추가하자.
 
-  7. 이제 여지것 했던 설정을 확인하고 서버를 생성한다.
+7.   이제 여지것 했던 설정을 확인하고 서버를 생성한다.
      <br><br>
 
-  8. 이제 *private key*를 설정한다.
-<<<<<<< HEAD
-     ![aws03](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws03.png?raw=true)
-=======
-     ![aws03](../images/aws03.png)
->>>>>>> origin/master
+8. 이제 *private key*를 설정한다.
+
+        ![aws03](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws03.png?raw=true)
+
+       
      이미 private key를 가지고 있으면 원래 가지고 있던것을 설정하고 만약에 없다면 `create new key`를 누르고 파일은 다운로드하자.
 
      관리를 편리하게 하기 위해서 `~/.ssh`폴더에 다운 받은 파일을 저장하자. 저장 후 계정의 소유자 이외에는 접근하지 못하도록 권한을 변경시켜준다.
@@ -87,10 +79,10 @@ comments: true
      ```shell
      $ chmod 440 [pirvateKEY 입력]
      ```
-
+    
      <br><br>
 
-  9. **server에 SSH연결**
+9.   **server에 SSH연결**
      [EC2 설정 페이지](https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#)에서 `instance`로 들어가면 `Public DNS:`가 우리 서버의 주소이다.
 
      ```shell
@@ -98,12 +90,7 @@ comments: true
      ```
 
      위의 명령어를 입력하여 리눅스 서버로 접속이 가능하다.
-
-<<<<<<< HEAD
-     ![aws04](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws04.png?raw=true)
-=======
-     ![aws04](../images/aws04.png)
->>>>>>> origin/master
+      ![aws04](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws04.png?raw=true)
 
      첫 접속시엔 이런 질문이 나올 수가 있는데 이때는 yes를 눌러 통과시킨다.
 

@@ -35,7 +35,7 @@ def euler001a(number=1000):
     print(time.time() - startTime)
 ```
 
-- 일반적으로는 이렇게 많이 푸실 것 같다(나도 맨 처음엔 이런식으로 풀었고). 딱히 큰 문제는 없지만 파이썬에서 제공해주는 **[set](https://docs.python.org/3/c-api/set.html)**자료형을 활용해서 풀면 약간이나마 연산 속도가 빨라진다.*(믿고 사용하는 STL이다..)*
+- 일반적으로는 이렇게 많이 푸실 것 같다(나도 맨 처음엔 이런식으로 풀었고). 딱히 큰 문제는 없지만 파이썬에서 제공해주는 **[set](https://docs.python.org/3/tutorial/datastructures.html)**자료형을 활용해서 풀면 약간이나마 연산 속도가 빨라진다.*(믿고 사용하는 STL이다..)*
 
 
 

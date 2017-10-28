@@ -15,7 +15,7 @@ comments: true
 
 문제는 심플하다. 피보나치수를 구해서 400만 이하의 모든 항의 합을 구한다.
 
-[피보나치 수열](https://en.wikipedia.org/wiki/Fibonacci_number)에 대한 설명은 이미 다 아시리라 생각하고 생략을..
+[피보나치 수열](https://en.wikipedia.org/wiki/Fibonacci_number)에 대한 설명은 이미 다 아시리라 생각하고 생략을...
 
 ```python
 def fibonacci(num):  

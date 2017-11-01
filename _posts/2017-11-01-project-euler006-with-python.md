@@ -28,7 +28,7 @@ comments: true
   $$
   \begin{align}
   	\sum_{i=1}^{n}i\ \ =&\ 1+\cdots+n=\frac{n\left(n+1\right)}{2} \\ 
-  	\sum_{i=1}^{n}i^2 =&\ 1^2+\cdots+n^2 = \frac{n\left(n+1\right)\left(2n+1\right)}{2} \\
+  	\sum_{i=1}^{n}i^2 =&\ 1^2+\cdots+n^2 = \frac{n\left(n+1\right)\left(2n+1\right)}{6} \\
   	\sum_{i=1}^{n}i^3 =&\ 1^3+\cdots+n^3 = \left(\frac{n\left(n+1\right)}{2}\right)^2 \\
   \end{align}
   $$

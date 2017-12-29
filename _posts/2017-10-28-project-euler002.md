@@ -65,6 +65,7 @@ def euler002a(n=4000000):
 피보나치의 일반항은 아래의 식과 같다.
 
 $$$
+\\
 \begin{align}
 	a_{n+2} =&\ a_{n+1} + a_n \\
 	a_{n+2}-pa_{n+1} =&\ q\left(a_{n+1}-pa_n\right) \\
@@ -79,6 +80,7 @@ $$$
 	\left\{\left(\frac{1+\sqrt{5}}{2}\right)^n- \left(\frac{1-\sqrt{5}}{2}\right)^n\right\}
 	}{\sqrt{5}}
 \end{align}
+\\
 $$$
 
 이 식을 [Binet's formular](https://ko.wikipedia.org/wiki/자크_비네)라고 한다..

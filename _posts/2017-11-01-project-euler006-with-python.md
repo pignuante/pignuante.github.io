@@ -5,6 +5,7 @@ description: ""
 date: 2017-11-01
 tags: algorithm,python,math
 comments: true
+mathjax: true
 ---
 
 #### 006. Sum square difference

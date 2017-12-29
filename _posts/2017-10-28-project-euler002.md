@@ -69,10 +69,10 @@ $$$
 \begin{align}
 	a_{n+2} =&\ a_{n+1} + a_n \\
 	a_{n+2}-pa_{n+1} =&\ q\left(a_{n+1}-pa_n\right) \\
-	a_{n+1}-pa_n = & \ q^{n-1}\left(a_2-pa_1\right) \\
+	a_{n+1}-pa_n =& \ q^{n-1}\left(a_2-pa_1\right) \\
 	a_{n+1}-pa_n =&\ q^{n-1}\left(1-p\right) \\
 	a_{n+1}-pa_n =&\ q^n\\
-	a_{n+1}-qa_n = &\ p^n \\
+	a_{n+1}-qa_n =&\ p^n \\
 	\left(p-q\right)a_n =&\ p^n-q^n \\
 	p,q =&\ \frac{1\pm\sqrt{5}}{2} \\
 	p-q =&\ \sqrt{5}, \ \text{if p > q}  \\

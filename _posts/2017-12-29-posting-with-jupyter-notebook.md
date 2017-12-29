@@ -51,7 +51,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_6_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_6_0.png)
+![2017-12-29-posting-with-jupyter-notebook_6_0](https://github.com/pignuante/pignuante.github.io/blob/master/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_6_0.png?raw=true)
 
 
 
@@ -63,7 +63,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_7_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
+![2017-12-29-posting-with-jupyter-notebook_7_0](https://github.com/pignuante/pignuante.github.io/blob/master/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png?raw=true)
 
 
 
@@ -96,7 +96,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_8_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png)
+![2017-12-29-posting-with-jupyter-notebook_8_0](https://github.com/pignuante/pignuante.github.io/blob/master/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png?raw=true)
 
 
 - 수식 예제

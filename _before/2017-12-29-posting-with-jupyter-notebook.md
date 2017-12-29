@@ -1,7 +1,8 @@
 
 ### jupyter notebook Posting Test
 
-오늘은 jupyter notebook으로 생성된 파일인 `ipynb`로 포스팅하는 것을 정리해볼까한다.
+오늘은 jupyter notebook으로 생성된 파일인 `ipynb`로 github blog에 포스팅하는 것을 정리해볼까한다.
+
 jupyter notebook파일을 바로 올리는 것으로 코드와 실행결과를 정리하기가 더욱 편해지지 않을까 싶다!
 
 
@@ -12,6 +13,8 @@ jupyter notebook파일을 바로 올리는 것으로 코드와 실행결과를 �
 우선 지금 글을 쓰고 있는 이 파일도 jupyter notebook파일로 실험하고 있다ㅎㅎ
 간단한 파이썬 예제코드를 하나 작성해보자.
 
+
+- 코드 예제
 
 
 ```python
@@ -31,9 +34,9 @@ print(x)
 print(y*x)
 ```
 
-    [1 2 1 2 2 1 1 1 1 2]
-    [1 1 2 1 1 2 2 1 2 1]
-    [1 2 2 2 2 2 2 1 2 2]
+    [2 2 1 1 2 2 1 2 1 2]
+    [1 1 1 1 2 2 2 1 2 1]
+    [2 2 1 1 4 4 2 2 2 2]
 
 
 위와 같이 간단한 코드들과 결과들은 특별한 설정을 해줄 필요도 없이 바로 표시가 된다!
@@ -47,7 +50,10 @@ sns.pairplot(iris, hue="species", markers=["o", "s", "D"], kind="reg", diag_kind
 plt.show()
 ```
 
-![2017-12-29-posting-with-jupyter-notebook_5_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_5_0.png)
+
+![png](2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_6_0.png)
+
+
 
 ```python
 iris = sns.load_dataset("iris")
@@ -57,7 +63,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_6_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_6_0.png)
+![png](2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
 
 
 
@@ -90,5 +96,37 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_7_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
+![png](2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png)
 
+
+- 수식 예제
+
+$$
+\begin{align}
+    f\left(x:\theta\right) = & \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(x-\theta\right)} {2\sigma^2}\right) \\
+    M_X\left(t\right) = & \exp\left(\mu t + \frac{\sigma^2t^2}{2}\right) \\
+    \phi_X\left(t\right)=& \exp\left(\mu it-\frac{1}{2}\sigma^2t^2\right) \\
+    \text{I} = & \begin{pmatrix}
+                    \frac{1}{\sigma^2}&0\\
+                    0&\frac{1}{2\sigma^4}
+                  \end{pmatrix}
+\end{align} 
+$$
+
+
+##### 2. 파일 변환
+우선 이렇게 만든 `ipynb`를 **markdown**파일로 변환을 시켜야 한다.
+
+```powershell
+> jupyter nbconvert --to markdown 변환시킬파일.ipynb
+```
+을 입력하면 `원본파일명.md`파일이 생성된다.
+
+1. 이미지 파일의 경우엔 변환시킨 파일이 있는 폴더에 파일명과 같은 이름으로 이미지들이 저장된 폴더가 생성된다.
+2. 그 이미지 폴더를 자신의 블로그의 이미지 저장소에 넣은 후, md파일에 ~~수동으로~~(...) 이미지 파일을 넣어준다.
+3. git에 push한다.
+
+
+
+
+위와 같이 간단한 설정만으로 `ipynb`로 포스팅을 즐길수 있다!

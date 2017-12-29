@@ -11,11 +11,11 @@ comments: true
 > Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
 >
 > $$
+> \begin{align}
 > 1634 = 1^4 + 6^4 + 3^4 + 4^4 \\
->
 > 8208 = 8^4 + 2^4 + 0^4 + 8^4 \\
->
-> 9474 = 9^4+4^4+7^4+4^4 \\ 
+> 9474 = 9^4+4^4+7^4+4^4 \\
+> \end{align}
 > $$
 > As 1 = 14 is not a sum it is not included.
 >
@@ -36,13 +36,15 @@ comments: true
   3. 9로 구성된 숫자의 위의 작업을 각각 해보면
      $$
      \begin{align}
-     9^5 =&\ 59049 \\
+     \\
+     9^5 =&\ 59049 \\ 
      99^5=&\ 118098 \\
      999^5=&\ 177147  \\
      9999^5 =&\ 236196 \\
      99999^5 =&\ 295245\\
      999999^5=&\ 354294\\
-     9999999^5=&\ 413343\\ 
+     9999999^5=&\ 413343\\  
+     \\
      \end{align}
      $$
      편의상 999로 표현했지만 각 자리수를 5승하여 합한 결과이다.

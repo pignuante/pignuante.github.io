@@ -1,3 +1,11 @@
+---
+layout: post
+title: "Posting with jupyter notebook"
+description: ""
+date: 2017-12-29
+tags: jupyter,python
+comments: true
+---
 
 ### jupyter notebook Posting Test
 
@@ -51,7 +59,7 @@ plt.show()
 ```
 
 
-![png](2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_6_0.png)
+![2017-12-29-posting-with-jupyter-notebook_5_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_5_0.png)
 
 
 
@@ -63,7 +71,7 @@ plt.show()
 ```
 
 
-![png](2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
+![2017-12-29-posting-with-jupyter-notebook_6_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_6_0.png)
 
 
 
@@ -96,7 +104,7 @@ plt.show()
 ```
 
 
-![png](2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png)
+![2017-12-29-posting-with-jupyter-notebook_7_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
 
 
 - 수식 예제
@@ -123,10 +131,18 @@ $$
 을 입력하면 `원본파일명.md`파일이 생성된다.
 
 1. 이미지 파일의 경우엔 변환시킨 파일이 있는 폴더에 파일명과 같은 이름으로 이미지들이 저장된 폴더가 생성된다.
-2. 그 이미지 폴더를 자신의 블로그의 이미지 저장소에 넣은 후, md파일에 ~~수동으로~~(...) 이미지 파일을 넣어준다.
+2. 그 이미지 폴더를 자신의 블로그의 이미지 저장소에 넣은 후, md파일에 ~~수동으로~~[^1] (...) 이미지 파일을 넣어준다.
 3. git에 push한다.
 
 
 
 
 위와 같이 간단한 설정만으로 `ipynb`로 포스팅을 즐길수 있다!
+
+그리고 원래 지킬에 올릴때 헤더부분에 쓰던 설정을 사용안해도 올라는 가지만 태그 구분이 안되므로 수동으로 넣어주자(.....불편한게 은근 많다!!)
+
+
+
+
+
+[^1]: 이거 은근 귀찮다 -\_-;뭔가 방법을 찾아야할듯.

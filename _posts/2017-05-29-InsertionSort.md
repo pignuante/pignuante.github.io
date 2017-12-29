@@ -5,6 +5,7 @@ description: "What is Insertion Sort?"
 date: 2017-05-29
 tags: [study, sort, algorithm, Insertion]
 comments: true
+mathjax: true
 ---
 
 ## Sort

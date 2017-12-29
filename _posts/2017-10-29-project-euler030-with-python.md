@@ -4,6 +4,7 @@ title: "Project Euler030 with python"
 description: ""
 date: 2017-10-29
 tags: algorithm,python,math
+mathjax: true
 comments: true
 ---
 

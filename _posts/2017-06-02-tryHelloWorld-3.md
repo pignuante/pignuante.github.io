@@ -5,6 +5,7 @@ description: "TryHelloWorld 알고리즘 level1 (3)"
 date: 2017-06-02
 tags: [algorithm, python]
 comments: true
+mathjax: true
 ---
 
 

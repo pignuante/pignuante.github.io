@@ -1,7 +1,6 @@
 _site
 .sass-cache
 Gemfile.lock
-_drafts
 .jsbeautifyrc
 *.swp
 .idea/

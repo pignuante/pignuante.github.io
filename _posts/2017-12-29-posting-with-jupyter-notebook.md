@@ -1,10 +1,18 @@
+---
+layout: post
+title: "Posting with jupyter notebook"
+description: ""
+date: 2017-12-29
+tags: jupyter,python
+comments: true
+mathjax: true
+---
 
-### jupyter notebook Posting Test
+### Posting with Jupyter notebook
 
 오늘은 jupyter notebook으로 생성된 파일인 `ipynb`로 github blog에 포스팅하는 것을 정리해볼까한다.
 
 jupyter notebook파일을 바로 올리는 것으로 코드와 실행결과를 정리하기가 더욱 편해지지 않을까 싶다!
-
 
 
 
@@ -13,9 +21,7 @@ jupyter notebook파일을 바로 올리는 것으로 코드와 실행결과를 �
 우선 지금 글을 쓰고 있는 이 파일도 jupyter notebook파일로 실험하고 있다ㅎㅎ
 간단한 파이썬 예제코드를 하나 작성해보자.
 
-
 - 코드 예제
-
 
 ```python
 # 필요 패키지 import
@@ -25,7 +31,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 ```
 
-
 ```python
 y = np.random.randint(1,3,10)
 x = np.random.randint(1,3,10)
@@ -34,22 +39,21 @@ print(x)
 print(y*x)
 ```
 
-    [2 2 1 1 2 2 1 2 1 2]
-    [1 1 1 1 2 2 2 1 2 1]
-    [2 2 1 1 4 4 2 2 2 2]
-
+```
+[2 2 1 1 2 2 1 2 1 2]
+[1 1 1 1 2 2 2 1 2 1]
+[2 2 1 1 4 4 2 2 2 2]
+```
 
 위와 같이 간단한 코드들과 결과들은 특별한 설정을 해줄 필요도 없이 바로 표시가 된다!
 
 하지만 아래와 같이 결과를 이미지로 출력한 것들은 특별한 설정을 해주어야한다.
-
 
 ```python
 iris = sns.load_dataset("iris")
 sns.pairplot(iris, hue="species", markers=["o", "s", "D"], kind="reg", diag_kind="kde", palette="husl")
 plt.show()
 ```
-
 
 ![2017-12-29-posting-with-jupyter-notebook_6_0](https://github.com/pignuante/pignuante.github.io/blob/master/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_6_0.png?raw=true)
 
@@ -61,7 +65,6 @@ g = sns.jointplot("sepal_width", "petal_length", data=iris,
                   kind="kde", space=0, color="g")
 plt.show()
 ```
-
 
 ![2017-12-29-posting-with-jupyter-notebook_7_0](https://github.com/pignuante/pignuante.github.io/blob/master/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png?raw=true)
 
@@ -95,9 +98,7 @@ sns.clustermap(df.corr(), center=0, cmap="vlag",
 plt.show()
 ```
 
-
 ![2017-12-29-posting-with-jupyter-notebook_8_0](https://github.com/pignuante/pignuante.github.io/blob/master/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png?raw=true)
-
 
 - 수식 예제
   ​
@@ -132,8 +133,6 @@ $$
 2. 그 이미지 폴더를 자신의 블로그의 이미지 저장소에 넣은 후, md파일에 수동으로1 (...) 이미지 파일을 넣어준다.
 3. git에 push한다.
 
-
-
 위와 같이 간단한 설정만으로 ipynb로 포스팅을 즐길수 있다!
 
 그리고 원래 지킬에 올릴때 헤더부분에 쓰던 설정을 사용안해도 올라는 가지만 태그 구분이 안되므로 수동으로 넣어주자(.....불편한게 은근 많다!!)
@@ -142,9 +141,6 @@ $$
 
 - 추후에 이미지 설정하는 것이 있나 더 알아보자!
 
-
-
 [1]: 이거 은근 귀찮다 -_-;뭔가 방법을 찾아야할듯.
-
 
 위와 같이 간단한 설정만으로 `ipynb`로 포스팅을 즐길수 있다!

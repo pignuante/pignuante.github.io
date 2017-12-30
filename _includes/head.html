@@ -6,33 +6,29 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css" type="text/css">
 
+    {% if page.mathjax %}
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
 
-    <script type="text/javascript"
-            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
-    <!--<script type="text/javascript" async-->
-            <!--src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">-->
-    <!--</script>-->
-
-    <!--{% if page.mathjax %}-->
-    <!--<script type="text/x-mathjax-config">-->
-    <!--MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });-->
-
-
-    <!--</script>-->
-    <!--<script-->
-    <!--type="text/javascript"-->
-    <!--charset="utf-8"-->
-    <!--src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"-->
-    <!--&gt;-->
-    <!--</script>-->
-    <!--<script-->
-    <!--type="text/javascript"-->
-    <!--charset="utf-8"-->
-    <!--src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"-->
-    <!--&gt;-->
-    <!--</script>-->
-    <!--{% endif %}-->
+    <script
+            type="text/javascript"
+            charset="utf-8"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    >
+    </script>
+    <script
+            type="text/javascript"
+            charset="utf-8"
+            src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+    >
+    </script>
+    {% endif %}
 
     <!-- Font -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

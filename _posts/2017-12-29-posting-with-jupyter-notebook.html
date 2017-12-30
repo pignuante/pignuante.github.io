@@ -3996,21 +3996,15 @@ $$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h5 id="2.-&#54028;&#51068;-&#48320;&#54872;">2. &#54028;&#51068; &#48320;&#54872;<a class="anchor-link" href="#2.-&#54028;&#51068;-&#48320;&#54872;">&#182;</a></h5><p>우선 이렇게 만든 <code>ipynb</code>를 <strong>markdown</strong>파일로 변환을 시켜야 한다.</p>
+<h5 id="2.-&#54028;&#51068;-&#48320;&#54872;">2. &#54028;&#51068; &#48320;&#54872;<a class="anchor-link" href="#2.-&#54028;&#51068;-&#48320;&#54872;">&#182;</a></h5><h6 id="2.1-to-markdown">2.1 to markdown<a class="anchor-link" href="#2.1-to-markdown">&#182;</a></h6><p>우선 이렇게 만든 <code>ipynb</code>를 <strong>markdown</strong>파일로 변환을 시켜야 한다.</p>
 <div class="highlight"><pre><span></span><span class="p">&gt;</span> <span class="n">jupyter</span> <span class="n">nbconvert</span> <span class="p">-</span><span class="n">-to</span> <span class="n">markdown</span> <span class="n">변환시킬파일</span><span class="p">.</span><span class="n">ipynb</span>
 </pre></div>
 <p>을 입력하면 원본파일명.md파일이 생성된다.</p>
 <ol>
 <li>이미지 파일의 경우엔 변환시킨 파일이 있는 폴더에 파일명과 같은 이름으로 이미지들이 저장된 폴더가 생성된다.</li>
-<li>그 이미지 폴더를 자신의 블로그의 이미지 저장소에 넣은 후, md파일에 수동으로1 (...) 이미지 파일을 넣어준다.</li>
+<li>그 이미지 폴더를 자신의 블로그의 이미지 저장소에 넣은 후, md파일에 수동으로[^1] (...) 이미지 파일을 넣어준다.</li>
 <li>git에 push한다.</li>
 </ol>
-<p>위와 같이 간단한 설정만으로 ipynb로 포스팅을 즐길수 있다!</p>
-<p>그리고 원래 지킬에 올릴때 헤더부분에 쓰던 설정을 사용안해도 올라는 가지만 태그 구분이 안되므로 수동으로 넣어주자(.....불편한게 은근 많다!!)</p>
-<ul>
-<li>추후에 이미지 설정하는 것이 있나 더 알아보자!</li>
-</ul>
-<p>[1]: 이거 은근 귀찮다 -_-;뭔가 방법을 찾아야할듯.</p>
 
 </div>
 </div>
@@ -4019,7 +4013,25 @@ $$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>위와 같이 간단한 설정만으로 <code>ipynb</code>로 포스팅을 즐길수 있다!</p>
+<h6 id="2.2-to-html">2.2 to html<a class="anchor-link" href="#2.2-to-html">&#182;</a></h6><div class="highlight"><pre><span></span><span class="p">&gt;</span> <span class="n">jupyter</span> <span class="n">nbconvert</span> <span class="p">-</span><span class="n">-to</span> <span class="n">html</span> <span class="n">변환시킬파일</span><span class="p">.</span><span class="n">ipynb</span>
+    <span class="p">&gt;</span> <span class="n">jupyter</span> <span class="n">nbconvert</span> <span class="p">-</span><span class="n">-to</span> <span class="n">html</span> <span class="p">-</span><span class="n">-template</span> <span class="n">basic</span> <span class="n">변환시킬파일</span><span class="p">.</span><span class="n">ipynb</span>
+</pre></div>
+<p>두가지 명령어가 존재하는데,</p>
+
+<pre><code>- 첫번째는 사실 뒤의 옵션이 `--template full`이 생략된것이다. 즉 full page의 html을 렌더링을 한다.
+- 두번째는 full page가 아닌 최소화된 html을 만든다. 이미 존재하는 다른 html의 속에 넣을 때 사용하면 좋을 듯하다.</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>위와 같이 간단한 설정만으로 ipynb로 포스팅을 즐길수 있다!</p>
+<p><del>그리고 원래 지킬에 올릴때 헤더부분에 쓰던 설정을 사용안해도 올라는 가지만 태그 구분이 안되므로 수동으로 넣어주자(.....불편한게 은근 많다!!)</del></p>
+<p><del>- 추후에 이미지 설정하는 것이 있나 더 알아보자!</del></p>
+<p>[^1] 이거 은근 귀찮다 -_-;뭔가 방법을 찾아야할듯.</p>
 
 </div>
 </div>

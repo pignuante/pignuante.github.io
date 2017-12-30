@@ -4,6 +4,7 @@ Gemfile.lock
 .jsbeautifyrc
 *.swp
 .idea/
+_before/.ipynb_checkpoints/
 
 
 # Created by https://www.gitignore.io/api/c,sas,git,vim,osx,c++,perl,node,sass,java,ruby,cuda,latex,linux,macos,pydev,julia,cmake,xcode,django,jekyll,python,windows,gitbook,pycharm,phpstorm,commonlisp,sublimetext,visualstudio,jetbrains+all,jupyternotebook

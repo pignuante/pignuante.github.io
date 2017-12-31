@@ -61,7 +61,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_7_0](http://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
+![2017-12-29-posting-with-jupyter-notebook_7_0](https://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
 
 
 
@@ -73,7 +73,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_8_0](http://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png)
+![2017-12-29-posting-with-jupyter-notebook_8_0](https://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png)
 
 
 
@@ -106,7 +106,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_9_0](http://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_9_0.png)
+![2017-12-29-posting-with-jupyter-notebook_9_0](https://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_9_0.png)
 
 
 - 수식 예제

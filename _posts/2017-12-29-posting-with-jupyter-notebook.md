@@ -57,10 +57,11 @@ print(y*x)
 iris = sns.load_dataset("iris")
 sns.pairplot(iris, hue="species", markers=["o", "s", "D"], kind="reg", diag_kind="kde", palette="husl")
 plt.show()
+
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_7_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
+![2017-12-29-posting-with-jupyter-notebook_7_0](http://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_7_0.png)
 
 
 
@@ -72,7 +73,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_8_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png)
+![2017-12-29-posting-with-jupyter-notebook_8_0](http://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_8_0.png)
 
 
 
@@ -105,7 +106,7 @@ plt.show()
 ```
 
 
-![2017-12-29-posting-with-jupyter-notebook_9_0](../images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_9_0.png)
+![2017-12-29-posting-with-jupyter-notebook_9_0](http://pignuante.github.io/images/2017-12-29-posting-with-jupyter-notebook_files/2017-12-29-posting-with-jupyter-notebook_9_0.png)
 
 
 - 수식 예제
@@ -115,18 +116,18 @@ plt.show()
 
     $$
     \begin{align}
-        f\left(x:\theta\right) = & \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(x-\theta\right)} {2\sigma^2}\right) \\
-        M_X\left(t\right) = & \exp\left(\mu t + \frac{\sigma^2t^2}{2}\right) \\
-        \phi_X\left(t\right)=& \exp\left(\mu it-\frac{1}{2}\sigma^2t^2\right) \\
-        \text{I} = & \begin{pmatrix}
+        f\left(x:\theta\right) = &\ \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(x-\theta\right)} {2\sigma^2}\right) \\
+        M_X\left(t\right) = &\ \exp\left(\mu t + \frac{\sigma^2t^2}{2}\right) \\
+        \phi_X\left(t\right)=&\ \exp\left(\mu it-\frac{1}{2}\sigma^2t^2\right) \\
+        \text{I}\ =&\ \begin{pmatrix}
                         \frac{1}{\sigma^2}&0\\
                         0&\frac{1}{2\sigma^4}
                       \end{pmatrix}
-    \end{align} 
+    \end{align}
     $$
 
 - 인라인수식 예제
-  $F\left(x\right) = \frac{1}{2}\left(1+erf\left(\frac{x-\mu}{\sigma\sqrt{2}}\right)\right)$
+  인라인 예제 : $F\left(x\right) = \frac{1}{2}\left(1+erf\left(\frac{x-\mu}{\sigma\sqrt{2}}\right)\right)$를 구할 수 있다.
 
 
 ##### 2. 파일 변환

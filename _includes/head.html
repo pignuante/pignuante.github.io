@@ -15,6 +15,7 @@
     }
   });
 
+
     </script>
     <script
             type="text/javascript"
@@ -38,6 +39,13 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ site.name }}"
           href="{{ site.baseurl }}/feed.xml"/>
 
+    <!--mermaid-->
+    <script src="pignuante.github.io/assets/mermaid-7.0.0/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="pignuante.github.io/assets/mermaid-7.0.0/dist/mermaid.forest.css">
+    <!--<link rel="stylesheet" href="pignuante.github.io/assets/mermaid-7.0.0/dist/mermaid.dark.css">-->
+    <!--<link rel="stylesheet" href="pignuante.github.io/assets/mermaid-7.0.0/dist/mermaid.css">-->
+
+    <script>mermaid.initialize({startOnLoad: true});</script>
 
     {% seo %}
 

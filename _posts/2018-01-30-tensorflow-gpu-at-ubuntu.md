@@ -17,15 +17,21 @@ comments: true
 
 여기서 우리는 **<u>CUDA 8.0</u>**과 **<u>cuDNN</u>** 6.0을 사용 할 것이다.(별이 다섯개!)
 
-처음에 아무것도 모르고 설치 할 때에는 무려 2박3일(...)이 걸렸었어서 설치방법을 정리, 메모겸해서 적어둔다.
+처음에 아무것도 모르고 설치 할 때에는 무려 2박3일(...)이 걸렸었어서 설치방법을 정리, 메모겸해서 적어둔다. 젤 중요한것은 <u>호환 버젼</u>을 잘 확인하자!!!!!
 
-[CUDA](http://docs.nvidia.com/cuda/cuda-installation-guide-linux/#axzz4VZnqTJ2A)
+```mermaid
+graph LR
+  a(python) --> b 
+  b(Nvidia) --> c
+  c(Cuda) --> d
+  d(cuDNN) --> e(tensorflow)
+```
 
-[cuDNN](https://developer.nvidia.com/cudnn)
-
-[Tensorflow 공식홈페이지](https://www.tensorflow.org/install/install_linux)
+설치의 순서는 크게 위의 순서로 진행이 된다.
 
 
+
+[CUDA](http://docs.nvidia.com/cuda/cuda-installation-guide-linux/#axzz4VZnqTJ2A), [cuDNN](https://developer.nvidia.com/cudnn), [Tensorflow 공식홈페이지](https://www.tensorflow.org/install/install_linux)
 
 ## 1. pyenv, virtualenv, python 설치
 
@@ -179,7 +185,7 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshrc, 
 
 
 
-#### 2.3 설치한 Nvidia 드라이버의 삭제
+#### 2.3 (덤)설치한 Nvidia 드라이버의 삭제
 
 ```powershell
 > dpkg --get-selections | grep nvidia

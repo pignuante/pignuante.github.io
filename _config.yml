@@ -79,5 +79,9 @@ gems:
   - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-admin
+  - jekyll-mermaid
+
+mermaid:
+  src: 'pignuante.github.io/assets/mermaid-7.0.0/dist/mermaid.js'
 
 exclude:            [vendor]

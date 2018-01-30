@@ -3,7 +3,7 @@ layout: post
 title: "Tensorflow gpu at ubuntu"
 description: ""
 date: 2018-01-30
-tags: python, tensorflow, cuda, cudnn, gpu, ubuntu, linux
+tags: python tensorflow cuda cudnn gpu ubuntu linux
 comments: true
 ---
 

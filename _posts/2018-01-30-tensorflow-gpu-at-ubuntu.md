@@ -3,9 +3,11 @@ layout: post
 title: "Tensorflow gpu at ubuntu"
 description: ""
 date: 2018-01-30
-tags: python,tensorflow,cuda,cudnn,gpu,ubuntu,linux
+tags: python, tensorflow, cuda, cudnn, gpu, ubuntu, linux
 comments: true
 ---
+
+[TOC]
 
 
 
@@ -13,15 +15,21 @@ comments: true
 
 **Tensorflow GPU**를 사용하기위해서는 python뿐만 아니라 GPU를 통한 병렬처리를 위한 [CUDA](https://ko.wikipedia.org/wiki/CUDA)와 deep neural network를 위한 [cuDNN](https://developer.nvidia.com/cudnn)(Cuda Deep Neural Network)를 설치해야한다.
 
-여기서 우리는 <u>**CUDA 8.0**</u>과 <u>**cuDNN 6.0**</u>을 사용 할 것이다.(별이 다섯개!)
+여기서 우리는 **<u>CUDA 8.0</u>**과 **<u>cuDNN</u>** 6.0을 사용 할 것이다.(별이 다섯개!)
 
 처음에 아무것도 모르고 설치 할 때에는 무려 2박3일(...)이 걸렸었어서 설치방법을 정리, 메모겸해서 적어둔다.
+
+[CUDA](http://docs.nvidia.com/cuda/cuda-installation-guide-linux/#axzz4VZnqTJ2A)
+
+[cuDNN](https://developer.nvidia.com/cudnn)
+
+[Tensorflow 공식홈페이지](https://www.tensorflow.org/install/install_linux)
 
 
 
 ## 1. pyenv, virtualenv, python 설치
 
-#### 1.1 우분투 update &7 upgrade
+#### 1.1 우분투 update && upgrade
 
 설치에 앞서서 우분투를 `update && upgrade`해준다.
 
@@ -36,12 +44,16 @@ comments: true
 설치에 필요한 패키지들을 미리 설치해준다.
 
 ```shell
-> sudo apt-get install -y vim terminator git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev 
+> sudo apt-get install -y vim terminator git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev gcc g++
 ```
 
-​
+- 경우에 따라서는 패키지까지만 설치하고 cuda와 cuDNN을 설치하고 파이썬을 설치해도 무방하다.
+
+
 
 #### 1.3 (덤)zsh 설치
+
+##### 1.3.1 zsh 설치
 
 덤으로 zsh을 혹시나 설치하지 않았으면 설치한다.
 
@@ -50,9 +62,23 @@ comments: true
 > curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ```
 
-**기타 theme변경이나 font설정추가, zsh-autosuggestions, zsh-syntax-highlighting**
+##### 1.3.2 zsh-syntax-highlighting
 
-​
+```powershell
+> git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+zsh의 문법 하이라이팅을 지원하는 패키지이다. 위의 명령어로 설치를 한 다음 `.zshrc`로 이동하여 `plugins`에 `zsh-syntax-highlighting`를 추가한다.
+
+##### 1.3.3 zsh-autosuggestions
+
+```powershell
+> git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+```
+
+역시 `zsh-syntax-highlighting`과 마찬가지로 `.zshrc`의 `plugin`에 `zsh-autosuggestions`을 추가한다.
+
+
 
 #### 1.4 pyenv, virtualenv 설치
 
@@ -62,13 +88,14 @@ comments: true
 > curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | sh
 ```
 
-pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshenv, .bash_profile)에 pyenv 설정을 추가한다. (아래의 명령어는 터미널창에 입력한다.)
+pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshrc, .bash_profile)에 pyenv 설정을 추가한다. (아래의 명령어는 터미널창에 입력한다.)
 
 ```powershell
-> echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshenv
-> echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshenv
-> echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshenv
-> source ~/.zshenv
+> echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+> echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+> echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+
+> source ~/.zshrc
 ```
 
 ​
@@ -93,7 +120,7 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshenv,
 #### 1.6 파이썬에 기타 필요한 파일 설치
 
 ```powershell
-> pip3 install --upgrade numpy pandas matplotlib seaborn scipy scikit-learn 
+> pip3 install --upgrade numpy pandas matplotlib seaborn scipy scikit-learn jupyter
 ```
 
 기타 필요한 파일을 설치한다.
@@ -112,11 +139,14 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshenv,
 
 
 
-#### 2.1 우선 관련 설정을 한다. [참고](https://www.makeuseof.com/tag/ubuntu-ppa-technology-explained/)
+#### 2.1 우선 관련 설정을 한다.
+
+[참고](https://www.makeuseof.com/tag/ubuntu-ppa-technology-explained/)
 
 ```powershell
 > sudo apt-get install software-properties-common
 > sudo add-apt-repository ppa:graphics-drivers/ppa
+
 > sudo apt-get update && sudo apt-get dist-upgrade
 ```
 
@@ -139,13 +169,13 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshenv,
 
 #### 2.2 설치의 확인
 
-- 터미널창에 명령어로 확인한다.
+터미널창에 명령어로 확인한다.
 
-  ```powershell
-  > cat /proc/driver/nvidia/version
-  > nvidia-smi
-  > nvidia-settings
-  ```
+```powershell
+> cat /proc/driver/nvidia/version
+> nvidia-smi
+> nvidia-settings
+```
 
 
 
@@ -191,8 +221,10 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshenv,
 > **Enter Toolkit Location [ default is /usr/local/cuda-8.0 ]:**
 > enter키(default)
 >
-> **Do you want to install a symbolic link at /usr/local/cuda?(y)es/(n)o/(q)uit: y**
-> **Install the CUDA 8.0 Samples?(y)es/(n)o/(q)uit:** y
+> **Do you want to install a symbolic link at /usr/local/cuda?(y)es/(n)o/(q)uit:** y
+>
+> **Install the CUDA 8.0 Samples?**
+> **(y)es/(n)o/(q)uit:** y
 >
 > **Enter CUDA Samples Location [ default is /home/사용자 이름 ]:**
 > enter키(default)
@@ -212,14 +244,14 @@ Samples: Installed in /home/사용자 이름
 자신의 셸 설정파일에 넣어준다.
 
 ```shell
-> vim ~/.zshenv
+> vim ~/.zshrc
 
 # cuda setting
 export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 export CUDA_HOME=/usr/local/cuda
 
-> source ~/.zshenv
+> source ~/.zshrc
 > nvcc --version
 ```
 
@@ -236,7 +268,7 @@ Cuda compilation tools, release 8.0, V8.0.44
 
 
 
-#### 3.4. Cuda 삭제
+#### 3.4. (덤)Cuda 삭제
 
 ```powershell
 > sudo apt-get remove --auto-remove nvidia-cuda-toolkit
@@ -301,6 +333,8 @@ cuDNN 라이브러리 파일을 R에서도 사용하기 위해 설정하는 김�
 
 ## 5. Tensorflow-gpu 설치
 
+#### 5.1 Tensorflow-gpu 설치
+
 위의 장황했던 작업에 비해서 tensorflow gpu설치는 매우 간단하다.
 
 ```powershell
@@ -308,6 +342,25 @@ cuDNN 라이브러리 파일을 R에서도 사용하기 위해 설정하는 김�
 ```
 
 
+
+#### 5.2 확인
+
+```python
+import tensorflow as tf
+
+with tf.Session() as sess:
+    matrix1 = tf.constant([[3., 3.], [4., 4.]])
+    matrix2 = tf.constant([[2., 3.],[2., 4.]])
+    
+    product = tf.matmul(matrix1, matrix2)
+
+    result = sess.run(product)
+    print(result)
+
+# result is
+# [[ 12.  21.]
+#  [ 16.  28.]]
+```
 
 
 

@@ -276,6 +276,12 @@ Cuda compilation tools, release 8.0, V8.0.44
 
 이라고 뜨면 성공이다.
 
+그리고 추가로 공식문서에서 필요로 한다니 설치해주자.
+
+```powershell
+> sudo apt-get install libcupti-dev
+```
+
 
 
 #### 3.4. (덤)Cuda 삭제

@@ -15,7 +15,7 @@ comments: true
 
 **Tensorflow GPU**를 사용하기위해서는 python뿐만 아니라 GPU를 통한 병렬처리를 위한 [CUDA](https://ko.wikipedia.org/wiki/CUDA)와 deep neural network를 위한 [cuDNN](https://developer.nvidia.com/cudnn)(Cuda Deep Neural Network)를 설치해야한다.
 
-여기서 우리는 **<u>CUDA 8.0</u>**과 **<u>cuDNN</u>** 6.0을 사용 할 것이다.(별이 다섯개!)
+여기서 우리는 **<u>CUDA 8.0</u>**과 **<u>cuDNN</u>** 6.0(7.0대도 무방!)을 사용 할 것이다.(별이 다섯개!)
 
 처음에 아무것도 모르고 설치 할 때에는 무려 2박3일(...)이 걸렸었어서 설치방법을 정리, 메모겸해서 적어둔다. 젤 중요한것은 <u>호환 버젼</u>을 잘 확인하자!!!!!
 
@@ -28,6 +28,10 @@ graph LR
 ```
 
 설치의 순서는 크게 위의 순서로 진행이 된다.
+
+
+
+여담으로 2018년 1월 기준 tensorflow 1.5버젼은 cuda 9.0과 cuDNN 7.0.x버젼을 지원한다!
 
 
 
@@ -139,7 +143,7 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshrc, 
 
 > **주의**
 >
-> 여기서 부터는 자신이 사용하는 그래픽카드의 버전이나 지금 사용하려는 Tensorflow의 버전, Cuda와 cuDNN의 버전의 ***호환성을 잘 확인***하고 사용해야한다!!!!!
+> 여기서 부터는 자신이 사용하는 그래픽카드의 버전이나 지금 사용하려는 Tensorflow의 버전, Cuda와 cuDNN의 버전 그리고 tensorflow와의 ***호환성을 잘 확인***하고 사용해야한다!!!!!
 >
 > **주의**
 
@@ -207,7 +211,7 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshrc, 
 
 위에서 언급한데로 우리는 cuda 8.0을 설치 할 것이다. [홈페이지](https://developer.nvidia.com/cuda-downloads)에서 자신의 버젼에 맞는 cuda를 고른 다음 `runfile[local]`을 다운 받는다. (물론 다른것도 가능하지만 이 파일이 설정이 제일 편하다.)
 
-#### 3.1 Cuda8.0 설치
+#### 3.1 Cuda 설치
 
 다운받은 위치로 이동하여 위의 명령어로 다운받은 파일을 실행 후 프롬포트에 명령어를 입력한다.
 
@@ -235,7 +239,7 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshrc, 
 > **Enter CUDA Samples Location [ default is /home/사용자 이름 ]:**
 > enter키(default)
 
-#### 3.2 Cuda8.0 설치 확인
+#### 3.2 Cuda 설치 확인
 
 설치 종료 후에 나오는 summary에 아래와 같이 뜨면 성공이다.
 
@@ -245,7 +249,7 @@ Toolkit: Installed in /usr/local/cuda-8.0
 Samples: Installed in /home/사용자 이름
 ```
 
-#### 3.3 Cuda8.0 환경변수 설정
+#### 3.3 Cuda 환경변수 설정
 
 자신의 셸 설정파일에 넣어준다.
 
@@ -253,7 +257,7 @@ Samples: Installed in /home/사용자 이름
 > vim ~/.zshrc
 
 # cuda setting
-export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
+export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}  # 설치위치 확인하자
 export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 export CUDA_HOME=/usr/local/cuda
 
@@ -280,6 +284,13 @@ Cuda compilation tools, release 8.0, V8.0.44
 > sudo apt-get remove --auto-remove nvidia-cuda-toolkit
 ```
 
+혹은 cuda가 설치된 path로 이동하여 수동으로 지워준다.
+
+```powershell
+> cd /usr/local
+> sud rm -fr cuda*
+```
+
 
 
 ---------
@@ -292,7 +303,7 @@ Cuda compilation tools, release 8.0, V8.0.44
 
 ![cuDNN](http://pignuante.github.io/images/tensorflow03.png)
 
-[사이트](https://developer.nvidia.com/rdp/cudnn-download)로 이동하여 로그인(+가입)을 한 다음 자신이 사용하려는 버젼을 다운 받는다(위에서도 언급한 것처럼 우리는 cuda 8.0에 cuDNN 6.0을 다운받는다.) **최신버전**으로 <u>받고 싶다면</u> tensorflow의 홈페이지에서 **<u>지원 여부</u>**를 확인하자.
+[사이트](https://developer.nvidia.com/rdp/cudnn-download)로 이동하여 로그인(+가입)을 한 다음 자신이 사용하려는 버젼을 다운 받는다(위에서도 언급한 것처럼 우리는 cuda 8.0에 cuDNN 6.0(or 7.0.x)을 다운받는다.) **최신버전**으로 <u>받고 싶다면</u> tensorflow의 홈페이지에서 **<u>지원 여부</u>**를 확인하자.
 
 
 
@@ -328,7 +339,7 @@ Cuda compilation tools, release 8.0, V8.0.44
 cuDNN 라이브러리 파일을 R에서도 사용하기 위해 설정하는 김에 미리 설정한다.
 
 ```powershell
-> sudo cp cuda/lib64/libcudnn* /usr/lib/x86_64-linux-gnu
+> sudo cp /usr/local/cuda/lib64/libcudnn* /usr/lib/x86_64-linux-gnu
 ```
 
 

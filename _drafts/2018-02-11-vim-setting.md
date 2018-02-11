@@ -106,13 +106,11 @@ call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""" 
 " emmet
-autocmd FileType html,css EmmetInstall
 let g:user_emmet_install_global = 0
-" let g:user_emmet_leader_key='<C-Y>' " emmet short cut (ctrl y , )
 let g:user_emmet_expandabbr_key='<Tab>'
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>") 
 " emmet-vim의 단축키 tab
-
+autocmd FileType html,css EmmetInstall
 
 """"""""""""""""""""""""""""""""""""""""""
 " vim-json

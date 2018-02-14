@@ -273,6 +273,8 @@ call plug#end()
 
 
 
+이렇게 완성된 파일은 [이곳](https://github.com/pignuante/pignuante.github.io/blob/master/data/vimrc)에서 확인 할 수 있다!
+
 
 
 

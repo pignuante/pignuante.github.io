@@ -91,7 +91,7 @@ if has("syntax")
     syntax enable
 endif				" 파일에 문법이 존재 할 시 문법설정을 온 
 
-map <Leader>r :up<Enter>:!python %<Enter> " 하단에 추가 설명
+map <Leader>r :up<CR>:!python %<CR> " 하단에 추가 설명
 ```
 
 - `set nrformats=alpha,octal,hex,bin " C-a, C-x` : 알파벳, 10진수, 16진수, 2진수의 숫자에 커서를 두고 `Ctrl+a`, `Ctrl+x`를 누르면 숫자가 증감한다. 기본은 10진수만!

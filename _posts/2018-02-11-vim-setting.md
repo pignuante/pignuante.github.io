@@ -269,6 +269,7 @@ call plug#end()
   - 위의 파일로 vim-plug를 사용 했을 경우 youcompleteme는 `~/vim/plugged/youcompleteme`에 설치되어 있는데 저 폴더 내부의 `install.py`로 설치를 추가로 해주어야한다.
   - 설치 할 때 필요한 언어를 설정해서 설치할 수 있으나 귀찮으니 다 설치해준다. `/install.py --all`
   - 혹시나 `pyenv`, `pyenv-virtualenv`를 사용하고 있을 경우 설치중에 에러메세지가 발생 할 수 있는데(특히나 지금 사용하는 터미널의 python이 가상환경이거나 pyenv로 만들었을 경우) 이럴 때에는 pyenv로 system python으로 변경한 다음 진행하면 잘 된다. 그래도 혹시 안되면 pyenv와 pyenv-virtualenv를 삭제하고 다시 `install.py`로 설치를 진행한다.
+  - 추가로 `C`언어계열 파일들의 자동완성을 설정하려면 `.ycm_extra_conf.py`파일이 필요한데 [여기](https://github.com/pignuante/pignuante.github.io/blob/master/data/.ycm_extra_conf.py)에서 다운 받아서 관리하기 편한곳에 넣자(나 같은 경우는 `~/.ycm_extra_conf.py`이렇게) 그 후에 위의 환경 설정처럼 vim의 글로벌 변수로 `ycm_global_ycm_extra_conf`을 설정해주자.
   - 근데 이 자동완성이 뭔가 좀 불완전하게 작동하는것같아서 세팅을 다시 확인해봐야겠다.
 
 

@@ -95,7 +95,7 @@ map <Leader>r :up<CR>:!python %<CR> " 하단에 추가 설명
 ```
 
 - `set nrformats=alpha,octal,hex,bin " C-a, C-x` : 알파벳, 10진수, 16진수, 2진수의 숫자에 커서를 두고 `Ctrl+a`, `Ctrl+x`를 누르면 숫자가 증감한다. 기본은 10진수만!
-- `map <Leader>r :up<Enter>:!python %<Enter>` : leader키(\\키)와 r을 누르면 지금 편집하던 프로그램의 변경이 있을 경우 저장을 한 다음 파이썬으로 실행을 한다.
+- `map <Leader>r :up<CR>:!python %<CR>` : leader키(\\키)와 r을 누르면 지금 편집하던 프로그램의 변경이 있을 경우 저장을 한 다음 파이썬으로 실행을 한다.
 
 위가 vim에서 기본으로 제공해주는 세팅이다. 옵션리스트를 더 알고 싶으면 `:help option-summary`명령어를 옵션의 설명이 보고 싶다면 `:help 옵션이름`을 입력하자. 
 

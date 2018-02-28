@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler006 with python"
 description: ""
 date: 2017-11-01
-tags: algorithm,python,math
+tags: [algorithm, python, math]
 comments: true
 mathjax: true
 ---
@@ -16,7 +16,7 @@ mathjax: true
 >
 > The square of the sum of the first ten natural numbers is,
 >
->  $(1 + 2 + ... + 10)^2 = 55^2 = 3025$
+>  $$(1 + 2 + ... + 10)^2 = 55^2 = 3025$$
 >
 > Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.
 >
@@ -28,7 +28,7 @@ mathjax: true
 - 우리가 중학생때인가 고등학생때쯤 배웠던 공식에 따르면
   $$
   \begin{align}
-  	\sum_{i=1}^{n}i\ \ =&\ 1+\cdots+n=\frac{n\left(n+1\right)}{2} \\ 
+  	\sum_{i=1}^{n}i\ \ =&\ 1+\cdots+n=\frac{n\left(n+1\right)}{2} \\
   	\sum_{i=1}^{n}i^2 =&\ 1^2+\cdots+n^2 = \frac{n\left(n+1\right)\left(2n+1\right)}{6} \\
   	\sum_{i=1}^{n}i^3 =&\ 1^3+\cdots+n^3 = \left(\frac{n\left(n+1\right)}{2}\right)^2 \\
   \end{align}

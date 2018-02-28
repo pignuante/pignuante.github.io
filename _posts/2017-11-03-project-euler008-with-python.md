@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler008 with python"
 description: ""
 date: 2017-11-03
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -36,7 +36,7 @@ comments: true
 > """
 > ```
 >
-> 
+>
 >
 > Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. What is the value of this product?
 
@@ -67,8 +67,8 @@ def euler008(digits=13):
 84580156166097919133875499200524063689912560717606
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450"""
-    
-    
+
+
     inputList = [int(s) for s in inputData.replace("\n","")]
     mulList = []
     maxValue = inputList[0]
@@ -77,16 +77,3 @@ def euler008(digits=13):
         mulList.append(maxValue)
     print(max(mulList))
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-

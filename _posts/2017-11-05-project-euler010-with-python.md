@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler010 with python"
 description: ""
 date: 2017-11-05
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -28,10 +28,10 @@ def is_prime(x):
         if not x%i or not x%(i+2):
             return False
     return True
-  
+
 def euler010a(number=2000000):
     results = []
-    
+
     for n in range(2, number+2):
         if is_prime(n):
             results.append(n)
@@ -53,10 +53,3 @@ def euler010(number=2000000):
 ```
 
 - [에라토스테네스의 체](https://ko.wikipedia.org/wiki/에라토스테네스의_체)의 방식으로 다시 풀어보았다.
-
-
-
-
-
-
-

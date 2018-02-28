@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler009 with python"
 description: ""
 date: 2017-11-03
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -35,12 +35,3 @@ def euler009(number=1000):
 - 그리고 또 1에서부터 a까지 생성을 한다.
 - 그리고 1000에서 a와 b의 합을 뺀 수를 c로 설정한 다음에 피타고라스를 계산한다!
 - a를 1000까지 반복하는데 그 반복의 횟수를 줄 일 수 있을 것 같다.
-
-
-
-
-
-
-
-
-

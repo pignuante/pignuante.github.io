@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler002"
 description: ""
 date: 2017-10-28
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 mathjax: true
 ---
@@ -106,18 +106,3 @@ def euler002a(n=4000000):
 ```
 
 식의 유도는 괴랄하지만 우리는 수학자가 아니므로 결과만 가져다 사용하자 ㅎㅎ.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

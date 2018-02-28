@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler 01 with python."
 description: "Project Euler 01"
 date: 2017-10-24
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -43,12 +43,12 @@ def euler001a(number=1000):
 def euler001(n1=3, n2=5, limit=1000):  
     import time
     startTime = time.time() # 시작시간
-    
+
     number1   = {n for n in range(n1, limit, n1)} # set으로 n1의 배수 생성
     number2   = {n for n in range(n2, limit, n2)} # set으로 n2의 배수 생성
-    
+
     result    = sorted(number1 | number2) # union 처리
-    
+
     print(time.time() - startTime) # 작동 시간 출력
     return sum(result)
 ```
@@ -56,24 +56,3 @@ def euler001(n1=3, n2=5, limit=1000):
 - **set**을 사용하면 우선 *set comprehension*을 사용하여 우리가 구하고자 하는 두 숫자들의 배수 set을 만든다.
 - 그리고 그 두 숫자를 **union**연산을 통해서 결과*set*을 저장한다(굳이 저장할 필요 없이 바로 뽑아 써도 되지만 절차를 위해서..).
 - 저장된 결과*set*의 합을 구한다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

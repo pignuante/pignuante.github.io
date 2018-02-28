@@ -3,7 +3,7 @@ layout: post
 title: "Posting with jupyter notebook"
 description: "jupyter로 블로깅하기"
 date: 2017-12-29
-tags: jupyter,python
+tags: [jupyter, python]
 comments: true
 mathjax: true
 ---
@@ -115,7 +115,7 @@ plt.show()
 - 블록 수식 예제
 
     $$
-    \begin{align}
+    \begin{aligned}
         f\left(x:\theta\right) = &\ \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(x-\theta\right)} {2\sigma^2}\right) \\
         M_X\left(t\right) = &\ \exp\left(\mu t + \frac{\sigma^2t^2}{2}\right) \\
         \phi_X\left(t\right)=&\ \exp\left(\mu it-\frac{1}{2}\sigma^2t^2\right) \\
@@ -123,14 +123,15 @@ plt.show()
                         \frac{1}{\sigma^2}&0\\
                         0&\frac{1}{2\sigma^4}
                       \end{pmatrix}
-    \end{align}
+    \end{aligned}
     $$
 
 - 인라인수식 예제
-  인라인 예제 : $F\left(x\right) = \frac{1}{2}\left(1+erf\left(\frac{x-\mu}{\sigma\sqrt{2}}\right)\right)$를 구할 수 있다.
+  인라인 예제 : $$F\left(x\right) = \frac{1}{2}\left(1+erf\left(\frac{x-\mu}{\sigma\sqrt{2}}\right)\right)$$를 구할 수 있다.
 
 
 ##### 2. 파일 변환
+
 ###### 2.1 to markdown
 
 우선 이렇게 만든 `ipynb`를 **markdown**파일로 변환을 시켜야 한다.
@@ -155,7 +156,7 @@ plt.show()
     > jupyter nbconvert --to html 변환시킬파일.ipynb
     > jupyter nbconvert --to html --template basic 변환시킬파일.ipynb
 ```
-두가지 명령어가 존재하는데, 
+두가지 명령어가 존재하는데,
     - 첫번째는 사실 뒤의 옵션이 `--template full`이 생략된것이다. 즉 full page의 html을 렌더링을 한다.
     - 두번째는 full page가 아닌 최소화된 html을 만든다. 이미 존재하는 다른 html의 속에 넣을 때 사용하면 좋을 듯하다.
 
@@ -172,5 +173,3 @@ plt.show()
 
 
 [^1] 이거 은근 귀찮다 -_-;뭔가 방법을 찾아야할듯.
-
-

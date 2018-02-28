@@ -3,7 +3,7 @@ layout: post
 title: "R with Jupyter Notebook at OSX"
 description: ""
 date: 2017-12-05
-tags: jupyter,r
+tags: [jupyter, r]
 comments: true
 ---
 

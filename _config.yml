@@ -1,87 +1,90 @@
+# SITE CONFIGURATION
+baseurl: ""
+url: "https://rayleigh-ryu.github.io"
 
-# Basic
-name:               "Pignu Ante"
+# THEME-SPECIFIC CONFIGURATION
+theme_settings:
+  title: PignuAnte
+  avatar: assets/images/main_icon.png
+  favicon: assets/images/favicon.ico
+  gravatar: # Email MD5 hash
+  description: "Pignu's Blog" # used by search engines
 
-author:
-  facebook:         pignuante
-  github:           pignuante
-  instagram:        pignuante
-  email:            hanyul.ryu@gmail.com
-copyright:
-  year:             2017
-  name:             Pignu Ante
-version:            v1.0.0
+  # Header and footer text
+  header_text: > #two or three lines to describe your site
+     <p>今だけは, 今だけは 悲しい歌 聞きたくないよ。</p>
+  header_text_feature_image: assets/images/benny01.png
+  footer_text: >
+   <p>Powered by <a>Rayleigh</a></p>
 
-# Google-analytics
-google-analytics:
-  id:               "UA-99633536-1"
+  # Icons
+  rss: false  # Make sure you created a feed.xml with feed.xml layout
+  email_address: hanyul.ryu@gmail.com # Full email address, e.g. "sam@example.com"
+  behance:
+  bitbucket:
+  dribbble:
+  facebook:
+  flickr:
+  gitlab:
+  github: "Rayleigh-Ryu"
+  google_plus:
+  instagram: "pignuante"
+  keybase:
+  linkedin:  # Full URL
+  pinterest:
+  reddit:
+  soundcloud:
+  stack_exchange:  # Full URL
+  steam:
+  tumblr:
+  twitter: # "twitter username"
+  vimeo:
+  wordpress:
+  youtube:
 
-# Disqus
-disqus:
-  id:               "pignu"
+  # Scripts / Features
+  google_analytics: UA-99633536-1 # Tracking ID, e.g. "UA-000000-01"
+  disqus_shortname: pignu
+  katex: true # Enable if using math markup
+  portfolio: false
+  search: true
+  tags: true
 
-# URL
-url:                "https://pignuante.github.io" # the base hostname & protocol for your site
-# url:                "http://localhost:4000" # use this url when you develop
-baseurl:            "" # the subpath of your site, e.g. /blog
 
+  # Localization strings
+  str_follow_on: "Follow on"
+  str_rss_follow: "Follow RSS feed"
+  str_email: "Email"
+  str_next_post: "Next post"
+  str_previous_post: "Previous post"
+  str_next_page: "Next"
+  str_previous_page: "Prev"
+  str_continue_reading: "Continue reading"
+  str_javascript_required_disqus: "Please enable JavaScript to view comments."
 
-# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:           Asia/Seoul
-permalink:          /:year-:month-:day/:title/
+  # Colours, typography and padding
+  # Open the "_sass > base" folder, and open "_variables.scss"
+  google_fonts: "Source+Sans+Pro:400,700,700italic,400italic"
 
-# Pagination
-paginate:           5
-paginate_path:      /page:num/
+  # Post navigation
+  post_navigation: true
 
-# Markdown
-markdown:           kramdown
-kramdown:
-  input:            GFM
+# PAGINATION
+paginate: 5
+paginate_path: "blog/page:num"
 
-# Navigation
-nav:
-  - name:           "About"
-    url:            "/about"
-  - name:           "Archive"
-    url:            "/archive"
-    #  - name:           "Study"
-    #    url:            "/study"
-    #  - name:           "ToDo"
-    #    url:            "/ToDo"
-  - name:           "Tags"
-    url:            "/tags"
-  - name:           "Github"
-    url:            "https://github.com/pignuante/"
+# PORTFOLIO
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:name
 
-# Sass
+# BUILD SETTINGS
+markdown: kramdown
+highlighter: rouge
 sass:
-  sass_dir:         _sass
-  style:            :compressed
-
-# Scopes
-defaults:
-  -
-    scope:
-      path:         ""
-      type:         "pages"
-    values:
-      layout:       "page"
-  -
-    scope:
-      path:         ""
-      type:         "posts"
-    values:
-      layout:       "post"
-
-# jekyll-seo-tag, see: http://www.rubydoc.info/gems/jekyll-seo-tag/1.2.0
-gems:
-  - jekyll-seo-tag
-  - jekyll-paginate
-  - jekyll-admin
-  - jekyll-mermaid
-
-mermaid:
-  src: 'pignuante.github.io/assets/mermaid-7.0.0/dist/mermaid.js'
-
-exclude:            [vendor]
+  sass_dir: _sass
+  style: :compressed
+plugins: [jekyll-paginate, jekyll-seo-tag]
+#theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
+exclude: ["Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", "LICENSE", "README.md", "screenshot.png"]

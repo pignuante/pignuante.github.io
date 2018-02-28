@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler011 with python"
 description: ""
 date: 2017-11-11
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -19,7 +19,7 @@ comments: true
 > ​	49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 > ​	81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
 > ​	52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91
-> ​	22 31 16 71 51 67 63 89 41 92 36 54 22 40 40 28 66 33 13 80	
+> ​	22 31 16 71 51 67 63 89 41 92 36 54 22 40 40 28 66 33 13 80
 > ​	24 47 32 60 99 03 45 02 44 75 33 53 78 36 84 20 35 17 12 50
 > ​	32 98 81 28 64 23 67 10 **26** 38 40 67 59 54 70 66 18 38 64 70
 > ​	67 26 20 68 02 62 12 20 95 **63** 94 39 63 08 40 91 66 49 94 21
@@ -66,10 +66,10 @@ def euler011():
 20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"""
-    
+
     grid = [[int(dd) for dd in d.split()] for d in data.split("\n")]
     result = 0
-    
+
     def right(array):
         result  = 0
         results = [[0 for aa in range(len(array))] for a in range(len(array))]
@@ -79,7 +79,7 @@ def euler011():
                 if result <= results[y][x]:
                     result = results[y][x]
         return result
-    
+
     def down(array):
         result  = 0
         results = [[0 for aa in range(len(array))] for a in range(len(array))]
@@ -90,7 +90,7 @@ def euler011():
                 if result <= results[y][x]:
                     result = results[y][x]
         return result
-    
+
     def crossDown(array):
         result  = 0
         results = [[0 for aa in range(len(array))] for a in range(len(array))]
@@ -100,7 +100,7 @@ def euler011():
                 if result <= results[y][x]:
                     result = results[y][x]
         return result
-    
+
     def crossUp(array):
         result  = 0
         results = [[0 for aa in range(len(array))] for a in range(len(array))]
@@ -110,27 +110,14 @@ def euler011():
                 if result <= results[y][x]:
                     result = results[y][x]
         return result
-    
+
     result = max(right(grid), down(grid), crossUp(grid), crossDown(grid))
     print(result)
 ```
 
 - 함수를 4개를 정의하였다.
   - right() : 좌에서 우로 탐색하는 함수이다
-  - down() : 위에서 아래로 탐색한다. 
+  - down() : 위에서 아래로 탐색한다.
   - crossDown() : 대각선 좌상단에서 우하단으로 탐색한다
   - crossUp() : 대각선 좌하단에서 우상단으로 탐색한다.
 - 탐색의 방향이랑 탐색을 할 때 경계선만 잘 선택해주면 간단한 문제이다.
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -3,7 +3,7 @@ layout: post
 title: "Tensorflow gpu at ubuntu"
 description: ""
 date: 2018-01-30
-tags: python tensorflow cuda cudnn gpu ubuntu linux
+tags: [python, tensorflow, cuda, cudnn, gpu, ubuntu, linux]
 comments: true
 ---
 
@@ -21,7 +21,7 @@ comments: true
 
 ```mermaid
 graph LR
-  a(python) --> b 
+  a(python) --> b
   b(Nvidia) --> c
   c(Cuda) --> d
   d(cuDNN) --> e(tensorflow)
@@ -68,7 +68,7 @@ graph LR
 덤으로 zsh을 혹시나 설치하지 않았으면 설치한다.
 
 ```powershell
-> sudo apt-get install zsh 
+> sudo apt-get install zsh
 > curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ```
 
@@ -164,7 +164,7 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshrc, 
 
 ![gpu_search_](http://pignuante.github.io/images/tensorflow01.png)
 
-위의 이미지 처럼 찾은 다음 
+위의 이미지 처럼 찾은 다음
 
 ![gpu_version_](http://pignuante.github.io/images/tensorflow02.png)
 
@@ -219,13 +219,13 @@ pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. .zshrc, 
 > sudo sh 다운받은CUDA파일
 ```
 
-> **accept/decline/quit:** 
+> **accept/decline/quit:**
 > accept
 >
 > **Install NVIDIA Accelerated Graphics Driver for Linux\~\~.?**
 > **(y)es/(n)o/(q)uit:** n
 >
-> **Install the CUDA 8.0 Toolkit?** 
+> **Install the CUDA 8.0 Toolkit?**
 > **(y)es/(n)o/(q)uit:** y
 >
 > **Enter Toolkit Location [ default is /usr/local/cuda-8.0 ]:**
@@ -265,7 +265,7 @@ export CUDA_HOME=/usr/local/cuda
 > nvcc --version
 ```
 
-마지막 문장을 입력하였을때 결과로 
+마지막 문장을 입력하였을때 결과로
 
 ```powershell
 nvcc: NVIDIA (R) Cuda compiler driver
@@ -323,7 +323,7 @@ Cuda compilation tools, release 8.0, V8.0.44
 > sudo cp include/cudnn.h /usr/local/cuda/include
 > sudo cp lib64/libcudnn* /usr/local/cuda/lib64
 
-> sudo chmod a+r /usr/local/cuda/include/cudnn.h 
+> sudo chmod a+r /usr/local/cuda/include/cudnn.h
 > sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
 
 ```
@@ -374,7 +374,7 @@ import tensorflow as tf
 with tf.Session() as sess:
     matrix1 = tf.constant([[3., 3.], [4., 4.]])
     matrix2 = tf.constant([[2., 3.],[2., 4.]])
-    
+
     product = tf.matmul(matrix1, matrix2)
 
     result = sess.run(product)
@@ -384,26 +384,3 @@ with tf.Session() as sess:
 # [[ 12.  21.]
 #  [ 16.  28.]]
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

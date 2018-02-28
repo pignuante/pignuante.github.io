@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler005 with python"
 description: ""
 date: 2017-10-31
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -46,20 +46,3 @@ def euler005(number=20):
 - 최소 공배수를 구하기 위해서는 우선 [최대공약수](https://namu.wiki/w/최대공약수)를 구한다.
 - 보통은 메모이제이션을 이용하여서들 많이 최대공약수를 구하는데 [이진 최대공약수](https://ko.wikipedia.org/wiki/이진_최대공약수_알고리즘)(스테인 알고리즘)으로 구현해보았다.
 - 최대공약수를 구한다음 두 숫자를 곱하고 최대 공약수로 나눠주면 최소 공배수를 구할 수 있다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

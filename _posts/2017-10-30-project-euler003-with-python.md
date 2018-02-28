@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler003 with python"
 description: ""
 date: 2017-10-30
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -11,7 +11,7 @@ comments: true
 >
 > What is the largest prime factor of the number 600851475143?
 >
-> 
+>
 
 - 어떠한 숫자의 소수의 약수를 구하는 문제이다.
 
@@ -28,49 +28,16 @@ comments: true
           while(num >= n):
               while(True):
                   if(num % n == 0): # 약수조건에 맞는다.
-                      if (n in result): 
+                      if (n in result):
                           result[n] += 1
                       else:
                           result[n]  = 1
                       num //= n # 지금의 숫자로 나눌수 있는 만큼 계속 나눈다.
                   else: # 약수가 아닐시 바로 탈주
-                      break 
+                      break
               n += 1 # 나누는 숫자 +1
           return (result)
       result = getFactor(number)
   ```
 
-- 결국엔 2에서 부터 숫자를 나눠 나가는데 2를 한번만 나누고 3으로 넘어가는게 아니고 2로 나눌수 있는 만큼 최대로 돌리고 그 다음 숫자로 넘어가는 것이 포인트이다.	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- 결국엔 2에서 부터 숫자를 나눠 나가는데 2를 한번만 나누고 3으로 넘어가는게 아니고 2로 나눌수 있는 만큼 최대로 돌리고 그 다음 숫자로 넘어가는 것이 포인트이다.

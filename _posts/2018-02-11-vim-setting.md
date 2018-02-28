@@ -3,7 +3,7 @@ layout: post
 title: "vim setting"
 description: ""
 date: 2018-02-11
-tags: vim
+tags: [vim]
 comments: true
 ---
 
@@ -73,7 +73,7 @@ set showtabline=2 " tab line을 항상보여준다
 set laststatus=2  " 상태바 표시를 항상한다
 set visualbell	  " 땡! 소리 대신에 화면의 깜빡임으로
 " 코멘트 하이라이트
-highlight Comment term=bold cterm=bold ctermfg=4 
+highlight Comment term=bold cterm=bold ctermfg=4
 set t_Co=256		" 색
 set showcmd         " (부분적인)명령어를 상태라인에 보여줌
 set showmatch		" 자신의 짝의 괄호를 보여준다.
@@ -87,9 +87,9 @@ set autoindent		" 지금 커서의 indent를 유지
 set cindent			" c문법에 맞는 indent를 제공
 set smartindent		" 파일에 맞는 indent를 제공
 
-if has("syntax")	
+if has("syntax")
     syntax enable
-endif				" 파일에 문법이 존재 할 시 문법설정을 온 
+endif				" 파일에 문법이 존재 할 시 문법설정을 온
 
 map <Leader>r :up<CR>:!python %<CR> " 하단에 추가 설명
 ```
@@ -97,7 +97,7 @@ map <Leader>r :up<CR>:!python %<CR> " 하단에 추가 설명
 - `set nrformats=alpha,octal,hex,bin " C-a, C-x` : 알파벳, 10진수, 16진수, 2진수의 숫자에 커서를 두고 `Ctrl+a`, `Ctrl+x`를 누르면 숫자가 증감한다. 기본은 10진수만!
 - `map <Leader>r :up<CR>:!python %<CR>` : leader키(\\키)와 r을 누르면 지금 편집하던 프로그램의 변경이 있을 경우 저장을 한 다음 파이썬으로 실행을 한다.
 
-위가 vim에서 기본으로 제공해주는 세팅이다. 옵션리스트를 더 알고 싶으면 `:help option-summary`명령어를 옵션의 설명이 보고 싶다면 `:help 옵션이름`을 입력하자. 
+위가 vim에서 기본으로 제공해주는 세팅이다. 옵션리스트를 더 알고 싶으면 `:help option-summary`명령어를 옵션의 설명이 보고 싶다면 `:help 옵션이름`을 입력하자.
 
 추가적으로 가끔 `ctrl+v`를 누르면 계단형으로 입력이 될 때가 있는데 이럴때에는 **붙여넣기 전**에 `set paste`를 입력하고 **붙여넣은 후**에 `set nopaste`를 입력하자. 물론 `set paste!`라는 토글 명령어로 해결 할 수도 있다!
 
@@ -119,7 +119,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 ```
 
-위의 문장을 자신의 `.vimrc`파일에 위의 문장을 추가해준다. `.vimrc`파일의 위치를 혹시라도 잘 모르겠다! 싶으면 vim에서 `:edit $MYVIMRC`명령어를 입력한다. 그러면 `vim-plug`가 설치가 된다. 
+위의 문장을 자신의 `.vimrc`파일에 위의 문장을 추가해준다. `.vimrc`파일의 위치를 혹시라도 잘 모르겠다! 싶으면 vim에서 `:edit $MYVIMRC`명령어를 입력한다. 그러면 `vim-plug`가 설치가 된다.
 
 설치되는 플러그인들은 `~/.vim`폴더안에 저장이 되므로 삭제하고 싶을때는 저 폴더 자체를 지워도 무관하다.
 
@@ -127,7 +127,7 @@ endif
 
 ##### 2.2. 패키지의 설치
 
-`vim-plug`로 설치를 하기위해선 
+`vim-plug`로 설치를 하기위해선
 
 ```powershell
 call plug#begin()
@@ -143,7 +143,7 @@ call plug#begin()
     Plug 'scrooloose/nerdcommenter' " leader cc (leader == \), c space, cm
 
     Plug 'tpope/vim-fugitive'       " git in vim
-    Plug 'airblade/vim-gitgutter'   " git check 
+    Plug 'airblade/vim-gitgutter'   " git check
 
     Plug 'valloric/youcompleteme'   " 자동완성
 
@@ -275,12 +275,3 @@ call plug#end()
 
 
 이렇게 완성된 파일은 [이곳](https://github.com/pignuante/pignuante.github.io/blob/master/data/vimrc)에서 확인 할 수 있다!
-
-
-
-
-
-
-
-
-

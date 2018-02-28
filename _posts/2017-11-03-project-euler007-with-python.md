@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler007 with python"
 description: ""
 date: 2017-11-03
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 comments: true
 ---
 
@@ -11,7 +11,7 @@ comments: true
 >
 > What is the 10 001st prime number?
 >
-> 
+>
 
 - 10001번째 소수를 찾는 문제이다!
 
@@ -23,8 +23,8 @@ comments: true
       primeList   = [2,] 	
       num         = 3
       flag        = True
-      
-      while(len(primeList) < number): 
+
+      while(len(primeList) < number):
           for n in primeList:			
               if (num % n == 0):
                   flag = False
@@ -58,7 +58,7 @@ comments: true
   def euler007a(num=10000):
       l = 0
       n = 1
-      
+
       if num < 2:
           return 0
       if num == 2:

@@ -3,7 +3,7 @@ layout: post
 title: "Project Euler030 with python"
 description: ""
 date: 2017-10-29
-tags: algorithm,python,math
+tags: [algorithm,python,math]
 mathjax: true
 comments: true
 ---
@@ -17,7 +17,7 @@ comments: true
 > 	9474 = 9^4+4^4+7^4+4^4 \\
 > \end{align}
 > $$
-> 
+>
 >
 > As 1 = 14 is not a sum it is not included.
 >
@@ -41,7 +41,7 @@ comments: true
      $$
      \begin{align}
      \\
-     9^5 =&\ 59049 \\ 
+     9^5 =&\ 59049 \\
      99^5=&\ 118098 \\
      999^5=&\ 177147  \\
      9999^5 =&\ 236196 \\
@@ -62,7 +62,7 @@ comments: true
 def euler030(power=5):
     limit = (9**5)*6
     results = []
-    
+
     for num in range(2, limit+1):
         temp = str(num)
         if num == sum(int(n)**5 for n in temp):
@@ -71,28 +71,3 @@ def euler030(power=5):
 ```
 
 언제나 처럼 갓갓갓 파이썬으로 해결하면 매우 쉽다...
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

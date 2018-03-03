@@ -4,3 +4,6 @@ Disallow: /_draft/
 Disallow: /assets/
 Disallow: /about/
 
+User-Agent : Yetibot
+Allow : /
+Disallow: /about/

@@ -17,7 +17,7 @@ theme_settings:
      <p>今だけは, 今だけは 悲しい歌 聞きたくないよ。</p>
   header_text_feature_image: assets/images/benny01.png
   footer_text: >
-   <p>Powered by <a href="pignu.kr">Pignu Ante</a></p>
+   <p>Powered by <a href="https://pignu.kr" target="_blank">Pignu Ante</a></p>
 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout

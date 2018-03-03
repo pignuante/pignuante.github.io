@@ -1,7 +1,9 @@
 # SITE CONFIGURATION
 baseurl: ""
-url: "http://pignuante.github.io"
-
+# url: "http://pignuante.github.io"
+# enforce_ssl: "pignuante.github.io"
+url: "https://pignu.kr"
+enforce_ssl: "pignu.kr"
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
   title: PignuAnte

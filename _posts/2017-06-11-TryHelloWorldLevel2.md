@@ -3,7 +3,7 @@ layout: post
 title: "TryHelloWorld Level 2 (2)"
 description: "TryHelloWorld Level 2"
 date: 2017-06-08
-tags: [Algorithm, Python]
+tags: [algorithm, python]
 comments: true
 ---
 

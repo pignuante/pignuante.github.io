@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "수리통계학"
-description: ""
+title: "Probability & Distribution (1)"
+description: "Introduction, Set Theory"
 date: 2018-03-10
 tags: [statistic, mathematical statistics, study]
 comments: true
@@ -17,22 +17,19 @@ comments: true
 
 #### Definition
 
-1. Statistical(random) experiment.
+1. Statistical(*random*) experiment.
    - The outcome can not be predicted with certainly prior to the performance of experiment.
 2. Sample space.
    - Collection of every possible outcome from the random[^1] experiment and denoted $$\mathscr{C}$$.
 3. Event.
    - Subset of `Sample space` and denoted by A, B, C$$\cdots$$.
 
-> ex 1.1) Consider tossing a coin, 
-> ​	then $$\mathscr{C}=\left\{\text{H, T}\right\}$$.
+> ex 1.1) Consider tossing a coin, then $$\mathscr{C}=\left\{\text{H, T}\right\}$$.
 >
-> ex 1.2) Consider tossing two dice(one red, the other white),
-> ​	then $$\mathscr{C}=\left\{\left(1, 1\right)\cdots\left(6,6\right)\right\}$$
+> ex 1.2) Consider tossing two dice(one red, the other white), then $$\mathscr{C}=\left\{\left(1, 1\right)\cdots\left(6,6\right)\right\}$$
 >
-> ex 1.3) Consider sum seven when tossing two dice,
+> ex 1.3) Consider sum seven when tossing two dice, then $$\mathscr{C}=\left\{\left(1, 6\right), \left(2, 5\right), \cdots \left(6, 1\right)\right\}$$
 >
-> ​	then $$\mathscr{C}=\left\{\left(1, 6\right), \left(2, 5\right), \cdots \left(6, 1\right)\right\}$$
 
 
 
@@ -63,6 +60,8 @@ Two types of probability.
 - It can be generalized to any number of sets $$C_1\cup C_2 \cup \cdots : =\bigcup_{k=1}^\infty C_k$$
 
 > ex 1.2.7) 
+>
+> 
 > $$
 > \begin{aligned}
 > 	C_k = & \left\{x:\frac{1}{k+1}\le x\le1\right\},\quad k=1,2,3,\cdots \\
@@ -77,6 +76,8 @@ Two types of probability.
 - It can be generalized to any number of sets $$C_1\cap C_2 \cap \cdots := \bigcap_{k=1}^\infty C_k$$
 
 > ex 1.2.11)
+>
+> 
 > $$
 > \begin{aligned}
 > 	C_k = & \left\{x:0\lt x\lt \frac{1}{k}\right\} \\
@@ -90,15 +91,34 @@ Two types of probability.
 - Let $$C \subset \mathscr{C}$$, then the set that consists of all element of $$\mathscr{C}$$, that are not elements of $$C$$ is called the **complements** of $$C$$, and denoted by $$C^c, \overline{C}$$.
 
 ![statistic1.1](http://pignuante.github.io/assets/images/statistic/1/statistic1.1.png)
+
 A **function** is called point or set function. Its domain is point or set respectively.
 
+![statistic1](https://pignu.kr/assets/images/statistic/1/statistic1.png)
+
+하단의 수식이 렌더링이 되질 않아서... 스크린샷도 첨부.
+
 > ex 1.2.24)
+>
+> 
 > $$
 > \begin{aligned}
-> 	Q\left(c\right)=\underbrace{\int\cdots\int_{0}^{x_2}}_{\text{n times folded}} d_{x1}d_{x2}\cdots dx_n
+> 	Q\left(c\right)=\underbrace{\int\cdots\int_{0}^{x_2}}_{\text{n times folded}} d_{x1}d_{x2}\cdots dx_n \\
 > \end{aligned}
 > $$
-> If $$C=\left\{\left(x_1, x_2,\dots, x_n\right): 0\le x_1\le x_2 \le \cdots\le x_n \le 1\right\}$$, then
+> 
+>
+> if
+>
+>  
+> $$
+> \begin{aligned}
+> 	C=\left\{\left(x_1, x_2,\dots, x_n\right): 0\le x_1\le x_2 \le \cdots\le x_n \le 1\right\}
+> \end{aligned}
+> $$
+> then
+>
+> 
 > $$
 > \begin{aligned}
 > 	Q\left(C\right) =& \int_0^1\int_0^{x_n}\cdots\int_0^{x_3}\int_0^{x_2}dx_1dx_2\cdots dx_{n-1}dx_n \\
@@ -109,150 +129,11 @@ A **function** is called point or set function. Its domain is point or set respe
 
 
 
-
-
-------------------------------
-
-## 1.3 The Probability Set Function
-
-#### Definition 1.3.1 $\left(\sigma-filed\right)$
-
-- Let $$\beta$$ be a collection of subset of $$\mathscr{C}$$[^4].
-- We say $$\beta$$ is a **$$\sigma-field$$**,
-- if 
-  1. $$\emptyset \notin \beta$$
-  2. $$C\in \beta \Rightarrow C^c\in \beta$$ (cloed under complement)
-  3. $$C_1, C_2\cdots\in\beta\Rightarrow\bigcup_{i=1}^{\infty}$$(closed under countable union)
-
-
-
-#### Definition 1.3.2 $\left(Probability\right)$
-
-- $$\mathscr{C}$$ : Sample Space.
-- $$\beta$$ : Borel $$\sigma-field$$.
-- P : Real-valued function defined on $$\beta$$
-  Probability set function if it satisfied,
-  1. $$P\left(c\right)\ge0, \quad \forall C\in\beta\quad$$  **(Non Negative)**
-  2. $$P\left(e\right)=1,\quad$$           **(Normality)**
-  3. $$C_1, C_2, \cdots\in\beta, \quad C_m\cap C_n = \emptyset,\quad \forall m\neq n$$
-     $$\Rightarrow P\left(\bigcup_{i=1}^{\infty}C_i\right) = \sum_{i=1}^{\infty}P\left(i\right),\quad$$**(Countable additivity)**
-
-##### Theorem 1.3.1
-
-$$
-\begin{aligned}
-	P\left(c\right) = 1-P\left(C^c\right), \quad \forall C\in\beta
-\end{aligned}
-$$
-
-- Proof.
-  - $$\mathscr{C} = C\cup C^c$$
-  - $$P\left(\mathscr{C}\right)= P\left(C\right) + P\left(C^c\right)\quad \left(\because\text{Countable Addictivity}\right)$$
-  - $$P\left(\mathscr{C}\right) = 1\qquad\qquad\qquad\quad \left(\because Normality\right)$$
-
-##### Theorem 1.3.2
-
-$$
-\begin{aligned}
-	P\left(\phi\right) = 0
-\end{aligned}
-$$
-
-- Proof.
-  - $$\mathscr{C}= \mathscr{C}\cup\emptyset$$
-  - $$P\left(\mathscr{C}\right) = P\left(\mathscr{C}\right) + P\left(\emptyset\right)$$
-
-
-
-##### Theorem 1.3.3
-
-$$
-C_1\subset C_2 \Rightarrow P\left(C_1\right)\le P\left(C_2\right)
-$$
-
-- Proof.
-  - $$C_2 = C_1\cup\left(C_2\cap C_1^c\right)$$
-  - $$\phi\ \ = C_1\cap \left(C_1^c\cap C_2\right)$$
-  - $$P\left(C_2\right)=P\left(C_1\right)+P\left(C_2\cap C_1^c\right)$$
-
-
-
-##### Theorem 1.3.4
-
-$$
-0\le P\left(C\right) \le 1, \quad \forall C \le \beta
-$$
-
-- Proof.
-  - $$\phi \subset C \subset \mathscr{C}$$
-  - $$0 = P\left(\phi\right) \le P\left(C\right) \le P\left(\mathscr{C}\right) = 1$$
-
-
-
-##### Theorem 1.3.5
-
-$$
-\begin{aligned}
-	P\left(C_1\cup C_2\right) = & P\left(C_1\right) + P\left(C_2\right) - P\left(C_1\cap C_2\right)
-\end{aligned}
-$$
-
-- Proof.
-  $$
-  \begin{aligned}
-  	C_1 \cup C_2 = &\ C_1 \cup \left(C_2 \cap C_1^c\right) \\
-  	C_2 = &\ \left(C_1 \cap C_2\right) \cup \left(C_2 \cap C_1^c\right) \\
-  	\text{from Countable}& \ \text{additivity from definition 1.3.1} \\
-  	P\left(C_1 \cup C_2\right) = &\ P\left(C_1\right) + P\left(C_2 \cap C_1^c\right) \\
-  	P\left(C_2\right) = & \ P\left(C_1 \cap C_2\right) + P\left(C_2\cap C_1^c\right)
-  \end{aligned}
-  $$
-
-
-
-
-#### Remark 1.3.2 $\left(\text{Inclusion Exclusion Formula}\right)$
-
-- For 3 sets $$C_1, C_2, C_3$$ it is not difficult to show.
-  $$
-  \begin{aligned}
-  	P\left(C_1\cup C_2 \cup C_3\right) = & \ p_1 - p_2 + p_3\\
-  	\text{where}, \quad p_1 =&\ P\left(C_1\right) + P\left(C_2\right) + P\left(C_3\right)\\
-  	p_2 =&\ P\left(C_1\cap C_2\right) + P\left(C_1\cap C_3\right) + P\left(C_2 \cap C_3\right)\\
-  	p_3 =&\ P\left(C_1\cap C_2 \cap C_3\right)\\
-  \end{aligned}
-  $$
-  ​
-
-- In general **inclusion exclusion formula**,
-  $$
-  P\left(C_1\cup C_2 \cdots \cup C_k\right) = \ p_1 - p_2 + p+3 - \cdots + \left(-1\right)^{k+1}p_k,
-  $$
-  ​
-
-- where $$p_i$$ is sum of probability of all possible intersection of sets. 
-  $$C_1, C_2, \cdots$$ are called mutually exclusion.
-
-- If $$C_i \cap C_j = \phi,\quad \forall i \neq j$$, mutually exclusive set $$c_1, c_2, \cdots$$ are called **exhaustive**[^5]. $$\left(\bigcup_{i=1}^{\infty}C_i\right)$$
-  ​
-
-
-
-
-
-
-
-
-
-
-
-
+---------------------------------------
 
 
 
 [^1]: unbiased
 [^2]: Objective
 [^3]: Subjective
-[^4]: Sample Space
-[^5]: partition
 

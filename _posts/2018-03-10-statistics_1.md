@@ -89,9 +89,8 @@ Two types of probability.
 
 - Let $$C \subset \mathscr{C}$$, then the set that consists of all element of $$\mathscr{C}$$, that are not elements of $$C$$ is called the **complements** of $$C$$, and denoted by $$C^c, \overline{C}$$.
 
-
-
-A function is called point or set function. its domain is point or set respectively.
+![statistic1.1](http://pignuante.github.io/assets/images/statistic/1/statistic1.1.png)
+A **function** is called point or set function. Its domain is point or set respectively.
 
 > ex 1.2.24)
 > $$
@@ -212,9 +211,30 @@ $$
 
 
 
-#### Remark 1.3.2
+#### Remark 1.3.2 $\left(\text{Inclusion Exclusion Formula}\right)$
 
+- For 3 sets $$C_1, C_2, C_3$$ it is not difficult to show.
+  $$
+  \begin{aligned}
+  	P\left(C_1\cup C_2 \cup C_3\right) = & \ p_1 - p_2 + p_3\\
+  	\text{where}, \quad p_1 =&\ P\left(C_1\right) + P\left(C_2\right) + P\left(C_3\right)\\
+  	p_2 =&\ P\left(C_1\cap C_2\right) + P\left(C_1\cap C_3\right) + P\left(C_2 \cap C_3\right)\\
+  	p_3 =&\ P\left(C_1\cap C_2 \cap C_3\right)\\
+  \end{aligned}
+  $$
+  ​
 
+- In general **inclusion exclusion formula**,
+  $$
+  P\left(C_1\cup C_2 \cdots \cup C_k\right) = \ p_1 - p_2 + p+3 - \cdots + \left(-1\right)^{k+1}p_k,
+  $$
+  ​
+
+- where $$p_i$$ is sum of probability of all possible intersection of sets. 
+  $$C_1, C_2, \cdots$$ are called mutually exclusion.
+
+- If $$C_i \cap C_j = \phi,\quad \forall i \neq j$$, mutually exclusive set $$c_1, c_2, \cdots$$ are called **exhaustive**[^5]. $$\left(\bigcup_{i=1}^{\infty}C_i\right)$$
+  ​
 
 
 
@@ -234,4 +254,5 @@ $$
 [^2]: Objective
 [^3]: Subjective
 [^4]: Sample Space
+[^5]: partition
 

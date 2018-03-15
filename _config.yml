@@ -2,8 +2,8 @@
 baseurl: ""
 # url: "http://pignuante.github.io"
 # enforce_ssl: "pignuante.github.io"
-url: "https://pignu.kr"
-enforce_ssl: "pignu.kr"
+url: "https://blog.pignu.kr"
+enforce_ssl: "blog.pignu.kr"
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
   title: PignuAnte
@@ -17,7 +17,7 @@ theme_settings:
      <p>今だけは, 今だけは 悲しい歌 聞きたくないよ。</p>
   header_text_feature_image: assets/images/benny01.png
   footer_text: >
-   <p>Powered by <a href="https://pignu.kr" target="_blank">Pignu Ante</a></p>
+   <p>Powered by <a href="https://blog.pignu.kr" target="_blank">Pignu Ante</a></p>
 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout

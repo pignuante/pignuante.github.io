@@ -39,8 +39,8 @@ $$
 > $$
 > \begin{aligned}
 > 	P\left(C_1\right) =&\ \frac{\binom{13}{2}\cdot\binom{39}{3}}{\binom{52}{5}}\\
-> 	P\left(C_2vert C_2\right) = &\ \frac{13\cdot2}{52\cdot5}\\
-> 	\text{Recall } P\left(C_2vert C_1\right) =&\ \frac{P\left(C_1\cap C_2\right)}{P\left(C_1\right)}\\
+> 	P\left(C_2\vert C_2\right) = &\ \frac{13\cdot2}{52\cdot5}\\
+> 	\text{Recall } P\left(C_2\vert C_1\right) =&\ \frac{P\left(C_1\cap C_2\right)}{P\left(C_1\right)}\\
 > 	 \Rightarrow P\left(C_1\cap C_2\right) =&\ P\left(C_2\vert C_1\right)\cdot P\left(C_1\right)
 > \end{aligned}
 > $$
@@ -98,7 +98,7 @@ $$
 
 #### Definition 1.4.1
 
-Two events C~1~ and C~2~ are **independent**. $$P\left(C_1\vert C_2\right) = P\left(C_1\right)$$[^2] 
+Two events $$C_1 \text{ and } C_2$$ are **independent**. $$P\left(C_1\vert C_2\right) = P\left(C_1\right)$$[^2] 
 $$
 \begin{aligned}
 	P\left(C_1vert C_2\right) =&\ \frac{P\left(C_1\cap C_2\right)}{P\left(C_2\right)} = \frac{P\left(C_1\right)\enclose{downdiagonalstrike}{P\left(C_2\right)}}{\enclose{downdiagonalstrike}{P\left(C_2\right)}} = P\left(C_1\right) \\

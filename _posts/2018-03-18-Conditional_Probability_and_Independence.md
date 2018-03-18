@@ -83,7 +83,6 @@ $$
 
 
 ##### proof.
-
 $$
 \begin{aligned}
 	C=&\ \ \ \ \left(C\cap C_1\right)\cup\cdots\cup\ \ \ \left(C\cap C_k\right)\\

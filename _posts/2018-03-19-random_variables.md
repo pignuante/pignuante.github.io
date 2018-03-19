@@ -93,7 +93,12 @@ $$
 
 
 
+##### Theorem 1.5.2 (Property of CDF)
 
+1. $$\forall a,b,\ a\lt b\Rightarrow F\left(a\right)\le F\left(b\right)$$.
+2. $$\lim_{x\rightarrow-\infty}F\left(x\right)=0$$.
+3. $$\lim_{x\rightarrow\infty}F\left(x\right)=1$$.
+4. $$\lim_{x\leftarrow x_0}=F\left(x_0\right)$$. (right continuous)
 
 
 
@@ -139,7 +144,24 @@ $$P\left(\bigcap_{n-1}^{\infty}C_n\right)=P\left(X\le x_0\right)=F(x_0)=\lim_{n\
 
 ##### Theorem 1.5.2
 
+$$
+\begin{aligned}
+	P(a\lt x \le b) = F_X\left(b\right) - F_X(a),\quad \forall a\lt b \\
+\left(-\infty, b\right] = \left(-\infty, a\right]\cup \left(a, b\right]\\
+F_X\left(b\right) = F_X\left(a\right) + P\left(a\lt x \le b\right) \\
+\therefore P(a\lt x \ le b) = F_X(b) - F_X(a)
+\end{aligned}
+$$
 
+
+
+----------
+
+##### Theorem 1.5.3
+
+- $$P(X=x)=F_X(x)-F_X(x^-)$$, where $$F_X(x)$$ : Left hand limit at x
+
+##### proof.
 
 
 

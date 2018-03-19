@@ -19,7 +19,7 @@ A function X is called random variable[^1], if it is assign to each element $$C\
 
 - The **random variable** is called **discrete** random variable if D is contable sequence.
 - The **random variable** is called **continuous** random variable if D is interval of real number.
-- Note that the probability function P is defined on $$\beta$$. 
+- Note that the probability function **P** is defined on $$\beta$$. 
 - We define a probability function $$p_x$$ defined on F and $$p_x$$ is called **induced probability function**.
 
 > ex 1.5.1) Toss two fair dice.
@@ -41,11 +41,16 @@ A function X is called random variable[^1], if it is assign to each element $$C\
 
 
 
+
+
 ----------------
 
 #### Definition 1.5.2 (Cumulative Distribution Function)
 
+
+
 The cdf of random variable X is 
+
 
 
 $$
@@ -54,6 +59,8 @@ $$
 	=&\ P_X\left(\left[-\infty, x\right]\right)
 \end{aligned}
 $$
+
+
 
 > Ex 1.5.3)
 >
@@ -71,15 +78,24 @@ $$
 > $$
 > \begin{aligned}
 > 	p_X\left(\left(a, b\right)\right) =& \left(b-a\right)\\ \\ 
-> 	F_X\left(x\right) = P\left(X\le x\right) =&\
-> 	\begin{cases}
-> 	0,\quad \text{if }x\lt 0\\
-> 	x, \quad \text{if } 0\le x \le 1\\
-> 	1, \quad \text{if } x\ge 1
-> 	\end{cases}
+> 	F_X\left(x\right) = P\left(X\le x\right)\\
+>     = &\ 0,\quad \text{if }x\lt 0\\
+> 	=&\ x, \quad \text{if } 0\le x \le 1\\
+> 	=&\ 1, \quad \text{if } x\ge 1
+>
 > \end{aligned}
 > $$
+> 
 >
+> 
+>
+> 
+
+
+
+
+
+
 
 c.f) 
 
@@ -87,11 +103,11 @@ c.f)
 
 - $$x\rightarrow x_0$$, convergence from the **left**.
 
-  ​
   $$
   \begin{aligned}
-  \lim_{x\leftarrow x_0}F\left(x\right)&\ :\text{Righthand side limit}\\
-  \lim_{x\rightarrow x_0}F\left(x\right)&\ :\text{Lefthand side limit}\\
+  \\
+  	\lim_{x\leftarrow x_0}F\left(x\right)&\ :\text{Righthand side limit}\\
+  	\lim_{x\rightarrow x_0}F\left(x\right)&\ :\text{Lefthand side limit}\\
   \end{aligned}
   $$
 
@@ -99,38 +115,29 @@ c.f)
 
 ##### proof.
 
-1.
 $$
 \begin{aligned}
-F\left(a\right) =&\ P\left(X\le a\right), \quad a\lt b,\ \ \forall a,b\\
-&\ \left\{X\le a\right\}\subset \left\{X\le b\right\}, \quad b\gt a\\
-&\Rightarrow P\left(X\le a\right)\le P\left(X\le b\right)\ \ \text{by theorem 1.3.3}
+	\text{1.}&\ \quad F\left(a\right) =\ P\left(X\le a\right), \quad a\lt b,\ \ \forall a,b\\
+	&\ \left\{X\le a\right\}\subset \left\{X\le b\right\}, \quad b\gt a\\
+	&\Rightarrow P\left(X\le a\right)\le P\left(X\le b\right)\ \ \text{by theorem 1.3.3} \\ \\
+	\text{2.}&\ \lim_{x\to -\infty}\left\{X\le x\right\}= \emptyset \\ 
+      &\ \lim_{x\to -\infty}P\left(X\le x\right) = P\left(\emptyset\right) = 0 \\ \\
+      
+      \text{3.}&\  \lim_{n\rightarrow \infty}\left\{X\lt x\right\} = \mathscr{C}\\
+	 &\ \lim_{x\to \infty}\left\{X\le x\right\} = P\left(\mathscr{C}\right) = 1
+      
 \end{aligned}
 $$
 
-2. ​
-   $$
-   \lim_{x\to -\infty}\left\{X\le x\right\} = \emptyset \\
-   \lim_{x\to -\infty}P\left(X\le x\right) = P\left(\emptyset\right) = 0
-   $$
-
-3. ​
-   $$
-   \lim_\left\{X\lt x\right\} = \mathscr{C}\\
-   \lim_{x\to \infty}\left\{X\le x\right\} = P\left(\mathscr{C}\right) = 1
-   $$
-   ​
-
-4. Let $$\left\{X_n\right\}$$ be a sequence st. $$x\leftarrow x_0$$ and let $$C_n=\left\{X\le x_n\right\}$$.
-
-   Then $$C_n$$ is decreasing set and $$\bigcap_{n=1}^\infty C_n=\left\{X\le x_0\right\}$$
-
-   $$P\left(\bigcap_{n-1}^{\infty}C_n\right)=P\left(X\le x_0\right)=F(x_0)=\lim_{n\rightarrow\infty}P(C_n)=\lim_{n\rightarrow}F(x_n)$$
-
-   ​
+4) Let $$\left\{X_n\right\}$$ be a sequence st. $$x\leftarrow x_0$$ and let $$C_n=\left\{X\le x_n\right\}$$.
+Then $$C_n$$ is decreasing set and $$\bigcap_{n=1}^\infty C_n=\left\{X\le x_0\right\}$$.
+$$P\left(\bigcap_{n-1}^{\infty}C_n\right)=P\left(X\le x_0\right)=F(x_0)=\lim_{n\rightarrow\infty}P(C_n)=\lim_{n\rightarrow}F(x_n)$$.
 
 
 
+------------
+
+##### Theorem 1.5.2
 
 
 

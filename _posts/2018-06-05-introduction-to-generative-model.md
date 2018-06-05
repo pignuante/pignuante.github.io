@@ -137,16 +137,72 @@ comments: true
 - pytorch와 함께하는 Linear Regression의 구현!
 
   ```python
+  import torch
+  import numpy as np
+  from torch.autograd import Variable  # Autograd
+  from torch import nn                 # Basic Neural Network Module
+  import matplotlib.pyplot as plt      # Needs for Ploting
+  
+  
+  # Data 정의
+  sample_size = 100
+  
+  x = torch.FloatTensor(sample_size, 1).uniform_(-1, 1)
+  y = 2*x + torch.randn(x.size())
+  
+  plt.scatter(x, y)
+  plt.title("y=ax+b")
+  plt.grid()
+  plt.show()
+  
+  
+  
+  
+  # Model 정의
+  model = nn.Linear(1, 1, bias=True)
+  
+  cost_function = nn.MSELoss()     # Mean Squared Cost Function
+  optimizer = torch.optim.SGD(model.parameters(), lr=0.05) # 일단 그려려니 하고 넘어가자
+  
+  print(model)
+  print(model.weight, model.bias)
+  
+  
+  # Training
+  epoch = 100
+  
+  for step in range(epoch):
+      prediction = model(x)                     # model에 x를 넣어서 예측값을 만든다.
+      cost = cost_function(prediction, y) #  cost function으로 얼마나 잘했는지 판단(예측, 원결과)
+      
+      optimizer.zero_grad()                     # 일단은 그려려니하고 넘어가자
+      cost.backward()
+      optimizer.step()                          
+      
+      if not(step % 20):
+          plt.cla()
+          plt.scatter(x, y)
+          plt.plot(x.data.numpy(), prediction.data.numpy(), 'r-', lw=1)
+          plt.title('cost=%.4f, w=%.4f, b=%.4f' % (cost.item(), model.weight.item(),model.bias.item()), fontdict={'size': 20} )
+          plt.grid()
+          plt.show()
+          plt.pause(0.1)
   
   ```
 
-  
+  위 코드는 간단히 python과 pytorch로 구현하였다. 
+
+  ![linear_data](http://pignuante.github.io/assets/images/generative/1/gif/images.png)
+
+우선 데이터는 위의 표와 같이 준비되어 있으며 우리는 저 데이터를 가장 잘 구분하는 선을 찾는다.
+
+![regression_result](http://pignuante.github.io/assets/images/generative/1/gif/linear_regression.gif)
 
 
 
+맨 처음에 우하단으로 향하는 선이었다가 점점 최적화가 되는 모습을 볼 수 있다.
 
-
-
+위 실행코드는 [여기](https://github.com/pignuante/pignuante.github.io/blob/master/assets/images/generative/1/gif/Linear_Regression_example.ipynb)에서 볼 수 있다.
 
 
 

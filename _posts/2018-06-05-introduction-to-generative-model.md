@@ -3,7 +3,7 @@ layout: post
 title: "Simple Linear Regression"
 description: "Generative model을 이해하기 위한 기초"
 date: 2018-06-06
-tags: generative, linear, regression, statistics
+tags: generative linear regression statistics
 comments: true
 ---
 
@@ -29,69 +29,57 @@ comments: true
 
 - 우리가 만들고자 하는 **모델**은 우리가 가진 **training Set**과 가장 차이가 작은, 즉 Training set을 Scatter plot등으로 그렸을때 모든 점과 <u>가장 가까이 지나가는 선</u>을 긋는 것이다.
 
-  ![gen_03_linear02](http://pignuante.github.io/assets/images/generative/1/gen_03_gaussian.png)
-
-  ```python
-  import numpy as np
-  import matplotlib.pyplot as plt
-  from scipy.stats import norm
-  
-  x = np.arange(-10, 10, 0.001)
-  
-  plt.title("Gaussian Probability Model")
-  plt.plot(x, norm.pdf(x, 0, 1), label="$\mu=0$, $\sigma^2=1$")
-  plt.plot(x, norm.pdf(x, 0, 3), label="$\mu=0$, $\sigma^2=3$")
-  plt.plot(x, norm.pdf(x, 5,2), label="$\mu=5$, $\sigma^2=2$")
-  
-  plt.legend()
-  plt.grid()
-  plt.show()
-  ```
+  ![gen_03_linear02](http://pignuante.github.io/assets/images/generative/1/gen_03_linear02.png)
 
   
 
 - 그러면 우리가 만들고자 하는 하나의 **직선**은 어떻게 그어야 할까? 하나의 Training Set에서도 위 그림과 같이 다양하게 직선을 그을수 있다. 위에서도 언급하였지만 우리는 우리가 그은 선과 찍은 저 모든 빨간점들과의 거리가 가장 작은 선을 긋는다. 여기서 점들과 선의 거리(**오차**)를 구하는 식을 `Cost Function`이라 한다.
-  ![Image-1](http://pignuante.github.io/assets/images/generative/1/Image-1.png)
+  ![손글씨 Error function](http://pignuante.github.io/assets/images/generative/1/Image-1.png)
   우리가 가진 데이터 Training set(초록점)과 우리가 예측한 모델(빨간선)과의 거리 즉 오차(파란선)을 그림으로 그려보면 위와 같다.
 
 - 일반적으로 Linear Regression에서는 저 오차를 구하기 위해서 우리는 위에서 언급한 **Cost Function**(비용함수)[^2]라는 것으로 우리가 만든 모델이 얼마나 일을 잘했나 못했나를 판단 내린다. 여기서 우리는 Cost function으로 소위 말하는 **Squared Error Function**을 사용한다[^3]. 이 Cost function의 식은 아래와 같다.
+  
   $$
-  Cost(\theta) = \frac{1}{2}\sum_{i=1}^m\left(h_\theta\left(x^{\left(i\right)}\right)-y^\left(i\right)\right)^2
+  \begin{aligned}
+  	Cost(\theta)= \frac{1}{2}\sum_{i=1}^{m} =\left(h_\theta \left(x^{\left(i \right)}\right)-y^{\left(i\right)}\right)^2
+  \end{aligned}
   $$
+  
   소위 통계에서 말하는 **편차제곱합**의 식이랑 같다. 편차제곱합은 결국엔 편차의 제곱들의 합이고, 원래의 값에서 평균(우리의 경우는 평균은 진짜 값)을 뺀 값 제곱의 합, 편차를 제곱한 값들의 합의 식이다. 이것은 결국엔 표본 내 개인차(변산성)의 총량을 의미한다. 
   추가로 보통 많이들 사용하는 **평균제곱오차**(Mean Squared Error: MSE)의 식은 위의 식에서 변수의 갯수 m으로 나눠준 식이다(평균으로 만들어준다!).
+  
   $$
-  Cost(\theta) = \frac{1}{2}\frac{1}{m}\sum_{i=1}^m\left(h_\theta\left(x^{\left(i\right)}\right)-y^\left(i\right)\right)^2
+  \begin{aligned}
+  	Cost(\theta)= \frac{1}{2}\frac{1}{m}\sum_{i=1}^{m} =\left(h_\theta \left(x^{\left(i \right)}\right)-y^{\left(i\right)}\right)^2 \\
+  	
+  \end{aligned}
   $$
+  
   이 식은 사실 통계에서의 **분산**...을 구하는 식이랑 같지않나 싶다(아니 식이 같은데!). 결국엔 우리가 만든 **Model**의 분산을 구한다는 느낌으로 접근을 하는것같다[^4]. ~~아마도 회귀분석에서 말하는 **MSE**는 표본분포에서 표본분산을 뜻하는 것 같다.~~  
   쨋든간에 MSE는 오차항의 분산($$\sigma^2$$)의 불편추정량[^5]이다. 그리고 이 오차항은 **정규 분포**를 따른다고 전제한다. 우리는 우리가 가진 Training Set 즉 전체에 존재하는 데이터(모집단)의 Sample Data를 가지고 있다고 전제를 하고 이 Sample Data로 모집단을 추측하는 것이다. 
 
-  - 추가로 식에서 $$\frac{1}{2}$$이 붙는 이유는 우리는 얼마나 변하는지에 대한 값을 구하는 거라서 2를 곱하건 2를 나누건 상관이 없다(수학적으로 멋있는 표현이 생각나질 않는다). 하지만 저 $$\frac{1}{2}$$를 하므로 후에 **경사하강법**(Gradient Descent)으로 최적의 값을 구할때 미분을 하기 편하게(제곱값의 2가 사라지도록)하는 향신료이다.
+  - 추가로 식에서 $$\frac{1}{2}$$이 붙는 이유는 우리는 얼마나 변하는지에 대한 값을 구하는 거라서 2를 곱하건 2를 나누건 상관이 없다(수학적으로 멋있는 표현이 생각나질 않는다). 하지만 저 $$\frac{1}{2}$$를 취하므로 후에 **경사하강법**(Gradient Descent)으로 최적의 값을 구할때 미분을 하기 편하게(제곱값의 2가 사라지도록)하는 향신료이다.
 
 - 이 Linear Regression의 확률적 해석은 아래와 같다.
 
   1. 우리는 우리의 예측값 y와 input값 x, 그리고 오차인 $$\epsilon$$으로 식을 가정한다.
+     
      $$
      \begin{aligned}
-     & y^i = \theta^{T}x^{i} + \epsilon^{i} \\
-     & \epsilon^{i} = y^i - \theta^{T}x^{i}
+     	y^i =&\ \theta^{T}x^{i} + \epsilon^{i} \\
+     	\epsilon^{i} =&\ y^i - \theta^{T}x^{i}
      \end{aligned}
      $$
+     
      즉 원래 값인 $$y\ $$에 오차 $$\epsilon^i$$를 합치면 예측값인 $$y^i$$가 나온다[^6].
 
-  2. 그리고 위에서 말 한것처럼 오차항은 **정규 분포**를 따른다고 가정을 해보면 ($$\epsilon \sim N\left(0, 1\right)$$)
-     $$
-     \begin{aligned}
-     P\left[\epsilon^i\right] = \frac{1}{\sigma\sqrt{2\pi}}exp\left(-\frac{\left(\epsilon^\left(i\right)\right)^2}{2\sigma^2}\right)
-     \end{aligned}
-     $$
-     이다[^7]. 
+  2. 그리고 위에서 말 한것처럼 오차항은 **정규 분포**를 따른다고 가정을 해보면 $$x^{2}$$ 이다[^7]. 
 
   3. 위의 1,2 두 가정을 결합하면 [조건부 확률](https://ko.wikipedia.org/wiki/조건부_확률) $$P\left(Y|X:\theta\right)$$를 정의하는 것이 가능하다.
      $$
      \begin{aligned}
-     P\left[y^\left(i\right)|x^\left(i\right):\theta\right] =& \ \frac{1}{\sigma\sqrt{2\pi}}exp\left(-\frac{\left(y^\left(i\right)-\theta^{T}x^\left(i\right)\right)^2}{2\sigma^2}\right) \\
-     P\left[y^\left(i\right)|x^\left(i\right):\theta\right] \sim& \ \mathcal{N}\left(\theta^Tx^\left(i\right), \sigma^2\right)
+     P\left[y^\left(i\right)\vert x^\left(i\right):\theta\right] =& \ \frac{1}{\sigma\sqrt{2\pi}}exp\left(-\frac{\left(y^\left(i\right)-\theta^{T}x^\left(i\right)\right)^2}{2\sigma^2}\right) \\
+     P\left[y^\left(i\right)\vert x^\left(i\right):\theta\right] \sim& \ \mathcal{N}\left(\theta^Tx^\left(i\right), \sigma^2\right)
      \end{aligned}
      $$
      로 유도가 가능하다.
@@ -99,7 +87,7 @@ comments: true
   4. $$\theta$$에 대한 **Likelihood**[^8]함수
      $$
      \begin{aligned}
-     	L\left(\theta\right) = & \ \prod_{i=1}^mP\left[y^{(i)}|x^{(i)}:\theta\right] \\
+     	L\left(\theta\right) = & \ \prod_{i=1}^mP\left[y^{(i)}\vert x^{(i)}:\theta\right] \\
      					  =& \ \prod_{i=1}^m \
      					  \frac{1}{\sigma\sqrt{2\pi}}exp\left(-\frac{\left(y^\left(i\right)-\theta^{T}x^\left(i\right)\right)^2}{2\sigma^2}\right)
      \end{aligned}

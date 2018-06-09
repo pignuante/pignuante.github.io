@@ -88,14 +88,13 @@ comments: true
      로 유도가 가능하다.
 
   4. $$\theta$$에 대한 **Likelihood**[^8]함수
-     
+
      $$
      \begin{aligned}
      	L\left(\theta\right) = &\ \prod_{i=1}^{m}P\left[y^{\left(i\right)}\vert x^{\left(i\right)}:\theta\right] \\
      	=&\ \prod_{i=1}^{m}\frac{1}{\theta\sqrt{2\pi}}\exp\left(-\frac{\left(y^{\left(i\right)}-\theta^{T}x^{\left(i\right)}\right)^{2}}{2\pi^{2}}\right)
      \end{aligned}
      $$
-     
 
   5. 최대우도추정(Maximum Likelihood Estimation: MLE)는 Likelihood를 최대화하는 $$\theta$$를 추정하는 방법이다. 보통은 log-likelihood를 최대화한다.
      
@@ -124,7 +123,6 @@ comments: true
   그리고 우리는 Linear Regression에서의 Cost Function, 즉 컴퓨터가 판단하는 원본과 얼마나 다른지를 판단하는 방법으로 Squared Error Function(Least-Square cost, 편차제곱합)이라는 것을 활용하였다. 이는 우리가 세운 가설 H라는 하나의 선을 기준으로 input된 값인 x들과의 물리적 거리를 최소화하는 방식이다.
 
   ....라는 정도로 요약할 수 있지 않을까 싶다.
-
 
 ------------------------------------------
 

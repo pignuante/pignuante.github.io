@@ -35,10 +35,10 @@ comments: true
 
 #### 1.1 우분투 update && upgrade
 
-설치에 앞서서 우분투를 `update && upgrade`해준다.
+설치에 앞서서 우분투를 ==**update && upgrade**==해준다.
 
 ```powershell
-sudo apt-get update && sudo apt-get dist-upgrade
+> sudo apt-get update && sudo apt-get dist-upgrade
 ```
 
 
@@ -48,7 +48,7 @@ sudo apt-get update && sudo apt-get dist-upgrade
 설치에 필요한 패키지들을 미리 설치해준다.
 
 ```shell
-sudo apt-get install -y vim terminator git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev sl libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev gcc g++
+> sudo apt-get install -y vim terminator git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev sl libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev gcc g++
 ```
 
 
@@ -58,18 +58,18 @@ sudo apt-get install -y vim terminator git make build-essential libssl-dev zlib1
 **pyenv**와 **virtualenv**를 설치한다. [링크](https://github.com/pyenv/pyenv#basic-github-checkout)
 
 ```powershell
-curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | sh
+> curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | sh
 ```
 
 pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. **.bash_profile**)에 pyenv 설정을 추가한다. (아래의 명령어는 터미널창에 입력한다.)
 
 ```powershell
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
-echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
+> echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+> echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+> echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
+> echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
 
-source ~/.bash_profile
+> source ~/.bash_profile
 ```
 
 
@@ -82,15 +82,15 @@ source ~/.bash_profile
 **2018년 6월 기준** Tensorflow는 파이썬 **3.4+**을 지원한다. 원하는 버젼을 설치하자. [참고](https://www.tensorflow.org/install/install_linux#prerequisite_python_and_pip)
 
 ```powershell
-pyenv install --list		# 설치가능한 python버전 확인
-pyenv install 3.6.5         # 3.6.5를 설치, 생각보다 오래걸린다.
-pyenv global 3.6.5          # 기본 파이썬 버젼 설정
+> pyenv install --list		# 설치가능한 python버전 확인
+> pyenv install 3.6.5         # 3.6.5를 설치, 생각보다 오래걸린다.
+> pyenv global 3.6.5          # 기본 파이썬 버젼 설정
 ```
 이 때 원하면 가상환경을 생성하여도 무방하다.
 
 ```powershell
-pyenv virtualenv "원하는버전" "가상환경이름"
-pyenv global "가상환경이름"
+> pyenv virtualenv "원하는버전" "가상환경이름"
+> pyenv global "가상환경이름"
 ```
 
 
@@ -98,7 +98,7 @@ pyenv global "가상환경이름"
 #### 1.5 파이썬에 기타 필요한 파일 설치
 
 ```powershell
-pip3 install --upgrade numpy pandas matplotlib seaborn scipy scikit-learn jupyterlab # 오래걸린다.
+> pip3 install --upgrade numpy pandas matplotlib seaborn scipy scikit-learn jupyterlab # 오래걸린다.
 ```
 
 기타 필요한 파일을 설치한다.
@@ -122,7 +122,7 @@ pip3 install --upgrade numpy pandas matplotlib seaborn scipy scikit-learn jupyte
 Cuda가 사용가능한 그래픽카드를 가지고 있는지 확인한다.
 
 ```powershell
-lspci | grep -i nvidia
+> lspci | grep -i nvidia
 ```
 
 위의 명령어를 입력했을 때
@@ -139,10 +139,10 @@ lspci | grep -i nvidia
 [참고](https://www.makeuseof.com/tag/ubuntu-ppa-technology-explained/)
 
 ```powershell
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:graphics-drivers/ppa
+> sudo apt-get install software-properties-common
+> sudo add-apt-repository ppa:graphics-drivers/ppa
 
-sudo apt-get update && sudo apt-get dist-upgrade
+> sudo apt-get update && sudo apt-get dist-upgrade
 ```
 
 그 후 자신이 사용하는 그래픽 드라이버에 맞는 버전을 [사이트](https://www.geforce.com/drivers)에서 찾아서 다운 받는다.
@@ -153,8 +153,8 @@ sudo apt-get update && sudo apt-get dist-upgrade
 드라이버 버젼은 눈치껏(...) 정하자.
 
 ```powershell
-sudo apt-get install nvidia-397 	# 위의 숫자를 입력
-sudo reboot now 					# 이 시점에서 한번쯤 재시작을..
+> sudo apt-get install nvidia-397 	# 위의 숫자를 입력
+> sudo reboot now 					# 이 시점에서 한번쯤 재시작을..
 ```
 
 
@@ -164,9 +164,9 @@ sudo reboot now 					# 이 시점에서 한번쯤 재시작을..
 터미널창에 명령어로 확인한다.
 
 ```powershell
-cat /proc/driver/nvidia/version
-nvidia-smi        
-nvidia-settings  
+> cat /proc/driver/nvidia/version
+> nvidia-smi        
+> nvidia-settings  
 ```
 
 
@@ -177,7 +177,7 @@ nvidia-settings
 > dpkg --get-selections | grep nvidia
 ```
 
-위의 명령어를 입력하면 설치된 드라이버의 리스트가 뜨는데 `sudo apt-get purge 버전명`일 입력해서 수동으로 삭제하는 방법과
+위의 명령어를 입력하면 설치된 드라이버의 리스트가 뜨는데 **sudo apt-get purge 버전명**을 입력해서 수동으로 삭제하는 방법과
 
 ```powershell
 > sudo apt-get purge nvidia-*
@@ -196,7 +196,7 @@ nvidia-settings
 ##### 3.0.1 Cuda 사용 가능 Linux version 확인
 
 ```powershell
-uname -m && cat /etc/*release
+> uname -m && cat /etc/*release
 ```
 
 사용가능한 버젼의 리눅스는 [여기](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)에서 확인하자. 아니면 cuda 다운 받는 곳에서 cuda 버전과 linux 버전을 확인하자.
@@ -204,7 +204,7 @@ uname -m && cat /etc/*release
 ##### 3.0.2 Cuda 호환 gcc 확인
 
 ```powershell
-gcc --version
+> gcc --version
 ```
 
 대부분은 사용가능했는데 최근에 나온 **18.04**에서 cuda 9.0을 설치할때 GCC관련 에러가 있었다. 이때 GCC버젼을 낮춰주자.
@@ -215,21 +215,21 @@ gcc --version
 
 ```powershell
 # ubuntu
-sudo apt-get install linux-headers-$(uname -r)
+> sudo apt-get install linux-headers-$(uname -r)
 # RHEL/CentOS
-sudo yum install kernel-devel-$(uname -r) kernel-headers-$(uname -r)
+> sudo yum install kernel-devel-$(uname -r) kernel-headers-$(uname -r)
 # Fedora
-sudo dnf install kernel-devel-$(uname -r) kernel-headers-$(uname -r)
+> sudo dnf install kernel-devel-$(uname -r) kernel-headers-$(uname -r)
 ```
 
 
 
 #### 3.1 Cuda 설치
 
-위에서 언급한데로 우리는 cuda 9.0을 설치 할 것이다. [홈페이지](https://developer.nvidia.com/cuda-downloads)에서 자신의 버젼에 맞는 cuda를 고른 다음 `runfile[local]`을 다운 받는다. (물론 다른것도 가능하지만 이 파일이 설정이 제일 편하다.)
+위에서 언급한데로 우리는 cuda 9.0을 설치 할 것이다. [홈페이지](https://developer.nvidia.com/cuda-downloads)에서 자신의 버젼에 맞는 cuda를 고른 다음 ==**runfile[local]**==을 다운 받는다. (물론 다른것도 가능하지만 이 파일이 설정이 제일 편하다.)
 다운받은 위치로 이동하여 위의 명령어로 다운받은 파일을 실행 후 프롬포트에 명령어를 입력한다.
 
-```shell
+```powershell
 > sudo sh 다운받은CUDA파일
 ```
 
@@ -237,7 +237,7 @@ sudo dnf install kernel-devel-$(uname -r) kernel-headers-$(uname -r)
 > accept
 >
 > **Install NVIDIA Accelerated Graphics Driver for Linux\~\~.?**
-> **(y)es/(n)o/(q)uit:** **n**	
+> **(y)es/(n)o/(q)uit:** n     # 우리는 수동으로 드라이버를 설치하였다.
 >
 > **Install the CUDA 9.0 Toolkit?**
 > **(y)es/(n)o/(q)uit:** y
@@ -271,9 +271,9 @@ Samples: Installed in /home/사용자 이름
 > vim ~/.bash_profile
 
 # cuda setting
-export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}  # 설치위치 확인하자
-export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-export CUDA_HOME=/usr/local/cuda
+> export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}  # 설치위치 확인하자
+> export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+> export CUDA_HOME=/usr/local/cuda
 # symbolic link를.. 껄껄
 
 source ~/.bash_profile
@@ -294,7 +294,7 @@ Cuda compilation tools, release 8.0, V8.0.44
 그리고 추가로 공식문서에서 필요로 한다니 설치해주자.
 
 ```powershell
-sudo apt-get install libcupti-dev
+> sudo apt-get install libcupti-dev
 ```
 
 
@@ -302,14 +302,14 @@ sudo apt-get install libcupti-dev
 #### 3.4. (덤)Cuda 삭제
 
 ```powershell
-sudo apt-get remove --auto-remove nvidia-cuda-toolkit # 적진 않았지만 ppa설정했을 경우..
+> sudo apt-get remove --auto-remove nvidia-cuda-toolkit # 적진 않았지만 ppa설정했을 경우..
 ```
 
 혹은 cuda가 설치된 path로 이동하여 수동으로 지워준다.
 
 ```powershell
-cd /usr/local
-sudo rm -fr cuda*
+> cd /usr/local
+> sudo rm -fr cuda*
 ```
 
 
@@ -331,16 +331,16 @@ sudo rm -fr cuda*
 #### 4.2 cuDNN 설정
 
 ```powershell
-cd <다운받은곳>
-sudo tar -xvzf <다운받은 파일명>
+> cd <다운받은곳>
+> sudo tar -xvzf <다운받은 파일명>
 
-cd cuda
+> cd cuda
 
-sudo cp include/cudnn.h /usr/local/cuda/include
-sudo cp lib64/libcudnn* /usr/local/cuda/lib64
+> sudo cp include/cudnn.h /usr/local/cuda/include
+> sudo cp lib64/libcudnn* /usr/local/cuda/lib64
 
-sudo chmod a+r /usr/local/cuda/include/cudnn.h
-sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
+> sudo chmod a+r /usr/local/cuda/include/cudnn.h
+> sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
 ```
 
 
@@ -348,7 +348,7 @@ sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
 #### 4.3 cuDNN 설치 확인
 
 ```powershell
-cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
+> cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
 ```
 
 출력화면에 **CUDNN_MAJOR**이 포함되어 있기를 빈다!
@@ -360,7 +360,7 @@ cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
 cuDNN 라이브러리 파일을 R에서도 사용하기 위해 설정하는 김에 미리 설정한다.
 
 ```powershell
-sudo cp /usr/local/cuda/lib64/libcudnn* /usr/lib/x86_64-linux-gnu
+> sudo cp /usr/local/cuda/lib64/libcudnn* /usr/lib/x86_64-linux-gnu
 ```
 
 
@@ -376,7 +376,7 @@ sudo cp /usr/local/cuda/lib64/libcudnn* /usr/lib/x86_64-linux-gnu
 위의 장황했던 작업에 비해서 tensorflow gpu설치는 매우 간단하다.
 
 ```powershell
-pip install --upgrade tensorflow-gpu
+> pip install --upgrade tensorflow-gpu
 ```
 
 
@@ -416,28 +416,71 @@ with tf.Session() as sess:
 
 ## 6. (덤)zsh 설치
 
+##### 6.1.0 vim을 기본에디터로
+
+자신의 기본환경설정파일에서 
+
+```powershell
+export EDITOR=/usr/bin/vim
+```
+
+라는 문장을 추가한다.
+
 ##### 6.1.1 zsh 설치
 
 덤으로 zsh을 혹시나 설치하지 않았으면 설치한다.
 
 ```powershell
-sudo apt-get install zsh
-curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+> sudo apt-get install zsh
+> curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ```
 
-##### 6.1.2 zsh-syntax-highlighting
+##### 6.1.2. chsh: PAM: Authentication failure 에러
+
+혹시나 **chsh: PAM: Authentication failure**라는 에러가 날 경우에는 
+
+```powershell
+> sudo vim /etc/pam.d/chsh
+```
+
+위의 파일에서 **auth required pam_shells.so**을  **auth sufficient pam_shells.so**로 변경한다.
+
+##### 6.1.3 zsh-syntax-highlighting
 
 ```powershell
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 ```
 
-zsh의 문법 하이라이팅을 지원하는 패키지이다. 위의 명령어로 설치를 한 다음 `.zshrc`로 이동하여 `plugins`에 `zsh-syntax-highlighting`를 추가한다.
+zsh의 문법 하이라이팅을 지원하는 패키지이다. 위의 명령어로 설치를 한 다음 **.zshrc**로 이동하여 **plugins**에 **zsh-syntax-highlighting**를 추가한다.
 
-##### 6.1.3 zsh-autosuggestions
+##### 6.1.4 zsh-autosuggestions
 
 ```powershell
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 ```
 
-역시 `zsh-syntax-highlighting`과 마찬가지로 `.zshrc`의 `plugin`에 `zsh-autosuggestions`을 추가한다.
+역시 **zsh-syntax-highlighting**과 마찬가지로 **.zshrc**의 **plugin**에 **zsh-autosuggestions**을 추가한다.
+
+##### 6.1.5 폰트
+
+폰트가 깨지는 경우에는 [여기](https://github.com/powerline/fonts)에서 다운받는다.
+
+```powershell
+> cd ~
+> git clone https://github.com/powerline/fonts.git --depth=1
+> cd ~/fonts/install.sh
+> rm -rf fonts
+```
+
+덤으로 내가 코딩용으로 자주 사용하는 **naver D2coding**도 설치해보자. 저장소는 [여기](https://github.com/naver/d2codingfont)이다. (영어도 영어지만 한국어 구분도 잘 되어서 애용한다.)
+
+```powershell
+> wget https://github.com/naver/d2codingfont/releases/download/VER1.3.2/D2Coding-Ver1.3.2-20180524.zip
+> sudo mkdir /usr/share/fonts/truetype/D2Coding
+> sudo unzip D2Coding-Ver1.3.2-20180524.zip -d /usr/share/fonts/truetype/D2Coding
+> rm -rf /usr/share/fonts/truetype/D2Coding/__MACOSX
+> fc-cache -f -v
+```
+
+최근 D2Coding이 1.3으로 버젼업이 되면서 파워라인폰트도 지원이 된당! 설치를 했는데도 폰트가 깨지면 터미널을 재시작해보자!
 

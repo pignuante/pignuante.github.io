@@ -3,9 +3,11 @@ layout: post
 title: "Simple Linear Regression"
 description: "Generative model을 이해하기 위한 기초"
 date: 2018-06-06
-tags: generative linear regression statistics
+tags: generative linear regression statistics logistic
 comments: true
 ---
+
+[TOC]
 
 
 
@@ -96,7 +98,7 @@ comments: true
      \end{aligned}
      $$
 
-  5. 최대우도추정(Maximum Likelihood Estimation: MLE)는 Likelihood를 최대화하는 $$\theta$$를 추정하는 방법이다. 보통은 log-likelihood를 최대화한다.
+  5. 최대우도추정(Maximum Likelihood Estimation: **MLE**)는 Likelihood를 최대화하는 $$\theta$$를 추정하는 방법이다. 보통은 log-likelihood를 최대화한다.
      
      $$
      \begin{aligned}
@@ -121,7 +123,6 @@ comments: true
 - 우리가 만든 심플한 모델은 어떠한 값(x)이 input되었을 때 y라는 예측값을 찾는 것이다. 인간들이야 느낌(?)내지는 경험으로 이게 어느정도 원본이랑 일치한다!라는 것을 판단할 수 있지만 컴퓨터한테는 생각(...)이 없다. 
   그래서 컴퓨터가 어떤식으로 우리가 예측한(우리의 가설 Hypothesis)랑 원본이랑 **비교**할지를 알려주어야 한다(간단하게는 틀렸는지 맞았는지의 여부와 복잡하게는 얼마나 틀렸는까지). 이 판단하는 방법으로 **Cost Function**이라는 것을 정의해준다. 
   그리고 우리는 Linear Regression에서의 Cost Function, 즉 컴퓨터가 판단하는 원본과 얼마나 다른지를 판단하는 방법으로 Squared Error Function(Least-Square cost, 편차제곱합)이라는 것을 활용하였다. 이는 우리가 세운 가설 H라는 하나의 선을 기준으로 input된 값인 x들과의 물리적 거리를 최소화하는 방식이다.
-
   ....라는 정도로 요약할 수 있지 않을까 싶다.
 
 ------------------------------------------
@@ -200,19 +201,7 @@ comments: true
 
 
 
-
-
-
-
-------------------------------------
-
-
-
-
-
-
-
-
+----------
 
 [^1]: 회귀분석이라는 이름은 X값에 따른 모든 Y값들이 평군으로 회귀한다라는 뜻이라고 한다.
 [^2]: 여기서 사용되는 Cost Function, 즉 Error를 어떤 함수를 사용하는 것에 대한 가정 역시 모델링의 일부분이다.
@@ -222,3 +211,4 @@ comments: true
 [^6]: 원래값과 우리의 모델의 결과값인 예측값의 차이를 오차라고 한것이다.
 [^7]: 평균 0, 분산 1인 정규분포의 확률밀도에 관측치 $$\epsilon^{i}$$ 를 넣은 식이다.
 [^8]: 우리가 만든 어떤 가설 **H**에 대한 우도(가능도)는 어떤 결과가 E가 있을때 H가 참일 경우 E가 나올 확률이다. H라는 원인하에 결과 E가 얻어질 확률..이라고 이해해보자..
+

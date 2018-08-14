@@ -15,7 +15,7 @@ comments: true
 
 # Keras 튜토리얼 (1)
 
-## ANN으로 MNIST 데이터 구분하기.
+## ANN, DNN으로 MNIST 데이터 구분하기.
 
 - 기본적인 개념은 알고있다는 전제하에 keras 문법 활용 레시피 위주로 적어본다.
 - 완성된 코드는 [여기](https://gist.github.com/pignuante/35a9a6d2bbdc2d8b7516d33f12a1b578)에서 확인 가능하다.
@@ -143,6 +143,7 @@ class ANN(Sequential):
         self.compile(loss=losses.categorical_crossentropy,
                      optimizer="adam", metrics=['acc'])
 
+        
 model.summary()
 
 # 결과

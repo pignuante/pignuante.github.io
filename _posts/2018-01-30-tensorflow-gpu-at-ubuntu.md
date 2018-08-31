@@ -5,6 +5,7 @@ description: "ubuntu에 Tensorflow gpu 설치하기!"
 date: 2018-01-30
 tags: [python, tensorflow, cuda, cudnn, gpu, ubuntu, linux]
 comments: true
+toc: true
 ---
 
 [TOC]
@@ -445,13 +446,27 @@ export EDITOR=/usr/bin/vim
 
 위의 파일에서 **auth required pam_shells.so**을  **auth sufficient pam_shells.so**로 변경한다.
 
-##### 6.1.3 zsh-syntax-highlighting
+##### 6.1.3 [fast-syntax-highlighting](https://github.com/zdharma/fast-syntax-highlighting#installation)
+
+```powershell
+git clone https://github.com/zdharma/fast-syntax-highlighting.git \
+  ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting
+```
+
+- 원래는 zsh-syntax-highlighting을 사용했지만 fast-syntax-highlighting이 조금 더 이쁘게 해줘서 이걸로 바꾸었다.
+- 위의 git을 clone받은 다음 **.zshrc**에서 **plugins**에 <u>fast-syntax-highlighting</u>를 추가한다!
+
+
+
+~~zsh-syntax-highlighting~~
 
 ```powershell
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 ```
 
-zsh의 문법 하이라이팅을 지원하는 패키지이다. 위의 명령어로 설치를 한 다음 **.zshrc**로 이동하여 **plugins**에 **zsh-syntax-highlighting**를 추가한다.
+~~zsh의 문법 하이라이팅을 지원하는 패키지이다. 위의 명령어로 설치를 한 다음 **.zshrc**로 이동하여 **plugins**에 **zsh-syntax-highlighting**를 추가한다.~~
+
+
 
 ##### 6.1.4 zsh-autosuggestions
 

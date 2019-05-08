@@ -33,8 +33,6 @@ comments: true
 
   ![gen_03_linear02](http://pignuante.github.io/assets/images/generative/1/gen_03_linear02.png)
 
-  
-
 - 그러면 우리가 만들고자 하는 하나의 **직선**은 어떻게 그어야 할까? 하나의 Training Set에서도 위 그림과 같이 다양하게 직선을 그을수 있다. 위에서도 언급하였지만 우리는 우리가 그은 선과 찍은 저 모든 빨간점들과의 거리가 가장 작은 선을 긋는다. 여기서 점들과 선의 거리(**오차**)를 구하는 식을 `Cost Function`이라 한다.
   ![손글씨 Error function](http://pignuante.github.io/assets/images/generative/1/Image-1.png)
   우리가 가진 데이터 Training set(초록점)과 우리가 예측한 모델(빨간선)과의 거리 즉 오차(파란선)을 그림으로 그려보면 위와 같다.

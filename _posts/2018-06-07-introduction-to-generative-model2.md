@@ -70,7 +70,7 @@ $$
 - Logistic Regression의 **Cost function**으로는 보통 **Cross Entropy**를 많이 사용한다. 여러가지 이유가 있지만 일반적인 Linear Regression의 Cost function을 사용하면 Convex function 모양이 되질않는다고 한다(...). 따라서 Local minimum이 생겨서 Global minimum을 찾기 힘들어진다한다.
 
 - 일반적으로 사용되는 Cost function의 모양은 아래와 같다.
-  
+
   $$
   \begin{aligned}
   	J\left(\theta\right) = &\ \frac{1}{m}\sum cost\left(h_{\theta}\left(x\right), y\right) \\
@@ -84,10 +84,6 @@ $$
   $$
   -y\log\left(h_{\theta}\left(x\right)\right)-\left(1-y\right)\log\left(1-h_{\theta}\left(x\right)\right)
   $$
-
-  
-
-  
 
 - Logistic Regression의 확률적 해석.
 
@@ -103,21 +99,21 @@ $$
   - 이는 **[Bernoulli distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution)**으로 표현이 가능하다.
 
 
-  $$
-  \begin{aligned}
-  	P\left(yvert x;\theta\right) =& \ \left(h_{\theta}\left(x\right)\right)^{y}\left(1-h_{\theta}\left(x\right)\right)^{1-y} \\
-  	yvert x;\theta \sim&\  \mathscr{Bernoulli}\left(\phi\right)
+$$
+\begin{aligned}
+  	P\left(y\vert x;\theta\right) =& \ \left(h_{\theta}\left(x\right)\right)^{y}\left(1-h_{\theta}\left(x\right)\right)^{1-y} \\
+  	y\vert x;\theta \sim&\  \mathscr{Bernoulli}\left(\phi\right)
   \end{aligned}
-  $$
+$$
 
   
 
   - 이러한 관측 데이터들이 독립시행으로 얻어졌다고 가정을 하고 $$\theta$$에 대한 likelihood 함수를 다음과 같이 적을 수 있다.
-    
+
     $$
     \begin{aligned}
-    	L\left(\theta\right) = &\ P\left(\overrightarrow{y}vert X;\theta\right) \\
-    				      = &\ \prod_{i=1}^{m}P\left(y^{i}vert X^{i};\theta\right) \\
+    	L\left(\theta\right) = &\ P\left(\overrightarrow{y}\vert X;\theta\right) \\
+    				      = &\ \prod_{i=1}^{m}P\left(y^{i}\vert X^{i};\theta\right) \\
     				      = &\ \prod_{i=1}^{m}\left(h_{\theta}\left(x^{\left(i\right)}\right)\right)^{y^{\left(i\right)}}\left(1-h_{\theta}\left(x^{\left(i\right)}\right)\right)^{1-y^{\left(i\right)}} \\
     	l\left(\theta\right) = &\ \log L\left(\theta\right) \\
     					 = &\ \sum_{i=1}^{m}y^{\left(i\right)}\log h\left(x^{\left(i\right)}\right) + \left(1-y^{\left(i\right)}\right)\log\left(1-h\left(x^{\left(i\right)}\right)\right)
@@ -126,15 +122,6 @@ $$
 
     위와 같이 최종적으로 나온 함수의 모양이 앞에서 구한 **Cross Entropy**의 꼴이 된다.
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 

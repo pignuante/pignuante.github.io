@@ -1,36 +1,41 @@
 # SITE CONFIGURATION
 baseurl: ""
-# url: "http://pignuante.github.io"
-# enforce_ssl: "pignuante.github.io"
 url: "https://blog.pignu.kr"
-enforce_ssl: "blog.pignu.kr"
+title: Pignu Ante # site's title
+description: "A Blog for Study" # used by search engines
+
+defaults:
+  - 
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      image: assets/img/theme/title.png # seo tag
+
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
-  title: PignuAnte
-  avatar: assets/images/main_icon.png
-  favicon: assets/images/favicon.ico
-  gravatar: # Email MD5 hash
-  description: Pignu's Blog # used by search engines
+  # Meta
+  avatar: assets/img/theme/avatar.png
+  color_image: /assets/img/lineart.png # In post when you set color
+  favicon: assets/img/theme/favicon.ico
 
   # Header and footer text
-  header_text: > #two or three lines to describe your site
-     <p>今だけは, 今だけは 悲しい歌 聞きたくないよ。</p>
-  header_text_feature_image: assets/images/benny01.png
+  header_text: <p>今だけは, 今だけは 悲しい歌 聞きたくないよ。</p>
+  header_feature_image: assets/img/theme/title.png
   footer_text: >
-   <p>Powered by <a href="https://blog.pignu.kr" target="_blank">Pignu Ante</a></p>
+    Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a>
 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout
-  email_address: hanyul.ryu@gmail.com # Full email address, e.g. "sam@example.com"
+  email_address: # Full email address, e.g. "sam@example.com"
   behance:
   bitbucket:
   dribbble:
   facebook:
   flickr:
   gitlab:
-  github: "pignuante"
+  github: "sylhare"
   google_plus:
-  instagram: "pignuante"
+  instagram:
   keybase:
   linkedin:  # Full URL
   pinterest:
@@ -44,36 +49,57 @@ theme_settings:
   wordpress:
   youtube:
 
-  # Scripts / Features
-  google_analytics: UA-99633536-1 # Tracking ID, e.g. "UA-000000-01"
-  disqus_shortname: pignu
-  katex: true # Enable if using math markup
-  portfolio: false
-  search: true
-  tags: true
+  # Sharing options
+  share_buttons:
+    facebook: true
+    twitter: true
+    tumblr:
+    pinterest:
+    pocket:
+    reddit: true
+    linkedin:
+    wordpress:
+    email: true
 
+  # Scripts / Features 
+  google_analytics: # Tracking ID, e.g. "UA-000000-01"
+  disqus_shortname:
+  katex: true # Enable if using math markup
 
   # Localization strings
   str_follow_on: "Follow on"
   str_rss_follow: "Follow RSS feed"
+  str_share_on: "Share on"
+  str_add_to: "Add to"
   str_email: "Email"
+  str_tweet: "Tweet"
+  str_pin_it: "Pin it"
   str_next_post: "Next post"
   str_previous_post: "Previous post"
   str_next_page: "Next"
   str_previous_page: "Prev"
-  str_continue_reading: "Continue reading"
   str_javascript_required_disqus: "Please enable JavaScript to view comments."
-
-  # Colours, typography and padding
-  # Open the "_sass > base" folder, and open "_variables.scss"
-  google_fonts: "Source+Sans+Pro:400,700,700italic,400italic"
 
   # Post navigation
   post_navigation: true
 
+  # Colours, typography and padding
+  # Open the "_sass > base" folder, and open "_variables.scss"
+
 # PAGINATION
 paginate: 5
 paginate_path: "blog/page:num"
+
+# AUTHORS
+authors:
+  mhagnumdw: # author-id
+    name: MhagnumDw
+    avatar: "assets/img/avatars/mhagnumdw_avatar.jpg"
+    url: 
+  sylhare:
+    name: Sylhare
+    avatar: "assets/img/avatars/sylhare_avatar.png"
+    url: "https://github.com/sylhare"
 
 # PORTFOLIO
 collections:
@@ -81,15 +107,14 @@ collections:
     output: true
     permalink: /:collection/:name
 
-mermaid:
-  src: 'path/to/mermaid.js'
-
 # BUILD SETTINGS
 markdown: kramdown
 highlighter: rouge
 sass:
   sass_dir: _sass
   style: :compressed
-plugins: [jekyll-paginate, jekyll-seo-tag, jekyll-mermaid]
-#theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
-exclude: ["Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", "LICENSE", "README.md", "screenshot.png"]
+plugins: [jekyll-paginate, jekyll-seo-tag]
+exclude: [".jekyll-cache", "Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", ".idea",
+          "LICENSE", "README.md", "screenshot.png", "assets/package.json", "assets/node_modules", "assets/gulpfile.js"]
+# theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
+remote_theme: sylhare/Type-on-Strap # If using as a remote_theme in github

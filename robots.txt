@@ -1,8 +1,0 @@
-User-agent: *
-Disallow: /about/
-
-User-Agent : Yetibot
-Allow : /
-Disallow: /about/
-
-Sitemap: https://pignu.kr/sitemap.xml

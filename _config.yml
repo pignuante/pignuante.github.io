@@ -22,22 +22,21 @@ theme_settings:
   header_text: <p>今だけは, 今だけは 悲しい歌 聞きたくないよ。</p>
   header_feature_image: assets/img/theme/title.png
   footer_text: >
-    Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a>
-
+   <p>Powered by <a href="https://blog.pignu.kr"                   \target="_blank">Pignu Ante</a></p> 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout
-  email_address: # Full email address, e.g. "sam@example.com"
+  email_address: hanyul.ryu@gmail.com # Full email address, e.g. "sam@example.com"
   behance:
   bitbucket:
   dribbble:
   facebook:
   flickr:
   gitlab:
-  github: "sylhare"
+  github: "pignuante"
   google_plus:
-  instagram:
+  instagram: "pignuante"
   keybase:
-  linkedin:  # Full URL
+  linkedin: https://www.linkedin.com/in/hanyul-ryu-082201b8/  # Full URL
   pinterest:
   reddit:
   soundcloud:
@@ -56,14 +55,14 @@ theme_settings:
     tumblr:
     pinterest:
     pocket:
-    reddit: true
+    reddit: 
     linkedin:
     wordpress:
     email: true
 
   # Scripts / Features 
-  google_analytics: # Tracking ID, e.g. "UA-000000-01"
-  disqus_shortname:
+  google_analytics: UA-99633536-1 # Tracking ID, e.g. "UA-000000-01"
+  disqus_shortname: pignu
   katex: true # Enable if using math markup
 
   # Localization strings
@@ -93,18 +92,15 @@ paginate_path: "blog/page:num"
 # AUTHORS
 authors:
   mhagnumdw: # author-id
-    name: MhagnumDw
-    avatar: "assets/img/avatars/mhagnumdw_avatar.jpg"
+    name: pignu 
+    avatar: "assets/img/avatars/pignu.jpg"
     url: 
-  sylhare:
-    name: Sylhare
-    avatar: "assets/img/avatars/sylhare_avatar.png"
-    url: "https://github.com/sylhare"
+  
 
 # PORTFOLIO
 collections:
   portfolio:
-    output: true
+    output: false
     permalink: /:collection/:name
 
 # BUILD SETTINGS
@@ -117,4 +113,4 @@ plugins: [jekyll-paginate, jekyll-seo-tag]
 exclude: [".jekyll-cache", "Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", ".idea",
           "LICENSE", "README.md", "screenshot.png", "assets/package.json", "assets/node_modules", "assets/gulpfile.js"]
 # theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
-remote_theme: sylhare/Type-on-Strap # If using as a remote_theme in github
+# remote_theme: sylhare/Type-on-Strap # If using as a remote_theme in github

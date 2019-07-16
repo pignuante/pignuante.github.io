@@ -4,7 +4,8 @@ title: About
 permalink: /about/
 feature-img: "assets/images/about_image.jpg"
 thumbnail: "assets/images/abuout_thumnail.jpg"
-tags: [About, Test]
+author-id: pignu
+tags: [About]
 ---
 
 ![profile]({{ site.url }}/assets/images/profile.jpeg)
@@ -40,9 +41,12 @@ tags: [About, Test]
         - Machine Learning
         - Advanced Medical Data Analysis
     - Demand Prediction Method of Supply Chain Management Using Big Data.
+    - Ensemble Learning of SARIMA and LSTM in SCM
 
 
 - Start at 5/21/2107 forth blog with Github [pages](https://pages.github.com).
-- updated at 28/2/2018 change skin.
+- Update
 
+  - updated at 28/2/2018 change skin.
+  - updated at 16/7/2019 update skin.
 - I would like to add a word of gratitude to Julia.

@@ -4,6 +4,7 @@ title: "Project Euler007 with python"
 description: ""
 date: 2017-11-03
 tags: [algorithm,python,math]
+author-id: pignu
 comments: true
 ---
 
@@ -68,8 +69,11 @@ comments: true
           if is_prime(n):
               l += 1
       return n
+  ```
 
 
   ```
 
 - 초반에 구할수 있는 소수를 최대한 구한 다음 탐색의 step을 넓혔다!
+
+  ```

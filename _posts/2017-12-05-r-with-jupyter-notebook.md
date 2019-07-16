@@ -4,6 +4,7 @@ title: "R with Jupyter Notebook at OSX"
 description: ""
 date: 2017-12-05
 tags: [jupyter, r]
+author-id: pignu
 comments: true
 ---
 
@@ -45,7 +46,7 @@ comments: true
 
          - 자신이 사용하는 셸 설정파일[^2]에 `alias rstudio="open -a /Applications/RStudio.app"`를 등록하고 터미널을 재실행하자.
 
-           ​
+           
 
    3. 필요 패키지 설치
 

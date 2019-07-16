@@ -4,6 +4,7 @@ title: "Pycharm에서 SASS auto compile"
 description: "sass auto compile"
 date: 2017-06-15
 tags: [css,sass,scss]
+author-id: pignu
 comments: true
 ---
 

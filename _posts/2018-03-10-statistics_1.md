@@ -4,6 +4,7 @@ title: "Probability & Distribution (1)"
 description: "Introduction, Set Theory"
 date: 2018-03-10
 tags: [statistic, mathematical statistics, study]
+author-id: pignu
 comments: true
 ---
 

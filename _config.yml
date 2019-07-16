@@ -91,7 +91,7 @@ paginate_path: "blog/page:num"
 
 # AUTHORS
 authors:
-  mhagnumdw: # author-id
+  pignu: # author-id
     name: pignu 
     avatar: "assets/img/avatars/pignu.jpg"
     url: 

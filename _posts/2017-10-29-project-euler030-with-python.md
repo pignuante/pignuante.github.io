@@ -4,6 +4,7 @@ title: "Project Euler030 with python"
 description: ""
 date: 2017-10-29
 tags: [algorithm,python,math]
+author-id: pignu
 mathjax: true
 comments: true
 ---
@@ -37,7 +38,7 @@ comments: true
 
   3. 9로 구성된 숫자의 위의 작업을 각각 해보면
 
-     ​
+     
      $$
      \begin{align}
      \\
@@ -51,7 +52,7 @@ comments: true
      \\
      \end{align}
      $$
-     ​
+     
      편의상 999로 표현했지만 각 자리수를 5승하여 합한 결과이다.
 
      보면 알겠지만 9999999의 5승의 합은 6자리가 나와서 7자리에서는 절대로 우리가 원하는 결과를 얻을 수가 없다.

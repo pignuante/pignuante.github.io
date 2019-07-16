@@ -4,6 +4,7 @@ title: "vim setting"
 description: ""
 date: 2018-02-11
 tags: [vim]
+author-id: pignu
 comments: true
 ---
 
@@ -264,7 +265,7 @@ call plug#end()
   set splitbelow              " detail window 아래로
   ```
 
-  ​
+  
 
   - 위의 파일로 vim-plug를 사용 했을 경우 youcompleteme는 `~/vim/plugged/youcompleteme`에 설치되어 있는데 저 폴더 내부의 `install.py`로 설치를 추가로 해주어야한다.
   - 설치 할 때 필요한 언어를 설정해서 설치할 수 있으나 귀찮으니 다 설치해준다. `/install.py --all`

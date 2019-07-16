@@ -4,6 +4,7 @@ title: "AWS EC2를 사용한 django server 설정"
 description: "aws의 ec2를 사용해보자"
 date: 2017-06-30
 tags: [aws, ec2, setting, python, 배포]
+author-id: pignu
 comments: true
 ---
 
@@ -38,6 +39,7 @@ comments: true
 
   `Launch Instance`버튼을 눌러 **Instance**를 세로 생성한다.
   ​
+  
   ![aws01](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws01.png?raw=true)
   =======
 1.   **Choose an Amazon Machine Image (AMI)**
@@ -72,6 +74,7 @@ comments: true
         ![aws03](https://github.com/pignuante/pignuante.github.io/blob/master/images/aws03.png?raw=true)
 
        
+
      이미 private key를 가지고 있으면 원래 가지고 있던것을 설정하고 만약에 없다면 `create new key`를 누르고 파일은 다운로드하자.
 
      관리를 편리하게 하기 위해서 `~/.ssh`폴더에 다운 받은 파일을 저장하자. 저장 후 계정의 소유자 이외에는 접근하지 못하도록 권한을 변경시켜준다.
@@ -79,7 +82,7 @@ comments: true
      ```shell
      $ chmod 440 [pirvateKEY 입력]
      ```
-    
+
      <br><br>
 
 9.   **server에 SSH연결**
@@ -134,7 +137,6 @@ comments: true
 
    - priaveKey : 위에서 생성하고 `./ssh`에 넣었던 private 키
    - public DNS: 위에서 언급한 DNS주소
-
 
 
 

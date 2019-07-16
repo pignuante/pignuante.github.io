@@ -4,6 +4,7 @@ title: "Project Euler005 with python"
 description: ""
 date: 2017-10-31
 tags: [algorithm,python,math]
+author-id: pignu
 comments: true
 ---
 

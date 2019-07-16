@@ -4,6 +4,7 @@ title: "Project Euler006 with python"
 description: ""
 date: 2017-11-01
 tags: [algorithm, python, math]
+author-id: pignu
 comments: true
 mathjax: true
 ---
@@ -56,4 +57,4 @@ mathjax: true
       return (sumSquare(number) - squareSum(number))
   ```
 
-  ​
+  

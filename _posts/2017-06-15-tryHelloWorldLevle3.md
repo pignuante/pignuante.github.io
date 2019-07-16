@@ -4,6 +4,7 @@ title: "TryHelloWorld Level 3"
 description: "TryHelloWorld Level 3"
 date: 2017-06-15
 tags: [algorithm, python]
+author-id: pignu
 comments: true
 ---
 
@@ -85,7 +86,7 @@ def jumpCase(num):
 
   <br><br>
 
-  ​
+  
 
 
 #### 03. N개의 최소공배수
@@ -194,7 +195,7 @@ def caesar(s, n):
 
 
 
-​
+
 
 
 

@@ -4,6 +4,7 @@ title: "Project Euler002"
 description: ""
 date: 2017-10-28
 tags: [algorithm,python,math]
+author-id: pignu
 comments: true
 mathjax: true
 ---

@@ -3,7 +3,8 @@ layout: post
 title: "네이버뉴스 댓글 크롤링 with python"
 description: "간단히 해보는 네이버 댓글 크롤링"
 date: 2018-03-26
-tags: python, crawling
+tags: [python, crawling]
+author-id: pignu
 comments: true
 ---
 

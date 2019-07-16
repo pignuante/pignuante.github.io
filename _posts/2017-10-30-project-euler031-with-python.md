@@ -4,6 +4,7 @@ title: "Project Euler031 with python"
 description: ""
 date: 2017-10-30
 tags: [algorithm,python,math]
+author-id: pignu
 comments: true
 ---
 
@@ -31,10 +32,10 @@ comments: true
 
   - $$\begin{align}
     	f\left(1\right) =&\  1\\
-    	f\left(2\right) =&\  2 \\
-    	f\left(3\right) =&\  1+ f\left(1\right) \\
-    	f\left(4\right) =&\  1+ f\left(2\right) \\
-    	f\left(5\right) =&\  1+f\left(3\right)  \\
+      	f\left(2\right) =&\  2 \\
+      	f\left(3\right) =&\  1+ f\left(1\right) \\
+      	f\left(4\right) =&\  1+ f\left(2\right) \\
+      	f\left(5\right) =&\  1+f\left(3\right)  \\
     \end{align}$$
 
 - ```python

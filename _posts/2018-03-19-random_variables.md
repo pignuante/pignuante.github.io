@@ -4,6 +4,7 @@ title: "1.5 Random Variables"
 description: "Random Variables"
 date: 2018-03-19
 tags: [statistic, mathematical statistics, study]
+author-id: pignu
 comments: true
 ---
 

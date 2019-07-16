@@ -4,6 +4,7 @@ title: "1.4 Conditional Probability and Independence"
 description: "Conditional Probability and Independence"
 date: 2018-03-18
 tags: [statistic, mathematical statistics, study]
+author-id: pignu
 comments: true
 ---
 
@@ -11,7 +12,7 @@ comments: true
 
 ## 1.4 Conditional Probability and Independence
 
-Conditional probability of $$C_2​$$ given $$C_1​$$ is
+Conditional probability of $$C_2$$ given $$C_1$$ is
 $$
 \begin{aligned}
 	P\left(C_2\vert C_1\right) = \frac{P\left(C_2\cap C_1\right)}{P\left(C_1\right)}, \quad C_1\lt C_2 \lt \mathscr{C}

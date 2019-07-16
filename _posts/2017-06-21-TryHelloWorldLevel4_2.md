@@ -4,6 +4,7 @@ title: "TryHelloWorld Level4 (2)"
 description: "TryHelloWorld Level4 (2)"
 date: 2017-06-21
 tags: [algorithm, python]
+author-id: pignu
 comments: true
 ---
 

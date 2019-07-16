@@ -5,6 +5,7 @@ description: "jupyter로 블로깅하기"
 date: 2017-12-29
 tags: [jupyter, python]
 comments: true
+author-id: pignu
 mathjax: true
 ---
 

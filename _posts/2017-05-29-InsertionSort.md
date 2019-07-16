@@ -4,6 +4,7 @@ title: "Insertion Sort"
 description: "What is Insertion Sort?"
 date: 2017-05-29
 tags: [study, sort, algorithm, Insertion]
+author-id: pignu
 comments: true
 mathjax: true
 ---
@@ -93,7 +94,7 @@ c8		A[i+1] = key
 
    - 최악의 경우 : $$an^2 \ +\ bn \ +\ c$$
 
-     ​
+     
 
 4. 예제 코드 python
 
@@ -111,6 +112,6 @@ c8		A[i+1] = key
    	return x
    ```
 
-   ​
+   
 
    [^1]: 수행시간이 $c_n$이 걸리며 $n$번 반복 된다면 수행시간은 $c_n\times n$ 이다.

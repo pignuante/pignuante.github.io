@@ -3,7 +3,8 @@ layout: post
 title: "Logistic Regression"
 description: "Generative model을 이해하기 위한 기초"
 date: 2018-06-07
-tags: generative linear regression statistics
+tags: [generative, linear, regression, statistics]
+author-id: pignu
 comments: true
 ---
 

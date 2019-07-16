@@ -5,13 +5,12 @@ description: "ubuntu에 Tensorflow gpu 설치하기!"
 date: 2018-01-30
 tags: [python, tensorflow, cuda, cudnn, gpu, ubuntu, linux]
 comments: true
+author-id: pignu
 toc: true
 ---
 
-[TOC]
-
-
-
+* TOC
+{:toc}
 ## 0. 들어가며
 
 **Tensorflow GPU**를 사용하기위해서는 python뿐만 아니라 GPU를 통한 병렬처리를 위한 [CUDA](https://ko.wikipedia.org/wiki/CUDA)와 deep neural network를 위한 [cuDNN](https://developer.nvidia.com/cudnn)(Cuda Deep Neural Network)를 설치해야한다.

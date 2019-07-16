@@ -3,7 +3,8 @@ layout: post
 title: "Simple Linear Regression"
 description: "Generative model을 이해하기 위한 기초"
 date: 2018-06-06
-tags: generative linear regression statistics logistic
+tags: [generative, linear, regression, statistics, logistic]
+author-id: pignu
 comments: true
 ---
 
@@ -58,7 +59,7 @@ comments: true
   이 식은 사실 통계에서의 **분산**...을 구하는 식이랑 같지않나 싶다(아니 식이 같은데!). 결국엔 우리가 만든 **Model**의 분산을 구한다는 느낌으로 접근을 하는것같다[^4]. ~~아마도 회귀분석에서 말하는 **MSE**는 표본분포에서 표본분산을 뜻하는 것 같다.~~  
   쨋든간에 MSE는 오차항의 분산($$\sigma^2$$)의 불편추정량[^5]이다. 그리고 이 오차항은 **정규 분포**를 따른다고 전제한다. 우리는 우리가 가진 Training Set 즉 전체에 존재하는 데이터(모집단)의 Sample Data를 가지고 있다고 전제를 하고 이 Sample Data로 모집단을 추측하는 것이다. 
 
-  - 추가로 식에서 $$\frac{1}{2}​$$이 붙는 이유는 우리는 얼마나 변하는지에 대한 값을 구하는 거라서 2를 곱하건 2를 나누건 상관이 없다(수학적으로 멋있는 표현이 생각나질 않는다). 하지만 저 $$\frac{1}{2}​$$를 취하므로 후에 **경사하강법**(Gradient Descent)으로 최적의 값을 구할때 미분을 하기 편하게(제곱값의 2가 사라지도록)하는 향신료이다.
+  - 추가로 식에서 $$\frac{1}{2}$$이 붙는 이유는 우리는 얼마나 변하는지에 대한 값을 구하는 거라서 2를 곱하건 2를 나누건 상관이 없다(수학적으로 멋있는 표현이 생각나질 않는다). 하지만 저 $$\frac{1}{2}$$를 취하므로 후에 **경사하강법**(Gradient Descent)으로 최적의 값을 구할때 미분을 하기 편하게(제곱값의 2가 사라지도록)하는 향신료이다.
 
 - 이 Linear Regression의 확률적 해석은 아래와 같다.
 

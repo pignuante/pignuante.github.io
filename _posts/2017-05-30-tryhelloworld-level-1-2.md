@@ -4,6 +4,7 @@ title: "TryHelloWorld Level 1 (2)"
 description: "tryhelloworld 알고리즘 level1 (2)"
 date: 2017-05-31
 tags: [algorithm,python]
+author-id: pignu
 comments: true
 ---
 
@@ -82,7 +83,7 @@ def strange_sort(strings, n):
 
 - `sorted()`에 key를 인자로 주면 key로 들어간 *함수*의 처리 결과로 나온 것들을 순차적으로 정렬시킨다.<br><br>
 
-  ​
+  
 
 #### 15. 딕셔너리 정렬
 

@@ -64,11 +64,11 @@ export function useGlobeDrag(
     const scale = scaleRef.current;
 
     setRotation((prev) => {
-      const rawLambda = prev.lambda + dxCss * scale * GLOBE_DRAG_SENSITIVITY;
+      const rawLambda = prev.lambda - dxCss * scale * GLOBE_DRAG_SENSITIVITY;
       const lambda = ((rawLambda % 360) + 360) % 360;
       const phi = Math.max(
         -90,
-        Math.min(90, prev.phi - dyCss * scale * GLOBE_DRAG_SENSITIVITY),
+        Math.min(90, prev.phi + dyCss * scale * GLOBE_DRAG_SENSITIVITY),
       );
       return { lambda, phi };
     });

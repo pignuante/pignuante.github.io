@@ -19,6 +19,7 @@ import { useDrag } from "./travel/useDrag";
 import { useGlobeDrag } from "./travel/useGlobeDrag";
 import { useGlobePixelGrid } from "./travel/useGlobePixelGrid";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
+import { useZoom } from "./travel/useZoom";
 import { wrapX } from "./travel/utils";
 import WorldPixelMap from "./travel/WorldPixelMap";
 
@@ -51,6 +52,13 @@ const TOOLTIP_GAP_PX = 12;
 /** Border width of the canvas wrapper (Tailwind border-4 = 4px) */
 const BORDER_WIDTH_PX = 4;
 
+/** Flat map zoom pivot (center of canvas) */
+const FLAT_PIVOT_X = WORLD_MAP_WIDTH / 2;
+const FLAT_PIVOT_Y = WORLD_MAP_HEIGHT / 2;
+
+/** Globe zoom pivot (center of canvas) */
+const GLOBE_HALF = GLOBE_SIZE / 2;
+
 /* ── Toggle button config ── */
 
 const VIEW_MODE_OPTIONS: ReadonlyArray<{
@@ -69,14 +77,24 @@ function FlatMapView() {
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
-  const { isDragging, offsetX } = useDrag(canvasWrapperRef, WORLD_MAP_WIDTH);
+  const { zoom } = useZoom(canvasWrapperRef);
+  const { isDragging, offsetX, offsetY } = useDrag(
+    canvasWrapperRef,
+    WORLD_MAP_WIDTH,
+    WORLD_MAP_HEIGHT,
+    zoom,
+  );
 
   const isDraggingRef = useRef<boolean>(false);
   const offsetXRef = useRef<number>(0);
+  const offsetYRef = useRef<number>(0);
+  const zoomRef = useRef<number>(1);
 
   useEffect(() => {
     isDraggingRef.current = isDragging;
     offsetXRef.current = offsetX;
+    offsetYRef.current = offsetY;
+    zoomRef.current = zoom;
   });
 
   const handleMarkerHover = useCallback(
@@ -94,10 +112,16 @@ function FlatMapView() {
       const scaleY = rect.height / WORLD_MAP_HEIGHT;
 
       const wrappedX = wrapX(marker.x + offsetXRef.current, WORLD_MAP_WIDTH);
+      const z = zoomRef.current;
+      const pivotY = FLAT_PIVOT_Y + offsetYRef.current;
+
+      // Transform from local (inside zoomed container) → stage → CSS
+      const stageX = (wrappedX - FLAT_PIVOT_X) * z + FLAT_PIVOT_X;
+      const stageY = (marker.y - pivotY) * z + pivotY;
 
       setTooltip({
-        cssX: wrappedX * scaleX,
-        cssY: marker.y * scaleY,
+        cssX: stageX * scaleX,
+        cssY: stageY * scaleY,
         marker,
       });
     },
@@ -119,7 +143,9 @@ function FlatMapView() {
             <WorldPixelMap
               grid={grid}
               offsetX={offsetX}
+              offsetY={offsetY}
               onMarkerHover={handleMarkerHover}
+              zoom={zoom}
             />
           ) : (
             <div className="flex h-[504px] w-[960px] items-center justify-center bg-[var(--surface)]">
@@ -137,7 +163,7 @@ function FlatMapView() {
         className="mt-2 font-pixel-body text-xs"
         style={{ color: "var(--text-tertiary)" }}
       >
-        ← 드래그하여 지도 이동 →
+        ← 드래그하여 지도 이동 · 스크롤하여 확대/축소 →
       </p>
     </>
   );
@@ -154,11 +180,14 @@ function GlobeMapView() {
     GLOBE_INITIAL_ROTATION,
   );
   const grid = useGlobePixelGrid(rotation);
+  const { zoom } = useZoom(canvasWrapperRef);
 
   const isDraggingRef = useRef<boolean>(false);
+  const zoomRef = useRef<number>(1);
 
   useEffect(() => {
     isDraggingRef.current = isDragging;
+    zoomRef.current = zoom;
   });
 
   const handleMarkerHover = useCallback(
@@ -173,10 +202,15 @@ function GlobeMapView() {
 
       const rect = canvas.getBoundingClientRect();
       const scale = rect.width / GLOBE_SIZE;
+      const z = zoomRef.current;
+
+      // Transform from local (inside zoomed container) → stage → CSS
+      const stageX = (marker.x - GLOBE_HALF) * z + GLOBE_HALF;
+      const stageY = (marker.y - GLOBE_HALF) * z + GLOBE_HALF;
 
       setTooltip({
-        cssX: marker.x * scale,
-        cssY: marker.y * scale,
+        cssX: stageX * scale,
+        cssY: stageY * scale,
         marker,
       });
     },
@@ -185,7 +219,10 @@ function GlobeMapView() {
 
   return (
     <>
-      <div className="relative" style={{ imageRendering: "pixelated" }}>
+      <div
+        className="relative aspect-square max-h-[70vh] max-w-[70vh]"
+        style={{ imageRendering: "pixelated" }}
+      >
         <div
           className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
           ref={canvasWrapperRef}
@@ -195,9 +232,13 @@ function GlobeMapView() {
           }}
         >
           {grid ? (
-            <GlobePixelMap grid={grid} onMarkerHover={handleMarkerHover} />
+            <GlobePixelMap
+              grid={grid}
+              onMarkerHover={handleMarkerHover}
+              zoom={zoom}
+            />
           ) : (
-            <div className="flex h-[720px] w-[720px] items-center justify-center bg-[var(--surface)]">
+            <div className="flex aspect-square w-full items-center justify-center bg-[var(--surface)]">
               <span className="font-pixel text-xs text-[var(--text-secondary)]">
                 Loading globe...
               </span>
@@ -212,7 +253,7 @@ function GlobeMapView() {
         className="mt-2 font-pixel-body text-xs"
         style={{ color: "var(--text-tertiary)" }}
       >
-        드래그하여 지구본 회전
+        드래그하여 지구본 회전 · 스크롤하여 확대/축소
       </p>
     </>
   );

@@ -73,6 +73,17 @@ export const COLOR_GLOBE_OUTLINE = 0xd6_d3_d1;
 /** Globe ocean background color (subtle blue-grey tint) */
 export const COLOR_GLOBE_OCEAN = 0xf0_f4_f8;
 
+/* ── Zoom constants ── */
+
+/** Minimum zoom level (no zoom-out beyond default) */
+export const ZOOM_MIN = 1;
+
+/** Maximum zoom level */
+export const ZOOM_MAX = 4;
+
+/** Zoom multiplier per wheel tick (~5% per step, ~28 ticks to reach 4×) */
+export const ZOOM_STEP = 1.05;
+
 /* ── Biome CSS hex (for HTML legend) ── */
 
 const toHex = (n: number): string => `#${n.toString(16).padStart(6, "0")}`;

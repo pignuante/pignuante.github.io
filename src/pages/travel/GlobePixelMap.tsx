@@ -111,9 +111,11 @@ function GlobeBorders({ grid }: { grid: WorldPixelGridResult }) {
 function GlobeMarkers({
   markers,
   onHover,
+  zoom,
 }: {
   markers: ProjectedCountryMarker[];
   onHover: (marker: ProjectedCountryMarker | null) => void;
+  zoom: number;
 }) {
   const draw = useCallback(
     (g: Graphics) => {
@@ -131,18 +133,19 @@ function GlobeMarkers({
 
   const handlePointerMove = useCallback(
     (e: FederatedPointerEvent) => {
-      const pointerX = e.global.x;
-      const pointerY = e.global.y;
+      // Transform stage coordinates → local (inside zoomed container)
+      const localX = (e.global.x - HALF) / zoom + HALF;
+      const localY = (e.global.y - HALF) / zoom + HALF;
 
       const hit = markers.find((m) => {
-        const dx = m.x - pointerX;
-        const dy = m.y - pointerY;
+        const dx = m.x - localX;
+        const dy = m.y - localY;
         return dx * dx + dy * dy <= HIT_RADIUS_SQ;
       });
 
       onHover(hit ?? null);
     },
-    [markers, onHover],
+    [markers, onHover, zoom],
   );
 
   const handlePointerLeave = useCallback(() => {
@@ -175,12 +178,14 @@ function GlobeOutline() {
 interface GlobePixelMapProps {
   grid: WorldPixelGridResult;
   onMarkerHover?: (marker: ProjectedCountryMarker | null) => void;
+  zoom?: number;
 }
 
 /* ── Main component ── */
 export default function GlobePixelMap({
   grid,
   onMarkerHover,
+  zoom = 1,
 }: GlobePixelMapProps) {
   const handleHover = useCallback(
     (marker: ProjectedCountryMarker | null) => {
@@ -197,12 +202,23 @@ export default function GlobePixelMap({
       resolution={window.devicePixelRatio}
       width={GLOBE_SIZE}
     >
-      <GlobeBackground />
-      <GlobeLandGrid grid={grid} />
-      <GlobeVisitedOverlay grid={grid} />
-      <GlobeBorders grid={grid} />
-      <GlobeMarkers markers={grid.markers} onHover={handleHover} />
-      <GlobeOutline />
+      <pixiContainer
+        pivot={{ x: HALF, y: HALF }}
+        scale={zoom}
+        x={HALF}
+        y={HALF}
+      >
+        <GlobeBackground />
+        <GlobeLandGrid grid={grid} />
+        <GlobeVisitedOverlay grid={grid} />
+        <GlobeBorders grid={grid} />
+        <GlobeMarkers
+          markers={grid.markers}
+          onHover={handleHover}
+          zoom={zoom}
+        />
+        <GlobeOutline />
+      </pixiContainer>
     </Application>
   );
 }

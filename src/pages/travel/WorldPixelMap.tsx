@@ -127,11 +127,15 @@ function VisitedOverlay({
 function CountryMarkers({
   markers,
   offsetX,
+  offsetY,
   onHover,
+  zoom,
 }: {
   markers: ProjectedCountryMarker[];
   offsetX: number;
+  offsetY: number;
   onHover: (marker: ProjectedCountryMarker | null) => void;
+  zoom: number;
 }) {
   const draw = useCallback(
     (g: Graphics) => {
@@ -150,19 +154,24 @@ function CountryMarkers({
 
   const handlePointerMove = useCallback(
     (e: FederatedPointerEvent) => {
+      // Transform stage coordinates → local (inside zoomed container)
+      // Account for shifted pivotY from vertical panning
+      const pivotY = PIVOT_Y + offsetY;
+      const localX = (e.global.x - PIVOT_X) / zoom + PIVOT_X;
+      const localY = (e.global.y - pivotY) / zoom + pivotY;
+
       // Unwrap the pointer position back to original map-space
-      const pointerX = wrapX(e.global.x - offsetX, WORLD_MAP_WIDTH);
-      const pointerY = e.global.y;
+      const pointerX = wrapX(localX - offsetX, WORLD_MAP_WIDTH);
 
       const hit = markers.find((m) => {
         const dx = m.x - pointerX;
-        const dy = m.y - pointerY;
+        const dy = m.y - localY;
         return dx * dx + dy * dy <= HIT_RADIUS_SQ;
       });
 
       onHover(hit ?? null);
     },
-    [markers, offsetX, onHover],
+    [markers, offsetX, offsetY, onHover, zoom],
   );
 
   const handlePointerLeave = useCallback(() => {
@@ -193,18 +202,26 @@ function BackgroundGrid() {
   return <pixiGraphics draw={draw} />;
 }
 
+/* ── Zoom pivot (center of canvas) ── */
+const PIVOT_X = WORLD_MAP_WIDTH / 2;
+const PIVOT_Y = WORLD_MAP_HEIGHT / 2;
+
 /* ── Props ── */
 interface WorldPixelMapProps {
   grid: WorldPixelGridResult;
   offsetX?: number;
+  offsetY?: number;
   onMarkerHover?: (marker: ProjectedCountryMarker | null) => void;
+  zoom?: number;
 }
 
 /* ── Main component ── */
 export default function WorldPixelMap({
   grid,
   offsetX = 0,
+  offsetY = 0,
   onMarkerHover,
+  zoom = 1,
 }: WorldPixelMapProps) {
   const handleHover = useCallback(
     (marker: ProjectedCountryMarker | null) => {
@@ -212,6 +229,9 @@ export default function WorldPixelMap({
     },
     [onMarkerHover],
   );
+
+  /** Vertical pivot shifts with pan (horizontal pivot stays fixed — offsetX is content-level) */
+  const pivotY = PIVOT_Y + offsetY;
 
   return (
     <Application
@@ -221,15 +241,24 @@ export default function WorldPixelMap({
       resolution={window.devicePixelRatio}
       width={WORLD_MAP_WIDTH}
     >
-      <BackgroundGrid />
-      <LandGrid grid={grid} offsetX={offsetX} />
-      <VisitedOverlay grid={grid} offsetX={offsetX} />
-      <CountryBorders grid={grid} offsetX={offsetX} />
-      <CountryMarkers
-        markers={grid.markers}
-        offsetX={offsetX}
-        onHover={handleHover}
-      />
+      <pixiContainer
+        pivot={{ x: PIVOT_X, y: pivotY }}
+        scale={zoom}
+        x={PIVOT_X}
+        y={pivotY}
+      >
+        <BackgroundGrid />
+        <LandGrid grid={grid} offsetX={offsetX} />
+        <VisitedOverlay grid={grid} offsetX={offsetX} />
+        <CountryBorders grid={grid} offsetX={offsetX} />
+        <CountryMarkers
+          markers={grid.markers}
+          offsetX={offsetX}
+          offsetY={offsetY}
+          onHover={handleHover}
+          zoom={zoom}
+        />
+      </pixiContainer>
     </Application>
   );
 }

@@ -98,6 +98,38 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
         fillCtx.fill();
       }
 
+      // ── Canvas 1b: Visited-country mask (white on black) ──
+      const visitedCanvas = new OffscreenCanvas(
+        WORLD_MAP_WIDTH,
+        WORLD_MAP_HEIGHT,
+      );
+      const visitedCtx = visitedCanvas.getContext("2d");
+
+      if (visitedCtx) {
+        const visitedPathGen = geoPath(
+          projection,
+          visitedCtx as unknown as CanvasRenderingContext2D,
+        );
+
+        for (const countryFeature of countries.features) {
+          const id = countryFeature.id?.toString();
+          const entry = id ? COUNTRY_BIOME_MAP.get(id) : undefined;
+          if (!entry?.visited) continue;
+
+          visitedCtx.fillStyle = "#ffffff";
+          visitedCtx.beginPath();
+          visitedPathGen(countryFeature);
+          visitedCtx.fill();
+        }
+      }
+
+      const visitedImageData = visitedCtx?.getImageData(
+        0,
+        0,
+        WORLD_MAP_WIDTH,
+        WORLD_MAP_HEIGHT,
+      );
+
       // ── Pixel sampling: read biome color per cell ──
       const cols = Math.floor(WORLD_MAP_WIDTH / WORLD_CELL_SIZE);
       const rows = Math.floor(WORLD_MAP_HEIGHT / WORLD_CELL_SIZE);
@@ -124,7 +156,13 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
           if (a < 128) continue;
 
           const color = (r << 16) | (g << 8) | b;
-          cells.push({ col, color, row });
+
+          // Check visited mask (red channel — white fill = 255)
+          const visited = visitedImageData
+            ? visitedImageData.data[idx] > 128
+            : false;
+
+          cells.push({ col, color, row, ...(visited && { visited: true }) });
         }
       }
 

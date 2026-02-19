@@ -6,6 +6,7 @@ export interface ColoredPixelCell {
   col: number;
   color: number; // PixiJS hex
   row: number;
+  visited?: boolean;
 }
 
 /** Country boundary pixel (land cells that overlap a border stroke) */

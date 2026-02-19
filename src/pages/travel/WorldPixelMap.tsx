@@ -6,11 +6,13 @@ import type { ProjectedCountryMarker, WorldPixelGridResult } from "./types";
 import {
   COLOR_MARKER_INNER,
   COLOR_MARKER_OUTER,
+  COLOR_VISITED_TINT,
   COLOR_WORLD_BG_DOT,
   COLOR_WORLD_BORDER,
   MARKER_DOT_INNER_RADIUS,
   MARKER_DOT_RADIUS,
   MARKER_HIT_RADIUS_MULTIPLIER,
+  VISITED_OVERLAY_ALPHA,
   WORLD_CELL_SIZE,
   WORLD_MAP_HEIGHT,
   WORLD_MAP_WIDTH,
@@ -71,6 +73,40 @@ function CountryBorders({
       const fill = { alpha: 0.4, color: COLOR_WORLD_BORDER };
 
       for (const cell of grid.boundaryPixels) {
+        const origX = cell.col * WORLD_CELL_SIZE;
+        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
+        const y = cell.row * WORLD_CELL_SIZE;
+
+        g.rect(wx, y, cellW, cellW).fill(fill);
+
+        if (wx + WORLD_CELL_SIZE > WORLD_MAP_WIDTH) {
+          g.rect(wx - WORLD_MAP_WIDTH, y, cellW, cellW).fill(fill);
+        }
+      }
+    },
+    [grid, offsetX],
+  );
+
+  return <pixiGraphics draw={draw} />;
+}
+
+function VisitedOverlay({
+  grid,
+  offsetX,
+}: {
+  grid: WorldPixelGridResult;
+  offsetX: number;
+}) {
+  const draw = useCallback(
+    (g: Graphics) => {
+      g.clear();
+
+      const cellW = WORLD_CELL_SIZE - 1;
+      const fill = { alpha: VISITED_OVERLAY_ALPHA, color: COLOR_VISITED_TINT };
+
+      for (const cell of grid.cells) {
+        if (!cell.visited) continue;
+
         const origX = cell.col * WORLD_CELL_SIZE;
         const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
         const y = cell.row * WORLD_CELL_SIZE;
@@ -187,6 +223,7 @@ export default function WorldPixelMap({
     >
       <BackgroundGrid />
       <LandGrid grid={grid} offsetX={offsetX} />
+      <VisitedOverlay grid={grid} offsetX={offsetX} />
       <CountryBorders grid={grid} offsetX={offsetX} />
       <CountryMarkers
         markers={grid.markers}

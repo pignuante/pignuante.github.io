@@ -26,6 +26,9 @@ export const COLOR_WORLD_BORDER = 0x8b_85_7a;
 /** Visited country highlight tint — warm overlay */
 export const COLOR_VISITED_TINT = 0xff_6b_6b;
 
+/** Alpha for visited-country tint overlay (0–1) */
+export const VISITED_OVERLAY_ALPHA = 0.18;
+
 /** Background dot grid color */
 export const COLOR_WORLD_BG_DOT = 0x1c_19_17;
 

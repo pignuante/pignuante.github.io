@@ -28,13 +28,13 @@ export default function Projects(): ReactElement {
           style={{ color: "var(--text-brand)" }}
         >
           <span aria-hidden="true">✦ </span>
-          프로젝트 퀘스트 로그
+          QUEST LOG
         </h1>
         <p
           className="mt-3 font-pixel-body text-sm sm:text-base"
           style={{ color: "var(--text-secondary)" }}
         >
-          실제 제작 경험을 RPG 기록 방식으로 정리한 프로젝트 목록입니다.
+          모험가가 완수한 퀘스트와 진행 중인 임무 기록
         </p>
       </header>
 
@@ -52,7 +52,7 @@ export default function Projects(): ReactElement {
           className="mt-3 font-pixel-body text-sm"
           style={{ color: "var(--text-secondary)" }}
         >
-          포트폴리오 정체성을 대표하는 핵심 프로젝트 기록입니다.
+          길드 게시판에 등록된 공식 의뢰 임무
         </p>
 
         {MAIN_QUEST_HERO_SUMMARY ? (
@@ -84,7 +84,7 @@ export default function Projects(): ReactElement {
           className="mt-3 font-pixel-body text-sm"
           style={{ color: "var(--text-secondary)" }}
         >
-          문제 탐색과 실험을 통해 성장한 서브 프로젝트 묶음입니다.
+          모험가가 홀로 떠난 자유 탐험 기록
         </p>
         <ul className="mt-4 grid gap-4 md:grid-cols-2" role="list">
           {SIDE_QUEST_SUMMARIES.map((project) => (

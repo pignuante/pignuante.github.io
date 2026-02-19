@@ -220,8 +220,12 @@ function GlobeMapView() {
   return (
     <>
       <div
-        className="relative aspect-square max-h-[70vh] max-w-[70vh]"
-        style={{ imageRendering: "pixelated" }}
+        className="relative max-h-[70vh] max-w-[70vh]"
+        style={{
+          aspectRatio: "1",
+          imageRendering: "pixelated",
+          width: GLOBE_SIZE,
+        }}
       >
         <div
           className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
@@ -238,7 +242,7 @@ function GlobeMapView() {
               zoom={zoom}
             />
           ) : (
-            <div className="flex aspect-square w-full items-center justify-center bg-[var(--surface)]">
+            <div className="flex h-full w-full items-center justify-center bg-[var(--surface)]">
               <span className="font-pixel text-xs text-[var(--text-secondary)]">
                 Loading globe...
               </span>

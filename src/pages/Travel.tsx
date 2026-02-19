@@ -15,9 +15,9 @@ import {
   WORLD_MAP_WIDTH,
 } from "./travel/constants";
 import GlobePixelMap from "./travel/GlobePixelMap";
-import { useDrag } from "./travel/useDrag";
 import { useGlobeDrag } from "./travel/useGlobeDrag";
 import { useGlobePixelGrid } from "./travel/useGlobePixelGrid";
+import { useMapCamera } from "./travel/useMapCamera";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
 import { wrapX } from "./travel/utils";
@@ -77,12 +77,10 @@ function FlatMapView() {
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
-  const { zoom } = useZoom(canvasWrapperRef);
-  const { isDragging, offsetX, offsetY } = useDrag(
+  const { isDragging, offsetX, offsetY, zoom } = useMapCamera(
     canvasWrapperRef,
     WORLD_MAP_WIDTH,
     WORLD_MAP_HEIGHT,
-    zoom,
   );
 
   const isDraggingRef = useRef<boolean>(false);
@@ -90,6 +88,7 @@ function FlatMapView() {
   const offsetYRef = useRef<number>(0);
   const zoomRef = useRef<number>(1);
 
+  /** Sync latest state → refs after every render (read by stable handleMarkerHover) */
   useEffect(() => {
     isDraggingRef.current = isDragging;
     offsetXRef.current = offsetX;

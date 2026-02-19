@@ -169,11 +169,6 @@ export const COUNTRY_BIOMES: ReadonlyArray<CountryBiomeEntry> = [
 export const COUNTRY_BIOME_MAP: ReadonlyMap<string, CountryBiomeEntry> =
   new Map(COUNTRY_BIOMES.map((entry) => [entry.id, entry]));
 
-/** Quick lookup: country ID → visited flag */
-export const VISITED_COUNTRIES: ReadonlySet<string> = new Set(
-  COUNTRY_BIOMES.filter((e) => e.visited).map((e) => e.id),
-);
-
 /**
  * Fallback biome classification based on centroid latitude.
  * Used for countries not manually classified in COUNTRY_BIOMES.

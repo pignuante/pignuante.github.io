@@ -42,3 +42,14 @@ export interface ProjectedCountryMarker {
   x: number; // projected canvas-space X
   y: number; // projected canvas-space Y
 }
+
+/** Globe rotation angles in degrees (positive values) */
+export interface GlobeRotation {
+  /** Longitude of the center point (0–360) */
+  lambda: number;
+  /** Latitude of the center point (-90–90) */
+  phi: number;
+}
+
+/** Map view mode for flat ↔ globe toggle */
+export type MapViewMode = "flat" | "globe";

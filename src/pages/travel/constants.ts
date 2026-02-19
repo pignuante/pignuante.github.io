@@ -49,6 +49,30 @@ export const COLOR_MARKER_INNER = 0xff_ff_ff;
 /** Hit-test radius multiplier (for hover detection) */
 export const MARKER_HIT_RADIUS_MULTIPLIER = 3;
 
+/* ── Globe constants ── */
+
+/** Globe canvas size in logical pixels (square — orthographic projects a circle) */
+export const GLOBE_SIZE = 720;
+
+/** Globe pixel cell size (same as world map for visual consistency) */
+export const GLOBE_CELL_SIZE = 3;
+
+/** Globe initial rotation — centered on South Korea (127°E, 37°N) */
+export const GLOBE_INITIAL_LAMBDA = 127;
+export const GLOBE_INITIAL_PHI = 37;
+
+/**
+ * Sensitivity: degrees of rotation per CSS pixel of drag.
+ * ~0.3 feels natural for a 720px globe (full drag across = ~216° rotation).
+ */
+export const GLOBE_DRAG_SENSITIVITY = 0.3;
+
+/** Globe outline circle color */
+export const COLOR_GLOBE_OUTLINE = 0xd6_d3_d1;
+
+/** Globe ocean background color (subtle blue-grey tint) */
+export const COLOR_GLOBE_OCEAN = 0xf0_f4_f8;
+
 /* ── Biome CSS hex (for HTML legend) ── */
 
 const toHex = (n: number): string => `#${n.toString(16).padStart(6, "0")}`;

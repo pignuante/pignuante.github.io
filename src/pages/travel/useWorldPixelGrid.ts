@@ -3,7 +3,6 @@ import { geoCentroid, geoNaturalEarth1, geoPath } from "d3-geo";
 import { useEffect, useState } from "react";
 import { feature } from "topojson-client";
 import type {
-  Biome,
   BoundaryPixel,
   ColoredPixelCell,
   ProjectedCountryMarker,
@@ -16,28 +15,8 @@ import {
   WORLD_MAP_INSET,
   WORLD_MAP_WIDTH,
 } from "./constants";
-import {
-  COUNTRY_BIOME_MAP,
-  COUNTRY_BIOMES,
-  biomeFromLatitude,
-} from "./world-data";
-
-/** Resolve biome for a country: manual lookup → latitude fallback */
-function resolveBiome(
-  countryId: string | undefined,
-  centroidLat: number,
-): Biome {
-  if (countryId) {
-    const entry = COUNTRY_BIOME_MAP.get(countryId);
-    if (entry) return entry.biome;
-  }
-  return biomeFromLatitude(centroidLat);
-}
-
-/** Convert PixiJS hex to CSS color string for canvas fill */
-function pixiHexToCss(hex: number): string {
-  return `#${hex.toString(16).padStart(6, "0")}`;
-}
+import { pixiHexToCss, resolveBiome } from "./utils";
+import { COUNTRY_BIOME_MAP, COUNTRY_BIOMES } from "./world-data";
 
 /**
  * Rasterize world-atlas 110m data into a colored pixel grid.

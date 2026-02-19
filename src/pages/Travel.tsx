@@ -27,11 +27,11 @@ import WorldPixelMap from "./travel/WorldPixelMap";
 
 /** Biome legend entries in display order */
 const BIOME_LEGEND: ReadonlyArray<{ biome: Biome; label: string }> = [
-  { biome: "tropical", label: "열대 Tropical" },
-  { biome: "arid", label: "건조 Arid" },
-  { biome: "temperate", label: "온대 Temperate" },
-  { biome: "continental", label: "대륙성 Continental" },
-  { biome: "polar", label: "극지 Polar" },
+  { biome: "tropical", label: "정글 지대" },
+  { biome: "arid", label: "사막 지대" },
+  { biome: "temperate", label: "초원 지대" },
+  { biome: "continental", label: "대륙 지대" },
+  { biome: "polar", label: "빙원 지대" },
 ];
 
 /** Globe initial rotation — centered on South Korea */
@@ -66,8 +66,8 @@ const VIEW_MODE_OPTIONS: ReadonlyArray<{
   label: string;
   mode: MapViewMode;
 }> = [
-  { icon: "🗺", label: "평면", mode: "flat" },
-  { icon: "🌍", label: "지구본", mode: "globe" },
+  { icon: "📜", label: "양피지", mode: "flat" },
+  { icon: "🔮", label: "수정구", mode: "globe" },
 ];
 
 /* ── FlatMapView ── */
@@ -150,7 +150,7 @@ function FlatMapView() {
           ) : (
             <div className="flex h-[504px] w-[960px] items-center justify-center bg-[var(--surface)]">
               <span className="font-pixel text-xs text-[var(--text-secondary)]">
-                Loading world map...
+                양피지를 펼치는 중...
               </span>
             </div>
           )}
@@ -163,7 +163,7 @@ function FlatMapView() {
         className="mt-2 font-pixel-body text-xs"
         style={{ color: "var(--text-tertiary)" }}
       >
-        ← 드래그하여 지도 이동 · 스크롤하여 확대/축소 →
+        ← 양피지를 끌어 탐험 · 스크롤로 확대/축소 →
       </p>
     </>
   );
@@ -244,7 +244,7 @@ function GlobeMapView() {
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-[var(--surface)]">
               <span className="font-pixel text-xs text-[var(--text-secondary)]">
-                Loading globe...
+                수정구에 세계를 비추는 중...
               </span>
             </div>
           )}
@@ -257,7 +257,7 @@ function GlobeMapView() {
         className="mt-2 font-pixel-body text-xs"
         style={{ color: "var(--text-tertiary)" }}
       >
-        드래그하여 지구본 회전 · 스크롤하여 확대/축소
+        수정구를 돌려 세계를 탐험 · 스크롤로 확대/축소
       </p>
     </>
   );
@@ -278,14 +278,14 @@ export default function Travel() {
         id="travel-page-title"
         style={{ color: "var(--text-brand)" }}
       >
-        <span aria-hidden="true">✈ </span>
-        여행 지도
+        <span aria-hidden="true">★ </span>
+        WORLD MAP
       </h1>
       <p
         className="mt-3 font-pixel-body text-sm sm:text-base"
         style={{ color: "var(--text-secondary)" }}
       >
-        픽셀 세계 지도 — 기후 바이옴 기반 색상
+        모험가의 발자취가 새겨진 세계 지도
       </p>
 
       <SparkDivider className="mt-6" />
@@ -352,7 +352,7 @@ function MarkerTooltip({ tooltip }: { tooltip: TooltipState }) {
       }}
     >
       <p className="truncate font-bold text-[var(--text-primary)]">
-        {marker.nameKo} ({marker.name}) ★
+        ✦ {marker.nameKo} — 탐험 완료
       </p>
     </div>
   );

@@ -1,0 +1,230 @@
+import type { CityMarker } from "./types";
+
+/**
+ * All 26 Swiss canton capitals + select major cities.
+ * Coordinates: [lng, lat] — real GPS from OpenStreetMap / Wikipedia.
+ * `visited` flags are sample data for the prototype.
+ */
+export const SWISS_CITIES: ReadonlyArray<CityMarker> = [
+  // ── Canton capitals ──
+  {
+    coords: [7.4474, 46.948],
+    memo: "연방 수도, 구시가지 UNESCO",
+    name: "Bern",
+    nameKo: "베른",
+    visited: true,
+  },
+  {
+    coords: [8.5417, 47.3769],
+    memo: "스위스 최대 도시, 금융 중심",
+    name: "Zürich",
+    nameKo: "취리히",
+    visited: true,
+  },
+  {
+    coords: [6.1432, 46.2044],
+    memo: "레만 호수, UN 유럽본부",
+    name: "Geneva",
+    nameKo: "제네바",
+    visited: true,
+  },
+  {
+    coords: [8.3093, 47.0502],
+    memo: "카펠교, 필라투스산",
+    name: "Lucerne",
+    nameKo: "루체른",
+    visited: true,
+  },
+  { coords: [7.5886, 47.5596], name: "Basel", nameKo: "바젤", visited: false },
+  {
+    coords: [6.6328, 46.5197],
+    memo: "올림픽 수도",
+    name: "Lausanne",
+    nameKo: "로잔",
+    visited: true,
+  },
+  {
+    coords: [9.3767, 47.4245],
+    name: "Sankt Gallen",
+    nameKo: "장크트갈렌",
+    visited: false,
+  },
+  {
+    coords: [7.1598, 46.802],
+    name: "Fribourg",
+    nameKo: "프리부르",
+    visited: false,
+  },
+  { coords: [8.5156, 47.1724], name: "Zug", nameKo: "추크", visited: false },
+  { coords: [7.3596, 46.2333], name: "Sion", nameKo: "시옹", visited: false },
+  {
+    coords: [8.9511, 46.0037],
+    name: "Bellinzona",
+    nameKo: "벨린초나",
+    visited: false,
+  },
+  { coords: [9.8355, 46.8499], name: "Chur", nameKo: "쿠어", visited: false },
+  {
+    coords: [6.9293, 46.9925],
+    name: "Neuchâtel",
+    nameKo: "뇌샤텔",
+    visited: false,
+  },
+  {
+    coords: [8.6441, 47.6944],
+    name: "Schaffhausen",
+    nameKo: "샤프하우젠",
+    visited: false,
+  },
+  {
+    coords: [8.3041, 47.3672],
+    name: "Aarau",
+    nameKo: "아라우",
+    visited: false,
+  },
+  {
+    coords: [7.6172, 47.2084],
+    name: "Solothurn",
+    nameKo: "졸로투른",
+    visited: false,
+  },
+  {
+    coords: [7.3462, 47.3672],
+    name: "Delémont",
+    nameKo: "들레몽",
+    visited: false,
+  },
+  {
+    coords: [9.0597, 47.0469],
+    name: "Glarus",
+    nameKo: "글라루스",
+    visited: false,
+  },
+  {
+    coords: [8.638, 46.8809],
+    name: "Altdorf",
+    nameKo: "알트도르프",
+    visited: false,
+  },
+  {
+    coords: [8.6551, 47.0206],
+    name: "Schwyz",
+    nameKo: "슈비츠",
+    visited: false,
+  },
+  {
+    coords: [8.3885, 46.9579],
+    name: "Stans",
+    nameKo: "슈탄스",
+    visited: false,
+  },
+  {
+    coords: [8.2456, 46.8965],
+    name: "Sarnen",
+    nameKo: "자르넨",
+    visited: false,
+  },
+  {
+    coords: [9.1315, 47.5476],
+    name: "Frauenfeld",
+    nameKo: "프라우엔펠트",
+    visited: false,
+  },
+  {
+    coords: [9.4084, 47.3266],
+    name: "Appenzell",
+    nameKo: "아펜첼",
+    visited: false,
+  },
+  {
+    coords: [9.3077, 47.3838],
+    name: "Herisau",
+    nameKo: "헤리사우",
+    visited: false,
+  },
+  {
+    coords: [7.7302, 47.4846],
+    name: "Liestal",
+    nameKo: "리스탈",
+    visited: false,
+  },
+  // ── Major non-capital cities ──
+  {
+    coords: [7.8632, 46.6863],
+    memo: "알프스 관문, 융프라우",
+    name: "Interlaken",
+    nameKo: "인터라켄",
+    visited: true,
+  },
+  {
+    coords: [8.8167, 46.1667],
+    memo: "이탈리아 문화권",
+    name: "Lugano",
+    nameKo: "루가노",
+    visited: false,
+  },
+  { coords: [7.5886, 46.6863], name: "Thun", nameKo: "툰", visited: false },
+  {
+    coords: [8.4055, 47.1724],
+    name: "Luzern (Kriens)",
+    nameKo: "크리엔스",
+    visited: false,
+  },
+  {
+    coords: [8.7241, 47.4979],
+    memo: "스위스 최대 공항",
+    name: "Winterthur",
+    nameKo: "빈터투어",
+    visited: false,
+  },
+  {
+    coords: [6.8498, 47.0007],
+    name: "La Chaux-de-Fonds",
+    nameKo: "라쇼드퐁",
+    visited: false,
+  },
+  {
+    coords: [7.4513, 46.9481],
+    memo: "인터라켄 관문 도시",
+    name: "Biel/Bienne",
+    nameKo: "비엘",
+    visited: false,
+  },
+  { coords: [7.997, 46.3164], name: "Brig", nameKo: "브리크", visited: false },
+  {
+    coords: [9.8515, 46.4986],
+    name: "St. Moritz",
+    nameKo: "생모리츠",
+    visited: false,
+  },
+  {
+    coords: [7.0886, 46.2314],
+    name: "Montreux",
+    nameKo: "몽트뢰",
+    visited: false,
+  },
+  {
+    coords: [7.6267, 46.7562],
+    name: "Spiez",
+    nameKo: "슈피츠",
+    visited: false,
+  },
+  {
+    coords: [7.7491, 46.4312],
+    name: "Zermatt",
+    nameKo: "체르마트",
+    visited: false,
+  },
+  {
+    coords: [8.2126, 46.7712],
+    name: "Meiringen",
+    nameKo: "마이링겐",
+    visited: false,
+  },
+  {
+    coords: [7.4474, 46.6587],
+    name: "Grindelwald",
+    nameKo: "그린델발트",
+    visited: false,
+  },
+];

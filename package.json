@@ -14,16 +14,23 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@pixi/react": "^8.0.5",
+    "d3-geo": "^3.1.1",
     "motion": "^12.34.3",
+    "pixi.js": "^8.16.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router": "^7.13.0"
+    "react-router": "^7.13.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@tailwindcss/vite": "^4.2.0",
+    "@types/d3-geo": "^3.1.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/topojson-client": "^3.1.5",
     "@vitejs/plugin-react-swc": "^4.2.3",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",

@@ -25,6 +25,10 @@ extend({ Container, Graphics });
 /** Squared hit-test radius for marker detection */
 const HIT_RADIUS_SQ = (MARKER_DOT_RADIUS * MARKER_HIT_RADIUS_MULTIPLIER) ** 2;
 
+/* ── Zoom pivot (center of canvas) ── */
+const PIVOT_X = WORLD_MAP_WIDTH / 2;
+const PIVOT_Y = WORLD_MAP_HEIGHT / 2;
+
 /* ── Sub-components ── */
 
 function LandGrid({
@@ -202,9 +206,38 @@ function BackgroundGrid() {
   return <pixiGraphics draw={draw} />;
 }
 
-/* ── Zoom pivot (center of canvas) ── */
-const PIVOT_X = WORLD_MAP_WIDTH / 2;
-const PIVOT_Y = WORLD_MAP_HEIGHT / 2;
+function OceanGrid({
+  grid,
+  offsetX,
+}: {
+  grid: WorldPixelGridResult;
+  offsetX: number;
+}) {
+  const draw = useCallback(
+    (g: Graphics) => {
+      g.clear();
+
+      if (!grid.oceanCells) return;
+
+      const cellW = WORLD_CELL_SIZE - 1;
+      for (const cell of grid.oceanCells) {
+        const origX = cell.col * WORLD_CELL_SIZE;
+        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
+        const y = cell.row * WORLD_CELL_SIZE;
+
+        g.rect(wx, y, cellW, cellW).fill(cell.color);
+
+        // If cell straddles the right edge, draw a wrapped copy on the left
+        if (wx + WORLD_CELL_SIZE > WORLD_MAP_WIDTH) {
+          g.rect(wx - WORLD_MAP_WIDTH, y, cellW, cellW).fill(cell.color);
+        }
+      }
+    },
+    [grid, offsetX],
+  );
+
+  return <pixiGraphics draw={draw} />;
+}
 
 /* ── Props ── */
 interface WorldPixelMapProps {
@@ -248,6 +281,7 @@ export default function WorldPixelMap({
         y={pivotY}
       >
         <BackgroundGrid />
+        <OceanGrid grid={grid} offsetX={offsetX} />
         <LandGrid grid={grid} offsetX={offsetX} />
         <VisitedOverlay grid={grid} offsetX={offsetX} />
         <CountryBorders grid={grid} offsetX={offsetX} />

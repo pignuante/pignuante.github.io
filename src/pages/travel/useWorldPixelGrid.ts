@@ -15,7 +15,7 @@ import {
   WORLD_MAP_INSET,
   WORLD_MAP_WIDTH,
 } from "./constants";
-import { pixiHexToCss, resolveBiome } from "./utils";
+import { buildOceanCells, pixiHexToCss, resolveBiome } from "./utils";
 import { COUNTRY_BIOME_MAP, COUNTRY_BIOMES } from "./world-data";
 
 /**
@@ -145,6 +145,11 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
         }
       }
 
+      // Build land set early — used by borders AND ocean
+      const landSet = new Set<number>(
+        cells.map((c: ColoredPixelCell) => c.row * cols + c.col),
+      );
+
       // ── Canvas 2: Stroke country boundaries ──
       const borderCanvas = new OffscreenCanvas(
         WORLD_MAP_WIDTH,
@@ -175,11 +180,6 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
           WORLD_MAP_HEIGHT,
         );
 
-        // Build a set of land cells for fast lookup (numeric key: row * cols + col)
-        const landSet = new Set<number>(
-          cells.map((c: ColoredPixelCell) => c.row * cols + c.col),
-        );
-
         for (let row = 0; row < rows; row++) {
           for (let col = 0; col < cols; col++) {
             if (!landSet.has(row * cols + col)) continue;
@@ -195,6 +195,36 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
           }
         }
       }
+
+      // ── Ocean cells: latitude biome + coast gradient + wave pattern ──
+      const halfCell = Math.floor(WORLD_CELL_SIZE / 2);
+      const oceanIndices: number[] = [];
+      const oceanLatMap = new Map<number, number>();
+
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const idx = row * cols + col;
+          if (landSet.has(idx)) continue;
+
+          const px = col * WORLD_CELL_SIZE + halfCell;
+          const py = row * WORLD_CELL_SIZE + halfCell;
+
+          // NaturalEarth1.invert() returns null/NaN outside projection boundary
+          const lonLat = projection.invert?.([px, py]);
+          if (!lonLat || !isFinite(lonLat[0]) || !isFinite(lonLat[1])) continue;
+
+          oceanIndices.push(idx);
+          oceanLatMap.set(idx, Math.abs(lonLat[1]));
+        }
+      }
+
+      const oceanCells = buildOceanCells({
+        cols,
+        landSet,
+        oceanIndices,
+        oceanLatMap,
+        rows,
+      });
 
       // ── Markers: project centroids for visited countries ──
       const markers: ProjectedCountryMarker[] = [];
@@ -223,7 +253,7 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
       }
 
       if (!cancelled) {
-        setResult({ boundaryPixels, cells, cols, markers, rows });
+        setResult({ boundaryPixels, cells, cols, markers, oceanCells, rows });
       }
     })();
 

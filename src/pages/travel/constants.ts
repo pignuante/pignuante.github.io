@@ -70,8 +70,34 @@ export const GLOBE_DRAG_SENSITIVITY = 0.3;
 /** Globe outline circle color */
 export const COLOR_GLOBE_OUTLINE = 0xd6_d3_d1;
 
-/** Globe ocean background color (subtle blue-grey tint) */
+/** Globe ocean background color (base fill for gaps between ocean cells) */
 export const COLOR_GLOBE_OCEAN = 0xf0_f4_f8;
+
+/* ── Ocean biome colors (latitude-based, PixiJS hex) ── */
+
+/** Tropical waters (0°–20°) — warm turquoise */
+export const COLOR_OCEAN_TROPICAL = 0xc8_e8_e4;
+
+/** Subtropical waters (20°–40°) — clear blue */
+export const COLOR_OCEAN_SUBTROPICAL = 0xd0_e4_f0;
+
+/** Temperate waters (40°–60°) — cool grey-blue */
+export const COLOR_OCEAN_TEMPERATE = 0xd4_dc_e8;
+
+/** Polar waters (60°–90°) — icy pale blue */
+export const COLOR_OCEAN_POLAR = 0xe0_e8_f0;
+
+/** BFS distance (in cells) at which ocean reaches maximum darkening */
+export const MAX_OCEAN_DEPTH_CELLS = 25;
+
+/** Wave pattern period — every Nth cell gets a highlight dot */
+export const OCEAN_WAVE_PERIOD = 5;
+
+/** Maximum darkening factor for deep ocean (0–1, applied multiplicatively) */
+export const OCEAN_DEPTH_DARKEN_MAX = 0.3;
+
+/** Lightening amount for wave highlight dots (added to each RGB channel) */
+export const OCEAN_WAVE_LIGHTEN = 8;
 
 /* ── Zoom constants ── */
 

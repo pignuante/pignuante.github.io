@@ -11,7 +11,7 @@ import type {
   WorldPixelGridResult,
 } from "./types";
 import { BIOME_COLORS, GLOBE_CELL_SIZE, GLOBE_SIZE } from "./constants";
-import { pixiHexToCss, resolveBiome } from "./utils";
+import { buildOceanCells, pixiHexToCss, resolveBiome } from "./utils";
 import { COUNTRY_BIOME_MAP, COUNTRY_BIOMES } from "./world-data";
 
 /* ── Pure rasterization function (extracted for performance) ── */
@@ -165,7 +165,52 @@ function rasterizeGlobe(
     }
   }
 
+  // ── Ocean cells: latitude biome + coast distance gradient + wave pattern ──
+  const HALF = GLOBE_SIZE / 2;
+  const R_SQ = HALF * HALF;
+
+  // Build globe-circle ocean set and latitude lookup in one pass
+  const oceanIndices: number[] = [];
+  const oceanLatMap = new Map<number, number>(); // index → absLat
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const idx = row * cols + col;
+      if (landSet.has(idx)) continue;
+
+      const px = col * GLOBE_CELL_SIZE + halfCell;
+      const py = row * GLOBE_CELL_SIZE + halfCell;
+
+      // Skip pixels outside the globe circle
+      const dx = px - HALF;
+      const dy = py - HALF;
+      if (dx * dx + dy * dy > R_SQ) continue;
+
+      // Inverse-project to get latitude
+      const lonLat = projection.invert?.([px, py]);
+      if (!lonLat) continue;
+
+      oceanIndices.push(idx);
+      oceanLatMap.set(idx, Math.abs(lonLat[1]));
+    }
+  }
+
+  // Shared BFS + latitude biome + distance gradient + wave pattern
+  const oceanCells = buildOceanCells({
+    cols,
+    landSet,
+    oceanIndices,
+    oceanLatMap,
+    rows,
+  });
+
   // ── Markers: project centroids for visited countries ──
+  // Filter to front hemisphere only (angular distance < 90° from rotation center)
+  const DEG_TO_RAD = Math.PI / 180;
+  const sinPhi0 = Math.sin(rotation.phi * DEG_TO_RAD);
+  const cosPhi0 = Math.cos(rotation.phi * DEG_TO_RAD);
+  const lambda0Rad = rotation.lambda * DEG_TO_RAD;
+
   const markers: ProjectedCountryMarker[] = [];
 
   for (const entry of COUNTRY_BIOMES) {
@@ -177,9 +222,16 @@ function rasterizeGlobe(
     if (!countryFeature) continue;
 
     const centroid = geoCentroid(countryFeature);
-    const projected = projection(centroid);
 
-    // Only include markers on the visible hemisphere
+    // Great-circle angular distance: cos(d) < 0 → back hemisphere
+    const phi2 = centroid[1] * DEG_TO_RAD;
+    const deltaLambda = centroid[0] * DEG_TO_RAD - lambda0Rad;
+    const cosD =
+      sinPhi0 * Math.sin(phi2) +
+      cosPhi0 * Math.cos(phi2) * Math.cos(deltaLambda);
+    if (cosD < 0) continue;
+
+    const projected = projection(centroid);
     if (!projected) continue;
 
     markers.push({
@@ -192,7 +244,7 @@ function rasterizeGlobe(
     });
   }
 
-  return { boundaryPixels, cells, cols, markers, rows };
+  return { boundaryPixels, cells, cols, markers, oceanCells, rows };
 }
 
 /* ── Hook ── */

@@ -48,6 +48,26 @@ function GlobeBackground() {
   return <pixiGraphics draw={draw} />;
 }
 
+function GlobeOceanGrid({ grid }: { grid: WorldPixelGridResult }) {
+  const draw = useCallback(
+    (g: Graphics) => {
+      g.clear();
+
+      if (!grid.oceanCells) return;
+
+      const cellW = GLOBE_CELL_SIZE - 1;
+      for (const cell of grid.oceanCells) {
+        const x = cell.col * GLOBE_CELL_SIZE;
+        const y = cell.row * GLOBE_CELL_SIZE;
+        g.rect(x, y, cellW, cellW).fill(cell.color);
+      }
+    },
+    [grid],
+  );
+
+  return <pixiGraphics draw={draw} />;
+}
+
 function GlobeLandGrid({ grid }: { grid: WorldPixelGridResult }) {
   const draw = useCallback(
     (g: Graphics) => {
@@ -209,6 +229,7 @@ export default function GlobePixelMap({
         y={HALF}
       >
         <GlobeBackground />
+        <GlobeOceanGrid grid={grid} />
         <GlobeLandGrid grid={grid} />
         <GlobeVisitedOverlay grid={grid} />
         <GlobeBorders grid={grid} />

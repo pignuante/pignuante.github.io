@@ -21,6 +21,8 @@ export interface WorldPixelGridResult {
   cells: ColoredPixelCell[];
   cols: number;
   markers: ProjectedCountryMarker[];
+  /** Ocean cells: latitude biome + coast-distance gradient + wave pattern */
+  oceanCells?: ColoredPixelCell[];
   rows: number;
 }
 

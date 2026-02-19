@@ -11,9 +11,19 @@ interface DragState {
   offsetY: number;
 }
 
-/** Max vertical offset at the given zoom (0 at zoom=1, grows as zoom increases) */
+/**
+ * Max vertical offset at the given zoom.
+ *
+ * At zoom=1 the full content is visible → no pan needed → 0.
+ * At zoom>1 the pivot can range from 0 to h, i.e. offset ∈ [-h/2, h/2],
+ * so the viewport can reach both top and bottom edges of the content.
+ *
+ * Derivation (PixiJS transform with position = pivot):
+ *   content_top = pivot × (1 − 1/z) ≥ 0  →  pivot ≥ 0  →  offset ≥ −h/2
+ *   content_bottom = content_top + h/z ≤ h →  pivot ≤ h  →  offset ≤  h/2
+ */
 function clampRange(h: number, z: number): number {
-  return Math.max(0, (h / 2) * (1 - 1 / z));
+  return z <= 1 ? 0 : h / 2;
 }
 
 /**

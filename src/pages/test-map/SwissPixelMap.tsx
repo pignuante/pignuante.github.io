@@ -1,6 +1,6 @@
 import type { FederatedPointerEvent } from "pixi.js";
 import { Application, extend } from "@pixi/react";
-import { Container, Graphics, TextStyle } from "pixi.js";
+import { Container, Graphics } from "pixi.js";
 import { useCallback, useState } from "react";
 import type { HoveredCityInfo, PixelGridResult, ProjectedCity } from "./types";
 import {
@@ -21,8 +21,6 @@ import {
   MAP_PADDING,
   MAP_WIDTH,
 } from "./constants";
-import { SWISS_CITIES } from "./swiss-data";
-import { useGeoPixelGrid } from "./useGeoPixelGrid";
 
 // Register PixiJS components for @pixi/react
 extend({ Container, Graphics });
@@ -190,33 +188,17 @@ function BackgroundGrid() {
   return <pixiGraphics draw={draw} />;
 }
 
-/* ── Loading state ── */
-function LoadingText() {
-  return (
-    <pixiText
-      style={
-        new TextStyle({
-          fill: 0x57_53_4e,
-          fontFamily: '"Press Start 2P", monospace',
-          fontSize: 12,
-        })
-      }
-      text="Loading map..."
-      x={MAP_WIDTH / 2 - 60}
-      y={MAP_HEIGHT / 2}
-    />
-  );
-}
-
 /* ── Props ── */
 interface SwissPixelMapProps {
+  grid: PixelGridResult;
   onCityHover?: (info: HoveredCityInfo | null) => void;
 }
 
 /* ── Main component ── */
-export default function SwissPixelMap({ onCityHover }: SwissPixelMapProps) {
-  const grid = useGeoPixelGrid(SWISS_CITIES);
-
+export default function SwissPixelMap({
+  grid,
+  onCityHover,
+}: SwissPixelMapProps) {
   // Internal state for PixiJS HoverHighlight (must stay in canvas)
   const [hoveredCity, setHoveredCity] = useState<ProjectedCity | null>(null);
 
@@ -247,16 +229,10 @@ export default function SwissPixelMap({ onCityHover }: SwissPixelMapProps) {
       width={MAP_WIDTH}
     >
       <BackgroundGrid />
-      {grid ? (
-        <>
-          <LandGrid grid={grid} />
-          <CantonBoundaries grid={grid} />
-          <HoverHighlight grid={grid} hoveredCity={hoveredCity} />
-          <CityDots grid={grid} onHover={handleHover} />
-        </>
-      ) : (
-        <LoadingText />
-      )}
+      <LandGrid grid={grid} />
+      <CantonBoundaries grid={grid} />
+      <HoverHighlight grid={grid} hoveredCity={hoveredCity} />
+      <CityDots grid={grid} onHover={handleHover} />
     </Application>
   );
 }

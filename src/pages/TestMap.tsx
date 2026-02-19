@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { HoveredCityInfo } from "./test-map/types";
 import {
   COLOR_CANTON_BORDER_CSS,
@@ -8,8 +8,9 @@ import {
   MAP_HEIGHT,
   MAP_WIDTH,
 } from "./test-map/constants";
-
-const SwissPixelMap = lazy(() => import("./test-map/SwissPixelMap"));
+import { SWISS_CITIES } from "./test-map/swiss-data";
+import SwissPixelMap from "./test-map/SwissPixelMap";
+import { useGeoPixelGrid } from "./test-map/useGeoPixelGrid";
 
 /** Tooltip state with CSS-space coordinates (scaled for actual canvas size) */
 interface TooltipState {
@@ -21,6 +22,7 @@ interface TooltipState {
 export default function TestMap() {
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const grid = useGeoPixelGrid(SWISS_CITIES);
 
   const handleCityHover = useCallback((info: HoveredCityInfo | null) => {
     if (!info) {
@@ -56,20 +58,18 @@ export default function TestMap() {
         {/* position:relative container for the HTML overlay tooltip */}
         <div className="relative" style={{ imageRendering: "pixelated" }}>
           <div
-            className="overflow-hidden border-4 border-[var(--border-default)]"
+            className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
             ref={canvasWrapperRef}
           >
-            <Suspense
-              fallback={
-                <div className="flex h-[400px] w-[600px] items-center justify-center bg-[var(--surface)]">
-                  <span className="font-pixel text-xs text-[var(--text-secondary)]">
-                    Loading map...
-                  </span>
-                </div>
-              }
-            >
-              <SwissPixelMap onCityHover={handleCityHover} />
-            </Suspense>
+            {grid ? (
+              <SwissPixelMap grid={grid} onCityHover={handleCityHover} />
+            ) : (
+              <div className="flex h-[400px] w-[600px] items-center justify-center bg-[var(--surface)]">
+                <span className="font-pixel text-xs text-[var(--text-secondary)]">
+                  Loading map...
+                </span>
+              </div>
+            )}
           </div>
 
           {/* HTML overlay tooltip — renders OUTSIDE the canvas, never clipped */}

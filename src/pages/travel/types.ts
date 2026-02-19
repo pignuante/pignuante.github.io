@@ -19,6 +19,7 @@ export interface WorldPixelGridResult {
   boundaryPixels: BoundaryPixel[];
   cells: ColoredPixelCell[];
   cols: number;
+  markers: ProjectedCountryMarker[];
   rows: number;
 }
 
@@ -26,15 +27,17 @@ export interface WorldPixelGridResult {
 export interface CountryBiomeEntry {
   biome: Biome;
   id: string; // ISO 3166-1 numeric code
+  name: string; // English name
   nameKo: string;
   visited?: boolean;
 }
 
-/** Hover info from world map — reuses same pattern as swiss map */
-export interface WorldHoveredInfo {
-  canvasX: number;
-  canvasY: number;
-  countryName: string;
-  countryNameKo: string;
+/** Country marker with projected pixel coordinates */
+export interface ProjectedCountryMarker {
+  id: string;
+  name: string;
+  nameKo: string;
   visited: boolean;
+  x: number; // projected canvas-space X
+  y: number; // projected canvas-space Y
 }

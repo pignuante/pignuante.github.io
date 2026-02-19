@@ -1,55 +1,146 @@
+import type { FederatedPointerEvent } from "pixi.js";
 import { Application, extend } from "@pixi/react";
 import { Container, Graphics } from "pixi.js";
 import { useCallback } from "react";
-import type { WorldPixelGridResult } from "./types";
+import type { ProjectedCountryMarker, WorldPixelGridResult } from "./types";
 import {
+  COLOR_MARKER_INNER,
+  COLOR_MARKER_OUTER,
   COLOR_WORLD_BG_DOT,
   COLOR_WORLD_BORDER,
+  MARKER_DOT_INNER_RADIUS,
+  MARKER_DOT_RADIUS,
+  MARKER_HIT_RADIUS_MULTIPLIER,
   WORLD_CELL_SIZE,
   WORLD_MAP_HEIGHT,
   WORLD_MAP_WIDTH,
 } from "./constants";
+import { wrapX } from "./utils";
 
 // Register PixiJS components for @pixi/react
 extend({ Container, Graphics });
 
+/** Squared hit-test radius for marker detection */
+const HIT_RADIUS_SQ = (MARKER_DOT_RADIUS * MARKER_HIT_RADIUS_MULTIPLIER) ** 2;
+
 /* ── Sub-components ── */
 
-function LandGrid({ grid }: { grid: WorldPixelGridResult }) {
+function LandGrid({
+  grid,
+  offsetX,
+}: {
+  grid: WorldPixelGridResult;
+  offsetX: number;
+}) {
   const draw = useCallback(
     (g: Graphics) => {
       g.clear();
 
+      const cellW = WORLD_CELL_SIZE - 1;
       for (const cell of grid.cells) {
-        const x = cell.col * WORLD_CELL_SIZE;
+        const origX = cell.col * WORLD_CELL_SIZE;
+        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
         const y = cell.row * WORLD_CELL_SIZE;
-        g.rect(x, y, WORLD_CELL_SIZE - 1, WORLD_CELL_SIZE - 1).fill(cell.color);
+
+        g.rect(wx, y, cellW, cellW).fill(cell.color);
+
+        // If cell straddles the right edge, draw a wrapped copy on the left
+        if (wx + WORLD_CELL_SIZE > WORLD_MAP_WIDTH) {
+          g.rect(wx - WORLD_MAP_WIDTH, y, cellW, cellW).fill(cell.color);
+        }
       }
     },
-    [grid],
+    [grid, offsetX],
   );
 
   return <pixiGraphics draw={draw} />;
 }
 
-function CountryBorders({ grid }: { grid: WorldPixelGridResult }) {
+function CountryBorders({
+  grid,
+  offsetX,
+}: {
+  grid: WorldPixelGridResult;
+  offsetX: number;
+}) {
   const draw = useCallback(
     (g: Graphics) => {
       g.clear();
 
+      const cellW = WORLD_CELL_SIZE - 1;
+      const fill = { alpha: 0.4, color: COLOR_WORLD_BORDER };
+
       for (const cell of grid.boundaryPixels) {
-        const x = cell.col * WORLD_CELL_SIZE;
+        const origX = cell.col * WORLD_CELL_SIZE;
+        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
         const y = cell.row * WORLD_CELL_SIZE;
-        g.rect(x, y, WORLD_CELL_SIZE - 1, WORLD_CELL_SIZE - 1).fill({
-          alpha: 0.4,
-          color: COLOR_WORLD_BORDER,
-        });
+
+        g.rect(wx, y, cellW, cellW).fill(fill);
+
+        if (wx + WORLD_CELL_SIZE > WORLD_MAP_WIDTH) {
+          g.rect(wx - WORLD_MAP_WIDTH, y, cellW, cellW).fill(fill);
+        }
       }
     },
-    [grid],
+    [grid, offsetX],
   );
 
   return <pixiGraphics draw={draw} />;
+}
+
+function CountryMarkers({
+  markers,
+  offsetX,
+  onHover,
+}: {
+  markers: ProjectedCountryMarker[];
+  offsetX: number;
+  onHover: (marker: ProjectedCountryMarker | null) => void;
+}) {
+  const draw = useCallback(
+    (g: Graphics) => {
+      g.clear();
+
+      for (const m of markers) {
+        const wx = wrapX(m.x + offsetX, WORLD_MAP_WIDTH);
+        // Outer ring
+        g.circle(wx, m.y, MARKER_DOT_RADIUS).fill(COLOR_MARKER_OUTER);
+        // Inner dot
+        g.circle(wx, m.y, MARKER_DOT_INNER_RADIUS).fill(COLOR_MARKER_INNER);
+      }
+    },
+    [markers, offsetX],
+  );
+
+  const handlePointerMove = useCallback(
+    (e: FederatedPointerEvent) => {
+      // Unwrap the pointer position back to original map-space
+      const pointerX = wrapX(e.global.x - offsetX, WORLD_MAP_WIDTH);
+      const pointerY = e.global.y;
+
+      const hit = markers.find((m) => {
+        const dx = m.x - pointerX;
+        const dy = m.y - pointerY;
+        return dx * dx + dy * dy <= HIT_RADIUS_SQ;
+      });
+
+      onHover(hit ?? null);
+    },
+    [markers, offsetX, onHover],
+  );
+
+  const handlePointerLeave = useCallback(() => {
+    onHover(null);
+  }, [onHover]);
+
+  return (
+    <pixiGraphics
+      draw={draw}
+      eventMode="static"
+      onPointerLeave={handlePointerLeave}
+      onPointerMove={handlePointerMove}
+    />
+  );
 }
 
 function BackgroundGrid() {
@@ -69,10 +160,23 @@ function BackgroundGrid() {
 /* ── Props ── */
 interface WorldPixelMapProps {
   grid: WorldPixelGridResult;
+  offsetX?: number;
+  onMarkerHover?: (marker: ProjectedCountryMarker | null) => void;
 }
 
 /* ── Main component ── */
-export default function WorldPixelMap({ grid }: WorldPixelMapProps) {
+export default function WorldPixelMap({
+  grid,
+  offsetX = 0,
+  onMarkerHover,
+}: WorldPixelMapProps) {
+  const handleHover = useCallback(
+    (marker: ProjectedCountryMarker | null) => {
+      onMarkerHover?.(marker);
+    },
+    [onMarkerHover],
+  );
+
   return (
     <Application
       antialias={false}
@@ -82,8 +186,13 @@ export default function WorldPixelMap({ grid }: WorldPixelMapProps) {
       width={WORLD_MAP_WIDTH}
     >
       <BackgroundGrid />
-      <LandGrid grid={grid} />
-      <CountryBorders grid={grid} />
+      <LandGrid grid={grid} offsetX={offsetX} />
+      <CountryBorders grid={grid} offsetX={offsetX} />
+      <CountryMarkers
+        markers={grid.markers}
+        offsetX={offsetX}
+        onHover={handleHover}
+      />
     </Application>
   );
 }

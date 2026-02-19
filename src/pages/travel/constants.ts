@@ -1,20 +1,14 @@
 import type { Biome } from "./types";
 
 /** Canvas logical dimensions (DPR scaling handled by PixiJS resolution prop) */
-export const WORLD_MAP_WIDTH = 648;
-export const WORLD_MAP_HEIGHT = 368;
+export const WORLD_MAP_WIDTH = 960;
+export const WORLD_MAP_HEIGHT = 504;
 
 /** Breathing room (px) between canvas edge and projected map outline */
 export const WORLD_MAP_INSET = 4;
 
-/**
- * @deprecated Kept at 0 — projection margins are handled by WORLD_MAP_INSET
- * via fitExtent in useWorldPixelGrid. Graphics draw at absolute positions.
- */
-export const WORLD_MAP_PADDING = 0;
-
-/** Pixel cell size in screen pixels */
-export const WORLD_CELL_SIZE = 4;
+/** Pixel cell size in screen pixels (3px balances detail vs pixel-art feel) */
+export const WORLD_CELL_SIZE = 3;
 
 /* ── Biome color palette (PixiJS hex) ── */
 
@@ -35,6 +29,23 @@ export const COLOR_VISITED_TINT = 0xff_6b_6b;
 /** Background dot grid color */
 export const COLOR_WORLD_BG_DOT = 0x1c_19_17;
 
+/* ── Country marker constants ── */
+
+/** Marker outer dot radius */
+export const MARKER_DOT_RADIUS = 3;
+
+/** Marker inner dot radius */
+export const MARKER_DOT_INNER_RADIUS = 1.5;
+
+/** Marker outer color (warm red, same as visited tint) */
+export const COLOR_MARKER_OUTER = 0xff_6b_6b;
+
+/** Marker inner color (white) */
+export const COLOR_MARKER_INNER = 0xff_ff_ff;
+
+/** Hit-test radius multiplier (for hover detection) */
+export const MARKER_HIT_RADIUS_MULTIPLIER = 3;
+
 /* ── Biome CSS hex (for HTML legend) ── */
 
 const toHex = (n: number): string => `#${n.toString(16).padStart(6, "0")}`;
@@ -45,16 +56,4 @@ export const BIOME_COLORS_CSS: Record<Biome, string> = {
   polar: toHex(BIOME_COLORS.polar),
   temperate: toHex(BIOME_COLORS.temperate),
   tropical: toHex(BIOME_COLORS.tropical),
-};
-
-export const COLOR_VISITED_TINT_CSS = toHex(COLOR_VISITED_TINT);
-
-/* ── Biome Korean labels ── */
-
-export const BIOME_LABELS_KO: Record<Biome, string> = {
-  arid: "건조",
-  continental: "대륙성",
-  polar: "극지",
-  temperate: "온대",
-  tropical: "열대",
 };

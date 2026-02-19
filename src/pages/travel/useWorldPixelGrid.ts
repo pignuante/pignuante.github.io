@@ -6,6 +6,7 @@ import type {
   Biome,
   BoundaryPixel,
   ColoredPixelCell,
+  ProjectedCountryMarker,
   WorldPixelGridResult,
 } from "./types";
 import {
@@ -15,7 +16,11 @@ import {
   WORLD_MAP_INSET,
   WORLD_MAP_WIDTH,
 } from "./constants";
-import { COUNTRY_BIOME_MAP, biomeFromLatitude } from "./world-data";
+import {
+  COUNTRY_BIOME_MAP,
+  COUNTRY_BIOMES,
+  biomeFromLatitude,
+} from "./world-data";
 
 /** Resolve biome for a country: manual lookup → latitude fallback */
 function resolveBiome(
@@ -153,12 +158,14 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
           WORLD_MAP_HEIGHT,
         );
 
-        // Build a set of land cells for fast lookup
-        const landSet = new Set<string>(cells.map((c) => `${c.col},${c.row}`));
+        // Build a set of land cells for fast lookup (numeric key: row * cols + col)
+        const landSet = new Set<number>(
+          cells.map((c: ColoredPixelCell) => c.row * cols + c.col),
+        );
 
         for (let row = 0; row < rows; row++) {
           for (let col = 0; col < cols; col++) {
-            if (!landSet.has(`${col},${row}`)) continue;
+            if (!landSet.has(row * cols + col)) continue;
 
             const px = col * WORLD_CELL_SIZE + Math.floor(WORLD_CELL_SIZE / 2);
             const py = row * WORLD_CELL_SIZE + Math.floor(WORLD_CELL_SIZE / 2);
@@ -172,8 +179,34 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
         }
       }
 
+      // ── Markers: project centroids for visited countries ──
+      const markers: ProjectedCountryMarker[] = [];
+
+      for (const entry of COUNTRY_BIOMES) {
+        if (!entry.visited) continue;
+
+        // Find the matching GeoJSON feature by ISO numeric id
+        const countryFeature = countries.features.find(
+          (f) => f.id?.toString() === entry.id,
+        );
+        if (!countryFeature) continue;
+
+        const centroid = geoCentroid(countryFeature);
+        const projected = projection(centroid);
+        if (!projected) continue;
+
+        markers.push({
+          id: entry.id,
+          name: entry.name,
+          nameKo: entry.nameKo,
+          visited: true,
+          x: projected[0],
+          y: projected[1],
+        });
+      }
+
       if (!cancelled) {
-        setResult({ boundaryPixels, cells, cols, rows });
+        setResult({ boundaryPixels, cells, cols, markers, rows });
       }
     })();
 

@@ -1,0 +1,544 @@
+{
+  "gridW": 1440,
+  "gridH": 720,
+  "degPerCell": 0.25,
+  "naturalEarthFit": {
+    "scale": 176.15557021995005,
+    "translate": [480, 248.11405657140665]
+  },
+  "countries": [
+    { "iso": "716", "biome": "tropical" },
+    { "iso": "894", "biome": "tropical" },
+    { "iso": "887", "biome": "tropical" },
+    {
+      "iso": "704",
+      "biome": "tropical",
+      "name": "Vietnam",
+      "nameKo": "베트남"
+    },
+    {
+      "iso": "862",
+      "biome": "tropical",
+      "name": "Venezuela",
+      "nameKo": "베네수엘라"
+    },
+    { "iso": "336", "biome": "temperate" },
+    { "iso": "548", "biome": "tropical" },
+    {
+      "iso": "860",
+      "biome": "arid",
+      "name": "Uzbekistan",
+      "nameKo": "우즈베키스탄"
+    },
+    { "iso": "858", "biome": "temperate" },
+    { "iso": "583", "biome": "tropical" },
+    { "iso": "584", "biome": "tropical" },
+    { "iso": "580", "biome": "tropical" },
+    { "iso": "850", "biome": "tropical" },
+    { "iso": "316", "biome": "tropical" },
+    { "iso": "016", "biome": "tropical" },
+    { "iso": "630", "biome": "tropical" },
+    {
+      "iso": "840",
+      "biome": "temperate",
+      "name": "United States",
+      "nameKo": "미국",
+      "visited": true
+    },
+    { "iso": "239", "biome": "continental" },
+    { "iso": "086", "biome": "tropical" },
+    { "iso": "654", "biome": "tropical" },
+    { "iso": "612", "biome": "temperate" },
+    { "iso": "660", "biome": "tropical" },
+    { "iso": "238", "biome": "continental" },
+    { "iso": "136", "biome": "tropical" },
+    { "iso": "060", "biome": "temperate" },
+    { "iso": "092", "biome": "tropical" },
+    { "iso": "796", "biome": "tropical" },
+    { "iso": "500", "biome": "tropical" },
+    { "iso": "832", "biome": "continental" },
+    { "iso": "831", "biome": "continental" },
+    { "iso": "833", "biome": "continental" },
+    {
+      "iso": "826",
+      "biome": "temperate",
+      "name": "United Kingdom",
+      "nameKo": "영국"
+    },
+    { "iso": "784", "biome": "arid", "name": "UAE", "nameKo": "아랍에미리트" },
+    {
+      "iso": "804",
+      "biome": "continental",
+      "name": "Ukraine",
+      "nameKo": "우크라이나"
+    },
+    { "iso": "800", "biome": "tropical" },
+    {
+      "iso": "795",
+      "biome": "arid",
+      "name": "Turkmenistan",
+      "nameKo": "투르크메니스탄"
+    },
+    {
+      "iso": "792",
+      "biome": "temperate",
+      "name": "Türkiye",
+      "nameKo": "튀르키예"
+    },
+    { "iso": "788", "biome": "temperate" },
+    { "iso": "780", "biome": "tropical" },
+    { "iso": "776", "biome": "tropical" },
+    { "iso": "768", "biome": "tropical" },
+    { "iso": "626", "biome": "tropical" },
+    {
+      "iso": "764",
+      "biome": "tropical",
+      "name": "Thailand",
+      "nameKo": "태국",
+      "visited": true
+    },
+    {
+      "iso": "834",
+      "biome": "tropical",
+      "name": "Tanzania",
+      "nameKo": "탄자니아"
+    },
+    { "iso": "762", "biome": "temperate" },
+    {
+      "iso": "158",
+      "biome": "temperate",
+      "name": "Taiwan",
+      "nameKo": "대만",
+      "visited": true
+    },
+    { "iso": "760", "biome": "temperate" },
+    {
+      "iso": "756",
+      "biome": "temperate",
+      "name": "Switzerland",
+      "nameKo": "스위스",
+      "visited": true
+    },
+    {
+      "iso": "752",
+      "biome": "continental",
+      "name": "Sweden",
+      "nameKo": "스웨덴"
+    },
+    { "iso": "748", "biome": "temperate" },
+    { "iso": "740", "biome": "tropical" },
+    { "iso": "728", "biome": "tropical" },
+    { "iso": "729", "biome": "tropical" },
+    {
+      "iso": "144",
+      "biome": "tropical",
+      "name": "Sri Lanka",
+      "nameKo": "스리랑카"
+    },
+    { "iso": "724", "biome": "temperate", "name": "Spain", "nameKo": "스페인" },
+    {
+      "iso": "410",
+      "biome": "temperate",
+      "name": "South Korea",
+      "nameKo": "대한민국",
+      "visited": true
+    },
+    {
+      "iso": "710",
+      "biome": "temperate",
+      "name": "South Africa",
+      "nameKo": "남아프리카공화국"
+    },
+    { "iso": "706", "biome": "arid", "name": "Somalia", "nameKo": "소말리아" },
+    { "iso": "", "biome": "tropical" },
+    { "iso": "090", "biome": "tropical" },
+    { "iso": "703", "biome": "continental" },
+    { "iso": "705", "biome": "continental" },
+    {
+      "iso": "702",
+      "biome": "tropical",
+      "name": "Singapore",
+      "nameKo": "싱가포르"
+    },
+    { "iso": "694", "biome": "tropical" },
+    { "iso": "690", "biome": "tropical" },
+    { "iso": "688", "biome": "temperate" },
+    { "iso": "686", "biome": "tropical" },
+    {
+      "iso": "682",
+      "biome": "arid",
+      "name": "Saudi Arabia",
+      "nameKo": "사우디아라비아"
+    },
+    { "iso": "678", "biome": "tropical" },
+    { "iso": "674", "biome": "temperate" },
+    { "iso": "882", "biome": "tropical" },
+    { "iso": "670", "biome": "tropical" },
+    { "iso": "662", "biome": "tropical" },
+    { "iso": "659", "biome": "tropical" },
+    { "iso": "646", "biome": "tropical" },
+    {
+      "iso": "643",
+      "biome": "continental",
+      "name": "Russia",
+      "nameKo": "러시아"
+    },
+    {
+      "iso": "642",
+      "biome": "continental",
+      "name": "Romania",
+      "nameKo": "루마니아"
+    },
+    { "iso": "634", "biome": "temperate" },
+    {
+      "iso": "620",
+      "biome": "temperate",
+      "name": "Portugal",
+      "nameKo": "포르투갈"
+    },
+    {
+      "iso": "616",
+      "biome": "continental",
+      "name": "Poland",
+      "nameKo": "폴란드"
+    },
+    {
+      "iso": "608",
+      "biome": "tropical",
+      "name": "Philippines",
+      "nameKo": "필리핀"
+    },
+    { "iso": "604", "biome": "tropical", "name": "Peru", "nameKo": "페루" },
+    { "iso": "600", "biome": "tropical" },
+    {
+      "iso": "598",
+      "biome": "tropical",
+      "name": "Papua New Guinea",
+      "nameKo": "파푸아뉴기니"
+    },
+    { "iso": "591", "biome": "tropical" },
+    { "iso": "585", "biome": "tropical" },
+    { "iso": "586", "biome": "arid", "name": "Pakistan", "nameKo": "파키스탄" },
+    { "iso": "512", "biome": "tropical" },
+    {
+      "iso": "578",
+      "biome": "continental",
+      "name": "Norway",
+      "nameKo": "노르웨이"
+    },
+    {
+      "iso": "408",
+      "biome": "temperate",
+      "name": "North Korea",
+      "nameKo": "북한"
+    },
+    {
+      "iso": "566",
+      "biome": "tropical",
+      "name": "Nigeria",
+      "nameKo": "나이지리아"
+    },
+    { "iso": "562", "biome": "arid", "name": "Niger", "nameKo": "니제르" },
+    { "iso": "558", "biome": "tropical" },
+    {
+      "iso": "554",
+      "biome": "temperate",
+      "name": "New Zealand",
+      "nameKo": "뉴질랜드"
+    },
+    { "iso": "570", "biome": "tropical" },
+    { "iso": "184", "biome": "tropical" },
+    {
+      "iso": "528",
+      "biome": "temperate",
+      "name": "Netherlands",
+      "nameKo": "네덜란드"
+    },
+    { "iso": "533", "biome": "tropical" },
+    { "iso": "531", "biome": "tropical" },
+    { "iso": "524", "biome": "continental", "name": "Nepal", "nameKo": "네팔" },
+    { "iso": "520", "biome": "tropical" },
+    { "iso": "516", "biome": "arid", "name": "Namibia", "nameKo": "나미비아" },
+    { "iso": "508", "biome": "tropical" },
+    { "iso": "504", "biome": "arid", "name": "Morocco", "nameKo": "모로코" },
+    { "iso": "732", "biome": "temperate" },
+    { "iso": "499", "biome": "temperate" },
+    {
+      "iso": "496",
+      "biome": "continental",
+      "name": "Mongolia",
+      "nameKo": "몽골"
+    },
+    { "iso": "498", "biome": "continental" },
+    { "iso": "492", "biome": "temperate" },
+    { "iso": "484", "biome": "arid", "name": "Mexico", "nameKo": "멕시코" },
+    { "iso": "480", "biome": "tropical" },
+    {
+      "iso": "478",
+      "biome": "arid",
+      "name": "Mauritania",
+      "nameKo": "모리타니"
+    },
+    { "iso": "470", "biome": "temperate" },
+    { "iso": "466", "biome": "arid", "name": "Mali", "nameKo": "말리" },
+    { "iso": "462", "biome": "tropical" },
+    {
+      "iso": "458",
+      "biome": "tropical",
+      "name": "Malaysia",
+      "nameKo": "말레이시아"
+    },
+    { "iso": "454", "biome": "tropical" },
+    { "iso": "450", "biome": "tropical" },
+    { "iso": "807", "biome": "temperate" },
+    { "iso": "442", "biome": "continental" },
+    { "iso": "440", "biome": "continental" },
+    { "iso": "438", "biome": "continental" },
+    { "iso": "434", "biome": "arid", "name": "Libya", "nameKo": "리비아" },
+    { "iso": "430", "biome": "tropical" },
+    { "iso": "426", "biome": "temperate" },
+    { "iso": "422", "biome": "temperate" },
+    { "iso": "428", "biome": "continental" },
+    { "iso": "418", "biome": "tropical", "name": "Laos", "nameKo": "라오스" },
+    { "iso": "417", "biome": "temperate" },
+    { "iso": "414", "biome": "temperate" },
+    { "iso": "", "biome": "temperate" },
+    { "iso": "296", "biome": "tropical" },
+    { "iso": "404", "biome": "tropical", "name": "Kenya", "nameKo": "케냐" },
+    {
+      "iso": "398",
+      "biome": "arid",
+      "name": "Kazakhstan",
+      "nameKo": "카자흐스탄"
+    },
+    { "iso": "400", "biome": "temperate" },
+    {
+      "iso": "392",
+      "biome": "temperate",
+      "name": "Japan",
+      "nameKo": "일본",
+      "visited": true
+    },
+    { "iso": "388", "biome": "tropical" },
+    {
+      "iso": "380",
+      "biome": "temperate",
+      "name": "Italy",
+      "nameKo": "이탈리아",
+      "visited": true
+    },
+    { "iso": "376", "biome": "arid", "name": "Israel", "nameKo": "이스라엘" },
+    { "iso": "275", "biome": "temperate" },
+    {
+      "iso": "372",
+      "biome": "temperate",
+      "name": "Ireland",
+      "nameKo": "아일랜드"
+    },
+    { "iso": "368", "biome": "arid", "name": "Iraq", "nameKo": "이라크" },
+    { "iso": "364", "biome": "arid", "name": "Iran", "nameKo": "이란" },
+    {
+      "iso": "360",
+      "biome": "tropical",
+      "name": "Indonesia",
+      "nameKo": "인도네시아"
+    },
+    { "iso": "356", "biome": "tropical", "name": "India", "nameKo": "인도" },
+    {
+      "iso": "352",
+      "biome": "polar",
+      "name": "Iceland",
+      "nameKo": "아이슬란드"
+    },
+    {
+      "iso": "348",
+      "biome": "continental",
+      "name": "Hungary",
+      "nameKo": "헝가리"
+    },
+    { "iso": "340", "biome": "tropical" },
+    { "iso": "332", "biome": "tropical" },
+    { "iso": "328", "biome": "tropical" },
+    { "iso": "624", "biome": "tropical" },
+    { "iso": "324", "biome": "tropical" },
+    { "iso": "320", "biome": "tropical" },
+    { "iso": "308", "biome": "tropical" },
+    {
+      "iso": "300",
+      "biome": "temperate",
+      "name": "Greece",
+      "nameKo": "그리스"
+    },
+    { "iso": "288", "biome": "tropical" },
+    { "iso": "276", "biome": "temperate", "name": "Germany", "nameKo": "독일" },
+    { "iso": "268", "biome": "temperate" },
+    { "iso": "270", "biome": "tropical" },
+    { "iso": "266", "biome": "tropical" },
+    {
+      "iso": "250",
+      "biome": "temperate",
+      "name": "France",
+      "nameKo": "프랑스"
+    },
+    { "iso": "666", "biome": "continental" },
+    { "iso": "876", "biome": "tropical" },
+    { "iso": "663", "biome": "tropical" },
+    { "iso": "652", "biome": "tropical" },
+    { "iso": "258", "biome": "tropical" },
+    { "iso": "540", "biome": "tropical" },
+    { "iso": "260", "biome": "continental" },
+    { "iso": "248", "biome": "polar" },
+    {
+      "iso": "246",
+      "biome": "continental",
+      "name": "Finland",
+      "nameKo": "핀란드"
+    },
+    { "iso": "242", "biome": "tropical" },
+    {
+      "iso": "231",
+      "biome": "tropical",
+      "name": "Ethiopia",
+      "nameKo": "에티오피아"
+    },
+    { "iso": "233", "biome": "continental" },
+    { "iso": "232", "biome": "tropical" },
+    { "iso": "226", "biome": "tropical" },
+    { "iso": "222", "biome": "tropical" },
+    { "iso": "818", "biome": "arid", "name": "Egypt", "nameKo": "이집트" },
+    {
+      "iso": "218",
+      "biome": "tropical",
+      "name": "Ecuador",
+      "nameKo": "에콰도르"
+    },
+    { "iso": "214", "biome": "tropical" },
+    { "iso": "212", "biome": "tropical" },
+    { "iso": "262", "biome": "tropical" },
+    {
+      "iso": "304",
+      "biome": "polar",
+      "name": "Greenland",
+      "nameKo": "그린란드"
+    },
+    { "iso": "234", "biome": "polar" },
+    {
+      "iso": "208",
+      "biome": "continental",
+      "name": "Denmark",
+      "nameKo": "덴마크"
+    },
+    {
+      "iso": "203",
+      "biome": "continental",
+      "name": "Czechia",
+      "nameKo": "체코"
+    },
+    { "iso": "", "biome": "temperate" },
+    { "iso": "196", "biome": "temperate" },
+    { "iso": "192", "biome": "tropical", "name": "Cuba", "nameKo": "쿠바" },
+    { "iso": "191", "biome": "continental" },
+    { "iso": "384", "biome": "tropical" },
+    { "iso": "188", "biome": "tropical" },
+    {
+      "iso": "180",
+      "biome": "tropical",
+      "name": "DR Congo",
+      "nameKo": "콩고민주공화국"
+    },
+    { "iso": "178", "biome": "tropical" },
+    { "iso": "174", "biome": "tropical" },
+    {
+      "iso": "170",
+      "biome": "tropical",
+      "name": "Colombia",
+      "nameKo": "콜롬비아"
+    },
+    { "iso": "156", "biome": "temperate", "name": "China", "nameKo": "중국" },
+    { "iso": "446", "biome": "tropical" },
+    { "iso": "344", "biome": "tropical" },
+    { "iso": "152", "biome": "temperate", "name": "Chile", "nameKo": "칠레" },
+    { "iso": "148", "biome": "arid", "name": "Chad", "nameKo": "차드" },
+    { "iso": "140", "biome": "tropical" },
+    { "iso": "132", "biome": "tropical" },
+    {
+      "iso": "124",
+      "biome": "continental",
+      "name": "Canada",
+      "nameKo": "캐나다"
+    },
+    { "iso": "120", "biome": "tropical" },
+    {
+      "iso": "116",
+      "biome": "tropical",
+      "name": "Cambodia",
+      "nameKo": "캄보디아"
+    },
+    {
+      "iso": "104",
+      "biome": "tropical",
+      "name": "Myanmar",
+      "nameKo": "미얀마"
+    },
+    { "iso": "108", "biome": "tropical" },
+    { "iso": "854", "biome": "tropical" },
+    { "iso": "100", "biome": "temperate" },
+    { "iso": "096", "biome": "tropical" },
+    { "iso": "076", "biome": "tropical", "name": "Brazil", "nameKo": "브라질" },
+    { "iso": "072", "biome": "tropical" },
+    { "iso": "070", "biome": "temperate" },
+    { "iso": "068", "biome": "tropical" },
+    { "iso": "064", "biome": "temperate" },
+    { "iso": "204", "biome": "tropical" },
+    { "iso": "084", "biome": "tropical" },
+    {
+      "iso": "056",
+      "biome": "temperate",
+      "name": "Belgium",
+      "nameKo": "벨기에"
+    },
+    { "iso": "112", "biome": "continental" },
+    { "iso": "052", "biome": "tropical" },
+    {
+      "iso": "050",
+      "biome": "tropical",
+      "name": "Bangladesh",
+      "nameKo": "방글라데시"
+    },
+    { "iso": "048", "biome": "temperate" },
+    { "iso": "044", "biome": "temperate" },
+    { "iso": "031", "biome": "temperate" },
+    {
+      "iso": "040",
+      "biome": "temperate",
+      "name": "Austria",
+      "nameKo": "오스트리아"
+    },
+    { "iso": "036", "biome": "arid", "name": "Australia", "nameKo": "호주" },
+    { "iso": "", "biome": "tropical" },
+    { "iso": "334", "biome": "continental" },
+    { "iso": "574", "biome": "temperate" },
+    { "iso": "036", "biome": "arid", "name": "Australia", "nameKo": "호주" },
+    { "iso": "051", "biome": "temperate" },
+    {
+      "iso": "032",
+      "biome": "temperate",
+      "name": "Argentina",
+      "nameKo": "아르헨티나"
+    },
+    { "iso": "028", "biome": "tropical" },
+    { "iso": "024", "biome": "tropical" },
+    { "iso": "020", "biome": "temperate" },
+    { "iso": "012", "biome": "arid", "name": "Algeria", "nameKo": "알제리" },
+    { "iso": "008", "biome": "temperate" },
+    {
+      "iso": "004",
+      "biome": "arid",
+      "name": "Afghanistan",
+      "nameKo": "아프가니스탄"
+    },
+    { "iso": "", "biome": "temperate" },
+    { "iso": "010", "biome": "polar", "name": "Antarctica", "nameKo": "남극" },
+    { "iso": "534", "biome": "tropical" }
+  ]
+}

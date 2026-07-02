@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/11/03/project-euler007-with-python.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Project Euler007 with python | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Project Euler007 with python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Blog for Study" />
+<meta property="og:description" content="A Blog for Study" />
+<link rel="canonical" href="/history/2017/11/03/project-euler007-with-python.html" />
+<meta property="og:url" content="/history/2017/11/03/project-euler007-with-python.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-11-03T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Project Euler007 with python" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-11-03T00:00:00+00:00","datePublished":"2017-11-03T00:00:00+00:00","description":"A Blog for Study","headline":"Project Euler007 with python","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/11/03/project-euler007-with-python.html"},"url":"/history/2017/11/03/project-euler007-with-python.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Project Euler007 with python | Pignu Ante</title>
+    <meta name="description" content="  By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.  What is the 10 001st prime number?">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Project+Euler007+with+python" class="title">Project Euler007 with python</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - November 3, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <blockquote>
+  <p>By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.</p>
+
+  <p>What is the 10 001st prime number?</p>
+
+</blockquote>
+
+<ul>
+  <li>
+    <p>10001번째 소수를 찾는 문제이다!</p>
+  </li>
+  <li>
+    <p>소수를 찾기위해서 n을 1~n까지 나눠봤다!</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">check_time</span>
+<span class="k">def</span> <span class="nf">euler007</span><span class="p">(</span><span class="n">number</span> <span class="o">=</span> <span class="mi">10001</span><span class="p">):</span>
+    <span class="n">primeList</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,]</span> 	
+    <span class="n">num</span>         <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">flag</span>        <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">primeList</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">number</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">primeList</span><span class="p">:</span>			
+            <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">):</span>
+                <span class="k">break</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="bp">False</span><span class="p">):</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">primeList</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">num</span> <span class="o">+=</span> <span class="mi">2</span>
+
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>반복문이 비효율적으로 중첩되어 있으므로 알고리즘을 고쳐보았다.</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span><span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">x</span><span class="o">%</span><span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">%</span><span class="n">i</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">x</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">def</span> <span class="nf">euler007a</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">n</span>
+</code></pre></div>    </div>
+
+    <p>```</p>
+  </li>
+  <li>
+    <p>초반에 구할수 있는 소수를 최대한 구한 다음 탐색의 step을 넓혔다!</p>
+
+    <p>```</p>
+  </li>
+</ul>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/11/03/project-euler007-with-python.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/11/03/project-euler007-with-python.html&text=Project+Euler007+with+python%20%7C%20Pignu+Ante:%20/history/2017/11/03/project-euler007-with-python.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Project+Euler007+with+python%20%7C%20Pignu+Ante&body=:%20/history/2017/11/03/project-euler007-with-python.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#algorithm">
+      <p><i class="fa fa-tag fa-fw"></i> algorithm</p>
+    </a>
+    
+    <a class="button" href="/history/tags#math">
+      <p><i class="fa fa-tag fa-fw"></i> math</p>
+    </a>
+    
+    <a class="button" href="/history/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Project Euler008 with python" href="/history/2017/11/03/project-euler008-with-python.html">
+            Project Euler008 with python
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Project Euler006 with python" href="/history/2017/11/01/project-euler006-with-python.html">
+            Project Euler006 with python
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

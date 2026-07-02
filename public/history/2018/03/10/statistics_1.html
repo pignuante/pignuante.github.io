@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2018/03/10/statistics_1.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Probability &amp; Distribution (1) | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Probability &amp; Distribution (1)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction, Set Theory" />
+<meta property="og:description" content="Introduction, Set Theory" />
+<link rel="canonical" href="/history/2018/03/10/statistics_1.html" />
+<meta property="og:url" content="/history/2018/03/10/statistics_1.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-10T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Probability &amp; Distribution (1)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-03-10T00:00:00+00:00","datePublished":"2018-03-10T00:00:00+00:00","description":"Introduction, Set Theory","headline":"Probability &amp; Distribution (1)","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2018/03/10/statistics_1.html"},"url":"/history/2018/03/10/statistics_1.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Probability & Distribution (1) | Pignu Ante</title>
+    <meta name="description" content="1. Probability &amp; Distribution">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Probability+%26+Distribution+%281%29" class="title">Probability & Distribution (1)</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - March 10, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h1 id="1-probability--distribution">1. Probability &amp; Distribution</h1>
+
+<h2 id="11-introduction">1.1 Introduction</h2>
+
+<h4 id="definition">Definition</h4>
+
+<ol>
+  <li>Statistical(<em>random</em>) experiment.
+    <ul>
+      <li>The outcome can not be predicted with certainly prior to the performance of experiment.</li>
+    </ul>
+  </li>
+  <li>Sample space.
+    <ul>
+      <li>Collection of every possible outcome from the random<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> experiment and denoted \(\mathscr{C}\).</li>
+    </ul>
+  </li>
+  <li>Event.
+    <ul>
+      <li>Subset of <code class="language-plaintext highlighter-rouge">Sample space</code> and denoted by A, B, C\(\cdots\).</li>
+    </ul>
+  </li>
+</ol>
+
+<blockquote>
+  <p>ex 1.1) Consider tossing a coin, then \(\mathscr{C}=\left\{\text{H, T}\right\}\).</p>
+
+  <p>ex 1.2) Consider tossing two dice(one red, the other white), then \(\mathscr{C}=\left\{\left(1, 1\right)\cdots\left(6,6\right)\right\}\)</p>
+
+  <p>ex 1.3) Consider sum seven when tossing two dice, then \(\mathscr{C}=\left\{\left(1, 6\right), \left(2, 5\right), \cdots \left(6, 1\right)\right\}\)</p>
+
+</blockquote>
+
+<h4 id="remark-11">Remark 1.1</h4>
+
+<p>Two types of probability.</p>
+
+<ol>
+  <li>Relative Frequency<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>.</li>
+  <li>Personal<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>.</li>
+</ol>
+
+<hr />
+
+<h2 id="12-set-theory">1.2 Set Theory</h2>
+
+<h4 id="definition-121">Definition 1.2.1</h4>
+
+<ul>
+  <li>If each element of set \(C_1\) is also an element of set \(C_2\), then \(C_1\) is called <strong>subset</strong> of \(C_2\), and denoted by \(C_1\subset C_2\).</li>
+</ul>
+
+<h4 id="definition-122">Definition 1.2.2</h4>
+
+<ul>
+  <li>If a set \(C\) has no elements, tehn \(C\) is called the <strong>NULL</strong>(empty) set, and denoted by \(C=\varnothing\).</li>
+</ul>
+
+<h4 id="definition-123">Definition 1.2.3</h4>
+
+<ul>
+  <li>The set of all elements that belong to at least \(C_1\) or \(C_2\) is called the <strong>union</strong> of \(C_1\) and \(C_2\), and denoted by \(C_1\cup C_2\).</li>
+  <li>It can be generalized to any number of sets \(C_1\cup C_2 \cup \cdots : =\bigcup_{k=1}^\infty C_k\)</li>
+</ul>
+
+<blockquote>
+  <p>ex 1.2.7)</p>
+
+\[\begin{aligned}
+	C_k = &amp; \left\{x:\frac{1}{k+1}\le x\le1\right\},\quad k=1,2,3,\cdots \\
+	\Rightarrow	&amp; \bigcup_{k=1}^{\infty}C_k = \left\{x: 0 \lt x\le 1\right\}
+\end{aligned}\]
+
+</blockquote>
+
+<h4 id="definition-124">Definition 1.2.4</h4>
+
+<ul>
+  <li>The set of all elements that belong to each of  \(C_1\) and \(C_2\) is called the <strong>intersection</strong> of \(C_1\) and \(C_2\), and denoted by \(C_1\cap C_2\).</li>
+  <li>It can be generalized to any number of sets \(C_1\cap C_2 \cap \cdots := \bigcap_{k=1}^\infty C_k\)</li>
+</ul>
+
+<blockquote>
+  <p>ex 1.2.11)</p>
+
+\[\begin{aligned}
+	C_k = &amp; \left\{x:0\lt x\lt \frac{1}{k}\right\} \\
+	\Rightarrow &amp; \bigcap_{k=1}^{\infty}C_k = \varnothing
+\end{aligned}\]
+
+</blockquote>
+
+<h4 id="definition-126">Definition 1.2.6</h4>
+
+<ul>
+  <li>Let \(C \subset \mathscr{C}\), then the set that consists of all element of \(\mathscr{C}\), that are not elements of \(C\) is called the <strong>complements</strong> of \(C\), and denoted by \(C^c, \overline{C}\).</li>
+</ul>
+
+<p><img src="/history/assets/images/statistic/1/statistic1.1.png" alt="statistic1.1" /></p>
+
+<p>A <strong>function</strong> is called point or set function. Its domain is point or set respectively.</p>
+
+<p><img src="https://pignu.kr/assets/images/statistic/1/statistic1.png" alt="statistic1" /></p>
+
+<p>하단의 수식이 렌더링이 되질 않아서… 스크린샷도 첨부.</p>
+
+<blockquote>
+  <p>ex 1.2.24)</p>
+
+\[\begin{aligned}
+	Q\left(c\right)=\underbrace{\int\cdots\int_{0}^{x_2}}_{\text{n times folded}} d_{x1}d_{x2}\cdots dx_n \\
+\end{aligned}\]
+
+  <p>if</p>
+
+  <p>\(\begin{aligned}
+	C=\left\{\left(x_1, x_2,\dots, x_n\right): 0\le x_1\le x_2 \le \cdots\le x_n \le 1\right\}
+\end{aligned}\)
+then</p>
+
+\[\begin{aligned}
+	Q\left(C\right) =&amp; \int_0^1\int_0^{x_n}\cdots\int_0^{x_3}\int_0^{x_2}dx_1dx_2\cdots dx_{n-1}dx_n \\
+	= &amp; \frac{1}{n!},
+\end{aligned}\]
+
+</blockquote>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>unbiased <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Objective <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>Subjective <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2018/03/10/statistics_1.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2018/03/10/statistics_1.html&text=Probability+%26+Distribution+%281%29%20%7C%20Pignu+Ante:%20/history/2018/03/10/statistics_1.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Probability+%26+Distribution+%281%29%20%7C%20Pignu+Ante&body=:%20/history/2018/03/10/statistics_1.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#mathematical+statistics">
+      <p><i class="fa fa-tag fa-fw"></i> mathematical statistics</p>
+    </a>
+    
+    <a class="button" href="/history/tags#statistic">
+      <p><i class="fa fa-tag fa-fw"></i> statistic</p>
+    </a>
+    
+    <a class="button" href="/history/tags#study">
+      <p><i class="fa fa-tag fa-fw"></i> study</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Probability & Distribution (2)" href="/history/2018/03/11/statistic_2.html">
+            Probability & Distribution (2)
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="vim setting" href="/history/2018/02/11/vim-setting.html">
+            vim setting
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

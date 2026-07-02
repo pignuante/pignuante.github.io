@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2018/03/18/Conditional_Probability_and_Independence.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>1.4 Conditional Probability and Independence | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="1.4 Conditional Probability and Independence" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Conditional Probability and Independence" />
+<meta property="og:description" content="Conditional Probability and Independence" />
+<link rel="canonical" href="/history/2018/03/18/Conditional_Probability_and_Independence.html" />
+<meta property="og:url" content="/history/2018/03/18/Conditional_Probability_and_Independence.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-18T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="1.4 Conditional Probability and Independence" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-03-18T00:00:00+00:00","datePublished":"2018-03-18T00:00:00+00:00","description":"Conditional Probability and Independence","headline":"1.4 Conditional Probability and Independence","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2018/03/18/Conditional_Probability_and_Independence.html"},"url":"/history/2018/03/18/Conditional_Probability_and_Independence.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>1.4 Conditional Probability and Independence | Pignu Ante</title>
+    <meta name="description" content="1.4 Conditional Probability and Independence">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="1.4+Conditional+Probability+and+Independence" class="title">1.4 Conditional Probability and Independence</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - March 18, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h2 id="14-conditional-probability-and-independence">1.4 Conditional Probability and Independence</h2>
+
+<p>Conditional probability of \(C_2\) given \(C_1\) is
+\(\begin{aligned}
+	P\left(C_2\vert C_1\right) = \frac{P\left(C_2\cap C_1\right)}{P\left(C_1\right)}, \quad C_1\lt C_2 \lt \mathscr{C}
+\end{aligned}\)</p>
+
+<ol>
+  <li>\(P\left(C_2\vert C_2\right)\ge0\) (Non-negative)</li>
+  <li>\(P\left(C_1\vert C_1\right)=0\) (Normality)</li>
+  <li>\(P\left(\cup_{i=2}^{\infty}C_i\vert C_1\right)=\sum_{i=2}^{\infty} P\left(C_i\vert C_1\right), \quad C_2, C_3,\cdots \text{are mutually exclusive}\). (Countable Additivity)</li>
+</ol>
+
+<blockquote>
+  <p><strong>ex 1.4.3)</strong> Consider drawing cards successively at random and without replacement. Find the probability that the <em>3rd</em> spade appears on the <em>6th</em> draw.</p>
+
+  <p><strong>sol)</strong></p>
+
+  <p>Spade, Diamond, Heart, Clover x 4, (A,1,…) = 52.
+\(\begin{aligned}
+	P\left(\text{3rd spade on the 6th draw}\right) =&amp;\ P\left(C_1\cap C_2\right) \\
+	C_1 = &amp;\ \text{Two spade in the first 5 draw} \\
+	C_2 = &amp;\ \text{A Spade in the 6th}\\
+	P\left(C_1\cap C_2\right) = &amp;\ P\left(C_2\vert C_2\right)P\left(C_1\right)\\
+\end{aligned}\)</p>
+
+\[\begin{aligned}
+	P\left(C_1\right) =&amp;\ \frac{\binom{13}{2}\cdot\binom{39}{3}}{\binom{52}{5}}\\
+	P\left(C_2\vert C_2\right) = &amp;\ \frac{13\cdot2}{52\cdot5}\\
+	\text{Recall } P\left(C_2\vert C_1\right) =&amp;\ \frac{P\left(C_1\cap C_2\right)}{P\left(C_1\right)}\\
+	 \Rightarrow P\left(C_1\cap C_2\right) =&amp;\ P\left(C_2\vert C_1\right)\cdot P\left(C_1\right)
+\end{aligned}\]
+
+</blockquote>
+
+<p>For 3 events \(C_1, C_2, C_3\),</p>
+
+\[\begin{aligned}
+	P\left(C_2\vert C_1\cap C_2\right) =&amp;\ \frac{P\left(C_1\cap C_2 \cap C_3\right)}{P\left(C_1\cap C_2\right)}\\
+	\therefore P\left(C_1\cap C_2 \cap C_3\right) = &amp;\ P\left(C_3\vert C_1\cap C_2\right)\cdot\left(C_1\cap C_2\right)\\
+	= &amp;\ P\left(C_3\vert C_1\cap C_2\right)\cdot\left(C_2|C_1\right)\cdot\left(C_1\right)\\
+	\text{in general,}\\
+	P\left(C_1\cap C_2\cap\cdots\right) = &amp;\\ P\left(C_1\right)P\left(C_2\vert C_1\right)P\left(C_3\vert C_1\cap C_2\right)&amp;P\left(C_4\vert C_1\cap C_2 \cap C_3 \cap C_4\right)\cdots
+\end{aligned}\]
+
+<hr />
+
+<h4 id="bayes-theorem">Bayes Theorem.</h4>
+
+<p>\(C_1, C_2,\cdots, C_k\) is mutually exclusive<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> and exhaustsive s.t. \(P\left(C_i\right)\gt0, \quad \forall i\)
+\(\begin{aligned}
+	P\left(C_j\vert C\right) &amp;=\ \frac{P\left(C_j\right)P\left(C\vert C_j\right)}{\sum_{i=1}^{k}P\left(C_i\right)P\left(C\vert C_i\right)},\quad j=1,2,\cdots k \\ \\
+	P\left(C_1\right)&amp;\ \cdots P\left(C_k\right): \text{Know} \\
+	P\left(Cvert C_1\right)&amp;\ \cdots P\left(C\vert C_k\right) : \text{Know} \\ \\
+	&amp;\ P\left(C_1\vert C\right) = ?
+\end{aligned}\)</p>
+
+<ul>
+  <li>\(P\left(C_j\vert C\right) =\) posterior probability</li>
+  <li>\(P\left(C_j\right) =\) prior probability</li>
+  <li>\( P\left(C\vert C_j\right) =\) likelihood</li>
+</ul>
+
+<h5 id="proof">proof.</h5>
+<p>\(\begin{aligned}
+	C=&amp;\ \ \ \ \left(C\cap C_1\right)\cup\cdots\cup\ \ \ \left(C\cap C_k\right)\\
+	P\left(C\right)=&amp;\ P\left(C\cap C_1\right)\cup\cdots\cup P\left(C\cap C_k\right)\\
+	=&amp;\  P\left(C_1\right)P\left(C\vert C_1\right)+P\left(C_2\right)P\left(C\vert C_2\right) +\cdots + P\left(C_k\right)P\left(C|C_k\right)\\
+	=&amp;\ \sum_{i=1}^{k}P\left(C_i\right)P\left(C\vert C_i\right) : \text{Law of Total Probability} \\
+	P\left(C_j\vert C\right) =&amp;\ \frac{P\left(C\cap C_j\right)}{P\left(C\right)} = \frac{P\left(C_j\right)P\left(C\vert C_j\right)}{\sum_{i=1}^{k}P\left(C\vert C_i\right)}
+\end{aligned}\)</p>
+
+<h4 id="definition-141">Definition 1.4.1</h4>
+
+<p>Two events \(C_1 \text{ and } C_2\) are <strong>independent</strong>. \(P\left(C_1\vert C_2\right) = P\left(C_1\right)\)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> 
+\(\begin{aligned}
+	P\left(C_1vert C_2\right) =&amp;\ \frac{P\left(C_1\cap C_2\right)}{P\left(C_2\right)} = \frac{P\left(C_1\right)\enclose{downdiagonalstrike}{P\left(C_2\right)}}{\enclose{downdiagonalstrike}{P\left(C_2\right)}} = P\left(C_1\right) \\
+	\Rightarrow&amp;\ P\left(C_1\cap C_2\right) = P\left(C_1\right)P\left(C_2\right) \\ \\
+	\text{and} &amp;\\
+	P\left(C_1\cap C_2 \cap \cdots \cap C_k\right) = &amp;\ P\left(C_1\right)P\left(C_2\right)\cdots P\left(C_k\right)
+\end{aligned}\)</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Partition <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Unrelated <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2018/03/18/Conditional_Probability_and_Independence.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2018/03/18/Conditional_Probability_and_Independence.html&text=1.4+Conditional+Probability+and+Independence%20%7C%20Pignu+Ante:%20/history/2018/03/18/Conditional_Probability_and_Independence.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=1.4+Conditional+Probability+and+Independence%20%7C%20Pignu+Ante&body=:%20/history/2018/03/18/Conditional_Probability_and_Independence.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#mathematical+statistics">
+      <p><i class="fa fa-tag fa-fw"></i> mathematical statistics</p>
+    </a>
+    
+    <a class="button" href="/history/tags#statistic">
+      <p><i class="fa fa-tag fa-fw"></i> statistic</p>
+    </a>
+    
+    <a class="button" href="/history/tags#study">
+      <p><i class="fa fa-tag fa-fw"></i> study</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="1.5 Random Variables" href="/history/2018/03/19/random_variables.html">
+            1.5 Random Variables
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Probability & Distribution (2)" href="/history/2018/03/11/statistic_2.html">
+            Probability & Distribution (2)
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

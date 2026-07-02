@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/10/24/project-euler.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Project Euler 01 with python. | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Project Euler 01 with python." />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Project Euler 01" />
+<meta property="og:description" content="Project Euler 01" />
+<link rel="canonical" href="/history/2017/10/24/project-euler.html" />
+<meta property="og:url" content="/history/2017/10/24/project-euler.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-10-24T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Project Euler 01 with python." />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-10-24T00:00:00+00:00","datePublished":"2017-10-24T00:00:00+00:00","description":"Project Euler 01","headline":"Project Euler 01 with python.","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/10/24/project-euler.html"},"url":"/history/2017/10/24/project-euler.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Project Euler 01 with python. | Pignu Ante</title>
+    <meta name="description" content="한동안 코딩을 할 여유가 나지를 않았다…(망할 수학)">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Project+Euler+01+with+python." class="title">Project Euler 01 with python.</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - October 24, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <p>한동안 코딩을 할 여유가 나지를 않았다…<del>(망할 수학)</del></p>
+
+<p>오일러프로젝트는 아마 60번대 문제까지 풀었었는데… 계정 비밀번호찾기가 되지를 않아서 짬이 날때마다 조금씩 다시 풀어보기로 했다. (예전에 풀었던 코드들을 보니 개선사항이 많이 보이기도 하므로 ㅎㅎ)</p>
+
+<p>또 최근 공부를 하면서 수학공부와 알고리즘문제는 뗄래야 뗄 수없는 관계임을 새삼 느낀 점도 한 몫을 단단히 하는 것같다 ㅎㅎ</p>
+
+<blockquote>
+  <p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.</p>
+
+  <p>Find the sum of all the multiples of 3 or 5 below 1000.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">euler001a</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>    
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="n">sum_</span>   <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">n</span>      <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">startTime</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="n">number</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span><span class="o">==</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">5</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">sum_</span><span class="o">+=</span><span class="n">n</span>
+        <span class="n">n</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sum_</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">startTime</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>일반적으로는 이렇게 많이 푸실 것 같다(나도 맨 처음엔 이런식으로 풀었고). 딱히 큰 문제는 없지만 파이썬에서 제공해주는 <strong><a href="https://docs.python.org/3/tutorial/datastructures.html">set</a></strong>자료형을 활용해서 풀면 약간이나마 연산 속도가 빨라진다.<em>(믿고 사용하는 STL이다..)</em></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">euler001</span><span class="p">(</span><span class="n">n1</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>  
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="n">startTime</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="c1"># 시작시간
+</span>
+    <span class="n">number1</span>   <span class="o">=</span> <span class="p">{</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">n1</span><span class="p">)}</span> <span class="c1"># set으로 n1의 배수 생성
+</span>    <span class="n">number2</span>   <span class="o">=</span> <span class="p">{</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n2</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">n2</span><span class="p">)}</span> <span class="c1"># set으로 n2의 배수 생성
+</span>
+    <span class="n">result</span>    <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">number1</span> <span class="o">|</span> <span class="n">number2</span><span class="p">)</span> <span class="c1"># union 처리
+</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">startTime</span><span class="p">)</span> <span class="c1"># 작동 시간 출력
+</span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>set</strong>을 사용하면 우선 <em>set comprehension</em>을 사용하여 우리가 구하고자 하는 두 숫자들의 배수 set을 만든다.</li>
+  <li>그리고 그 두 숫자를 <strong>union</strong>연산을 통해서 결과<em>set</em>을 저장한다(굳이 저장할 필요 없이 바로 뽑아 써도 되지만 절차를 위해서..).</li>
+  <li>저장된 결과<em>set</em>의 합을 구한다.</li>
+</ul>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/10/24/project-euler.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/10/24/project-euler.html&text=Project+Euler+01+with+python.%20%7C%20Pignu+Ante:%20/history/2017/10/24/project-euler.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Project+Euler+01+with+python.%20%7C%20Pignu+Ante&body=:%20/history/2017/10/24/project-euler.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#algorithm">
+      <p><i class="fa fa-tag fa-fw"></i> algorithm</p>
+    </a>
+    
+    <a class="button" href="/history/tags#math">
+      <p><i class="fa fa-tag fa-fw"></i> math</p>
+    </a>
+    
+    <a class="button" href="/history/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Project Euler002" href="/history/2017/10/28/project-euler002.html">
+            Project Euler002
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="AWS EC2를 사용한 django server 설정" href="/history/2017/06/30/AWS_server_setting.html">
+            AWS EC2를 사용한 django server 설정
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/10/30/project-euler031-with-python.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Project Euler031 with python | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Project Euler031 with python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Blog for Study" />
+<meta property="og:description" content="A Blog for Study" />
+<link rel="canonical" href="/history/2017/10/30/project-euler031-with-python.html" />
+<meta property="og:url" content="/history/2017/10/30/project-euler031-with-python.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-10-30T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Project Euler031 with python" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-10-30T00:00:00+00:00","datePublished":"2017-10-30T00:00:00+00:00","description":"A Blog for Study","headline":"Project Euler031 with python","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/10/30/project-euler031-with-python.html"},"url":"/history/2017/10/30/project-euler031-with-python.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Project Euler031 with python | Pignu Ante</title>
+    <meta name="description" content="  In England the currency is made up of pound, £, and pence, p, and there are eight coins in general circulation:      1p, 2p, 5p, 10p, 20p, 50p, £1 (100p) a...">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Project+Euler031+with+python" class="title">Project Euler031 with python</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - October 30, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <blockquote>
+  <p>In England the currency is made up of pound, £, and pence, p, and there are eight coins in general circulation:</p>
+
+  <blockquote>
+    <p>1p, 2p, 5p, 10p, 20p, 50p, £1 (100p) and £2 (200p).</p>
+  </blockquote>
+
+  <p>It is possible to make £2 in the following way:</p>
+
+  <blockquote>
+    <p>1×£1 + 1×50p + 2×20p + 1×5p + 1×2p + 3×1p</p>
+  </blockquote>
+
+  <p>How many different ways can £2 be made using any number of coins?</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p>재귀를 활용하는 전형적인 문제이다..</p>
+  </li>
+  <li>
+    <p>편의상 1페니와 2페니로 5페니를 만드는 경우의 수를 생각해보자.</p>
+
+    <ol>
+      <li>1 페니 : 1가지</li>
+      <li>2 페니 : (1+1), (2)</li>
+      <li>3 페니 : (1+1+1), (1+2)</li>
+      <li>4 페니 : (1+1+1+1), (1+1+2), (2+2)</li>
+      <li>5 페니 : (1+1+1+1+1), (1+1+1+2) \(\cdots \\\)</li>
+    </ol>
+  </li>
+  <li>
+    <p>위의 식은 아래의 공식을 따른다.</p>
+
+    <ul>
+      <li>
+\[\begin{align}
+	f\left(1\right) =&amp;\  1\\
+  	f\left(2\right) =&amp;\  2 \\
+  	f\left(3\right) =&amp;\  1+ f\left(1\right) \\
+  	f\left(4\right) =&amp;\  1+ f\left(2\right) \\
+  	f\left(5\right) =&amp;\  1+f\left(3\right)  \\
+\end{align}\]
+      </li>
+    </ul>
+  </li>
+  <li>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">euler031a</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+    <span class="n">coins</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,]</span>
+
+    <span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">solution</span><span class="p">(</span>
+            <span class="n">val</span><span class="o">-</span><span class="n">coins</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="n">solution</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>정말 단순하게 재귀로 구성하였다. 작동은 하지만 생각보다<del><em>(라기보다는 당연히)</em></del> 빠르진 않다.</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">euler031</span><span class="p">():</span>
+    <span class="n">coins</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">ways</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">200</span>
+    <span class="k">for</span> <span class="n">coin</span> <span class="ow">in</span> <span class="n">coins</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coin</span><span class="p">,</span> <span class="mi">200</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">ways</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ways</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">ways</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">coin</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">ways</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>그래서 <strong>dp</strong>(맞나..)의 방식으로 다시 구성해봤다.</p>
+
+    <ol>
+      <li>
+        <p>우선 모든 방법의 갯수를 저장할 배열을 생성한다(계산하려고 하는 돈의 크기만큼).</p>
+      </li>
+      <li>
+        <p>그리고 ways의 index에 해당하는 돈의 경우의 수를 저장해야한다.</p>
+
+        <ol>
+          <li>
+            <p>1페니를 사용할 경우
+2페니는 (1페니 + 1페니)
+3페니는 (1페니 + 1페니 + 1페니)페니이다.
+4페니는 (1페니 + 1페니 + 1페니 + 1페니)페니이다.</p>
+
+            <p>이 시점에서 배열에는 (1,1,1)이 저장되어 있다</p>
+          </li>
+          <li>
+            <p>(1,1,1,1,1)의 의미는 1페니로 1페니,2페니 3페니를 만드는 갯수이고 이것을 연결해서</p>
+          </li>
+          <li>
+            <p>2페니를 활용해서 배열을 채워보면
+2페니 부분에 이미 저장되어 있는 수치에 2페니로 2페니를 만드는 방법은 1가지 밖에 없으므로 +1한다. 여기서 우리는 이 처리를 0번 index에 저장된 1을 사용한다.
+그리고 3페니로 이동하여 이미 (1+1+1)이 저장되어 있는 1에 (1+2)의 경우의 수를 추가한다. 역시나 지금 2페니와 조합이 되어지는 1의 경우의 수를 필요로 하므로 지금의 index에 페니를 빼준 곳의 경우의 수를 합쳐준다.
+마지막으로 4페니로 이동하여 (1+1+1+1)의 경우의 수가 저장되어 있는 곳에 (<em>2</em>+2)와 (<em>1+1</em>+2)의 경우의 수를 추가해주는데 이 경우의 수는 우리의 지금 2페니에 <u>2페니와 (1+1)</u>의 경우의 수를 합치는 것이다. 밑줄 친 곳의 경우의 수는 우리가 2페니를 구할떄 만들어둔 경우의 수이므로 지금 index에 -2를 하면 얻어올 수 있다.</p>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>머리로는 이해하는데 말로 설명이 조금 부족하다. 추후 설명 보완을..</li>
+</ul>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/10/30/project-euler031-with-python.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/10/30/project-euler031-with-python.html&text=Project+Euler031+with+python%20%7C%20Pignu+Ante:%20/history/2017/10/30/project-euler031-with-python.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Project+Euler031+with+python%20%7C%20Pignu+Ante&body=:%20/history/2017/10/30/project-euler031-with-python.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#algorithm">
+      <p><i class="fa fa-tag fa-fw"></i> algorithm</p>
+    </a>
+    
+    <a class="button" href="/history/tags#math">
+      <p><i class="fa fa-tag fa-fw"></i> math</p>
+    </a>
+    
+    <a class="button" href="/history/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Project Euler004 with python" href="/history/2017/10/31/project-euler004-with-python.html">
+            Project Euler004 with python
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Project Euler003 with python" href="/history/2017/10/30/project-euler003-with-python.html">
+            Project Euler003 with python
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

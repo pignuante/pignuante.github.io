@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2018/01/30/tensorflow-gpu-at-ubuntu.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Tensorflow gpu at ubuntu, updated at 2018.06 | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Tensorflow gpu at ubuntu, updated at 2018.06" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="ubuntu에 Tensorflow gpu 설치하기!" />
+<meta property="og:description" content="ubuntu에 Tensorflow gpu 설치하기!" />
+<link rel="canonical" href="/history/2018/01/30/tensorflow-gpu-at-ubuntu.html" />
+<meta property="og:url" content="/history/2018/01/30/tensorflow-gpu-at-ubuntu.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-01-30T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Tensorflow gpu at ubuntu, updated at 2018.06" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-01-30T00:00:00+00:00","datePublished":"2018-01-30T00:00:00+00:00","description":"ubuntu에 Tensorflow gpu 설치하기!","headline":"Tensorflow gpu at ubuntu, updated at 2018.06","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2018/01/30/tensorflow-gpu-at-ubuntu.html"},"url":"/history/2018/01/30/tensorflow-gpu-at-ubuntu.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Tensorflow gpu at ubuntu, updated at 2018.06 | Pignu Ante</title>
+    <meta name="description" content="  0. 들어가며0. 들어가며">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Tensorflow+gpu+at+ubuntu%2C+updated+at+2018.06" class="title">Tensorflow gpu at ubuntu, updated at 2018.06</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - January 30, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <ul id="markdown-toc">
+  <li><a href="#0-들어가며" id="markdown-toc-0-들어가며">0. 들어가며</a></li>
+  <li><a href="#1-pyenv-virtualenv-python-설치" id="markdown-toc-1-pyenv-virtualenv-python-설치">1. pyenv, virtualenv, python 설치</a>    <ul>
+      <li><a href="#11-우분투-update--upgrade" id="markdown-toc-11-우분투-update--upgrade">1.1 우분투 update &amp;&amp; upgrade</a></li>
+      <li><a href="#12-패키지-미리-설치" id="markdown-toc-12-패키지-미리-설치">1.2 패키지 미리 설치</a></li>
+      <li><a href="#13-pyenv-virtualenv-설치" id="markdown-toc-13-pyenv-virtualenv-설치">1.3 pyenv, virtualenv 설치</a></li>
+      <li><a href="#14-파이썬-설치" id="markdown-toc-14-파이썬-설치">1.4 파이썬 설치</a></li>
+      <li><a href="#15-파이썬에-기타-필요한-파일-설치" id="markdown-toc-15-파이썬에-기타-필요한-파일-설치">1.5 파이썬에 기타 필요한 파일 설치</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-nvidia-driver-설치" id="markdown-toc-2-nvidia-driver-설치">2. Nvidia driver 설치</a>    <ul>
+      <li><a href="#20-graphic-card-확인" id="markdown-toc-20-graphic-card-확인">2.0 Graphic Card 확인</a></li>
+      <li><a href="#21-우선-관련-설정을-한다" id="markdown-toc-21-우선-관련-설정을-한다">2.1 우선 관련 설정을 한다.</a></li>
+      <li><a href="#22-설치의-확인" id="markdown-toc-22-설치의-확인">2.2 설치의 확인</a></li>
+      <li><a href="#23-덤설치한-nvidia-드라이버의-삭제" id="markdown-toc-23-덤설치한-nvidia-드라이버의-삭제">2.3 (덤)설치한 Nvidia 드라이버의 삭제</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-cuda-설치" id="markdown-toc-3-cuda-설치">3. Cuda 설치</a>    <ul>
+      <li><a href="#30-cuda-사용-가능-여부-확인" id="markdown-toc-30-cuda-사용-가능-여부-확인">3.0 Cuda 사용 가능 여부 확인</a>        <ul>
+          <li><a href="#301-cuda-사용-가능-linux-version-확인" id="markdown-toc-301-cuda-사용-가능-linux-version-확인">3.0.1 Cuda 사용 가능 Linux version 확인</a></li>
+          <li><a href="#302-cuda-호환-gcc-확인" id="markdown-toc-302-cuda-호환-gcc-확인">3.0.2 Cuda 호환 gcc 확인</a></li>
+          <li><a href="#303-kernel-header--development-packages" id="markdown-toc-303-kernel-header--development-packages">3.0.3 Kernel header &amp; development Packages</a></li>
+        </ul>
+      </li>
+      <li><a href="#31-cuda-설치" id="markdown-toc-31-cuda-설치">3.1 Cuda 설치</a></li>
+      <li><a href="#32-cuda-설치-확인" id="markdown-toc-32-cuda-설치-확인">3.2 Cuda 설치 확인</a></li>
+      <li><a href="#33-cuda-환경변수-설정" id="markdown-toc-33-cuda-환경변수-설정">3.3 Cuda 환경변수 설정</a></li>
+      <li><a href="#34-덤cuda-삭제" id="markdown-toc-34-덤cuda-삭제">3.4. (덤)Cuda 삭제</a></li>
+    </ul>
+  </li>
+  <li><a href="#4-cudnn-설치" id="markdown-toc-4-cudnn-설치">4. cuDNN 설치</a>    <ul>
+      <li><a href="#41-cudnn-다운로드" id="markdown-toc-41-cudnn-다운로드">4.1 cuDNN 다운로드</a></li>
+      <li><a href="#42-cudnn-설정" id="markdown-toc-42-cudnn-설정">4.2 cuDNN 설정</a></li>
+      <li><a href="#43-cudnn-설치-확인" id="markdown-toc-43-cudnn-설치-확인">4.3 cuDNN 설치 확인</a></li>
+      <li><a href="#44-번외-tensorflow-for-r을-사용하기-위한-준비" id="markdown-toc-44-번외-tensorflow-for-r을-사용하기-위한-준비">4.4 (번외) tensorflow for R을 사용하기 위한 준비</a></li>
+    </ul>
+  </li>
+  <li><a href="#5-tensorflow-gpu-설치" id="markdown-toc-5-tensorflow-gpu-설치">5. Tensorflow-gpu 설치</a>    <ul>
+      <li><a href="#51-tensorflow-gpu-설치" id="markdown-toc-51-tensorflow-gpu-설치">5.1 Tensorflow-gpu 설치</a></li>
+      <li><a href="#52-확인" id="markdown-toc-52-확인">5.2 확인</a></li>
+    </ul>
+  </li>
+  <li><a href="#6-덤zsh-설치" id="markdown-toc-6-덤zsh-설치">6. (덤)zsh 설치</a>    <ul>
+      <li><a href="#610-vim을-기본에디터로" id="markdown-toc-610-vim을-기본에디터로">6.1.0 vim을 기본에디터로</a></li>
+      <li><a href="#611-zsh-설치" id="markdown-toc-611-zsh-설치">6.1.1 zsh 설치</a></li>
+      <li><a href="#612-chsh-pam-authentication-failure-에러" id="markdown-toc-612-chsh-pam-authentication-failure-에러">6.1.2. chsh: PAM: Authentication failure 에러</a></li>
+      <li><a href="#613-fast-syntax-highlighting" id="markdown-toc-613-fast-syntax-highlighting">6.1.3 fast-syntax-highlighting</a></li>
+      <li><a href="#614-zsh-autosuggestions" id="markdown-toc-614-zsh-autosuggestions">6.1.4 zsh-autosuggestions</a></li>
+      <li><a href="#615-폰트" id="markdown-toc-615-폰트">6.1.5 폰트</a></li>
+    </ul>
+  </li>
+</ul>
+<h2 id="0-들어가며">0. 들어가며</h2>
+
+<p><strong>Tensorflow GPU</strong>를 사용하기위해서는 python뿐만 아니라 GPU를 통한 병렬처리를 위한 <a href="https://ko.wikipedia.org/wiki/CUDA">CUDA</a>와 deep neural network를 위한 <a href="https://developer.nvidia.com/cudnn">cuDNN</a>(Cuda Deep Neural Network)를 설치해야한다.</p>
+
+<p>여기서 우리는 <strong><u>CUDA 9.0</u></strong>과 <strong><u>cuDNN 7.1</u></strong>을 사용 할 것이다.(별이 다섯개!)</p>
+
+<p>처음에 아무것도 모르고 설치 할 때에는 무려 2박3일(…)이 걸렸었어서 설치방법을 정리, 메모겸해서 적어둔다. 젤 중요한것은 <u>호환 버젼</u>을 잘 확인하자!!!!!</p>
+
+<blockquote>
+  <p>여담으로</p>
+
+  <p><del>2018년 1월 기준 tensorflow 1.5버젼은 cuda 9.0과 cuDNN 7.0.x버젼을 지원한다!</del></p>
+
+  <p>2018년 6월 기준 tensorflow <strong>1.8</strong>, cud <strong>9.0</strong> cuDNN <strong>7.1.x</strong> 버전을 설치하였다!</p>
+</blockquote>
+
+<p><a href="http://docs.nvidia.com/cuda/cuda-installation-guide-linux/#axzz4VZnqTJ2A">CUDA</a>, <a href="https://developer.nvidia.com/cudnn">cuDNN</a>, <a href="https://www.tensorflow.org/install/install_linux">Tensorflow 공식홈페이지</a></p>
+
+<h2 id="1-pyenv-virtualenv-python-설치">1. pyenv, virtualenv, python 설치</h2>
+
+<h4 id="11-우분투-update--upgrade">1.1 우분투 update &amp;&amp; upgrade</h4>
+
+<p>설치에 앞서서 우분투를 ==<strong>update &amp;&amp; upgrade</strong>==해준다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">update</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">dist-upgrade</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="12-패키지-미리-설치">1.2 패키지 미리 설치</h4>
+
+<p>설치에 필요한 패키지들을 미리 설치해준다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> vim terminator git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev sl libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev gcc g++
+</code></pre></div></div>
+
+<h4 id="13-pyenv-virtualenv-설치">1.3 pyenv, virtualenv 설치</h4>
+
+<p><strong>pyenv</strong>와 <strong>virtualenv</strong>를 설치한다. <a href="https://github.com/pyenv/pyenv#basic-github-checkout">링크</a></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">curl</span><span class="w"> </span><span class="nt">-L</span><span class="w"> </span><span class="nx">https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">sh</span><span class="w">
+</span></code></pre></div></div>
+
+<p>pyenv를 설치 한 후 자신이 사용하는 셸의 설정파일(e.g. <strong>.bash_profile</strong>)에 pyenv 설정을 추가한다. (아래의 명령어는 터미널창에 입력한다.)</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="s1">'export PYENV_ROOT="$HOME/.pyenv"'</span><span class="w"> </span><span class="err">&gt;&gt;</span><span class="w"> </span><span class="nx">~/.bash_profile</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="s1">'export PATH="$PYENV_ROOT/bin:$PATH"'</span><span class="w"> </span><span class="err">&gt;&gt;</span><span class="w"> </span><span class="nx">~/.bash_profile</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="nt">-e</span><span class="w"> </span><span class="s1">'if command -v pyenv 1&gt;/dev/null 2&gt;&amp;1; then\n  eval "$(pyenv init -)"\nfi'</span><span class="w"> </span><span class="err">&gt;&gt;</span><span class="w"> </span><span class="nx">~/.bash_profile</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="s1">'eval "$(pyenv virtualenv-init -)"'</span><span class="w"> </span><span class="err">&gt;&gt;</span><span class="w"> </span><span class="nx">~/.bash_profile</span><span class="w">
+
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="nx">~/.bash_profile</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="14-파이썬-설치">1.4 파이썬 설치</h4>
+
+<p>자신이 사용 할 파이썬의 버젼을 설치한다. 
+<del><strong>2018년 1월 기준</strong> tensorflow는 3.5.x버전의 파이썬을 지원하고 있으므로 3.5.x중 가장 최신인 3.5.4를 설치한다.</del></p>
+
+<p><strong>2018년 6월 기준</strong> Tensorflow는 파이썬 <strong>3.4+</strong>을 지원한다. 원하는 버젼을 설치하자. <a href="https://www.tensorflow.org/install/install_linux#prerequisite_python_and_pip">참고</a></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">pyenv</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">--list</span><span class="w">		</span><span class="c"># 설치가능한 python버전 확인</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">pyenv</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">3.6.5</span><span class="w">         </span><span class="c"># 3.6.5를 설치, 생각보다 오래걸린다.</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">pyenv</span><span class="w"> </span><span class="nx">global</span><span class="w"> </span><span class="nx">3.6.5</span><span class="w">          </span><span class="c"># 기본 파이썬 버젼 설정</span><span class="w">
+</span></code></pre></div></div>
+<p>이 때 원하면 가상환경을 생성하여도 무방하다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">pyenv</span><span class="w"> </span><span class="nx">virtualenv</span><span class="w"> </span><span class="s2">"원하는버전"</span><span class="w"> </span><span class="s2">"가상환경이름"</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">pyenv</span><span class="w"> </span><span class="nx">global</span><span class="w"> </span><span class="s2">"가상환경이름"</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="15-파이썬에-기타-필요한-파일-설치">1.5 파이썬에 기타 필요한 파일 설치</h4>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">pip3</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">--upgrade</span><span class="w"> </span><span class="nx">numpy</span><span class="w"> </span><span class="nx">pandas</span><span class="w"> </span><span class="nx">matplotlib</span><span class="w"> </span><span class="nx">seaborn</span><span class="w"> </span><span class="nx">scipy</span><span class="w"> </span><span class="nx">scikit-learn</span><span class="w"> </span><span class="nx">jupyterlab</span><span class="w"> </span><span class="c"># 오래걸린다.</span><span class="w">
+</span></code></pre></div></div>
+
+<p>기타 필요한 파일을 설치한다.</p>
+
+<hr />
+
+<h2 id="2-nvidia-driver-설치">2. Nvidia driver 설치</h2>
+
+<blockquote>
+  <p><strong>주의</strong></p>
+
+  <p>여기서 부터는 자신이 사용하는 그래픽카드의 버전이나 지금 사용하려는 Tensorflow의 버전, Cuda와 cuDNN의 버전 그리고 tensorflow와의 <strong><em>호환성을 잘 확인</em></strong>하고 사용해야한다!!!!!</p>
+
+  <p><strong>주의</strong></p>
+</blockquote>
+
+<h4 id="20-graphic-card-확인">2.0 Graphic Card 확인</h4>
+
+<p>Cuda가 사용가능한 그래픽카드를 가지고 있는지 확인한다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">lspci</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="nt">-i</span><span class="w"> </span><span class="nx">nvidia</span><span class="w">
+</span></code></pre></div></div>
+
+<p>위의 명령어를 입력했을 때</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">09</span><span class="p">:</span><span class="mf">00.0</span><span class="w"> </span><span class="n">VGA</span><span class="w"> </span><span class="nx">compatible</span><span class="w"> </span><span class="nx">controller:</span><span class="w"> </span><span class="nx">NVIDIA</span><span class="w"> </span><span class="nx">Corporation</span><span class="w"> </span><span class="nx">Device</span><span class="w"> </span><span class="nx">1b80</span><span class="w"> </span><span class="p">(</span><span class="n">rev</span><span class="w"> </span><span class="nx">a1</span><span class="p">)</span><span class="w">
+</span><span class="mi">09</span><span class="p">:</span><span class="mf">00.1</span><span class="w"> </span><span class="n">Audio</span><span class="w"> </span><span class="nx">device:</span><span class="w"> </span><span class="nx">NVIDIA</span><span class="w"> </span><span class="nx">Corporation</span><span class="w"> </span><span class="nx">Device</span><span class="w"> </span><span class="nx">10f0</span><span class="w"> </span><span class="p">(</span><span class="n">rev</span><span class="w"> </span><span class="nx">a1</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>등의 메세지가 나오면 설치 가능하다! 명령어 입력이 귀찮으면 <a href="https://developer.nvidia.com/cuda-gpus">여기</a>에서 가지고 있는 그래픽카드를 찾아보자.</p>
+
+<h4 id="21-우선-관련-설정을-한다">2.1 우선 관련 설정을 한다.</h4>
+
+<p><a href="https://www.makeuseof.com/tag/ubuntu-ppa-technology-explained/">참고</a></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">software-properties-common</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">add-apt-repository</span><span class="w"> </span><span class="nx">ppa:graphics-drivers/ppa</span><span class="w">
+
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">update</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">dist-upgrade</span><span class="w">
+</span></code></pre></div></div>
+
+<p>그 후 자신이 사용하는 그래픽 드라이버에 맞는 버전을 <a href="https://www.geforce.com/drivers">사이트</a>에서 찾아서 다운 받는다.</p>
+
+<p><img src="/history/assets/images/tensorflow_gpu_settings/tensorflow.png" alt="nvidia" /></p>
+
+<p>동그라미 친 숫자를 기억 한 다음 아래의 명령어로 설치한다.
+드라이버 버젼은 눈치껏(…) 정하자.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">nvidia-397</span><span class="w"> 	</span><span class="c"># 위의 숫자를 입력</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">reboot</span><span class="w"> </span><span class="nx">now</span><span class="w"> 					</span><span class="c"># 이 시점에서 한번쯤 재시작을..</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="22-설치의-확인">2.2 설치의 확인</h4>
+
+<p>터미널창에 명령어로 확인한다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="nx">/proc/driver/nvidia/version</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">nvidia-smi</span><span class="w">        
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">nvidia-settings</span><span class="w">  
+</span></code></pre></div></div>
+
+<h4 id="23-덤설치한-nvidia-드라이버의-삭제">2.3 (덤)설치한 Nvidia 드라이버의 삭제</h4>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">dpkg</span><span class="w"> </span><span class="nt">--get-selections</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="nx">nvidia</span><span class="w">
+</span></code></pre></div></div>
+
+<p>위의 명령어를 입력하면 설치된 드라이버의 리스트가 뜨는데 <strong>sudo apt-get purge 버전명</strong>을 입력해서 수동으로 삭제하는 방법과</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">purge</span><span class="w"> </span><span class="nx">nvidia-</span><span class="o">*</span><span class="w">
+</span></code></pre></div></div>
+
+<p>위의 명령어로 모두 삭제하는 방법이 있다.</p>
+
+<hr />
+
+<h2 id="3-cuda-설치">3. Cuda 설치</h2>
+
+<h4 id="30-cuda-사용-가능-여부-확인">3.0 Cuda 사용 가능 여부 확인</h4>
+
+<h5 id="301-cuda-사용-가능-linux-version-확인">3.0.1 Cuda 사용 가능 Linux version 확인</h5>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">uname</span><span class="w"> </span><span class="nt">-m</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">cat</span><span class="w"> </span><span class="nx">/etc/</span><span class="o">*</span><span class="nx">release</span><span class="w">
+</span></code></pre></div></div>
+
+<p>사용가능한 버젼의 리눅스는 <a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">여기</a>에서 확인하자. 아니면 cuda 다운 받는 곳에서 cuda 버전과 linux 버전을 확인하자.</p>
+
+<h5 id="302-cuda-호환-gcc-확인">3.0.2 Cuda 호환 gcc 확인</h5>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">gcc</span><span class="w"> </span><span class="nt">--version</span><span class="w">
+</span></code></pre></div></div>
+
+<p>대부분은 사용가능했는데 최근에 나온 <strong>18.04</strong>에서 cuda 9.0을 설치할때 GCC관련 에러가 있었다. 이때 GCC버젼을 낮춰주자.</p>
+
+<h5 id="303-kernel-header--development-packages">3.0.3 Kernel header &amp; development Packages</h5>
+
+<p>혹시나 설치하다 헤더관련 에러가 나면 아래의 명령어를 입력해보자.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ubuntu</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">linux-headers-</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span><span class="w"> </span><span class="nt">-r</span><span class="p">)</span><span class="w">
+</span><span class="c"># RHEL/CentOS</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">yum</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">kernel-devel-</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span><span class="w"> </span><span class="nt">-r</span><span class="p">)</span><span class="w"> </span><span class="n">kernel-headers-</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span><span class="w"> </span><span class="nt">-r</span><span class="p">)</span><span class="w">
+</span><span class="c"># Fedora</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">dnf</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">kernel-devel-</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span><span class="w"> </span><span class="nt">-r</span><span class="p">)</span><span class="w"> </span><span class="n">kernel-headers-</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span><span class="w"> </span><span class="nt">-r</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="31-cuda-설치">3.1 Cuda 설치</h4>
+
+<p>위에서 언급한데로 우리는 cuda 9.0을 설치 할 것이다. <a href="https://developer.nvidia.com/cuda-downloads">홈페이지</a>에서 자신의 버젼에 맞는 cuda를 고른 다음 ==<strong>runfile[local]</strong>==을 다운 받는다. (물론 다른것도 가능하지만 이 파일이 설정이 제일 편하다.)
+다운받은 위치로 이동하여 위의 명령어로 다운받은 파일을 실행 후 프롬포트에 명령어를 입력한다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">sh</span><span class="w"> </span><span class="err">다운받은</span><span class="nx">CUDA</span><span class="err">파일</span><span class="w">
+</span></code></pre></div></div>
+
+<blockquote>
+  <p><strong>accept/decline/quit:</strong>
+accept</p>
+
+  <p><strong>Install NVIDIA Accelerated Graphics Driver for Linux~~.?</strong>
+<strong>(y)es/(n)o/(q)uit:</strong> n     # 우리는 수동으로 드라이버를 설치하였다.</p>
+
+  <p><strong>Install the CUDA 9.0 Toolkit?</strong>
+<strong>(y)es/(n)o/(q)uit:</strong> y</p>
+
+  <p><strong>Enter Toolkit Location [ default is /usr/local/cuda-9.0 ]:</strong>
+enter키(default)</p>
+
+  <p><strong>Do you want to install a symbolic link at /usr/local/cuda?(y)es/(n)o/(q)uit:</strong> y</p>
+
+  <p><strong>Install the CUDA 9.0 Samples?</strong>
+<strong>(y)es/(n)o/(q)uit:</strong> y</p>
+
+  <p><strong>Enter CUDA Samples Location [ default is /home/사용자 이름 ]:</strong>
+enter키(default)</p>
+</blockquote>
+
+<h4 id="32-cuda-설치-확인">3.2 Cuda 설치 확인</h4>
+
+<p>설치 종료 후에 나오는 summary에 아래와 같이 뜨면 성공이다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Driver:</span><span class="w"> </span><span class="nx">Not</span><span class="w"> </span><span class="nx">Selected</span><span class="w">
+</span><span class="n">Toolkit:</span><span class="w"> </span><span class="nx">Installed</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">/usr/local/cuda-9.0</span><span class="w">
+</span><span class="n">Samples:</span><span class="w"> </span><span class="nx">Installed</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">/home/</span><span class="err">사용자</span><span class="w"> </span><span class="err">이름</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="33-cuda-환경변수-설정">3.3 Cuda 환경변수 설정</h4>
+
+<p>자신의 셸 설정파일에 넣어준다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> vim ~/.bash_profile
+
+<span class="c"># cuda setting</span>
+<span class="o">&gt;</span> <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/cuda-9.0/bin<span class="k">${</span><span class="nv">PATH</span>:+:<span class="k">${</span><span class="nv">PATH</span><span class="k">}}</span>  <span class="c"># 설치위치 확인하자</span>
+<span class="o">&gt;</span> <span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/cuda-9.0/lib64<span class="se">\$</span><span class="o">{</span>LD_LIBRARY_PATH:+:<span class="k">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="k">}</span><span class="o">}</span>
+<span class="o">&gt;</span> <span class="nb">export </span><span class="nv">CUDA_HOME</span><span class="o">=</span>/usr/local/cuda
+<span class="c"># symbolic link를.. 껄껄</span>
+
+<span class="nb">source</span> ~/.bash_profile
+nvcc <span class="nt">--version</span>
+</code></pre></div></div>
+
+<p>마지막 문장을 입력하였을때 결과로</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nvcc:</span><span class="w"> </span><span class="nx">NVIDIA</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="n">Cuda</span><span class="w"> </span><span class="nx">compiler</span><span class="w"> </span><span class="nx">driver</span><span class="w">
+</span><span class="n">Copyright</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="mi">2005</span><span class="nt">-2017</span><span class="w"> </span><span class="n">NVIDIA</span><span class="w"> </span><span class="nx">Corporation</span><span class="w">
+</span><span class="n">Built</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">Sun_Sep__4_23:04:13_CDT_2017</span><span class="w">
+</span><span class="n">Cuda</span><span class="w"> </span><span class="nx">compilation</span><span class="w"> </span><span class="nx">tools</span><span class="p">,</span><span class="w"> </span><span class="nx">release</span><span class="w"> </span><span class="nx">8.0</span><span class="p">,</span><span class="w"> </span><span class="nx">V8.0.44</span><span class="w">
+</span></code></pre></div></div>
+
+<p>이라고 뜨면 성공이다.</p>
+
+<p>그리고 추가로 공식문서에서 필요로 한다니 설치해주자.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">libcupti-dev</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="34-덤cuda-삭제">3.4. (덤)Cuda 삭제</h4>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">remove</span><span class="w"> </span><span class="nt">--auto-remove</span><span class="w"> </span><span class="nx">nvidia-cuda-toolkit</span><span class="w"> </span><span class="c"># 적진 않았지만 ppa설정했을 경우..</span><span class="w">
+</span></code></pre></div></div>
+
+<p>혹은 cuda가 설치된 path로 이동하여 수동으로 지워준다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="nx">/usr/local</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">rm</span><span class="w"> </span><span class="nt">-fr</span><span class="w"> </span><span class="nx">cuda</span><span class="o">*</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="4-cudnn-설치">4. cuDNN 설치</h2>
+
+<h4 id="41-cudnn-다운로드">4.1 cuDNN 다운로드</h4>
+
+<p><img src="/history/assets/images/tensorflow_gpu_settings/cuDNN.png" alt="cuDNN" /></p>
+
+<p><a href="https://developer.nvidia.com/rdp/cudnn-archive">사이트</a>로 이동하여 로그인(+가입)을 한 다음 자신이 사용하려는 버젼을 다운 받는다(위에서도 언급한 것처럼 우리는 cuda 9.0에 cuDNN 7.1.x을 다운받는다.) <strong>최신버전</strong>으로 <u>받고 싶다면</u> tensorflow의 홈페이지에서 <strong><u>지원 여부</u></strong>를 확인하자.</p>
+
+<h4 id="42-cudnn-설정">4.2 cuDNN 설정</h4>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="err">&lt;다운받은곳&gt;</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">tar</span><span class="w"> </span><span class="nt">-xvzf</span><span class="w"> </span><span class="err">&lt;다운받은</span><span class="w"> </span><span class="err">파일명&gt;</span><span class="w">
+
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="nx">cuda</span><span class="w">
+
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="nx">include/cudnn.h</span><span class="w"> </span><span class="nx">/usr/local/cuda/include</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="nx">lib64/libcudnn</span><span class="o">*</span><span class="w"> </span><span class="nx">/usr/local/cuda/lib64</span><span class="w">
+
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">chmod</span><span class="w"> </span><span class="nx">a</span><span class="o">+</span><span class="nx">r</span><span class="w"> </span><span class="nx">/usr/local/cuda/include/cudnn.h</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">chmod</span><span class="w"> </span><span class="nx">a</span><span class="o">+</span><span class="nx">r</span><span class="w"> </span><span class="nx">/usr/local/cuda/lib64/libcudnn</span><span class="o">*</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="43-cudnn-설치-확인">4.3 cuDNN 설치 확인</h4>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="nx">/usr/local/cuda/include/cudnn.h</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="nx">CUDNN_MAJOR</span><span class="w"> </span><span class="nt">-A</span><span class="w"> </span><span class="nx">2</span><span class="w">
+</span></code></pre></div></div>
+
+<p>출력화면에 <strong>CUDNN_MAJOR</strong>이 포함되어 있기를 빈다!</p>
+
+<h4 id="44-번외-tensorflow-for-r을-사용하기-위한-준비">4.4 (번외) tensorflow for R을 사용하기 위한 준비</h4>
+
+<p>cuDNN 라이브러리 파일을 R에서도 사용하기 위해 설정하는 김에 미리 설정한다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">cp</span><span class="w"> </span><span class="nx">/usr/local/cuda/lib64/libcudnn</span><span class="o">*</span><span class="w"> </span><span class="nx">/usr/lib/x86_64-linux-gnu</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="5-tensorflow-gpu-설치">5. Tensorflow-gpu 설치</h2>
+
+<h4 id="51-tensorflow-gpu-설치">5.1 Tensorflow-gpu 설치</h4>
+
+<p>위의 장황했던 작업에 비해서 tensorflow gpu설치는 매우 간단하다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">pip</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">--upgrade</span><span class="w"> </span><span class="nx">tensorflow-gpu</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="52-확인">5.2 확인</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+
+<span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">matrix1</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
+    <span class="n">matrix2</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
+
+    <span class="n">product</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">matrix1</span><span class="p">,</span> <span class="n">matrix2</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># result is
+# [[ 12.  21.]
+#  [ 16.  28.]]
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="6-덤zsh-설치">6. (덤)zsh 설치</h2>
+
+<h5 id="610-vim을-기본에디터로">6.1.0 vim을 기본에디터로</h5>
+
+<p>자신의 기본환경설정파일에서</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">export</span><span class="w"> </span><span class="nx">EDITOR</span><span class="o">=</span><span class="n">/usr/bin/vim</span><span class="w">
+</span></code></pre></div></div>
+
+<p>라는 문장을 추가한다.</p>
+
+<h5 id="611-zsh-설치">6.1.1 zsh 설치</h5>
+
+<p>덤으로 zsh을 혹시나 설치하지 않았으면 설치한다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">apt-get</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">zsh</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">curl</span><span class="w"> </span><span class="nt">-L</span><span class="w"> </span><span class="nx">https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">sh</span><span class="w">
+</span></code></pre></div></div>
+
+<h5 id="612-chsh-pam-authentication-failure-에러">6.1.2. chsh: PAM: Authentication failure 에러</h5>
+
+<p>혹시나 <strong>chsh: PAM: Authentication failure</strong>라는 에러가 날 경우에는</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">vim</span><span class="w"> </span><span class="nx">/etc/pam.d/chsh</span><span class="w">
+</span></code></pre></div></div>
+
+<p>위의 파일에서 <strong>auth required pam_shells.so</strong>을  <strong>auth sufficient pam_shells.so</strong>로 변경한다.</p>
+
+<h5 id="613-fast-syntax-highlighting">6.1.3 <a href="https://github.com/zdharma/fast-syntax-highlighting#installation">fast-syntax-highlighting</a></h5>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="nx">https://github.com/zdharma/fast-syntax-highlighting.git</span><span class="w"> </span><span class="nx">\</span><span class="w">
+  </span><span class="n">~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li>원래는 zsh-syntax-highlighting을 사용했지만 fast-syntax-highlighting이 조금 더 이쁘게 해줘서 이걸로 바꾸었다.</li>
+  <li>위의 git을 clone받은 다음 <strong>.zshrc</strong>에서 <strong>plugins</strong>에 <u>fast-syntax-highlighting</u>를 추가한다!</li>
+</ul>
+
+<p><del>zsh-syntax-highlighting</del></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="nx">https://github.com/zsh-users/zsh-syntax-highlighting.git</span><span class="w"> </span><span class="nv">${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</span><span class="nx">/plugins/zsh-syntax-highlighting</span><span class="w">
+</span></code></pre></div></div>
+
+<p><del>zsh의 문법 하이라이팅을 지원하는 패키지이다. 위의 명령어로 설치를 한 다음 <strong>.zshrc</strong>로 이동하여 <strong>plugins</strong>에 <strong>zsh-syntax-highlighting</strong>를 추가한다.</del></p>
+
+<h5 id="614-zsh-autosuggestions">6.1.4 zsh-autosuggestions</h5>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="nx">https://github.com/zsh-users/zsh-autosuggestions</span><span class="w"> </span><span class="nv">$ZSH_CUSTOM</span><span class="nx">/plugins/zsh-autosuggestions</span><span class="w">
+</span></code></pre></div></div>
+
+<p>역시 <strong>zsh-syntax-highlighting</strong>과 마찬가지로 <strong>.zshrc</strong>의 <strong>plugin</strong>에 <strong>zsh-autosuggestions</strong>을 추가한다.</p>
+
+<h5 id="615-폰트">6.1.5 폰트</h5>
+
+<p>폰트가 깨지는 경우에는 <a href="https://github.com/powerline/fonts">여기</a>에서 다운받는다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="nx">~</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="nx">https://github.com/powerline/fonts.git</span><span class="w"> </span><span class="nt">--depth</span><span class="o">=</span><span class="mi">1</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="nx">~/fonts/install.sh</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">rm</span><span class="w"> </span><span class="nt">-rf</span><span class="w"> </span><span class="nx">fonts</span><span class="w">
+</span></code></pre></div></div>
+
+<p>덤으로 내가 코딩용으로 자주 사용하는 <strong>naver D2coding</strong>도 설치해보자. 저장소는 <a href="https://github.com/naver/d2codingfont">여기</a>이다. (영어도 영어지만 한국어 구분도 잘 되어서 애용한다.)</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">&gt;</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="nx">https://github.com/naver/d2codingfont/releases/download/VER1.3.2/D2Coding-Ver1.3.2-20180524.zip</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">mkdir</span><span class="w"> </span><span class="nx">/usr/share/fonts/truetype/D2Coding</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="nx">unzip</span><span class="w"> </span><span class="nx">D2Coding-Ver1.3.2-20180524.zip</span><span class="w"> </span><span class="nt">-d</span><span class="w"> </span><span class="nx">/usr/share/fonts/truetype/D2Coding</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">rm</span><span class="w"> </span><span class="nt">-rf</span><span class="w"> </span><span class="nx">/usr/share/fonts/truetype/D2Coding/__MACOSX</span><span class="w">
+</span><span class="err">&gt;</span><span class="w"> </span><span class="n">fc-cache</span><span class="w"> </span><span class="nt">-f</span><span class="w"> </span><span class="nt">-v</span><span class="w">
+</span></code></pre></div></div>
+
+<p>최근 D2Coding이 1.3으로 버젼업이 되면서 파워라인폰트도 지원이 된당! 설치를 했는데도 폰트가 깨지면 터미널을 재시작해보자!</p>
+
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2018/01/30/tensorflow-gpu-at-ubuntu.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2018/01/30/tensorflow-gpu-at-ubuntu.html&text=Tensorflow+gpu+at+ubuntu%2C+updated+at+2018.06%20%7C%20Pignu+Ante:%20/history/2018/01/30/tensorflow-gpu-at-ubuntu.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Tensorflow+gpu+at+ubuntu%2C+updated+at+2018.06%20%7C%20Pignu+Ante&body=:%20/history/2018/01/30/tensorflow-gpu-at-ubuntu.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#cuda">
+      <p><i class="fa fa-tag fa-fw"></i> cuda</p>
+    </a>
+    
+    <a class="button" href="/history/tags#cudnn">
+      <p><i class="fa fa-tag fa-fw"></i> cudnn</p>
+    </a>
+    
+    <a class="button" href="/history/tags#gpu">
+      <p><i class="fa fa-tag fa-fw"></i> gpu</p>
+    </a>
+    
+    <a class="button" href="/history/tags#linux">
+      <p><i class="fa fa-tag fa-fw"></i> linux</p>
+    </a>
+    
+    <a class="button" href="/history/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+    <a class="button" href="/history/tags#tensorflow">
+      <p><i class="fa fa-tag fa-fw"></i> tensorflow</p>
+    </a>
+    
+    <a class="button" href="/history/tags#ubuntu">
+      <p><i class="fa fa-tag fa-fw"></i> ubuntu</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="vim setting" href="/history/2018/02/11/vim-setting.html">
+            vim setting
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Posting with jupyter notebook" href="/history/2017/12/29/posting-with-jupyter-notebook.html">
+            Posting with jupyter notebook
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

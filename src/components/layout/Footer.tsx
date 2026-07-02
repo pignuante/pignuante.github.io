@@ -3,12 +3,12 @@ import { type NavItem, isActivePath } from "../../utils/routing";
 
 const YEAR = new Date().getFullYear();
 
-/** Footer excludes /colors (developer-only scheme debug page) */
 const footerLinks: NavItem[] = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Projects", path: "/projects" },
   { label: "Travel", path: "/travel" },
+  { external: true, label: "History", path: "/history/" },
 ];
 
 export default function Footer() {
@@ -24,27 +24,35 @@ export default function Footer() {
           {/* Nav links */}
           <nav aria-label="푸터 내비게이션">
             <ul className="flex flex-wrap gap-x-6 gap-y-2" role="list">
-              {footerLinks.map(({ label, path }) => {
-                const active = isActivePath(path, pathname);
+              {footerLinks.map(({ external, label, path }) => {
+                const active = !external && isActivePath(path, pathname);
+                const linkClass = `flex min-h-[44px] items-center gap-1 text-sm transition-colors ${
+                  active
+                    ? "text-[var(--text-primary)]"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                }`;
+                const marker = (
+                  <span aria-hidden="true" className="text-[var(--text-brand)]">
+                    ▸
+                  </span>
+                );
                 return (
                   <li key={path}>
-                    <Link
-                      aria-current={active ? "page" : undefined}
-                      className={`flex min-h-[44px] items-center gap-1 text-sm transition-colors ${
-                        active
-                          ? "text-[var(--text-primary)]"
-                          : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                      }`}
-                      to={path}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="text-[var(--text-brand)]"
+                    {external ? (
+                      <a className={linkClass} href={path}>
+                        {marker}
+                        {label}
+                      </a>
+                    ) : (
+                      <Link
+                        aria-current={active ? "page" : undefined}
+                        className={linkClass}
+                        to={path}
                       >
-                        ▸
-                      </span>
-                      {label}
-                    </Link>
+                        {marker}
+                        {label}
+                      </Link>
+                    )}
                   </li>
                 );
               })}
@@ -61,7 +69,7 @@ export default function Footer() {
             <a
               aria-label="GitHub 저장소"
               className="flex min-h-[44px] min-w-[44px] items-center gap-2 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-              href="https://github.com/ai-screams"
+              href="https://github.com/pignuante"
               rel="noopener noreferrer"
               target="_blank"
             >

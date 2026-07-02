@@ -10,7 +10,7 @@ const navItems: NavItem[] = [
   { label: "About", path: "/about" },
   { label: "Projects", path: "/projects" },
   { label: "Travel", path: "/travel" },
-  { label: "Colors", path: "/colors" },
+  { external: true, label: "History", path: "/history/" },
 ];
 
 const schemeKeys = Object.keys(schemeConfig) as ColorScheme[];
@@ -81,17 +81,26 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden items-center gap-6 lg:flex">
           <ul className="flex items-center gap-1" role="list">
-            {navItems.map(({ label, path }) => {
-              const active = isActivePath(path, pathname);
+            {navItems.map(({ external, label, path }) => {
+              const active = !external && isActivePath(path, pathname);
               return (
                 <li key={path}>
-                  <Link
-                    aria-current={active ? "page" : undefined}
-                    className={getNavLinkClass(active, "px-4 py-2")}
-                    to={path}
-                  >
-                    {label}
-                  </Link>
+                  {external ? (
+                    <a
+                      className={getNavLinkClass(false, "px-4 py-2")}
+                      href={path}
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <Link
+                      aria-current={active ? "page" : undefined}
+                      className={getNavLinkClass(active, "px-4 py-2")}
+                      to={path}
+                    >
+                      {label}
+                    </Link>
+                  )}
                 </li>
               );
             })}
@@ -230,18 +239,28 @@ export default function Navbar() {
 
               {/* Mobile nav links */}
               <ul className="flex flex-col py-2" role="list">
-                {navItems.map(({ label, path }) => {
-                  const active = isActivePath(path, pathname);
+                {navItems.map(({ external, label, path }) => {
+                  const active = !external && isActivePath(path, pathname);
                   return (
                     <li key={path}>
-                      <Link
-                        aria-current={active ? "page" : undefined}
-                        className={getNavLinkClass(active, "px-6 py-3")}
-                        onClick={() => setIsOpen(false)}
-                        to={path}
-                      >
-                        {label}
-                      </Link>
+                      {external ? (
+                        <a
+                          className={getNavLinkClass(false, "px-6 py-3")}
+                          href={path}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {label}
+                        </a>
+                      ) : (
+                        <Link
+                          aria-current={active ? "page" : undefined}
+                          className={getNavLinkClass(active, "px-6 py-3")}
+                          onClick={() => setIsOpen(false)}
+                          to={path}
+                        >
+                          {label}
+                        </Link>
+                      )}
                     </li>
                   );
                 })}

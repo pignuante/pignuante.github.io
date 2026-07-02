@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/06/18/tryHelloWorldLevel4_1.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>TryHelloWorld Level4 (1) | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="TryHelloWorld Level4 (1)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="TryHelloWorld Level4 (1)" />
+<meta property="og:description" content="TryHelloWorld Level4 (1)" />
+<link rel="canonical" href="/history/2017/06/18/tryHelloWorldLevel4_1.html" />
+<meta property="og:url" content="/history/2017/06/18/tryHelloWorldLevel4_1.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-06-18T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="TryHelloWorld Level4 (1)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-06-18T00:00:00+00:00","datePublished":"2017-06-18T00:00:00+00:00","description":"TryHelloWorld Level4 (1)","headline":"TryHelloWorld Level4 (1)","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/06/18/tryHelloWorldLevel4_1.html"},"url":"/history/2017/06/18/tryHelloWorldLevel4_1.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>TryHelloWorld Level4 (1) | Pignu Ante</title>
+    <meta name="description" content="01. 가장 큰 정사각형 찾기">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="TryHelloWorld+Level4+%281%29" class="title">TryHelloWorld Level4 (1)</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - June 18, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h4 id="01-가장-큰-정사각형-찾기">01. 가장 큰 정사각형 찾기</h4>
+
+<blockquote>
+  <p>O와 X로 채워진 표가 있습니다. 표 1칸은 1 x 1 의 정사각형으로 이루어져 있습니다. 표에서 O로 이루어진 가장 큰 정사각형을 찾아 넓이를 반환하는 findLargestSquare 함수를 완성하세요. 예를 들어</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>X</td>
+        <td>O</td>
+        <td>O</td>
+        <td>O</td>
+        <td>X</td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>O</td>
+        <td>O</td>
+        <td>O</td>
+        <td>O</td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>X</td>
+        <td>O</td>
+        <td>O</td>
+        <td>O</td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>X</td>
+        <td>O</td>
+        <td>O</td>
+        <td>O</td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>가 있다면 정답은</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>X</td>
+        <td>O</td>
+        <td>O</td>
+        <td>O</td>
+        <td>X</td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>O</td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>X</td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>X</td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+        <td><code class="language-plaintext highlighter-rouge">O</code></td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>가 되며 넓이는 9가 되므로 9를 반환해 주면 됩니다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">findLargestSquare</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1">#     board = list(map(lambda y: list(map(lambda x: 1 if x == "O" else 0, y)), board))
+</span>    <span class="n">board</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="s">"O"</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">board</span><span class="p">]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">))]</span>
+    <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">board</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">)):</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="p">],</span> 
+                                    <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> 
+                                    <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">answer</span><span class="p">:</span>
+                    <span class="n">answer</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">answer</span> <span class="o">**</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<ul>
+  <li>기본 알고리즘은 좌에서 부터 우로 탐색해 나가면서 지금 노드의 <strong>좌단</strong>, <strong>좌상단</strong>, <strong>상단</strong>의 크기 중 작은 것에 <strong>+1</strong>을 해준다. <code class="language-plaintext highlighter-rouge">min( r[y-][x], r[y-1][x-1], r[y][x-1] )</code>
+    <ul>
+      <li>이렇게 하면 지금의 내 위치에 있는 숫자가 내 위치로부터 좌측까지의 정사각형의 크기가 된다.</li>
+    </ul>
+  </li>
+  <li>y축과 x축의 0번째 인덱스에서는 자신의 상단과 좌단의 크기에 접근하려면 오류가 발생하므로 각각 한줄씩 추가해 준다.</li>
+</ul>
+
+<p><br /><br /></p>
+
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/06/18/tryHelloWorldLevel4_1.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/06/18/tryHelloWorldLevel4_1.html&text=TryHelloWorld+Level4+%281%29%20%7C%20Pignu+Ante:%20/history/2017/06/18/tryHelloWorldLevel4_1.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=TryHelloWorld+Level4+%281%29%20%7C%20Pignu+Ante&body=:%20/history/2017/06/18/tryHelloWorldLevel4_1.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#algorithm">
+      <p><i class="fa fa-tag fa-fw"></i> algorithm</p>
+    </a>
+    
+    <a class="button" href="/history/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="TryHelloWorld Level4 (2)" href="/history/2017/06/21/TryHelloWorldLevel4_2.html">
+            TryHelloWorld Level4 (2)
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="TryHelloWorld Level 3" href="/history/2017/06/15/tryHelloWorldLevle3.html">
+            TryHelloWorld Level 3
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

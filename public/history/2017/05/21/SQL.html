@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/05/21/SQL.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>SQL Study | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="SQL Study" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="What is SQL?" />
+<meta property="og:description" content="What is SQL?" />
+<link rel="canonical" href="/history/2017/05/21/SQL.html" />
+<meta property="og:url" content="/history/2017/05/21/SQL.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-21T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="SQL Study" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-05-21T00:00:00+00:00","datePublished":"2017-05-21T00:00:00+00:00","description":"What is SQL?","headline":"SQL Study","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/05/21/SQL.html"},"url":"/history/2017/05/21/SQL.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>SQL Study | Pignu Ante</title>
+    <meta name="description" content="SQL은 무엇인가?">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="SQL+Study" class="title">SQL Study</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - May 21, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h2 id="sql은-무엇인가">SQL은 무엇인가?</h2>
+
+<ol>
+  <li>SQL은 구조적 <em>query</em>언어를 의미.</li>
+  <li><em>Database</em>를 조작하는데 사용한다.</li>
+  <li><em>ANSI</em>표준이다.</li>
+</ol>
+
+<h2 id="sql은-무엇을-할-수-있을까">SQL은 무엇을 할 수 있을까?</h2>
+
+<ol>
+  <li>DataBase에 <em>query</em>를 실행할 수 있다.</li>
+  <li>DataBase에서 데이터를 검색 할 수 있다.</li>
+  <li>DataBase에 자료를 <strong>insert</strong>, <strong>update</strong>, <strong>delete</strong>할 수 있다.</li>
+  <li>새 DataBase를 만들 수 있다.</li>
+</ol>
+
+<h2 id="sql-구문">SQL 구문</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">이름</th>
+      <th style="text-align: center">설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">SELECT</td>
+      <td style="text-align: center">DB에서 데이터를 추출</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">UPDATE</td>
+      <td style="text-align: center">DB에서 데이터를 업데이트</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">DELETE</td>
+      <td style="text-align: center">DB에서 데이터를 삭제</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">INSERT INTO</td>
+      <td style="text-align: center">DB에 새 데이터를 삽입</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">CREATE DATABASE</td>
+      <td style="text-align: center">새 DB를 생성</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">ALTER DATABASE</td>
+      <td style="text-align: center">DB를 수정</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">CREATE TABLE</td>
+      <td style="text-align: center">새로운 table 생성</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">ALTER TABLE</td>
+      <td style="text-align: center">table 수정</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">DROP TABLE</td>
+      <td style="text-align: center">table 삭제</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">CREATE INDEX</td>
+      <td style="text-align: center">index를 생성</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">DROP INDEX</td>
+      <td style="text-align: center">index를 삭제</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="sql-select-문">SQL SELECT 문</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customer</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">Name</span><span class="p">,</span> <span class="n">City</span> <span class="k">FROM</span> <span class="n">Customer</span><span class="p">;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>SELECT</strong>문은 데이터 베이스에서 데이터를 선택하는데 사용된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">SELECT coloumn1, ..., columnN FROM tableName</code>의 형태로 사용된다.</li>
+</ul>
+
+<h4 id="sql-select-distinct-문">SQL SELECT DISTINCT 문</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">Country</span> <span class="k">FROM</span> <span class="n">Customers</span><span class="p">;</span>
+
+<span class="cm">/*for MS DB*/</span>
+<span class="k">SELECT</span> <span class="k">Count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="n">DistinctCountries</span>
+<span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">Country</span> <span class="k">FROM</span> <span class="n">Customers</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>SELECT DISTINCT</strong>문은 column의 결과값에 중복된 값을 제거해 준다.</li>
+  <li><code class="language-plaintext highlighter-rouge">SELECT DISTINCT column1, ..., columnN FROM tableName</code>의 형태로 사용된다.</li>
+</ul>
+
+<h4 id="sql-where-문">SQL WHERE 문</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="nv">"Mexico"</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">CustomerID</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>WHERE</strong>문은 주로 자료에 대해 <em>filter</em>의 기능을 수행할때 사용된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">SELECT coloumn1, ..., columnN FROM tableName WHERE condition;</code>의 형태로 쓰인다.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">연산자</th>
+      <th style="text-align: left">설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">=</td>
+      <td style="text-align: left">Equal</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">&lt;&gt;, !=</td>
+      <td style="text-align: left">Not Equal</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">&gt;</td>
+      <td style="text-align: left">Greater than</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">&lt;</td>
+      <td style="text-align: left">Less than</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">&gt;=</td>
+      <td style="text-align: left">Greater than equal</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">&lt;=</td>
+      <td style="text-align: left">Less than or equal</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">BETWEEN</td>
+      <td style="text-align: left">Between an inclusive range</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">LIKE</td>
+      <td style="text-align: left">Search for pattern</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">IN</td>
+      <td style="text-align: left">To specify multiple possible values for a column</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="sql-and-or-and-not-operator">SQL AND, OR and NOT operator</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="nv">"Germany"</span> <span class="k">AND</span> <span class="n">City</span><span class="o">=</span><span class="nv">"Berilin"</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">City</span><span class="o">=</span><span class="nv">"Seoul"</span> <span class="k">OR</span> <span class="n">City</span><span class="o">=</span><span class="nv">"Busan"</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="k">NOT</span> <span class="n">City</span><span class="o">=</span><span class="nv">"MokPo"</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="nv">"Korea"</span> <span class="k">AND</span> <span class="p">(</span><span class="n">City</span><span class="o">=</span><span class="nv">"Seoul"</span> <span class="k">OR</span> <span class="n">City</span><span class="o">=</span><span class="nv">"Daegu"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="sql-order-by-keyword">SQL ORDER BY keyword</h4>
+
+<ol>
+  <li>
+    <p>ORDER BY 예시</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Country</span><span class="p">;</span>
+</code></pre></div>    </div>
+
+    <p>Customers에서 Country의 오름차순으로 정렬한다.</p>
+  </li>
+  <li>
+    <p>ORDER BY DESC 예시</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Country</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div>    </div>
+
+    <p>Customers에서 Country의 내림차순으로 정렬한다.</p>
+  </li>
+  <li>
+    <p>다수의 Column 예시</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*1*/</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Country</span><span class="p">,</span> <span class="n">CustomerName</span><span class="p">;</span>
+
+<span class="cm">/*2*/</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">CustomerName</span><span class="p">,</span> <span class="n">Country</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Country</span> <span class="k">ASC</span><span class="p">,</span> <span class="n">CustomerName</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div>    </div>
+
+    <ul>
+      <li>첫번째의 경우 Customers에서 Country로 정렬을 한 후, 그 안에서 CustomerName으로 다시 정렬을 한다.</li>
+      <li>두번째의 경우 Customers에서 CustomerName으로 정렬을 한 후, 그 안에서 Country로 다시 정렬한다.</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="sql-insert-into-문">SQL INSERT INTO 문</h4>
+
+<ol>
+  <li>
+    <p>INSERT INTO 예문</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">Customers</span> <span class="p">(</span><span class="n">CustomerName</span><span class="p">,</span> <span class="n">ContactName</span><span class="p">,</span> <span class="n">Address</span><span class="p">,</span> <span class="n">City</span><span class="p">,</span> <span class="n">PostalCode</span><span class="p">,</span> <span class="n">Country</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="s1">'Cardinal'</span><span class="p">,</span> <span class="s1">'Tom B. Erichsen'</span><span class="p">,</span> <span class="s1">'Skagen 21'</span><span class="p">,</span> <span class="s1">'Stavanger'</span><span class="p">,</span> <span class="s1">'4006'</span><span class="p">,</span> <span class="s1">'Norway'</span><span class="p">);</span>
+</code></pre></div>    </div>
+
+    <p>Customers의 모든 column에 자료를 넣은 예시이다. 만약 모든 column에 자료를 넣을때는 column명을 생략가능하다.</p>
+  </li>
+</ol>
+
+<h4 id="sql-null-value">SQL <em>NULL</em> value</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">LastName</span><span class="p">,</span> <span class="n">FirstName</span><span class="p">,</span> <span class="n">Address</span> <span class="k">FROM</span> <span class="n">Persons</span>
+<span class="k">WHERE</span> <span class="n">Address</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">LastName</span><span class="p">,</span> <span class="n">FirstName</span><span class="p">,</span> <span class="n">Address</span> <span class="k">FROM</span> <span class="n">Persons</span>
+<span class="k">WHERE</span> <span class="n">Address</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>NULL value는 데이터 필드에서 아무런 값이 없는 것을 의미한다. (0의 값이 들어있는것이랑은 다르다.)</p>
+
+  <p>데이터 필드에 NULL의 존재 여부는 DB를 생성할때 미리 정해진다.</p>
+
+  <p>NULL은 일반 comparison operator로는 비교가 불가하며, <strong>IS NULL</strong> 혹은 <strong>IS NOT NULL</strong>로만 비교가 가능하다.</p>
+</blockquote>
+
+<h4 id="sql-update-문">SQL UPDATE 문</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">Customers</span>
+<span class="k">SET</span> <span class="n">ContactName</span> <span class="o">=</span> <span class="s1">'Alfred Schmidt'</span><span class="p">,</span> <span class="n">City</span><span class="o">=</span> <span class="s1">'Frankfurt'</span>
+<span class="k">WHERE</span> <span class="n">CustomerID</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="k">UPDATE</span> <span class="n">Customers</span>
+<span class="k">SET</span> <span class="n">ContactName</span><span class="o">=</span><span class="s1">'Juan'</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="s1">'Mexico'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>UPDATE문은 이미 table에 존재하는 자료의 값을 수정할때 사용된다.</p>
+
+<h4 id="sql-delete-문">SQL DELETE 문</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">CustomerName</span><span class="o">=</span><span class="s1">'Alfreds Futterkiste'</span><span class="p">;</span>
+
+<span class="k">DELETE</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">table_name</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>DELETE문은 테이블에 존재하는 자료를 지울때 사용된다.</p>
+
+<h4 id="sql-in-연산자">SQL IN 연산자</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'Germany'</span><span class="p">,</span> <span class="s1">'France'</span><span class="p">,</span> <span class="s1">'UK'</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'Germany'</span><span class="p">,</span> <span class="s1">'France'</span><span class="p">,</span> <span class="s1">'UK'</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">Country</span> <span class="k">FROM</span> <span class="n">Suppliers</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>IN 연산자는 WHERE문에서의 결과값을 특정화 시켜줄때 사용된다. IN연산자를 사용함으로 다중 OR문을 짧게 줄일수 있다.</p>
+
+<h4 id="sql-between-연산자">SQL BETWEEN 연산자</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Products</span>
+<span class="k">WHERE</span> <span class="n">Price</span> <span class="k">BETWEEN</span> <span class="mi">10</span> <span class="k">AND</span> <span class="mi">20</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Products</span>
+<span class="k">WHERE</span> <span class="n">Price</span> <span class="k">NOT</span> <span class="k">BETWEEN</span> <span class="mi">10</span> <span class="k">AND</span> <span class="mi">20</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Products</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">Price</span> <span class="k">BETWEEN</span> <span class="mi">10</span> <span class="k">AND</span> <span class="mi">20</span><span class="p">)</span>
+<span class="k">AND</span> <span class="k">NOT</span> <span class="n">CategoryID</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Products</span>
+<span class="k">WHERE</span> <span class="n">ProductName</span> <span class="k">NOT</span> <span class="k">BETWEEN</span> <span class="s1">'Carnarvon Tigers'</span> <span class="k">AND</span> <span class="s1">'Mozzarella di Giovanni'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">ProductName</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Orders</span>
+<span class="k">WHERE</span> <span class="n">OrderDate</span> <span class="k">BETWEEN</span> <span class="o">#</span><span class="mi">07</span><span class="o">/</span><span class="mi">04</span><span class="o">/</span><span class="mi">1996</span><span class="o">#</span> <span class="k">AND</span> <span class="o">#</span><span class="mi">07</span><span class="o">/</span><span class="mi">09</span><span class="o">/</span><span class="mi">1996</span><span class="o">#</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>BETWEEN연산자는 주어진 범위내에서 결과값을 찾는 연산자이다.</p>
+
+<h4 id="sql-joins">SQL Joins</h4>
+
+<p>Join문은 다수의 table의 row를 합칠때 사용된다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">이름</th>
+      <th style="text-align: center">설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">(INNER)Join</td>
+      <td style="text-align: center">양 테이블에 매치가 되는 값</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">LEFT (OUTER) Join</td>
+      <td style="text-align: center">left의 모든 값 + 매칭되는 right값</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">RIGHT (OUTER) Join</td>
+      <td style="text-align: center">right의 모든 값 + 매칭되는 left값</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">FULL (OUTER) Join</td>
+      <td style="text-align: center">left나 right에 하나라도 매치되는 모든 값</td>
+    </tr>
+  </tbody>
+</table>
+
+<h6 id="sql-inner-join">SQL Inner Join</h6>
+
+<p><img src="https://www.w3schools.com/sql/img_innerjoin.gif" alt="Inner Join" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Orders</span><span class="p">.</span><span class="n">OrderID</span><span class="p">,</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerName</span>
+<span class="k">FROM</span> <span class="n">Orders</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">Customers</span> <span class="k">ON</span> <span class="n">Orders</span><span class="p">.</span><span class="n">CustomerID</span> <span class="o">=</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerID</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">Orders</span><span class="p">.</span><span class="n">OrderID</span><span class="p">,</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerName</span><span class="p">,</span> <span class="n">Shippers</span><span class="p">.</span><span class="n">ShipperName</span>
+<span class="k">FROM</span> <span class="p">((</span><span class="n">Orders</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">Customers</span> <span class="k">ON</span> <span class="n">Orders</span><span class="p">.</span><span class="n">CustomerID</span> <span class="o">=</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerID</span><span class="p">)</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">Shippers</span> <span class="k">ON</span> <span class="n">Orders</span><span class="p">.</span><span class="n">ShipperID</span> <span class="o">=</span> <span class="n">Shippers</span><span class="p">.</span><span class="n">ShipperID</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>INNER JOIN은 양 table에 둘다 정의되어 있는 자료를 선택한다.</p>
+
+<h6 id="sql-left-right-outer-join">SQL LEFT, RIGHT (OUTER) JOIN</h6>
+
+<p><img src="https://www.w3schools.com/sql/img_leftjoin.gif" alt="LEFT JOIN" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerName</span><span class="p">,</span> <span class="n">Orders</span><span class="p">.</span><span class="n">OrderID</span>
+<span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="k">ON</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerID</span> <span class="o">=</span> <span class="n">Orders</span><span class="p">.</span><span class="n">CustomerID</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerName</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>LEFT JOIN은 LEFT TABLE의 모든 값을 출력하고, RIGHT TABLE의 결과값이 매치되는 값만 출력한다. 만약 매치되지 않으면 NULL을 출력한다.</p>
+
+<p><img src="https://www.w3schools.com/sql/img_rightjoin.gif" alt="RIGHT JOIN" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Orders</span><span class="p">.</span><span class="n">OrderID</span><span class="p">,</span> <span class="n">Employees</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span> <span class="n">Employees</span><span class="p">.</span><span class="n">FirstName</span>
+<span class="k">FROM</span> <span class="n">Orders</span>
+<span class="k">RIGHT</span> <span class="k">JOIN</span> <span class="n">Employees</span> <span class="k">ON</span> <span class="n">Orders</span><span class="p">.</span><span class="n">EmployeeID</span> <span class="o">=</span> <span class="n">Employees</span><span class="p">.</span><span class="n">EmployeeID</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Orders</span><span class="p">.</span><span class="n">OrderID</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>RIGHT JOIN은 LEFT와 반대이다.</p>
+
+<h6 id="sql-full-outer-join">SQL FULL (OUTER) JOIN</h6>
+
+<p><img src="https://www.w3schools.com/sql/img_fulljoin.gif" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerName</span><span class="p">,</span> <span class="n">Orders</span><span class="p">.</span><span class="n">OrderID</span>
+<span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">FULL</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="k">ON</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerID</span><span class="o">=</span><span class="n">Orders</span><span class="p">.</span><span class="n">CustomerID</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Customers</span><span class="p">.</span><span class="n">CustomerName</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>FULL JOIN은 LEFT와 RIGHT JOIN을 합친 것이다. 각각에 포함되지 않은 것들의 NULL값까지 다 표현이 된다.</p>
+
+<h6 id="sql-self-join">SQL SELF JOIN</h6>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">A</span><span class="p">.</span><span class="n">CustomerName</span> <span class="k">AS</span> <span class="n">CustomerName1</span><span class="p">,</span> <span class="n">B</span><span class="p">.</span><span class="n">CustomerName</span> <span class="k">AS</span> <span class="n">CustomerName2</span><span class="p">,</span> <span class="n">A</span><span class="p">.</span><span class="n">City</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">A</span><span class="p">,</span> <span class="n">Customers</span> <span class="n">B</span>
+<span class="k">WHERE</span> <span class="n">A</span><span class="p">.</span><span class="n">CustomerID</span> <span class="o">&lt;&gt;</span> <span class="n">B</span><span class="p">.</span><span class="n">CustomerID</span>
+<span class="k">AND</span> <span class="n">A</span><span class="p">.</span><span class="n">City</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="n">City</span> 
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">A</span><span class="p">.</span><span class="n">City</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>SELF JOIN은 자기 자신을 JOIN하는 것이다.</p>
+
+<blockquote>
+  <p>이름이 SMITH인 사원의 매니저 이름을 알아내려면 이 역시 EMP테이블에서 확인 할 수 있다. 그럼 담당 매니저의 이름을 알아내려면 어떻게 해야할까? 매니저 테이블이 있다면 이 두 테이블을 조인하여 알아낼 수 있겠지만 매니저 역시 이 회사에 사원이기 때문에 중복된 데이터가 생길 수 있으므로 SMITH 담당 매니저의 정보는 사원 테이블을 참조해서 얻어내야 한다. 이렇게 <strong>자신과 자기 자신을 조인하는것이 SELF JOIN이라고 한다.</strong></p>
+</blockquote>
+
+<h4 id="union-연산자">UNION 연산자</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">City</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="n">City</span> <span class="k">FROM</span> <span class="n">Suppliers</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">City</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">City</span><span class="p">,</span> <span class="n">Country</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="s1">'Germany'</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="n">City</span><span class="p">,</span> <span class="n">Country</span> <span class="k">FROM</span> <span class="n">Suppliers</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="s1">'Germany'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">City</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">City</span><span class="p">,</span> <span class="n">Country</span> <span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="s1">'Germany'</span>
+<span class="k">UNION</span> <span class="k">ALL</span>
+<span class="k">SELECT</span> <span class="n">City</span><span class="p">,</span> <span class="n">Country</span> <span class="k">FROM</span> <span class="n">Suppliers</span>
+<span class="k">WHERE</span> <span class="n">Country</span><span class="o">=</span><span class="s1">'Germany'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">City</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="s1">'Customer'</span> <span class="k">As</span> <span class="k">Type</span><span class="p">,</span> <span class="n">ContactName</span><span class="p">,</span> <span class="n">City</span><span class="p">,</span> <span class="n">Country</span>
+<span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="s1">'Supplier'</span><span class="p">,</span> <span class="n">ContactName</span><span class="p">,</span> <span class="n">City</span><span class="p">,</span> <span class="n">Country</span>
+<span class="k">FROM</span> <span class="n">Suppliers</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>UNION operator는 여러개의 SELECT문의 결과를 합칠때 사용되어진다.</p>
+
+<h4 id="sql-group-by-문">SQL GROUP BY 문</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">CustomerID</span><span class="p">),</span> <span class="n">Country</span>
+<span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">Country</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">CustomerID</span><span class="p">),</span> <span class="n">Country</span>
+<span class="k">FROM</span> <span class="n">Customers</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">Country</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">CustomerID</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">Shippers</span><span class="p">.</span><span class="n">ShipperName</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">Orders</span><span class="p">.</span><span class="n">OrderID</span><span class="p">)</span> <span class="k">AS</span> <span class="n">NumberOfOrders</span> <span class="k">FROM</span> <span class="n">Orders</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">Shippers</span> <span class="k">ON</span> <span class="n">Orders</span><span class="p">.</span><span class="n">ShipperID</span> <span class="o">=</span> <span class="n">Shippers</span><span class="p">.</span><span class="n">ShipperID</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ShipperName</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>GROUP BY 문은 결과로 나온 값들을 <em>COUNT</em>, <em>MAX</em>, <em>MIN</em>, <em>SUM</em>, <em>AVG</em>로 다시한번 묶어주는 역할을 한다.</p>
+
+<h4 id="sql-exists-operator">SQL EXISTS operator</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">SupplierName</span>
+<span class="k">FROM</span> <span class="n">Suppliers</span>
+<span class="k">WHERE</span> <span class="k">EXISTS</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">ProductName</span> <span class="k">FROM</span> <span class="n">Products</span> <span class="k">WHERE</span> <span class="n">SupplierId</span> <span class="o">=</span> <span class="n">Suppliers</span><span class="p">.</span><span class="n">supplierId</span> <span class="k">AND</span> <span class="n">Price</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">SupplierName</span>
+<span class="k">FROM</span> <span class="n">Suppliers</span>
+<span class="k">WHERE</span> <span class="k">EXISTS</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">ProductName</span> <span class="k">FROM</span> <span class="n">Products</span> <span class="k">WHERE</span> <span class="n">SupplierId</span> <span class="o">=</span> <span class="n">Suppliers</span><span class="p">.</span><span class="n">supplierId</span> <span class="k">AND</span> <span class="n">Price</span> <span class="o">=</span> <span class="mi">22</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>EXISTS 연산자는 데이터의 존재여부를 확인할떄 쓰인다. 결과에 맞는 값이 존재할때 true를 리턴한다.</p>
+
+<h4 id="sql-any-and-all-operator">SQL ANY and ALL operator</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*ANY*/</span>
+<span class="k">SELECT</span> <span class="n">ProductName</span>
+<span class="k">FROM</span> <span class="n">Products</span>
+<span class="k">WHERE</span> <span class="n">ProductID</span> <span class="o">=</span> <span class="k">ANY</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">ProductID</span> <span class="k">FROM</span> <span class="n">OrderDetails</span> <span class="k">WHERE</span> <span class="n">Quantity</span> <span class="o">=</span> <span class="mi">10</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">ProductName</span>
+<span class="k">FROM</span> <span class="n">Products</span>
+<span class="k">WHERE</span> <span class="n">ProductID</span> <span class="o">=</span> <span class="k">ANY</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">ProductID</span> <span class="k">FROM</span> <span class="n">OrderDetails</span> <span class="k">WHERE</span> <span class="n">Quantity</span> <span class="o">&gt;</span> <span class="mi">99</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>ANY 연산자는 조건을 만족하는 것이 하나라도 존재 할시 true를 리턴한다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*ALL*/</span>
+<span class="k">SELECT</span> <span class="n">ProductName</span>
+<span class="k">FROM</span> <span class="n">Products</span>
+<span class="k">WHERE</span> <span class="n">ProductID</span> <span class="o">=</span> <span class="k">ALL</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">ProductID</span> <span class="k">FROM</span> <span class="n">OrderDetails</span> <span class="k">WHERE</span> <span class="n">Quantity</span> <span class="o">=</span> <span class="mi">10</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>ALL 연산자는 모든 것이 조건을 만족 할 시 true를 리턴한다.</p>
+
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/05/21/SQL.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/05/21/SQL.html&text=SQL+Study%20%7C%20Pignu+Ante:%20/history/2017/05/21/SQL.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=SQL+Study%20%7C%20Pignu+Ante&body=:%20/history/2017/05/21/SQL.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#SQL">
+      <p><i class="fa fa-tag fa-fw"></i> SQL</p>
+    </a>
+    
+    <a class="button" href="/history/tags#study">
+      <p><i class="fa fa-tag fa-fw"></i> study</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Insertion Sort" href="/history/2017/05/29/InsertionSort.html">
+            Insertion Sort
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="첫 포스팅" href="/history/2017/05/21/">
+            첫 포스팅
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

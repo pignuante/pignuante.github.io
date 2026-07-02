@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2018/06/05/10-ssd.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>윈도우10 SSD 최적화 | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="윈도우10 SSD 최적화" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="윈도우에서 SSD를 최적화 해보자." />
+<meta property="og:description" content="윈도우에서 SSD를 최적화 해보자." />
+<link rel="canonical" href="/history/2018/06/05/10-ssd.html" />
+<meta property="og:url" content="/history/2018/06/05/10-ssd.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-06-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="윈도우10 SSD 최적화" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-06-05T00:00:00+00:00","datePublished":"2018-06-05T00:00:00+00:00","description":"윈도우에서 SSD를 최적화 해보자.","headline":"윈도우10 SSD 최적화","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2018/06/05/10-ssd.html"},"url":"/history/2018/06/05/10-ssd.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>윈도우10 SSD 최적화 | Pignu Ante</title>
+    <meta name="description" content="윈도우 10 SSD 최적화">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="%EC%9C%88%EB%8F%84%EC%9A%B010+SSD+%EC%B5%9C%EC%A0%81%ED%99%94" class="title">윈도우10 SSD 최적화</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - June 5, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h1 id="윈도우-10-ssd-최적화">윈도우 10 SSD 최적화</h1>
+
+<h3 id="1-superfetch-windows-search-비활성화">1. Superfetch, Windows Search 비활성화</h3>
+
+<p>자주 사용하는 파일 및 프로그램을 Readyboost기능을 적용해서 관리하는 기능.</p>
+
+<p>AHCI모드가 활성화된 SSD환경에서는 자동으로 비활성화되지만 서비스가 제대로 비활성화 되었는지 확인을 해보자.</p>
+
+<ol>
+  <li>
+    <p><strong>윈도우 + R을</strong> 눌러 실행 창을 띄우고 <strong>services.msc</strong>를 입력 후 확인을 누른다.<img src="/history/assets/images/ssd/ssd01.png" alt="ssd01" /></p>
+
+    <p>서비스 창이 뜨면 <strong>Superfetch</strong>를 찾아 더블 클릭한다.</p>
+  </li>
+  <li>
+    <p>그리고 새창이 뜨면 시작유형을 <strong>사용 안함</strong>으로 변경 후 확인을 클릭한다. 만약 서비스가 시작 상태이면 <strong>중지</strong>를 먼저 누르고 변경을 한다.<img src="/history/assets/images/ssd/ssd02.png" alt="ssd02" /></p>
+  </li>
+  <li>
+    <p>같은 요령으로 <strong>Windows Search</strong>도 비활성화 한다.</p>
+  </li>
+</ol>
+
+<h3 id="2-가상-메모리-비활성화">2. 가상 메모리 비활성화</h3>
+
+<p>메모리 용량이 8gb 미만인 PC면 가상 메모리를 비활성화 할 경우 메모리를 많이 사용하는 작업 실행시 문제가 발생할 수 있다. 지금 사용 중인 PC의 메모리가 <em>8gb</em>이상이고 SSD용량 확보가 필요한 경우 실행한다.</p>
+
+<ol>
+  <li>
+    <p><strong>윈도우 + R</strong>버튼을 눌러 실행창을 띄우고 <strong>SystemPropertiesAdvanced</strong>를 입력 <img src="/history/assets/images/ssd/ssd03.png" alt="ssd03" /></p>
+  </li>
+  <li>
+    <p><u>시스템속성</u> 창이 뜨면 <strong>고급</strong>에서 <strong>설정</strong>을 누른다. <img src="/history/assets/images/ssd/ssd04.png" alt="ssd04" /></p>
+
+    <p>그 후에 <u>성능 옵션</u> 창이 뜨면 <strong>고급</strong>에서 <u>가상 메모리 부분</u>의 <strong>변경</strong>을 누른다.
+그리고 마지막으로 <u>가상 메모리</u> 창이 뜨면 모든 드라이브에 대한 <strong>페이징 파일 크기 자동관리</strong>를 <em>체크 해제</em> 한 후 <strong>페이징 파일 없음</strong>을 선택 후 확인을 누른다. 이 때 재시작을 요구하지만 일단은 미룬다.</p>
+  </li>
+</ol>
+
+<h1 id="3-최대-절전-모드-비활성화">3. 최대 절전 모드 비활성화</h1>
+
+<p>다음 중에 해당하는 사항이 있으면 최대 절전 모드 비활성화를 한다.</p>
+
+<ul>
+  <li>SSD 용량 확보가 필요한 경우</li>
+  <li>최대 절전 모드 복귀시 시스템 프리징이 생기는 경우</li>
+  <li>윈도우 8/10의 빠른 시작 기능이 필요 없는 경우</li>
+</ul>
+
+<ol>
+  <li>
+    <p><strong>윈도우 + R</strong>을 눌러 <strong>cmd</strong>를 실행한다.<img src="/history/assets/images/ssd/ssd05.png" alt="ssd05" />
+이 때 <strong>Windows PowerShell(관리자)</strong> 혹은 <strong>명령 프롬프트(관리자)</strong>를 클릭한다.</p>
+  </li>
+  <li>
+    <p>명령프롬포트창이 열리면 아래의 명령어를 입력한 후 Enter 키를 누른다.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>powercfg -h off
+</code></pre></div>    </div>
+
+    <p>그럼 완료!</p>
+  </li>
+  <li>
+    <p>터미널을 켠 김에 <strong>예약된 최적화</strong> 스케쥴링도 같이 꺼준다.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fsutil behavior query DisableDeleteNotify
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h1 id="4-시스템-복원-비활성화">4. 시스템 복원 비활성화</h1>
+
+<p>시스템 복원 기능을 비활서왛 하면 시스템 복원 지점이 생기지 않아 디스크 공간을 덜 차지하게 된다. 하지만 문제가 생겼을때 복원 지점이 생기지 않아서 <u>복원을 할 수 없다</u>. 시스템 복원을 사용하지 않거나 SSD 용량 확보가 필요하면 비활성화 시키자.</p>
+
+<ol>
+  <li><strong>윈도우 + R</strong>버튼을 눌러 실행창을 띄우고 <strong>SystemPropertiesAdvanced</strong>를 입력 <img src="/history/assets/images/ssd/ssd02.png" alt="ssd02" /></li>
+  <li><strong>시스템 속성</strong> 창이 뜨면 <strong>시스템 보호</strong> \(\rightarrow\) <strong>구성</strong>를 누른다.</li>
+</ol>
+
+<p><img src="/history/assets/images/ssd/ssd06.png" alt="ssd06" />
+그리고 <strong>시스템 보호 대상 xxx</strong>(xxx는 본인 디스크 이름) 창이 뜨면 <strong>시스템 보호 사용 안함</strong>을 누르고 확인을 누른다.</p>
+
+<h1 id="5-prefetch-끄기">5. Prefetch 끄기</h1>
+
+<ol>
+  <li>
+    <p><strong>윈도우 + R</strong>버튼을 눌러 실행창을 띄우고 <strong>regedit</strong>를 입력 <img src="/history/assets/images/ssd/ssd07.png" alt="ssd07" /></p>
+  </li>
+  <li>
+    <p>하단의 주소로 순서대로 클릭해서 들어간다.<img src="/history/assets/images/ssd/ssd08.png" alt="ssd08" /><code class="language-plaintext highlighter-rouge">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters</code>. 좌측에 폴더 이름이니 하나씩 찾아 들어간 다음 <strong>PrefetchParameters</strong> 안에 <strong>EnablePrefetcher</strong>의 값 데이터에 <strong>0</strong>을 넣어준다.</p>
+
+    <h1 id="6-디스크-조각-모음-끄기">6. 디스크 조각 모음 끄기</h1>
+
+    <p><img src="/history/assets/images/ssd/ssd09.png" alt="ssd09" /></p>
+
+    <ol>
+      <li>내컴퓨터로 이동한 후 <strong>C 드라이브</strong>를 우클릭 한 다음 <strong>속성</strong>을 클릭한다.</li>
+      <li>그리고 <strong>XXX 속성</strong> 창이 뜨면 드라이브 <strong>최적화 및 조각 모음</strong>란의 <strong>최적화</strong>를 클릭한다.</li>
+      <li><strong>드라이브 최적화</strong>창 이 뜨면 하단의 <strong>설정 변경</strong>을 누른다.</li>
+      <li>그리고 새창의 <strong>드라이브 최적화</strong>창 이 뜨면 <strong>최적화 일정</strong>의 <strong>예약 실행</strong>을 체크 해제한다.</li>
+    </ol>
+  </li>
+</ol>
+
+<h1 id="7-디스트-색인-기능-비활성화">7. 디스트 색인 기능 비활성화</h1>
+
+<p><img src="/history/assets/images/ssd/ssd10.png" alt="ssd10" /></p>
+
+<ol>
+  <li><strong>내 컴퓨터</strong>에서 C 드라이브를 우클릭후 <strong>속성</strong>을 클릭.</li>
+  <li><strong>속성</strong> 창이 뜨면 하단의 <strong>이 드라이브의 파일 속성 및 내용 색인 허용</strong> 체크 해제.</li>
+  <li>그 후에 하위폴더까지 적용 클릭.</li>
+</ol>
+
+<h1 id="마무리">마무리</h1>
+
+<p>최근에는 이런 최적화가 필요 없다곤 하지만 우선은 용량확보의 목적으로라도 일단 메모해둔다. 추가로 몇가지 더 해주는게 있지만 그건 추후에 추가하기로 한다.</p>
+
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2018/06/05/10-ssd.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2018/06/05/10-ssd.html&text=%EC%9C%88%EB%8F%84%EC%9A%B010+SSD+%EC%B5%9C%EC%A0%81%ED%99%94%20%7C%20Pignu+Ante:%20/history/2018/06/05/10-ssd.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=%EC%9C%88%EB%8F%84%EC%9A%B010+SSD+%EC%B5%9C%EC%A0%81%ED%99%94%20%7C%20Pignu+Ante&body=:%20/history/2018/06/05/10-ssd.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tag</div>
+    
+
+    
+    <a class="button" href="/history/tags#ssd">
+      <p><i class="fa fa-tag fa-fw"></i> ssd</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Simple Linear Regression" href="/history/2018/06/06/introduction-to-generative-model.html">
+            Simple Linear Regression
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="네이버뉴스 댓글 크롤링 with python" href="/history/2018/03/26/naver_crawling.html">
+            네이버뉴스 댓글 크롤링 with python
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

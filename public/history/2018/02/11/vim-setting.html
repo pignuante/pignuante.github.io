@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2018/02/11/vim-setting.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>vim setting | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="vim setting" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Blog for Study" />
+<meta property="og:description" content="A Blog for Study" />
+<link rel="canonical" href="/history/2018/02/11/vim-setting.html" />
+<meta property="og:url" content="/history/2018/02/11/vim-setting.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-02-11T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="vim setting" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-02-11T00:00:00+00:00","datePublished":"2018-02-11T00:00:00+00:00","description":"A Blog for Study","headline":"vim setting","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2018/02/11/vim-setting.html"},"url":"/history/2018/02/11/vim-setting.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>vim setting | Pignu Ante</title>
+    <meta name="description" content="Vim setting">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="vim+setting" class="title">vim setting</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - February 11, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h1 id="vim-setting">Vim setting</h1>
+
+<p>terminal환경에서 작업을 하다보면 필연적으로 많이 사용하게 되는 text editor인 <a href="https://namu.wiki/w/vi">vi</a>(m)의 환경설정파일을 간단히 정리해보았다. vim의 사용법은 우선은 생략하고 말 그대로 나의 개인 세팅만 정리하였다.</p>
+
+<h2 id="요약">요약</h2>
+
+<p>2018.02 기준으로 설정해둔 것은 아래와 같다.</p>
+
+<ol>
+  <li>vim에서 파일트리창 보기</li>
+  <li>자동완성</li>
+  <li>vim 테마</li>
+  <li>문법체크</li>
+  <li>git 호환성</li>
+  <li>주석처리</li>
+  <li>indent 표시</li>
+  <li>몇몇 문법추가(markdown, emmet, javascript, html, json)</li>
+</ol>
+
+<h3 id="설정-설명">설정 설명</h3>
+
+<p>자신의 <code class="language-plaintext highlighter-rouge">.vimrc</code>가 어딨는지 모르겠다면 vim을 킨 후 <code class="language-plaintext highlighter-rouge">edit $MYVIMRC</code>라고 입력하자.</p>
+
+<h4 id="1-기본-세팅-설명">1. 기본 세팅 설명</h4>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">" vim 기본 세팅
+set encoding=utf8   "</span><span class="w"> </span><span class="n">vim</span><span class="err">의</span><span class="w"> </span><span class="err">인코딩</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">fenc</span><span class="o">=</span><span class="n">utf-8</span><span class="w">		</span><span class="s2">" 파일의 인코딩
+set fileencodings=utf-8,cp949,euc-kr,korea,japan "</span><span class="w"> </span><span class="err">파일</span><span class="w"> </span><span class="err">인코딩</span><span class="w"> </span><span class="err">탐색순위</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">tenc</span><span class="o">=</span><span class="n">utf-8</span><span class="w">      </span><span class="s2">" 터미널인코딩
+
+set nocompatible    "</span><span class="w"> </span><span class="nx">vi</span><span class="err">와의</span><span class="w"> </span><span class="err">호환성</span><span class="nx">x</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">number</span><span class="w">          </span><span class="s2">" 라인넘버 표시
+set numberwidth=2	"</span><span class="w"> </span><span class="err">라인넘버</span><span class="w"> </span><span class="err">크기</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">ruler</span><span class="w">           </span><span class="s2">" 커서 위치표시
+set cursorline      "</span><span class="w"> </span><span class="err">커서에</span><span class="w"> </span><span class="err">밑줄</span><span class="w"> </span><span class="err">표시</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">showcmd</span><span class="w">         </span><span class="s2">" normal 모드 명령어 우하단에 표시
+set showmatch       "</span><span class="w"> </span><span class="err">괄호</span><span class="w"> </span><span class="err">짝</span><span class="w"> </span><span class="err">표시</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">title</span><span class="w">           </span><span class="s2">" title 표시
+
+set history=1000	"</span><span class="w"> </span><span class="nx">vim</span><span class="err">의</span><span class="w"> </span><span class="nx">history</span><span class="w"> </span><span class="nx">1000</span><span class="err">개까지</span><span class="w"> </span><span class="err">표시</span><span class="w">
+
+</span><span class="n">set</span><span class="w"> </span><span class="nx">backspace</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span><span class="nx">eol</span><span class="p">,</span><span class="nx">start</span><span class="w"> </span><span class="s2">" 딜리트버튼이 indent와 eol과 start를 지우도록
+
+set expandtab   "</span><span class="w"> </span><span class="nx">tab</span><span class="err">을</span><span class="w"> </span><span class="err">누르면</span><span class="w"> </span><span class="nx">space</span><span class="err">가</span><span class="w"> </span><span class="err">입력됨</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">shiftwidth</span><span class="o">=</span><span class="mi">4</span><span class="s2">" 기본 인덴트 크기
+set tabstop=4   "</span><span class="w"> </span><span class="n">tab-</span><span class="err">&gt;</span><span class="nx">space</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">smarttab</span><span class="w">	</span><span class="s2">" 삭제로 tab을 한번에 지우기
+
+set hlsearch    "</span><span class="w"> </span><span class="nx">search</span><span class="w"> </span><span class="nx">highlight</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">incsearch</span><span class="w">   </span><span class="s2">" 한글자입력시마다 검색
+set ignorecase  "</span><span class="w"> </span><span class="err">검색대소문자</span><span class="w"> </span><span class="err">무시</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">smartcase</span><span class="w">   </span><span class="s2">" 대문자포함시 대소문자를 맞게 검색
+set nowrapscan  "</span><span class="w"> </span><span class="err">검색시</span><span class="w"> </span><span class="err">마지막에서</span><span class="w"> </span><span class="err">처음으로</span><span class="w"> </span><span class="err">ㄴㄴ</span><span class="w">
+
+</span><span class="n">set</span><span class="w"> </span><span class="nx">linebreak</span><span class="w">   </span><span class="s2">" 단어단위로 짤림
+"</span><span class="w"> </span><span class="err">짤린줄임을</span><span class="w"> </span><span class="err">좌단에</span><span class="w"> </span><span class="err">표시</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">showbreak</span><span class="o">=+++</span><span class="n">\</span><span class="w">
+</span><span class="nx">set</span><span class="w"> </span><span class="nx">nrformats</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="nx">octal</span><span class="p">,</span><span class="nx">hex</span><span class="p">,</span><span class="nx">bin</span><span class="w"> </span><span class="s2">" C-a, C-x 하단에 추가 설명
+set showtabline=2 "</span><span class="w"> </span><span class="nx">tab</span><span class="w"> </span><span class="nx">line</span><span class="err">을</span><span class="w"> </span><span class="err">항상보여준다</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">laststatus</span><span class="o">=</span><span class="mi">2</span><span class="w">  </span><span class="s2">" 상태바 표시를 항상한다
+set visualbell	  "</span><span class="w"> </span><span class="err">땡</span><span class="o">!</span><span class="w"> </span><span class="err">소리</span><span class="w"> </span><span class="err">대신에</span><span class="w"> </span><span class="err">화면의</span><span class="w"> </span><span class="err">깜빡임으로</span><span class="w">
+</span><span class="s2">" 코멘트 하이라이트
+highlight Comment term=bold cterm=bold ctermfg=4
+set t_Co=256		"</span><span class="w"> </span><span class="err">색</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">showcmd</span><span class="w">         </span><span class="s2">" (부분적인)명령어를 상태라인에 보여줌
+set showmatch		"</span><span class="w"> </span><span class="err">자신의</span><span class="w"> </span><span class="err">짝의</span><span class="w"> </span><span class="err">괄호를</span><span class="w"> </span><span class="err">보여준다</span><span class="o">.</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">wildmenu</span><span class="w">        </span><span class="s2">" 자동완성을 좀더 편리하게 확장
+
+filetype off		"</span><span class="w"> </span><span class="nx">filetype</span><span class="err">을</span><span class="w"> </span><span class="err">끈다</span><span class="w">
+</span><span class="n">filetype</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">indent</span><span class="w"> </span><span class="nx">on</span><span class="w">	</span><span class="s2">" filetype에 맞는 플러그인, indent를 켠다.
+
+"</span><span class="w"> </span><span class="err">이</span><span class="w"> </span><span class="err">부분은</span><span class="w"> </span><span class="err">굳이</span><span class="w"> </span><span class="nx">3</span><span class="err">개가</span><span class="w"> </span><span class="err">다</span><span class="w"> </span><span class="err">필요한지는</span><span class="w"> </span><span class="err">잘</span><span class="w"> </span><span class="err">모르겠지만</span><span class="w"> </span><span class="err">일단</span><span class="w"> </span><span class="err">다</span><span class="w"> </span><span class="err">넣었다</span><span class="o">.</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">autoindent</span><span class="w">		</span><span class="s2">" 지금 커서의 indent를 유지
+set cindent			"</span><span class="w"> </span><span class="nx">c</span><span class="err">문법에</span><span class="w"> </span><span class="err">맞는</span><span class="w"> </span><span class="nx">indent</span><span class="err">를</span><span class="w"> </span><span class="err">제공</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">smartindent</span><span class="w">		</span><span class="s2">" 파일에 맞는 indent를 제공
+
+if has("</span><span class="nx">syntax</span><span class="s2">")
+    syntax enable
+endif				"</span><span class="w"> </span><span class="err">파일에</span><span class="w"> </span><span class="err">문법이</span><span class="w"> </span><span class="err">존재</span><span class="w"> </span><span class="err">할</span><span class="w"> </span><span class="err">시</span><span class="w"> </span><span class="err">문법설정을</span><span class="w"> </span><span class="err">온</span><span class="w">
+
+</span><span class="n">map</span><span class="w"> </span><span class="err">&lt;</span><span class="nx">Leader</span><span class="err">&gt;</span><span class="nx">r</span><span class="w"> </span><span class="p">:</span><span class="nx">up</span><span class="err">&lt;</span><span class="nx">CR</span><span class="err">&gt;</span><span class="p">:</span><span class="o">!</span><span class="nx">python</span><span class="w"> </span><span class="o">%</span><span class="err">&lt;</span><span class="nx">CR</span><span class="err">&gt;</span><span class="w"> </span><span class="s2">" 하단에 추가 설명
+</span></code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">set nrformats=alpha,octal,hex,bin " C-a, C-x</code> : 알파벳, 10진수, 16진수, 2진수의 숫자에 커서를 두고 <code class="language-plaintext highlighter-rouge">Ctrl+a</code>, <code class="language-plaintext highlighter-rouge">Ctrl+x</code>를 누르면 숫자가 증감한다. 기본은 10진수만!</li>
+  <li><code class="language-plaintext highlighter-rouge">map &lt;Leader&gt;r :up&lt;CR&gt;:!python %&lt;CR&gt;</code> : leader키(\키)와 r을 누르면 지금 편집하던 프로그램의 변경이 있을 경우 저장을 한 다음 파이썬으로 실행을 한다.</li>
+</ul>
+
+<p>위가 vim에서 기본으로 제공해주는 세팅이다. 옵션리스트를 더 알고 싶으면 <code class="language-plaintext highlighter-rouge">:help option-summary</code>명령어를 옵션의 설명이 보고 싶다면 <code class="language-plaintext highlighter-rouge">:help 옵션이름</code>을 입력하자.</p>
+
+<p>추가적으로 가끔 <code class="language-plaintext highlighter-rouge">ctrl+v</code>를 누르면 계단형으로 입력이 될 때가 있는데 이럴때에는 <strong>붙여넣기 전</strong>에 <code class="language-plaintext highlighter-rouge">set paste</code>를 입력하고 <strong>붙여넣은 후</strong>에 <code class="language-plaintext highlighter-rouge">set nopaste</code>를 입력하자. 물론 <code class="language-plaintext highlighter-rouge">set paste!</code>라는 토글 명령어로 해결 할 수도 있다!</p>
+
+<p>아예 붙여넣기 전에 자동으로 토글을 실행하도록 매핑을 시도해보자.</p>
+
+<hr />
+
+<h4 id="2-패키지관리자">2. 패키지관리자</h4>
+
+<h5 id="21-패키지-관리자의-설치">2.1. 패키지 관리자의 설치</h5>
+
+<p>보통 설명들 보면 <code class="language-plaintext highlighter-rouge">vundle</code>을 이용한 설치가 많이 나오는데 찾다보니 한국인이 만든 vim 패키지 관리자인 <a href="https://github.com/junegunn/vim-plug">vim-plug</a>라는 것이 있어서 그걸로 설치하였다.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">if</span><span class="w"> </span><span class="n">empty</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s1">'~/.vim/autoload/plug.vim'</span><span class="p">))</span><span class="w">
+    </span><span class="n">silent</span><span class="w"> </span><span class="o">!</span><span class="nx">curl</span><span class="w"> </span><span class="nt">-fLo</span><span class="w"> </span><span class="nx">~/.vim/autoload/plug.vim</span><span class="w"> </span><span class="nt">--create-dirs</span><span class="w">
+    </span><span class="n">\</span><span class="w"> </span><span class="nx">https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><span class="w">
+    </span><span class="n">autocmd</span><span class="w"> </span><span class="nx">VimEnter</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">PlugInstall</span><span class="w"> </span><span class="nt">--sync</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="nv">$MYVIMRC</span><span class="w">
+</span><span class="n">endif</span><span class="w">
+</span></code></pre></div></div>
+
+<p>위의 문장을 자신의 <code class="language-plaintext highlighter-rouge">.vimrc</code>파일에 위의 문장을 추가해준다. <code class="language-plaintext highlighter-rouge">.vimrc</code>파일의 위치를 혹시라도 잘 모르겠다! 싶으면 vim에서 <code class="language-plaintext highlighter-rouge">:edit $MYVIMRC</code>명령어를 입력한다. 그러면 <code class="language-plaintext highlighter-rouge">vim-plug</code>가 설치가 된다.</p>
+
+<p>설치되는 플러그인들은 <code class="language-plaintext highlighter-rouge">~/.vim</code>폴더안에 저장이 되므로 삭제하고 싶을때는 저 폴더 자체를 지워도 무관하다.</p>
+
+<h5 id="22-패키지의-설치">2.2. 패키지의 설치</h5>
+
+<p><code class="language-plaintext highlighter-rouge">vim-plug</code>로 설치를 하기위해선</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">call</span><span class="w"> </span><span class="nx">plug</span><span class="c">#begin()</span><span class="w">
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'bling/vim-airline'</span><span class="w">
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'vim-airline/vim-airline-themes'</span><span class="w">
+
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'scrooloose/nerdtree'</span><span class="w">
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'scrooloose/syntastic'</span><span class="w">
+
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'raimondi/delimitmate'</span><span class="w">
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'nathanaelkane/vim-indent-guides'</span><span class="w">  </span><span class="s2">" indent guide
+
+    Plug 'scrooloose/nerdcommenter' "</span><span class="w"> </span><span class="nx">leader</span><span class="w"> </span><span class="nx">cc</span><span class="w"> </span><span class="p">(</span><span class="n">leader</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">\</span><span class="p">),</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="nx">space</span><span class="p">,</span><span class="w"> </span><span class="nx">cm</span><span class="w">
+
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'tpope/vim-fugitive'</span><span class="w">       </span><span class="s2">" git in vim
+    Plug 'airblade/vim-gitgutter'   "</span><span class="w"> </span><span class="nx">git</span><span class="w"> </span><span class="nx">check</span><span class="w">
+
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'valloric/youcompleteme'</span><span class="w">   </span><span class="s2">" 자동완성
+
+    Plug 'pangloss/vim-javascript'  "</span><span class="w"> </span><span class="nx">java</span><span class="w"> </span><span class="nx">script</span><span class="w">
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'plasticboy/vim-markdown'</span><span class="w">  </span><span class="s2">" markdown
+    Plug 'othree/html5.vim'         "</span><span class="w"> </span><span class="nx">html</span><span class="w">
+    </span><span class="n">Plug</span><span class="w"> </span><span class="s1">'elzr/vim-json'</span><span class="w">            </span><span class="s2">" json
+    Plug 'mattn/emmet-vim'          "</span><span class="w"> </span><span class="nx">emmet</span><span class="w">
+</span><span class="n">call</span><span class="w"> </span><span class="nx">plug</span><span class="c">#end()</span><span class="w">
+</span></code></pre></div></div>
+
+<p>라고 입력한다. <code class="language-plaintext highlighter-rouge">Plug</code>라고 적힌 것이 설치할 플러그인들이다. 이제 vim의 normal모드에서 <code class="language-plaintext highlighter-rouge">:PlugInstall</code>이라고 적으면 위에 명시된 플러그인들을 설치한다.</p>
+
+<h5 id="23-패키지의-설명">2.3 패키지의 설명</h5>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">bling/vim-airline</code>, <code class="language-plaintext highlighter-rouge">vim-airline/vim-airline-themes</code> : vim을 보기 좋게 꾸며준다.</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">" airline
+let g:airline_right_sep = '⮂'
+let g:airline_left_sep = '⮀'
+"</span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline_symbols.branch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'⎇'</span><span class="w">
+</span><span class="s2">"let g:airline_symbols.paste = 'Þ'
+"</span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline_symbols.spell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Ꞩ'</span><span class="w">
+</span><span class="kr">if</span><span class="w"> </span><span class="o">!</span><span class="n">exists</span><span class="p">(</span><span class="s1">'g:airline_symbols'</span><span class="p">)</span><span class="w">
+    </span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline_symbols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="n">endif</span><span class="w">
+
+</span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline</span><span class="c">#extensions#tabline#enabled = 1 " turn on buffer list</span><span class="w">
+</span><span class="s2">"let g:airline_theme='luna'
+set laststatus=2 "</span><span class="w"> </span><span class="n">turn</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">bottom</span><span class="w"> </span><span class="nx">bar</span><span class="p">(</span><span class="err">중복</span><span class="p">)</span><span class="w">
+</span><span class="s2">"let g:airline#extensions#tabline#left_sep = ' '
+"</span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline</span><span class="c">#extensions#tabline#left_alt_sep = '|'</span><span class="w">
+</span><span class="s2">"let g:airline_left_sep=''
+"</span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline_right_sep</span><span class="o">=</span><span class="s1">'&lt;'</span><span class="w">
+</span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline_detect_crypt</span><span class="o">=</span><span class="mi">1</span><span class="w">
+</span><span class="n">let</span><span class="w"> </span><span class="nx">g:airline</span><span class="c">#extensions#tabline#fnamemod = ':t'</span><span class="w">
+
+</span><span class="s2">"let g:airline_mode_map = {
+    "</span><span class="w">      </span><span class="n">\</span><span class="w"> </span><span class="s1">'__'</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s1">'-'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"      \ 'n'  : 'N',
+    "</span><span class="w">      </span><span class="n">\</span><span class="w"> </span><span class="s1">'i'</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="s1">'I'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"      \ 'R'  : 'R',
+    "</span><span class="w">      </span><span class="n">\</span><span class="w"> </span><span class="s1">'c'</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="s1">'C'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"      \ 'v'  : 'V',
+    "</span><span class="w">      </span><span class="n">\</span><span class="w"> </span><span class="s1">'V'</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="s1">'V'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"      \ '^V' : 'V',
+    "</span><span class="w">      </span><span class="n">\</span><span class="w"> </span><span class="s1">'s'</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="s1">'S'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"      \ 'S'  : 'S',
+    "</span><span class="w">      </span><span class="n">\</span><span class="w"> </span><span class="s1">'^S'</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s1">'S'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"      \ }
+</span></code></pre></div>    </div>
+
+    <p>굳이 해줄 필요는 없지만 아이콘 커스터마이징을 위해서 남겨놨다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">scrooloose/nerdtree</code> : vim의 파일 탐색기이다.</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">" nerdTree
+nnoremap &lt;Leader&gt;t :NERDTreeToggle&lt;CR&gt;
+</span></code></pre></div>    </div>
+
+    <p>나는 <code class="language-plaintext highlighter-rouge">Leader</code>키를 <code class="language-plaintext highlighter-rouge">\</code>로 설정을 해놔서 <code class="language-plaintext highlighter-rouge">\+t</code>를 누르면 창이 켜졌다 꺼졋다한다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">scrooloose/syntastic</code> : 문법, 오타를 체크해서 표시해준다.</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">raimondi/delimitmate</code> : 괄호 자동완성</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">nathanaelkane/vim-indent-guides</code> : 인덴트 표시</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">" vim indent guide
+colorscheme default
+let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd guibg=red ctermbg=3
+hi IndentGuidesEven guibg=green ctermbg=4
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 1
+let g:indent_guides_space_guides = 1
+let g:indent_guides_tab_guides = 1
+let g:indent_guides_enable_on_vim_startup = 1
+</span></code></pre></div>    </div>
+
+    <p>제작자 추천 세팅이다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">scrooloose/nerdcommenter</code> : 문법에 맞게 주석 처리를 해준다.</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">" nerdcommenter
+let g:NERDSpaceDelims = 2       
+</span></code></pre></div>    </div>
+
+    <p>주석표시가 앞뒤로 생길경우 뒤에 여백을 2칸으로 한다. 주석을 처리하는 여러가지 방식이 있는데 기본적으로는 <code class="language-plaintext highlighter-rouge">Leader + c + Space</code>를 비쥬얼모드로 선택한 다음 눌러주면 주석이 토글된다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">tpope/vim-fugitive</code>, <code class="language-plaintext highlighter-rouge">airblade/vim-gitgutter</code> : 각각 git명령어, git에 변동사항 표시를 해준다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">pangloss/vim-javascript</code>, <code class="language-plaintext highlighter-rouge">plasticboy/vim-markdown</code>, <code class="language-plaintext highlighter-rouge">othree/html5.vim</code>, <code class="language-plaintext highlighter-rouge">elzr/vim-json</code>, <code class="language-plaintext highlighter-rouge">mattn/emmet-vim</code> : 추가 언어를 설치하였다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">valloric/youcompleteme</code> : 자동완성 플러그인. plug로 설치하고 추가 설정을 해줘야한다.</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">" youcompleteme
+let g:ycm_python_binary_path = 'python'
+let g:ycm_min_num_of_chars_for_completion = 1 "</span><span class="w"> </span><span class="mi">1</span><span class="err">글자만</span><span class="w"> </span><span class="err">입력되어도</span><span class="w"> </span><span class="err">완성기능이</span><span class="w"> </span><span class="err">나오도록</span><span class="w">
+</span><span class="n">let</span><span class="w"> </span><span class="nx">g:ycm_global_ycm_extra_conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'~/.ycm_extra_conf.py'</span><span class="w">
+</span><span class="n">set</span><span class="w"> </span><span class="nx">splitbelow</span><span class="w">              </span><span class="s2">" detail window 아래로
+</span></code></pre></div>    </div>
+
+    <ul>
+      <li>위의 파일로 vim-plug를 사용 했을 경우 youcompleteme는 <code class="language-plaintext highlighter-rouge">~/vim/plugged/youcompleteme</code>에 설치되어 있는데 저 폴더 내부의 <code class="language-plaintext highlighter-rouge">install.py</code>로 설치를 추가로 해주어야한다.</li>
+      <li>설치 할 때 필요한 언어를 설정해서 설치할 수 있으나 귀찮으니 다 설치해준다. <code class="language-plaintext highlighter-rouge">/install.py --all</code></li>
+      <li>혹시나 <code class="language-plaintext highlighter-rouge">pyenv</code>, <code class="language-plaintext highlighter-rouge">pyenv-virtualenv</code>를 사용하고 있을 경우 설치중에 에러메세지가 발생 할 수 있는데(특히나 지금 사용하는 터미널의 python이 가상환경이거나 pyenv로 만들었을 경우) 이럴 때에는 pyenv로 system python으로 변경한 다음 진행하면 잘 된다. 그래도 혹시 안되면 pyenv와 pyenv-virtualenv를 삭제하고 다시 <code class="language-plaintext highlighter-rouge">install.py</code>로 설치를 진행한다.</li>
+      <li>추가로 <code class="language-plaintext highlighter-rouge">C</code>언어계열 파일들의 자동완성을 설정하려면 <code class="language-plaintext highlighter-rouge">.ycm_extra_conf.py</code>파일이 필요한데 <a href="https://github.com/pignuante/pignuante.github.io/blob/master/data/.ycm_extra_conf.py">여기</a>에서 다운 받아서 관리하기 편한곳에 넣자(나 같은 경우는 <code class="language-plaintext highlighter-rouge">~/.ycm_extra_conf.py</code>이렇게) 그 후에 위의 환경 설정처럼 vim의 글로벌 변수로 <code class="language-plaintext highlighter-rouge">ycm_global_ycm_extra_conf</code>을 설정해주자.</li>
+      <li>근데 이 자동완성이 뭔가 좀 불완전하게 작동하는것같아서 세팅을 다시 확인해봐야겠다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>이렇게 완성된 파일은 <a href="https://github.com/pignuante/pignuante.github.io/blob/master/data/vimrc">이곳</a>에서 확인 할 수 있다!</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2018/02/11/vim-setting.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2018/02/11/vim-setting.html&text=vim+setting%20%7C%20Pignu+Ante:%20/history/2018/02/11/vim-setting.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=vim+setting%20%7C%20Pignu+Ante&body=:%20/history/2018/02/11/vim-setting.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tag</div>
+    
+
+    
+    <a class="button" href="/history/tags#vim">
+      <p><i class="fa fa-tag fa-fw"></i> vim</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Probability & Distribution (1)" href="/history/2018/03/10/statistics_1.html">
+            Probability & Distribution (1)
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Tensorflow gpu at ubuntu, updated at 2018.06" href="/history/2018/01/30/tensorflow-gpu-at-ubuntu.html">
+            Tensorflow gpu at ubuntu, updated at 2018.06
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/11/01/project-euler006-with-python.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Project Euler006 with python | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Project Euler006 with python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Blog for Study" />
+<meta property="og:description" content="A Blog for Study" />
+<link rel="canonical" href="/history/2017/11/01/project-euler006-with-python.html" />
+<meta property="og:url" content="/history/2017/11/01/project-euler006-with-python.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-11-01T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Project Euler006 with python" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-11-01T00:00:00+00:00","datePublished":"2017-11-01T00:00:00+00:00","description":"A Blog for Study","headline":"Project Euler006 with python","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/11/01/project-euler006-with-python.html"},"url":"/history/2017/11/01/project-euler006-with-python.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Project Euler006 with python | Pignu Ante</title>
+    <meta name="description" content="006. Sum square difference">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Project+Euler006+with+python" class="title">Project Euler006 with python</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - November 1, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h4 id="006-sum-square-difference">006. Sum square difference</h4>
+
+<blockquote>
+  <p>The sum of the squares of the first ten natural numbers is,</p>
+
+  <p>12 + 22 + … + 102 = 385</p>
+
+  <p>The square of the sum of the first ten natural numbers is,</p>
+
+\[(1 + 2 + ... + 10)^2 = 55^2 = 3025\]
+
+  <p>Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.</p>
+
+  <p>Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p>문제는 간단하다 모든 숫자의 제곱의 합과 모든 숫자의 합의 제곱을 구하는 것이다.</p>
+  </li>
+  <li>
+    <p>우리가 중학생때인가 고등학생때쯤 배웠던 공식에 따르면
+\(\begin{align}
+	\sum_{i=1}^{n}i\ \ =&amp;\ 1+\cdots+n=\frac{n\left(n+1\right)}{2} \\
+	\sum_{i=1}^{n}i^2 =&amp;\ 1^2+\cdots+n^2 = \frac{n\left(n+1\right)\left(2n+1\right)}{6} \\
+	\sum_{i=1}^{n}i^3 =&amp;\ 1^3+\cdots+n^3 = \left(\frac{n\left(n+1\right)}{2}\right)^2 \\
+\end{align}\)
+의 식을 따른다.</p>
+  </li>
+  <li>
+    <p>위의 공식의 첫번째것과 두번째 것을 단순히 코드로 옮겨준다.</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">euler006</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">sumSquare</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">((</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">squareSum</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>  <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">//</span> <span class="mi">6</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sumSquare</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-</span> <span class="n">squareSum</span><span class="p">(</span><span class="n">number</span><span class="p">))</span>
+
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>아니면 컴퓨터 이용의 주목적중 하나인 반복 노가다를 시켜보자.</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">euler006a</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sumSquare</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="n">number</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">def</span> <span class="nf">squareSum</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="n">number</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sumSquare</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-</span> <span class="n">squareSum</span><span class="p">(</span><span class="n">number</span><span class="p">))</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/11/01/project-euler006-with-python.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/11/01/project-euler006-with-python.html&text=Project+Euler006+with+python%20%7C%20Pignu+Ante:%20/history/2017/11/01/project-euler006-with-python.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Project+Euler006+with+python%20%7C%20Pignu+Ante&body=:%20/history/2017/11/01/project-euler006-with-python.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#algorithm">
+      <p><i class="fa fa-tag fa-fw"></i> algorithm</p>
+    </a>
+    
+    <a class="button" href="/history/tags#math">
+      <p><i class="fa fa-tag fa-fw"></i> math</p>
+    </a>
+    
+    <a class="button" href="/history/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="Project Euler007 with python" href="/history/2017/11/03/project-euler007-with-python.html">
+            Project Euler007 with python
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Project Euler005 with python" href="/history/2017/10/31/project-euler005-with-python.html">
+            Project Euler005 with python
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

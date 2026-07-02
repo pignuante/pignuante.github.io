@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/11/11/project-euler011-with-python.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Project Euler011 with python | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Project Euler011 with python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Blog for Study" />
+<meta property="og:description" content="A Blog for Study" />
+<link rel="canonical" href="/history/2017/11/11/project-euler011-with-python.html" />
+<meta property="og:url" content="/history/2017/11/11/project-euler011-with-python.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-11-11T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Project Euler011 with python" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-11-11T00:00:00+00:00","datePublished":"2017-11-11T00:00:00+00:00","description":"A Blog for Study","headline":"Project Euler011 with python","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/11/11/project-euler011-with-python.html"},"url":"/history/2017/11/11/project-euler011-with-python.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Project Euler011 with python | Pignu Ante</title>
+    <meta name="description" content="011. Largest product in a grid">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Project+Euler011+with+python" class="title">Project Euler011 with python</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - November 11, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h4 id="011-largest-product-in-a-grid">011. Largest product in a grid</h4>
+
+<blockquote>
+  <p>In the 20×20 grid below, four numbers along a diagonal line have been marked in red.</p>
+
+  <p>​	08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
+​	49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
+​	81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
+​	52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91
+​	22 31 16 71 51 67 63 89 41 92 36 54 22 40 40 28 66 33 13 80
+​	24 47 32 60 99 03 45 02 44 75 33 53 78 36 84 20 35 17 12 50
+​	32 98 81 28 64 23 67 10 <strong>26</strong> 38 40 67 59 54 70 66 18 38 64 70
+​	67 26 20 68 02 62 12 20 95 <strong>63</strong> 94 39 63 08 40 91 66 49 94 21
+​	24 55 58 05 66 73 99 26 97 17 <strong>78</strong> 78 96 83 14 88 34 89 63 72
+​	21 36 23 09 75 00 76 44 20 45 35 <strong>14</strong> 00 61 33 97 34 31 33 95
+​	78 17 53 28 22 75 31 67 15 94 03 80 04 62 16 14 09 53 56 92
+​	16 39 05 42 96 35 31 47 55 58 88 24 00 17 54 24 36 29 85 57
+​	86 56 00 48 35 71 89 07 05 44 44 37 44 60 21 58 51 54 17 58
+​	19 80 81 68 05 94 47 69 28 73 92 13 86 52 17 77 04 89 55 40
+​	04 52 08 83 97 35 99 16 07 97 57 32 16 26 26 79 33 27 98 66
+​	88 36 68 87 57 62 20 72 03 46 33 67 46 55 12 32 63 93 53 69
+​	04 42 16 73 38 25 39 11 24 94 72 18 08 46 29 32 40 62 76 36
+​	20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
+​	20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
+​	01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48</p>
+
+  <p>The product of these numbers is 26 × 63 × 78 × 14 = 1788696.</p>
+
+  <p>What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?</p>
+</blockquote>
+
+<ul>
+  <li>문제에 제시된 배열의 상하좌우 그리고 대각선으로 4개 숫자의 곱이 최대가 되는 것을 찾는 문제이다.</li>
+  <li>파이썬 경전에 언급되어 있는 것 처럼 “Simple is better than complex” 단순 무식하게 풀었다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">euler011</span><span class="p">():</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="s">"""08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
+49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
+81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
+52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91
+22 31 16 71 51 67 63 89 41 92 36 54 22 40 40 28 66 33 13 80
+24 47 32 60 99 03 45 02 44 75 33 53 78 36 84 20 35 17 12 50
+32 98 81 28 64 23 67 10 26 38 40 67 59 54 70 66 18 38 64 70
+67 26 20 68 02 62 12 20 95 63 94 39 63 08 40 91 66 49 94 21
+24 55 58 05 66 73 99 26 97 17 78 78 96 83 14 88 34 89 63 72
+21 36 23 09 75 00 76 44 20 45 35 14 00 61 33 97 34 31 33 95
+78 17 53 28 22 75 31 67 15 94 03 80 04 62 16 14 09 53 56 92
+16 39 05 42 96 35 31 47 55 58 88 24 00 17 54 24 36 29 85 57
+86 56 00 48 35 71 89 07 05 44 44 37 44 60 21 58 51 54 17 58
+19 80 81 68 05 94 47 69 28 73 92 13 86 52 17 77 04 89 55 40
+04 52 08 83 97 35 99 16 07 97 57 32 16 26 26 79 33 27 98 66
+88 36 68 87 57 62 20 72 03 46 33 67 46 55 12 32 63 93 53 69
+04 42 16 73 38 25 39 11 24 94 72 18 08 46 29 32 40 62 76 36
+20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
+20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
+01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"""</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span> <span class="k">for</span> <span class="n">dd</span> <span class="ow">in</span> <span class="n">d</span><span class="p">.</span><span class="n">split</span><span class="p">()]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+        <span class="n">result</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">):</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+        <span class="n">result</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)):</span>
+                <span class="c1"># results[y][x] = sum(array[y:y+4][x])
+</span>                <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">2</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">3</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">crossDown</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+        <span class="n">result</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">):</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">2</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">3</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">crossUp</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+        <span class="n">result</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">):</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">-</span><span class="mi">2</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">array</span><span class="p">[</span><span class="n">y</span><span class="o">-</span><span class="mi">3</span><span class="p">][</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">right</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">down</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">crossUp</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">crossDown</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>함수를 4개를 정의하였다.
+    <ul>
+      <li>right() : 좌에서 우로 탐색하는 함수이다</li>
+      <li>down() : 위에서 아래로 탐색한다.</li>
+      <li>crossDown() : 대각선 좌상단에서 우하단으로 탐색한다</li>
+      <li>crossUp() : 대각선 좌하단에서 우상단으로 탐색한다.</li>
+    </ul>
+  </li>
+  <li>탐색의 방향이랑 탐색을 할 때 경계선만 잘 선택해주면 간단한 문제이다.</li>
+</ul>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/11/11/project-euler011-with-python.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/11/11/project-euler011-with-python.html&text=Project+Euler011+with+python%20%7C%20Pignu+Ante:%20/history/2017/11/11/project-euler011-with-python.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Project+Euler011+with+python%20%7C%20Pignu+Ante&body=:%20/history/2017/11/11/project-euler011-with-python.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#algorithm">
+      <p><i class="fa fa-tag fa-fw"></i> algorithm</p>
+    </a>
+    
+    <a class="button" href="/history/tags#math">
+      <p><i class="fa fa-tag fa-fw"></i> math</p>
+    </a>
+    
+    <a class="button" href="/history/tags#python">
+      <p><i class="fa fa-tag fa-fw"></i> python</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="R with Jupyter Notebook at OSX" href="/history/2017/12/05/r-with-jupyter-notebook.html">
+            R with Jupyter Notebook at OSX
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Project Euler010 with python" href="/history/2017/11/05/project-euler010-with-python.html">
+            Project Euler010 with python
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

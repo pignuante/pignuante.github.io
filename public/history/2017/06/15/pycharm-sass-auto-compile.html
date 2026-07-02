@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2017/06/15/pycharm-sass-auto-compile.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Pycharm에서 SASS auto compile | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Pycharm에서 SASS auto compile" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="sass auto compile" />
+<meta property="og:description" content="sass auto compile" />
+<link rel="canonical" href="/history/2017/06/15/pycharm-sass-auto-compile.html" />
+<meta property="og:url" content="/history/2017/06/15/pycharm-sass-auto-compile.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-06-15T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Pycharm에서 SASS auto compile" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-06-15T00:00:00+00:00","datePublished":"2017-06-15T00:00:00+00:00","description":"sass auto compile","headline":"Pycharm에서 SASS auto compile","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2017/06/15/pycharm-sass-auto-compile.html"},"url":"/history/2017/06/15/pycharm-sass-auto-compile.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Pycharm에서 SASS auto compile | Pignu Ante</title>
+    <meta name="description" content="PyCharm">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Pycharm%EC%97%90%EC%84%9C+SASS+auto+compile" class="title">Pycharm에서 SASS auto compile</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - June 15, 2017
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h4 id="pycharm">PyCharm</h4>
+
+<p>최근에 <code class="language-plaintext highlighter-rouge">python</code>을 많이 사용하다보니 자연스레 <a href="https://www.jetbrains.com">jetBrains</a>사에서 개발한 <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>을 주로 사용하게 되었다. 아직 많이 사용해보지는 않았으나 python을 이용하는데에 있어서는 전체적인 기능에선 매우 만족하고 있다.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+<p>그런데 css를 할 때 SASS를 <a href="https://atom.io">atom</a>에서 많이 사용하였었는데<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> 아뿔사 PyCharm에서는 얼핏보았을때 Plugins에 <a href="https://www.jetbrains.com/help/pycharm/2017.1/compiling-sass-less-and-scss-to-css.html">sass support</a>는 보여도 auto compile이 보이질 않는 것이었다.</p>
+
+<p>잡설이 길었는데, PyCharm에서 sass auto compile을 설정하고 컴파일되는 위치를 변경해보자.</p>
+
+<h4 id="file-watchers">File Watchers</h4>
+
+<ul>
+  <li>
+    <p><a href="https://www.jetbrains.com/help/pycharm/2017.1/file-watchers.html">File Watchers</a>란 무엇일까?</p>
+
+    <p>PyCharm은 기본적으로 내장된 컴파일러를 가지고 있지 않는다. 대신에 우리가 파이참의 외부에서 설치한 컴파일러들을 통합관리하도록 도와주는 것이 <strong>File Watcher</strong>이다.
+ <br /></p>
+  </li>
+  <li>
+    <p>간단한 사용법
+<img src="https://github.com/pignuante/pignuante.github.io/blob/master/images/fileWatcher001.png?raw=true" alt="fileWatcher001" /></p>
+
+    <p><img src="https://github.com/pignuante/pignuante.github.io/blob/master/images/fileWatcher002.png?raw=true" alt="fileWatcher002" />
+기본적으로 <code class="language-plaintext highlighter-rouge">scss</code>파일을 만들면 자동으로 <code class="language-plaintext highlighter-rouge">file watcher</code>에서 설정하겠냐는 메세지가 뜬다.<br />
+​</p>
+
+    <ol>
+      <li>
+        <p>PyCharm 설정창에서 Tools -&gt; File Watcher 탭으로 진입.</p>
+      </li>
+      <li>
+        <p>스샷에는 가려져서 보이지 않지만 <code class="language-plaintext highlighter-rouge">+</code>버튼을 누르고 SCSS<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>를 선택한다.</p>
+      </li>
+      <li>
+        <p>2번에서 선택한 file tempate인 SCSS가 선택되어져 있고 그 밑에 컴파일러를 선택해준다.
+지금 같은 경우는 기본적으로 macOS에 설치되어 있는 scss컴파일러가 선택되었다.</p>
+      </li>
+      <li>
+        <p>Compile Argument를 설정해준다. 기본 환경변수가 무엇이 있는지 잘 모를때에는 우측의 <code class="language-plaintext highlighter-rouge">insert macro</code></p>
+      </li>
+      <li>
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">--no-cache</span>
+<span class="nt">--update</span>
+<span class="nv">$FileName$:$FileNameWithoutExtension$.</span>css
+</code></pre></div>        </div>
+
+        <p>1,2번 라인은 커맨드 라인에서 <code class="language-plaintext highlighter-rouge">scss</code> 명령어를 실행할때의 옵션을 설정해주는 것이다. <code class="language-plaintext highlighter-rouge">scss  --no-cache --update</code></p>
+
+        <p>그리고 3번째인자의 <code class="language-plaintext highlighter-rouge">$FileName$</code>은 미리 설정되어있는 환경변수로 지금 실행하는 파일의 이름을 뜻하고 <code class="language-plaintext highlighter-rouge">$FileNameWithoutExtension$</code>는 확장자를 제외한 파일 이름<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>을 출력한다음 <code class="language-plaintext highlighter-rouge">.css</code>를 뒤에 붙여서 css파일로 만들어준다.</p>
+
+        <p>결국엔 저 명령어는 <code class="language-plaintext highlighter-rouge">scss --no-cache base.scss base.css</code>라는 명령어를 커맨드라인에서 실행한 것과 같은 결과가 나온다.</p>
+      </li>
+      <li>
+        <p>여기서 나는 컴파일을 지금 폴더가 아닌 지금 파일의 형제폴더인 <code class="language-plaintext highlighter-rouge">css</code>폴더로 컴파일이 되게 하기 위해서 명령어를 살짝 바꿧다.</p>
+
+        <p><img src="https://github.com/pignuante/pignuante.github.io/blob/master/images/fileWatcher003.png?raw=true" alt="fileWatcher003" /></p>
+
+        <p>위에서 언급된 명령어가 같은 폴더에 컴파일이 되고 있으므로 컴파일될 위치만 재설정하면 되는 간단한 명령어이다.</p>
+
+        <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">--no-cache</span><span class="w">
+</span><span class="nt">--update</span><span class="w">
+</span><span class="nv">$FileName</span><span class="err">$</span><span class="p">:</span><span class="nv">$FileParentDir</span><span class="err">$</span><span class="n">/css/</span><span class="nv">$FileNameWithoutExtension</span><span class="err">$</span><span class="o">.</span><span class="nf">css</span><span class="w">
+</span></code></pre></div>        </div>
+
+        <p><code class="language-plaintext highlighter-rouge">$FileParentDir$/css/$FileNameWithoutExtension$.css</code>라는 것만 추가 되었는데 <code class="language-plaintext highlighter-rouge">$FileParentDir$</code>는 지금 파일의 부모폴더의 주소이고 <code class="language-plaintext highlighter-rouge">css</code>는 그 부모폴더내의 css폴더를 의미한다. 물론 <code class="language-plaintext highlighter-rouge">../css</code>라고 해도 같은 것을 의미한다.</p>
+
+        <p>이미 설정되어 있는 환경변수를 보고 싶거나 환경변수를 추가하고 싶을때에는 4번째 스텝에서의 <code class="language-plaintext highlighter-rouge">Insert macro...</code>을 누르면 확인이 가능하다.</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>근데 이전에는 vim에서 설정을 해서 썼어서 그런듯도 하다.. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>처음에는 간단한 셸스크립트를 만들어서 쓰다가 atom에서 sass 자동 컴파일을 해주는데 너무 편해서 애용하였다. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>다른 파일을 컴파일한다쳐도 거의 비슷한 순서일듯하다. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>ex) <code class="language-plaintext highlighter-rouge">a.css</code>이면 그냥 <code class="language-plaintext highlighter-rouge">a</code>가 출력된다. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2017/06/15/pycharm-sass-auto-compile.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2017/06/15/pycharm-sass-auto-compile.html&text=Pycharm%EC%97%90%EC%84%9C+SASS+auto+compile%20%7C%20Pignu+Ante:%20/history/2017/06/15/pycharm-sass-auto-compile.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Pycharm%EC%97%90%EC%84%9C+SASS+auto+compile%20%7C%20Pignu+Ante&body=:%20/history/2017/06/15/pycharm-sass-auto-compile.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#css">
+      <p><i class="fa fa-tag fa-fw"></i> css</p>
+    </a>
+    
+    <a class="button" href="/history/tags#sass">
+      <p><i class="fa fa-tag fa-fw"></i> sass</p>
+    </a>
+    
+    <a class="button" href="/history/tags#scss">
+      <p><i class="fa fa-tag fa-fw"></i> scss</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="TryHelloWorld Level 3" href="/history/2017/06/15/tryHelloWorldLevle3.html">
+            TryHelloWorld Level 3
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="TryHelloWorld Level 2 (2)" href="/history/2017/06/08/TryHelloWorldLevel2.html">
+            TryHelloWorld Level 2 (2)
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

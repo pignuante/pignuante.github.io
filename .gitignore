@@ -457,3 +457,7 @@ dist/
 *.local
 *.tsbuildinfo
 
+
+# oh-my-claudecode state & internal docs (never commit)
+.omc/
+.docs/

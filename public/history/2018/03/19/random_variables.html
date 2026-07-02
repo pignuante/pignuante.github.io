@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2018/03/19/random_variables.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>1.5 Random Variables | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="1.5 Random Variables" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Random Variables" />
+<meta property="og:description" content="Random Variables" />
+<link rel="canonical" href="/history/2018/03/19/random_variables.html" />
+<meta property="og:url" content="/history/2018/03/19/random_variables.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-19T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="1.5 Random Variables" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-03-19T00:00:00+00:00","datePublished":"2018-03-19T00:00:00+00:00","description":"Random Variables","headline":"1.5 Random Variables","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2018/03/19/random_variables.html"},"url":"/history/2018/03/19/random_variables.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>1.5 Random Variables | Pignu Ante</title>
+    <meta name="description" content="1.5 Random Variables">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="1.5+Random+Variables" class="title">1.5 Random Variables</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - March 19, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <h2 id="15-random-variables">1.5 Random Variables</h2>
+
+<h4 id="definition-151">Definition 1.5.1</h4>
+
+<p>A function X is called random variable<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, if it is assign to each element \(C\in\mathscr{C}\)  one and only one number \(X\left(c\right)\in x\). The <strong>space</strong> or <strong>range</strong> of X is  \(D=\left\{x:x=X\left(c\right), \ C\in\mathscr{C}\right\}\).</p>
+
+<ul>
+  <li>The <strong>random variable</strong> is called <strong>discrete</strong> random variable if D is contable sequence.</li>
+  <li>The <strong>random variable</strong> is called <strong>continuous</strong> random variable if D is interval of real number.</li>
+  <li>Note that the probability function <strong>P</strong> is defined on \(\beta\).</li>
+  <li>We define a probability function \(p_x\) defined on F and \(p_x\) is called <strong>induced probability function</strong>.</li>
+</ul>
+
+<blockquote>
+  <p>ex 1.5.1) Toss two fair dice.</p>
+
+  <ul>
+    <li>X : Sum of up faces</li>
+    <li>\(\mathscr{C} \ : \ \left\{\left(1,1\right),\left(1,2\right),\cdots,\left(6,6\right)\right\}\) .</li>
+    <li>\(D=\left\{2,3,\cdots,12\right\}\).</li>
+  </ul>
+
+  <p>Find the probability of sum 4.</p>
+
+\[\begin{aligned}
+	P\left(\left(1,3\right)\cup\left(2,2\right)\cup\left(3,1\right)\right)\\
+	= \frac{3}{36} = p_X\left(4\right) = P\left(4\right)
+\end{aligned}\]
+
+</blockquote>
+
+<hr />
+
+<h4 id="definition-152-cumulative-distribution-function">Definition 1.5.2 (Cumulative Distribution Function)</h4>
+
+<p>The cdf of random variable X is</p>
+
+\[\begin{aligned}
+	F_X\left(x\right) = P\left(X\le x\right) =&amp;\ P\left(c: X\left(c\right)\le x\right)\\
+	=&amp;\ P_X\left(\left[-\infty, x\right]\right)
+\end{aligned}\]
+
+<blockquote>
+  <p>Ex 1.5.3)</p>
+
+  <p>​	X: upface of tossing a fair dice.</p>
+
+  <p>​	Find CDF of X</p>
+
+  <p>Ex 1.5.4)</p>
+
+  <p>​	X: real number chosen at random in (0, 1).</p>
+
+\[\begin{aligned}
+	p_X\left(\left(a, b\right)\right) =&amp; \left(b-a\right)\\ \\ 
+	F_X\left(x\right) = P\left(X\le x\right)\\
+    = &amp;\ 0,\quad \text{if }x\lt 0\\
+	=&amp;\ x, \quad \text{if } 0\le x \le 1\\
+	=&amp;\ 1, \quad \text{if } x\ge 1
+
+\end{aligned}\]
+
+</blockquote>
+
+<h5 id="theorem-152-property-of-cdf">Theorem 1.5.2 (Property of CDF)</h5>
+
+<ol>
+  <li>\(\forall a,b,\ a\lt b\Rightarrow F\left(a\right)\le F\left(b\right)\).</li>
+  <li>\(\lim_{x\rightarrow-\infty}F\left(x\right)=0\).</li>
+  <li>\(\lim_{x\rightarrow\infty}F\left(x\right)=1\).</li>
+  <li>\(\lim_{x\leftarrow x_0}=F\left(x_0\right)\). (right continuous)</li>
+</ol>
+
+<p>c.f)</p>
+
+<ul>
+  <li>
+    <p>\(x\leftarrow x_0\), convergence from the <strong>right</strong>.</p>
+  </li>
+  <li>
+    <p>\(x\rightarrow x_0\), convergence from the <strong>left</strong>.</p>
+
+\[\begin{aligned}
+\\
+	\lim_{x\leftarrow x_0}F\left(x\right)&amp;\ :\text{Righthand side limit}\\
+	\lim_{x\rightarrow x_0}F\left(x\right)&amp;\ :\text{Lefthand side limit}\\
+\end{aligned}\]
+  </li>
+</ul>
+
+<h5 id="proof">proof.</h5>
+
+\[\begin{aligned}
+	\text{1.}&amp;\ \quad F\left(a\right) =\ P\left(X\le a\right), \quad a\lt b,\ \ \forall a,b\\
+	&amp;\ \left\{X\le a\right\}\subset \left\{X\le b\right\}, \quad b\gt a\\
+	&amp;\Rightarrow P\left(X\le a\right)\le P\left(X\le b\right)\ \ \text{by theorem 1.3.3} \\ \\
+	\text{2.}&amp;\ \lim_{x\to -\infty}\left\{X\le x\right\}= \emptyset \\ 
+      &amp;\ \lim_{x\to -\infty}P\left(X\le x\right) = P\left(\emptyset\right) = 0 \\ \\
+      
+      \text{3.}&amp;\  \lim_{n\rightarrow \infty}\left\{X\lt x\right\} = \mathscr{C}\\
+	 &amp;\ \lim_{x\to \infty}\left\{X\le x\right\} = P\left(\mathscr{C}\right) = 1
+      
+\end{aligned}\]
+
+<p>4) Let \(\left\{X_n\right\}\) be a sequence st. \(x\leftarrow x_0\) and let \(C_n=\left\{X\le x_n\right\}\).
+Then \(C_n\) is decreasing set and \(\bigcap_{n=1}^\infty C_n=\left\{X\le x_0\right\}\).
+\(P\left(\bigcap_{n-1}^{\infty}C_n\right)=P\left(X\le x_0\right)=F(x_0)=\lim_{n\rightarrow\infty}P(C_n)=\lim_{n\rightarrow}F(x_n)\).</p>
+
+<hr />
+
+<h5 id="theorem-152">Theorem 1.5.2</h5>
+
+\[\begin{aligned}
+	P(a\lt x \le b) = F_X\left(b\right) - F_X(a),\quad \forall a\lt b \\
+\left(-\infty, b\right] = \left(-\infty, a\right]\cup \left(a, b\right]\\
+F_X\left(b\right) = F_X\left(a\right) + P\left(a\lt x \le b\right) \\
+\therefore P(a\lt x \ le b) = F_X(b) - F_X(a)
+\end{aligned}\]
+
+<hr />
+
+<h5 id="theorem-153">Theorem 1.5.3</h5>
+
+<ul>
+  <li>\(P(X=x)=F_X(x)-F_X(x^-)\), where \(F_X(x)\) : Left hand limit at x</li>
+</ul>
+
+<h5 id="proof-1">proof.</h5>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>r.v. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2018/03/19/random_variables.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2018/03/19/random_variables.html&text=1.5+Random+Variables%20%7C%20Pignu+Ante:%20/history/2018/03/19/random_variables.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=1.5+Random+Variables%20%7C%20Pignu+Ante&body=:%20/history/2018/03/19/random_variables.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#mathematical+statistics">
+      <p><i class="fa fa-tag fa-fw"></i> mathematical statistics</p>
+    </a>
+    
+    <a class="button" href="/history/tags#statistic">
+      <p><i class="fa fa-tag fa-fw"></i> statistic</p>
+    </a>
+    
+    <a class="button" href="/history/tags#study">
+      <p><i class="fa fa-tag fa-fw"></i> study</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="네이버뉴스 댓글 크롤링 with python" href="/history/2018/03/26/naver_crawling.html">
+            네이버뉴스 댓글 크롤링 with python
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="1.4 Conditional Probability and Independence" href="/history/2018/03/18/Conditional_Probability_and_Independence.html">
+            1.4 Conditional Probability and Independence
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

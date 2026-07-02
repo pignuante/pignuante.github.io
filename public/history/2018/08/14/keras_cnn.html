@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer=true src="/history/assets/js/main.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/history/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/history/assets/img/theme/favicon.ico" type="image/x-icon">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/history/2018/08/14/keras_cnn.html">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Pignu Ante" href="/history/feed.xml"/>
+    
+    
+
+    <!-- KaTeX 0.8.3 -->
+    <!-- if you have any issue check https://github.com/KaTeX/KaTeX -->
+    
+    <script src="/history/assets/js/vendor/katex.min.js"></script>
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    
+    
+    
+
+    <!-- seo tags -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Keras CNN 구현 with cifar10 | Pignu Ante</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Keras CNN 구현 with cifar10" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Keras CNN" />
+<meta property="og:description" content="Keras CNN" />
+<link rel="canonical" href="/history/2018/08/14/keras_cnn.html" />
+<meta property="og:url" content="/history/2018/08/14/keras_cnn.html" />
+<meta property="og:site_name" content="Pignu Ante" />
+<meta property="og:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-08-14T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/history/assets/img/theme/avatar.png" />
+<meta property="twitter:title" content="Keras CNN 구현 with cifar10" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-08-14T00:00:00+00:00","datePublished":"2018-08-14T00:00:00+00:00","description":"Keras CNN","headline":"Keras CNN 구현 with cifar10","image":"/history/assets/img/theme/avatar.png","mainEntityOfPage":{"@type":"WebPage","@id":"/history/2018/08/14/keras_cnn.html"},"url":"/history/2018/08/14/keras_cnn.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- Manual seo tags -->
+    <!--
+    <title>Keras CNN 구현 with cifar10 | Pignu Ante</title>
+    <meta name="description" content="">
+    -->
+</head>
+
+  <body><div style="background:#1d1f27;color:#e8e8e8;padding:10px 16px;font-size:14px;text-align:center;font-family:sans-serif;line-height:1.5;">📼 이 블로그는 2017–2019년 기록 보관본(아카이브)입니다. 댓글·검색 등 일부 기능은 동작하지 않습니다. &nbsp;<a href="/" style="color:#9ecbff;font-weight:bold;">→ 새 사이트로 이동</a></div>
+    <header class="site-header">
+    
+    <!-- Logo and title -->
+	<div class="branding">
+		<a href="/history/">
+			<img alt="logo img" class="avatar" src="/history/assets/img/theme/avatar.png" />
+		</a>
+
+		<h1 class="site-title">
+			<a aria-label="Pignu Ante" href="/history/">
+        Pignu Ante
+      </a>
+		</h1>
+	</div>
+    
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fa fa-bars fa-lg"></i>
+    </a>
+    
+    <!-- Menu -->
+    <ul class="hide">
+        
+        
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About" title="About" href="/history/about/">
+                     About 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/history/search/">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/history/tags/">
+                     <i class="fa fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+    </ul>
+        
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    
+      <h1 id="Keras+CNN+%EA%B5%AC%ED%98%84+with+cifar10" class="title">Keras CNN 구현 with cifar10</h1>
+      
+
+<div class="post-info"><a href="/history/" target="_blank">
+      <img src="/history/assets/img/avatars/pignu.jpg">
+    
+    <p class="meta">
+      pignu - August 14, 2018
+    </p></a></div>
+
+    
+  </header>
+  <section class="post-content">
+  
+      <ul id="markdown-toc">
+  <li><a href="#keras-튜토리얼-2" id="markdown-toc-keras-튜토리얼-2">Keras 튜토리얼 (2)</a>    <ul>
+      <li><a href="#cnn으로-cifar10-데이터-구분하기" id="markdown-toc-cnn으로-cifar10-데이터-구분하기">CNN으로 cifar10 데이터 구분하기.</a>        <ul>
+          <li><a href="#1-cnnconvolution-neural-network" id="markdown-toc-1-cnnconvolution-neural-network">1. CNN(Convolution Neural Network)</a>            <ul>
+              <li><a href="#10-필요-라이브러리-import" id="markdown-toc-10-필요-라이브러리-import">1.0 필요 라이브러리 import</a></li>
+              <li><a href="#12-데이터-확인" id="markdown-toc-12-데이터-확인">1.2 데이터 확인</a>                <ul>
+                  <li><a href="#120-데이터-로딩" id="markdown-toc-120-데이터-로딩">1.2.0 데이터 로딩</a></li>
+                </ul>
+              </li>
+              <li><a href="#121-데이터-확인" id="markdown-toc-121-데이터-확인">1.2.1 데이터 확인</a></li>
+              <li><a href="#122-데이터-전처리" id="markdown-toc-122-데이터-전처리">1.2.2 데이터 전처리</a></li>
+              <li><a href="#13-cnn-모델-생성" id="markdown-toc-13-cnn-모델-생성">1.3 CNN 모델 생성</a></li>
+              <li><a href="#14-모델-생성--실행" id="markdown-toc-14-모델-생성--실행">1.4 모델 생성 &amp;. 실행</a>                <ul>
+                  <li><a href="#141-모델-생성" id="markdown-toc-141-모델-생성">1.4.1 모델 생성</a></li>
+                  <li><a href="#142-모델-실행" id="markdown-toc-142-모델-실행">1.4.2 모델 실행</a></li>
+                  <li><a href="#143-모델-검정" id="markdown-toc-143-모델-검정">1.4.3 모델 검정</a></li>
+                  <li><a href="#144-결과-그래프" id="markdown-toc-144-결과-그래프">1.4.4 결과 그래프</a></li>
+                  <li><a href="#145-결과-확인" id="markdown-toc-145-결과-확인">1.4.5 결과 확인</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="keras-튜토리얼-2">Keras 튜토리얼 (2)</h1>
+
+<h2 id="cnn으로-cifar10-데이터-구분하기">CNN으로 cifar10 데이터 구분하기.</h2>
+
+<ul>
+  <li><a href="https://en.wikipedia.org/wiki/Convolutional_neural_network">CNN</a>에 대해서는 알고있다는 전제하에 keras 문법 활용 레시피 위주로 한다.</li>
+</ul>
+
+<h3 id="1-cnnconvolution-neural-network">1. CNN(Convolution Neural Network)</h3>
+
+<h4 id="10-필요-라이브러리-import">1.0 필요 라이브러리 import</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Flatten</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">losses</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">optimizers</span>
+
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">datasets</span>  <span class="c1"># cifar10
+</span><span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">np_utils</span> <span class="c1"># one hot coding
+</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">sns</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+
+<span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"CUDA_DEVICE_ORDER"</span><span class="p">]</span><span class="o">=</span><span class="s">"PCI_BUS_ID"</span>   
+<span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"CUDA_VISIBLE_DEVICES"</span><span class="p">]</span><span class="o">=</span><span class="s">"2"</span>
+</code></pre></div></div>
+
+<h4 id="12-데이터-확인">1.2 데이터 확인</h4>
+
+<h5 id="120-데이터-로딩">1.2.0 데이터 로딩</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># data load &amp; 확인
+</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">cifar10</span><span class="p">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">"airplane"</span><span class="p">,</span> <span class="s">"automobile"</span><span class="p">,</span>
+    <span class="s">"bird"</span><span class="p">,</span> <span class="s">"cat"</span><span class="p">,</span>
+    <span class="s">"deer"</span><span class="p">,</span> <span class="s">"dog"</span><span class="p">,</span>
+    <span class="s">"frog"</span><span class="p">,</span> <span class="s">"horse"</span><span class="p">,</span>
+    <span class="s">"ship"</span><span class="p">,</span> <span class="s">"truck"</span>
+<span class="p">]</span>
+
+<span class="c1"># 결과
+</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>mnist랑 다르게 cifar10은 32\(\times\)32 크기의 rgb 3개(w\(\times\)h\(\times\)c)의 채널로 이루어진 50000개의 데이터이다.</li>
+  <li>label은  airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck의 10가지이다.</li>
+</ul>
+
+<h4 id="121-데이터-확인">1.2.1 데이터 확인</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">320</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="https://github.com/pignuante/pignuante.github.io/blob/master/assets/images/keras/cnn/확인.png?raw=true" alt="cnn확인" /></p>
+
+<h4 id="122-데이터-전처리">1.2.2 데이터 전처리</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 데이터 전처리
+</span>
+<span class="n">Y_train</span> <span class="o">=</span> <span class="n">np_utils</span><span class="p">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">Y_test</span> <span class="o">=</span> <span class="n">np_utils</span><span class="p">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Y_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Y_train</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Y_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y_test</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Y_test</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+
+<span class="c1"># 결과
+</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+
+<span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h4 id="13-cnn-모델-생성">1.3 CNN 모델 생성</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Conv</span><span class="p">(</span><span class="n">Sequential</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">num_class</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">):</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span>
+                        <span class="n">activation</span><span class="o">=</span><span class="s">"relu"</span><span class="p">,</span>
+                        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'same'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"input_Layer"</span><span class="p">)</span>
+                 <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"Batch_norm00"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Drop00"</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span>
+                        <span class="n">activation</span><span class="o">=</span><span class="s">"relu"</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">"same"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Conv2D01"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"Batch_norm01"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Drop01"</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span>
+                        <span class="n">activation</span><span class="o">=</span><span class="s">"relu"</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">"same"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Conv2D02"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"Batch_norm02"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Drop02"</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"Flatten00"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">"relu"</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Dense00"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"Batch_norm03"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s">"relu"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"DropOut03"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">"softmax"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"Dense01"</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">losses</span><span class="p">.</span><span class="n">categorical_crossentropy</span><span class="p">,</span>
+                     <span class="n">optimizer</span><span class="o">=</span><span class="s">"rmsprop"</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'acc'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h4 id="14-모델-생성--실행">1.4 모델 생성 &amp;. 실행</h4>
+
+<h5 id="141-모델-생성">1.4.1 모델 생성</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conv2d</span> <span class="o">=</span> <span class="n">Conv</span><span class="p">()</span>
+<span class="n">conv2d</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+
+<span class="c1"># 결과
+</span><span class="n">_________________________________________________________________</span>
+<span class="n">Layer</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span>                 <span class="n">Output</span> <span class="n">Shape</span>              <span class="n">Param</span> <span class="c1">#   
+</span><span class="o">=================================================================</span>
+<span class="n">input_Layer</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>         <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">1792</span>      
+<span class="n">_________________________________________________________________</span>
+<span class="n">Batch_norm00</span> <span class="p">(</span><span class="n">BatchNormaliza</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">256</span>       
+<span class="n">_________________________________________________________________</span>
+<span class="n">Drop00</span> <span class="p">(</span><span class="n">Dropout</span><span class="p">)</span>             <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">Conv2D01</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>            <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">36928</span>     
+<span class="n">_________________________________________________________________</span>
+<span class="n">Batch_norm01</span> <span class="p">(</span><span class="n">BatchNormaliza</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">256</span>       
+<span class="n">_________________________________________________________________</span>
+<span class="n">max_pooling2d_1</span> <span class="p">(</span><span class="n">MaxPooling2</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">Drop01</span> <span class="p">(</span><span class="n">Dropout</span><span class="p">)</span>             <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">Conv2D02</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>            <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">36928</span>     
+<span class="n">_________________________________________________________________</span>
+<span class="n">Batch_norm02</span> <span class="p">(</span><span class="n">BatchNormaliza</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>        <span class="mi">256</span>       
+<span class="n">_________________________________________________________________</span>
+<span class="n">max_pooling2d_2</span> <span class="p">(</span><span class="n">MaxPooling2</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>          <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">Drop02</span> <span class="p">(</span><span class="n">Dropout</span><span class="p">)</span>             <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>          <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">Flatten00</span> <span class="p">(</span><span class="n">Flatten</span><span class="p">)</span>          <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>              <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">Dense00</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>               <span class="mi">2097152</span>   
+<span class="n">_________________________________________________________________</span>
+<span class="n">Batch_norm03</span> <span class="p">(</span><span class="n">BatchNormaliza</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>               <span class="mi">2048</span>      
+<span class="n">_________________________________________________________________</span>
+<span class="n">activation_1</span> <span class="p">(</span><span class="n">Activation</span><span class="p">)</span>    <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>               <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">DropOut03</span> <span class="p">(</span><span class="n">Dropout</span><span class="p">)</span>          <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>               <span class="mi">0</span>         
+<span class="n">_________________________________________________________________</span>
+<span class="n">Dense01</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>                <span class="mi">5130</span>      
+<span class="o">=================================================================</span>
+<span class="n">Total</span> <span class="n">params</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">746</span>
+<span class="n">Trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span><span class="mi">179</span><span class="p">,</span><span class="mi">338</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">408</span>
+<span class="n">_________________________________________________________________</span>
+</code></pre></div></div>
+
+<ul>
+  <li>정확도를 올려보고 싶어서 조금 복잡하게 했으나 영 결과는 좋지 못하다.</li>
+  <li>input_shape=(32, 32, 3)
+    <ul>
+      <li>우리가 넣을 image의 사이즈</li>
+    </ul>
+  </li>
+  <li>num_class=10
+    <ul>
+      <li>label의 갯수</li>
+    </ul>
+  </li>
+  <li>kernel_size=(3, 3)
+    <ul>
+      <li>CNN에서 사용되는 kernel의 크기</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="142-모델-실행">1.4.2 모델 실행</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">history</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># 결과
+</span><span class="n">Epoch</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="mi">40000</span><span class="o">/</span><span class="mi">40000</span> <span class="p">[</span><span class="o">==============================</span><span class="p">]</span> <span class="o">-</span> <span class="mi">11</span><span class="n">s</span> <span class="mi">265</span><span class="n">us</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">2.2678</span> <span class="o">-</span> <span class="n">acc</span><span class="p">:</span> <span class="mf">0.1394</span> <span class="o">-</span> <span class="n">val_loss</span><span class="p">:</span> <span class="mf">2.1680</span> <span class="o">-</span> <span class="n">val_acc</span><span class="p">:</span> <span class="mf">0.1905</span>
+                <span class="p">....</span>
+</code></pre></div></div>
+
+<h5 id="143-모델-검정">1.4.3 모델 검정</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span><span class="p">,</span> <span class="n">accuracy</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">Y_test</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Test Loss</span><span class="se">\t</span><span class="s">:</span><span class="se">\t</span><span class="s">{:2.4f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Test Accuracy</span><span class="se">\t</span><span class="s">:</span><span class="se">\t</span><span class="s">{:2.4f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">accuracy</span><span class="p">))</span>
+
+<span class="c1"># 결과
+</span><span class="mi">10000</span><span class="o">/</span><span class="mi">10000</span> <span class="p">[</span><span class="o">==============================</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">s</span> <span class="mi">81</span><span class="n">us</span><span class="o">/</span><span class="n">step</span>
+<span class="n">Test</span> <span class="n">Loss</span>	<span class="p">:</span>	<span class="mf">0.8359</span>
+<span class="n">Test</span> <span class="n">Accuracy</span>	<span class="p">:</span>	<span class="mf">0.7747</span>
+</code></pre></div></div>
+
+<h5 id="144-결과-그래프">1.4.4 결과 그래프</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">h</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">).</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">h</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"index"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s">"loss"</span><span class="p">,</span> <span class="s">"val_loss"</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">"loss"</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">"acc"</span><span class="p">)</span>
+<span class="n">h</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"index"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s">"acc"</span><span class="p">,</span> <span class="s">"val_acc"</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s">'viridis'</span><span class="p">,)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://github.com/pignuante/pignuante.github.io/blob/master/assets/images/keras/cnn/result.png?raw=true" alt="결과00" /></p>
+
+<h5 id="145-결과-확인">1.4.5 결과 확인</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">320</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">reshape</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"R:{}, P:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">y_test</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="n">name</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">yhat_test</span><span class="p">[</span><span class="n">n</span><span class="p">])]))</span>
+</code></pre></div></div>
+
+<p><img src="https://github.com/pignuante/pignuante.github.io/blob/master/assets/images/keras/cnn/result01.png?raw=true" alt="결과01" /></p>
+
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  <div class="share-buttons">
+    <ul class="share-buttons">
+        <div class="meta">Share</div>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/history/2018/08/14/keras_cnn.html" target="_blank" title="Share on Facebook">
+			<i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Share on Facebook</span>
+		</a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?source=/history/2018/08/14/keras_cnn.html&text=Keras+CNN+%EA%B5%AC%ED%98%84+with+cifar10%20%7C%20Pignu+Ante:%20/history/2018/08/14/keras_cnn.html" target="_blank" title="Tweet">
+			<i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Tweet</span>
+		</a>
+        </li>
+               
+        <li>
+            <a href="mailto:?subject=Keras+CNN+%EA%B5%AC%ED%98%84+with+cifar10%20%7C%20Pignu+Ante&body=:%20/history/2018/08/14/keras_cnn.html" target="_blank" title="Email">
+			<i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+			<span class="sr-only">Email</span>
+		</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+   <!-- Tag list -->
+  
+  
+
+
+<footer>
+  <div class="tag-list">
+    
+      <div class="meta">Tags</div>
+    
+
+    
+    <a class="button" href="/history/tags#cnn">
+      <p><i class="fa fa-tag fa-fw"></i> cnn</p>
+    </a>
+    
+    <a class="button" href="/history/tags#deep+learning">
+      <p><i class="fa fa-tag fa-fw"></i> deep learning</p>
+    </a>
+    
+    <a class="button" href="/history/tags#keras">
+      <p><i class="fa fa-tag fa-fw"></i> keras</p>
+    </a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+<div class="comments">
+  <div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view comments.</noscript>
+
+</div>
+
+
+<!-- Post navigation -->
+
+  <div id="post-nav">
+    
+    <div id="previous-post">
+        <p>Next post</p>
+        <a alt="PyTorch Tutorial (Linear Regression)" href="/history/2019/06/19/pytorch_00.html">
+            PyTorch Tutorial (Linear Regression)
+        </a>
+    </div>
+    
+    
+
+    <div id="next-post">
+        <p>Previous post</p>
+        <a alt="Keras ANN, DNN구현" href="/history/2018/08/14/keras_ann_dnn.html">
+            Keras ANN, DNN구현
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!-- To change color of links in the page -->
+<style>
+  
+
+  
+  header#main {
+    background-repeat:no-repeat;
+    background-image: url('');
+  }
+</style>
+    </div>
+    
+<footer class="site-footer">
+    <p class="text">Powered by <a href="/history/">Pignu Ante</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+	<a href="/history/feed.xml" title="Follow RSS feed">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+<li>
+	<a href="mailto:hanyul@ajou.ac.kr" title="Email">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/pignuante" title="Follow on GitHub">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="http://instagram.com/pignuante" title="Follow on Instagram">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+<li>
+	<a href="https://www.linkedin.com/in/hanyul-ryu-082201b8/" title="Follow on LinkedIn">
+		<span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+        </span>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+
+  </body>
+</html>

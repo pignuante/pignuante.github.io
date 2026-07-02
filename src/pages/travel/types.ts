@@ -1,37 +1,18 @@
 /** Köppen-inspired biome categories for pixel map coloring */
 export type Biome = "arid" | "continental" | "polar" | "temperate" | "tropical";
 
-/** Pixel cell with biome-derived color */
-export interface ColoredPixelCell {
-  col: number;
-  color: number; // PixiJS hex
-  row: number;
-  visited?: boolean;
-}
-
-/** Country boundary pixel (land cells that overlap a border stroke) */
-export interface BoundaryPixel {
-  col: number;
-  row: number;
-}
-
-/** Rasterized world grid data */
+/** Composited screen-cell grid (see composite.ts) */
 export interface WorldPixelGridResult {
   /**
-   * All rotation-dependent cell layers (ocean, land, visited tint, borders)
-   * pre-baked into one canvas. Rendered as a single sprite instead of
-   * tens of thousands of Graphics rects — rebuilding those every rotation
-   * frame froze the globe drag.
+   * All cell layers (ocean, land, visited tint, borders) baked into one
+   * canvas, rendered as a single sprite. Rebuilding per-cell Graphics
+   * every frame froze dragging — never render cells individually.
    */
-  bakedCanvas?: OffscreenCanvas;
-  boundaryPixels: BoundaryPixel[];
-  cells: ColoredPixelCell[];
+  bakedCanvas: OffscreenCanvas;
   cols: number;
-  /** Ocean cells: latitude biome + coast-distance gradient + wave pattern */
-  oceanCells?: ColoredPixelCell[];
   rows: number;
   /** Cell flat index (row * cols + col) → ISO country ID for visited cells only */
-  visitedCountryGrid?: Map<number, string>;
+  visitedCountryGrid: Map<number, string>;
 }
 
 /** Country metadata for biome classification */

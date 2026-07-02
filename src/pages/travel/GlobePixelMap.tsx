@@ -3,6 +3,7 @@ import { Application, extend } from "@pixi/react";
 import { Container, Graphics, Sprite, Texture } from "pixi.js";
 import { useCallback, useEffect, useMemo } from "react";
 import type { CountryHoverInfo, WorldPixelGridResult } from "./types";
+import { HOVER_BOOST_ALPHA } from "./composite";
 import {
   COLOR_GLOBE_OCEAN,
   COLOR_GLOBE_OUTLINE,
@@ -12,9 +13,7 @@ import {
   GLOBE_CELL_SIZE,
   GLOBE_SIZE,
   HOVER_BORDER_ALPHA,
-  HOVER_OVERLAY_ALPHA,
   HOVER_SEARCH_RADIUS,
-  VISITED_OVERLAY_ALPHA,
 } from "./constants";
 import { COUNTRY_BIOME_MAP } from "./world-data";
 
@@ -51,7 +50,6 @@ function GlobeBackground() {
  */
 function GlobeBakedLayer({ grid }: { grid: WorldPixelGridResult }) {
   const texture = useMemo(() => {
-    if (!grid.bakedCanvas) return null;
     const t = Texture.from(grid.bakedCanvas);
     t.source.scaleMode = "nearest";
     return t;
@@ -59,23 +57,13 @@ function GlobeBakedLayer({ grid }: { grid: WorldPixelGridResult }) {
 
   // Destroy the previous frame's texture to avoid leaking GPU memory
   useEffect(() => {
-    if (!texture) return;
     return () => {
       texture.destroy(true);
     };
   }, [texture]);
 
-  if (!texture) return null;
   return <pixiSprite texture={texture} />;
 }
-
-/**
- * Extra tint on the hovered country only — the constant visited tint is
- * baked into GlobeBakedLayer. Alpha compositing: baked 0.18 + 0.21 over it
- * ≈ the 0.35 hover emphasis the design wants.
- */
-const HOVER_BOOST_ALPHA =
-  (HOVER_OVERLAY_ALPHA - VISITED_OVERLAY_ALPHA) / (1 - VISITED_OVERLAY_ALPHA);
 
 function GlobeHoverOverlay({
   grid,
@@ -88,7 +76,7 @@ function GlobeHoverOverlay({
     (g: Graphics) => {
       g.clear();
 
-      if (!hoveredCountryId || !grid.visitedCountryGrid) return;
+      if (!hoveredCountryId) return;
 
       const cellW = GLOBE_CELL_SIZE - 1;
       const fill = { alpha: HOVER_BOOST_ALPHA, color: COLOR_VISITED_TINT };
@@ -124,7 +112,7 @@ function GlobeHoverBorder({
     (g: Graphics) => {
       g.clear();
 
-      if (!hoveredCountryId || !grid.visitedCountryGrid) return;
+      if (!hoveredCountryId) return;
 
       const cellW = GLOBE_CELL_SIZE - 1;
       const fill = { alpha: HOVER_BORDER_ALPHA, color: COLOR_HOVER_BORDER };
@@ -192,13 +180,8 @@ function GlobeHoverDetector({
     });
   }, []);
 
-  const handlePointerMove = useCallback(
+  const handlePointer = useCallback(
     (e: FederatedPointerEvent) => {
-      if (!grid.visitedCountryGrid) {
-        onCountryHover(null);
-        return;
-      }
-
       // Transform stage coordinates → local (inside zoomed container)
       const localX = (e.global.x - HALF) / zoom + HALF;
       const localY = (e.global.y - HALF) / zoom + HALF;
@@ -268,7 +251,8 @@ function GlobeHoverDetector({
       draw={draw}
       eventMode="static"
       onPointerLeave={handlePointerLeave}
-      onPointerMove={handlePointerMove}
+      onPointerMove={handlePointer}
+      onPointerTap={handlePointer}
     />
   );
 }

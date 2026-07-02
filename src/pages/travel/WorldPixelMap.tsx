@@ -1,17 +1,15 @@
 import type { FederatedPointerEvent } from "pixi.js";
 import { Application, extend } from "@pixi/react";
-import { Container, Graphics } from "pixi.js";
-import { useCallback } from "react";
+import { Container, Graphics, Sprite, Texture } from "pixi.js";
+import { useCallback, useEffect, useMemo } from "react";
 import type { CountryHoverInfo, WorldPixelGridResult } from "./types";
+import { HOVER_BOOST_ALPHA } from "./composite";
 import {
   COLOR_HOVER_BORDER,
   COLOR_VISITED_TINT,
   COLOR_WORLD_BG_DOT,
-  COLOR_WORLD_BORDER,
   HOVER_BORDER_ALPHA,
-  HOVER_OVERLAY_ALPHA,
   HOVER_SEARCH_RADIUS,
-  VISITED_OVERLAY_ALPHA,
   WORLD_CELL_SIZE,
   WORLD_MAP_HEIGHT,
   WORLD_MAP_WIDTH,
@@ -20,7 +18,7 @@ import { wrapX } from "./utils";
 import { COUNTRY_BIOME_MAP } from "./world-data";
 
 // Register PixiJS components for @pixi/react
-extend({ Container, Graphics });
+extend({ Container, Graphics, Sprite });
 
 /* ── Zoom pivot (center of canvas) ── */
 const PIVOT_X = WORLD_MAP_WIDTH / 2;
@@ -28,70 +26,58 @@ const PIVOT_Y = WORLD_MAP_HEIGHT / 2;
 
 /* ── Sub-components ── */
 
-function LandGrid({
+function BackgroundGrid() {
+  const draw = useCallback((g: Graphics) => {
+    g.clear();
+
+    for (let x = 0; x < WORLD_MAP_WIDTH; x += 8) {
+      for (let y = 0; y < WORLD_MAP_HEIGHT; y += 8) {
+        g.circle(x, y, 0.5).fill({ alpha: 0.15, color: COLOR_WORLD_BG_DOT });
+      }
+    }
+  }, []);
+
+  return <pixiGraphics draw={draw} />;
+}
+
+/**
+ * All cell layers (ocean, land, visited tint, borders) as one sprite from
+ * the composited canvas. Horizontal pan = sprite x with a wrapped twin —
+ * per-cell Graphics rebuilds on every pan frame used to freeze dragging.
+ */
+function BakedLayer({
   grid,
   offsetX,
 }: {
   grid: WorldPixelGridResult;
   offsetX: number;
 }) {
-  const draw = useCallback(
-    (g: Graphics) => {
-      g.clear();
+  const texture = useMemo(() => {
+    const t = Texture.from(grid.bakedCanvas);
+    t.source.scaleMode = "nearest";
+    return t;
+  }, [grid]);
 
-      const cellW = WORLD_CELL_SIZE - 1;
-      for (const cell of grid.cells) {
-        const origX = cell.col * WORLD_CELL_SIZE;
-        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
-        const y = cell.row * WORLD_CELL_SIZE;
+  useEffect(() => {
+    return () => {
+      texture.destroy(true);
+    };
+  }, [texture]);
 
-        g.rect(wx, y, cellW, cellW).fill(cell.color);
-
-        // If cell straddles the right edge, draw a wrapped copy on the left
-        if (wx + WORLD_CELL_SIZE > WORLD_MAP_WIDTH) {
-          g.rect(wx - WORLD_MAP_WIDTH, y, cellW, cellW).fill(cell.color);
-        }
-      }
-    },
-    [grid, offsetX],
+  const x = wrapX(offsetX, WORLD_MAP_WIDTH);
+  return (
+    <>
+      <pixiSprite texture={texture} x={x} />
+      <pixiSprite texture={texture} x={x - WORLD_MAP_WIDTH} />
+    </>
   );
-
-  return <pixiGraphics draw={draw} />;
 }
 
-function CountryBorders({
-  grid,
-  offsetX,
-}: {
-  grid: WorldPixelGridResult;
-  offsetX: number;
-}) {
-  const draw = useCallback(
-    (g: Graphics) => {
-      g.clear();
-
-      const cellW = WORLD_CELL_SIZE - 1;
-      const fill = { alpha: 0.4, color: COLOR_WORLD_BORDER };
-
-      for (const cell of grid.boundaryPixels) {
-        const origX = cell.col * WORLD_CELL_SIZE;
-        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
-        const y = cell.row * WORLD_CELL_SIZE;
-
-        g.rect(wx, y, cellW, cellW).fill(fill);
-
-        if (wx + WORLD_CELL_SIZE > WORLD_MAP_WIDTH) {
-          g.rect(wx - WORLD_MAP_WIDTH, y, cellW, cellW).fill(fill);
-        }
-      }
-    },
-    [grid, offsetX],
-  );
-
-  return <pixiGraphics draw={draw} />;
-}
-
-function VisitedOverlay({
+/**
+ * Extra tint on the hovered country only — the constant visited tint is
+ * baked into BakedLayer (composite.ts documents the alpha math).
+ */
+function HoverOverlay({
   grid,
   hoveredCountryId,
   offsetX,
@@ -104,29 +90,19 @@ function VisitedOverlay({
     (g: Graphics) => {
       g.clear();
 
+      if (!hoveredCountryId) return;
+
       const cellW = WORLD_CELL_SIZE - 1;
-      const normalFill = {
-        alpha: VISITED_OVERLAY_ALPHA,
-        color: COLOR_VISITED_TINT,
-      };
-      const hoverFill = {
-        alpha: HOVER_OVERLAY_ALPHA,
-        color: COLOR_VISITED_TINT,
-      };
-      const countryGrid = grid.visitedCountryGrid;
+      const fill = { alpha: HOVER_BOOST_ALPHA, color: COLOR_VISITED_TINT };
+      const { cols } = grid;
 
-      for (const cell of grid.cells) {
-        if (!cell.visited) continue;
+      for (const [flatIdx, countryId] of grid.visitedCountryGrid) {
+        if (countryId !== hoveredCountryId) continue;
 
-        const flatIdx = cell.row * grid.cols + cell.col;
-        const cellCountryId = countryGrid?.get(flatIdx);
-        const isHovered =
-          cellCountryId === hoveredCountryId && hoveredCountryId !== null;
-        const fill = isHovered ? hoverFill : normalFill;
-
-        const origX = cell.col * WORLD_CELL_SIZE;
-        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
-        const y = cell.row * WORLD_CELL_SIZE;
+        const col = flatIdx % cols;
+        const row = Math.floor(flatIdx / cols);
+        const wx = wrapX(col * WORLD_CELL_SIZE + offsetX, WORLD_MAP_WIDTH);
+        const y = row * WORLD_CELL_SIZE;
 
         g.rect(wx, y, cellW, cellW).fill(fill);
 
@@ -159,13 +135,12 @@ function HoverBorder({
     (g: Graphics) => {
       g.clear();
 
-      if (!hoveredCountryId || !grid.visitedCountryGrid) return;
+      if (!hoveredCountryId) return;
 
       const cellW = WORLD_CELL_SIZE - 1;
       const fill = { alpha: HOVER_BORDER_ALPHA, color: COLOR_HOVER_BORDER };
-      const { cols } = grid;
+      const { cols, rows } = grid;
       const countryGrid = grid.visitedCountryGrid;
-      const rows = grid.rows;
 
       // 4-directional neighbor offsets: [dRow, dCol]
       const DIRS: ReadonlyArray<readonly [number, number]> = [
@@ -198,8 +173,7 @@ function HoverBorder({
 
         if (!isBorder) continue;
 
-        const origX = col * WORLD_CELL_SIZE;
-        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
+        const wx = wrapX(col * WORLD_CELL_SIZE + offsetX, WORLD_MAP_WIDTH);
         const y = row * WORLD_CELL_SIZE;
 
         g.rect(wx, y, cellW, cellW).fill(fill);
@@ -210,53 +184,6 @@ function HoverBorder({
       }
     },
     [grid, hoveredCountryId, offsetX],
-  );
-
-  return <pixiGraphics draw={draw} />;
-}
-
-function BackgroundGrid() {
-  const draw = useCallback((g: Graphics) => {
-    g.clear();
-
-    for (let x = 0; x < WORLD_MAP_WIDTH; x += 8) {
-      for (let y = 0; y < WORLD_MAP_HEIGHT; y += 8) {
-        g.circle(x, y, 0.5).fill({ alpha: 0.15, color: COLOR_WORLD_BG_DOT });
-      }
-    }
-  }, []);
-
-  return <pixiGraphics draw={draw} />;
-}
-
-function OceanGrid({
-  grid,
-  offsetX,
-}: {
-  grid: WorldPixelGridResult;
-  offsetX: number;
-}) {
-  const draw = useCallback(
-    (g: Graphics) => {
-      g.clear();
-
-      if (!grid.oceanCells) return;
-
-      const cellW = WORLD_CELL_SIZE - 1;
-      for (const cell of grid.oceanCells) {
-        const origX = cell.col * WORLD_CELL_SIZE;
-        const wx = wrapX(origX + offsetX, WORLD_MAP_WIDTH);
-        const y = cell.row * WORLD_CELL_SIZE;
-
-        g.rect(wx, y, cellW, cellW).fill(cell.color);
-
-        // If cell straddles the right edge, draw a wrapped copy on the left
-        if (wx + WORLD_CELL_SIZE > WORLD_MAP_WIDTH) {
-          g.rect(wx - WORLD_MAP_WIDTH, y, cellW, cellW).fill(cell.color);
-        }
-      }
-    },
-    [grid, offsetX],
   );
 
   return <pixiGraphics draw={draw} />;
@@ -289,13 +216,8 @@ function HoverDetector({
     });
   }, []);
 
-  const handlePointerMove = useCallback(
+  const handlePointer = useCallback(
     (e: FederatedPointerEvent) => {
-      if (!grid.visitedCountryGrid) {
-        onCountryHover(null);
-        return;
-      }
-
       // Transform stage coordinates → local (inside zoomed container)
       const pivotY = PIVOT_Y + offsetY;
       const localX = (e.global.x - PIVOT_X) / zoom + PIVOT_X;
@@ -369,7 +291,8 @@ function HoverDetector({
       draw={draw}
       eventMode="static"
       onPointerLeave={handlePointerLeave}
-      onPointerMove={handlePointerMove}
+      onPointerMove={handlePointer}
+      onPointerTap={handlePointer}
     />
   );
 }
@@ -418,9 +341,8 @@ export default function WorldPixelMap({
         y={pivotY}
       >
         <BackgroundGrid />
-        <OceanGrid grid={grid} offsetX={offsetX} />
-        <LandGrid grid={grid} offsetX={offsetX} />
-        <VisitedOverlay
+        <BakedLayer grid={grid} offsetX={offsetX} />
+        <HoverOverlay
           grid={grid}
           hoveredCountryId={hoveredCountryId}
           offsetX={offsetX}
@@ -430,7 +352,6 @@ export default function WorldPixelMap({
           hoveredCountryId={hoveredCountryId}
           offsetX={offsetX}
         />
-        <CountryBorders grid={grid} offsetX={offsetX} />
         <HoverDetector
           grid={grid}
           offsetX={offsetX}

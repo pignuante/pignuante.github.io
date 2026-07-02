@@ -16,8 +16,6 @@ Route-level page components. Each file corresponds to a URL path, lazy-loaded in
 | `Projects.tsx`      | `/projects` — Project list page rendered from dummy summary data                                    |
 | `ProjectDetail.tsx` | `/projects/:slug` — Dynamic project detail page rendered from dummy detail data                     |
 | `Travel.tsx`        | `/travel` — Travel page placeholder (`Pixel world map coming soon.`)                                |
-| `Colors.tsx`        | `/colors` — Design token visual showcase with all scales, buttons, cards                            |
-| `TestCssPixel.tsx`  | `/test-css-pixel` — 568-line pixel design prototype with DotHero canvas + RPG UI                    |
 | `NotFound.tsx`      | `*` — 404 page with "Go home" link                                                                  |
 
 ## For AI Agents
@@ -30,7 +28,7 @@ Route-level page components. Each file corresponds to a URL path, lazy-loaded in
   3. Add `<Route>` in `App.tsx` inside the Layout route
 - Optionally add to `navItems` array in `Navbar.tsx` for navigation link
 - Static data arrays must be hoisted outside the component function
-- Production pages should use `var()` tokens; `TestCssPixel.tsx` still includes prototype hardcoded fallback colors
+- Production pages should use `var()` tokens
 
 ### Common Patterns
 

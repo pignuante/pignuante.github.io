@@ -1,7 +1,7 @@
 import type { FederatedPointerEvent } from "pixi.js";
 import { Application, extend } from "@pixi/react";
-import { Container, Graphics } from "pixi.js";
-import { useCallback } from "react";
+import { Container, Graphics, Sprite, Texture } from "pixi.js";
+import { useCallback, useEffect, useMemo } from "react";
 import type { CountryHoverInfo, WorldPixelGridResult } from "./types";
 import {
   COLOR_GLOBE_OCEAN,
@@ -9,7 +9,6 @@ import {
   COLOR_HOVER_BORDER,
   COLOR_VISITED_TINT,
   COLOR_WORLD_BG_DOT,
-  COLOR_WORLD_BORDER,
   GLOBE_CELL_SIZE,
   GLOBE_SIZE,
   HOVER_BORDER_ALPHA,
@@ -20,7 +19,7 @@ import {
 import { COUNTRY_BIOME_MAP } from "./world-data";
 
 // Register PixiJS components for @pixi/react
-extend({ Container, Graphics });
+extend({ Container, Graphics, Sprite });
 
 /** Globe center coordinate (half of GLOBE_SIZE) */
 const HALF = GLOBE_SIZE / 2;
@@ -45,45 +44,40 @@ function GlobeBackground() {
   return <pixiGraphics draw={draw} />;
 }
 
-function GlobeOceanGrid({ grid }: { grid: WorldPixelGridResult }) {
-  const draw = useCallback(
-    (g: Graphics) => {
-      g.clear();
+/**
+ * All rotation-dependent cell layers (ocean, land, visited tint, borders)
+ * rendered as one sprite from the canvas baked in rasterizeGlobe.
+ * Replaces per-cell Graphics rects whose rebuild froze the drag.
+ */
+function GlobeBakedLayer({ grid }: { grid: WorldPixelGridResult }) {
+  const texture = useMemo(() => {
+    if (!grid.bakedCanvas) return null;
+    const t = Texture.from(grid.bakedCanvas);
+    t.source.scaleMode = "nearest";
+    return t;
+  }, [grid]);
 
-      if (!grid.oceanCells) return;
+  // Destroy the previous frame's texture to avoid leaking GPU memory
+  useEffect(() => {
+    if (!texture) return;
+    return () => {
+      texture.destroy(true);
+    };
+  }, [texture]);
 
-      const cellW = GLOBE_CELL_SIZE - 1;
-      for (const cell of grid.oceanCells) {
-        const x = cell.col * GLOBE_CELL_SIZE;
-        const y = cell.row * GLOBE_CELL_SIZE;
-        g.rect(x, y, cellW, cellW).fill(cell.color);
-      }
-    },
-    [grid],
-  );
-
-  return <pixiGraphics draw={draw} />;
+  if (!texture) return null;
+  return <pixiSprite texture={texture} />;
 }
 
-function GlobeLandGrid({ grid }: { grid: WorldPixelGridResult }) {
-  const draw = useCallback(
-    (g: Graphics) => {
-      g.clear();
+/**
+ * Extra tint on the hovered country only — the constant visited tint is
+ * baked into GlobeBakedLayer. Alpha compositing: baked 0.18 + 0.21 over it
+ * ≈ the 0.35 hover emphasis the design wants.
+ */
+const HOVER_BOOST_ALPHA =
+  (HOVER_OVERLAY_ALPHA - VISITED_OVERLAY_ALPHA) / (1 - VISITED_OVERLAY_ALPHA);
 
-      const cellW = GLOBE_CELL_SIZE - 1;
-      for (const cell of grid.cells) {
-        const x = cell.col * GLOBE_CELL_SIZE;
-        const y = cell.row * GLOBE_CELL_SIZE;
-        g.rect(x, y, cellW, cellW).fill(cell.color);
-      }
-    },
-    [grid],
-  );
-
-  return <pixiGraphics draw={draw} />;
-}
-
-function GlobeVisitedOverlay({
+function GlobeHoverOverlay({
   grid,
   hoveredCountryId,
 }: {
@@ -94,29 +88,20 @@ function GlobeVisitedOverlay({
     (g: Graphics) => {
       g.clear();
 
+      if (!hoveredCountryId || !grid.visitedCountryGrid) return;
+
       const cellW = GLOBE_CELL_SIZE - 1;
-      const normalFill = {
-        alpha: VISITED_OVERLAY_ALPHA,
-        color: COLOR_VISITED_TINT,
-      };
-      const hoverFill = {
-        alpha: HOVER_OVERLAY_ALPHA,
-        color: COLOR_VISITED_TINT,
-      };
-      const countryGrid = grid.visitedCountryGrid;
+      const fill = { alpha: HOVER_BOOST_ALPHA, color: COLOR_VISITED_TINT };
+      const { cols } = grid;
 
-      for (const cell of grid.cells) {
-        if (!cell.visited) continue;
+      for (const [flatIdx, countryId] of grid.visitedCountryGrid) {
+        if (countryId !== hoveredCountryId) continue;
 
-        const flatIdx = cell.row * grid.cols + cell.col;
-        const cellCountryId = countryGrid?.get(flatIdx);
-        const isHovered =
-          cellCountryId === hoveredCountryId && hoveredCountryId !== null;
-        const fill = isHovered ? hoverFill : normalFill;
-
-        const x = cell.col * GLOBE_CELL_SIZE;
-        const y = cell.row * GLOBE_CELL_SIZE;
-        g.rect(x, y, cellW, cellW).fill(fill);
+        const col = flatIdx % cols;
+        const row = Math.floor(flatIdx / cols);
+        g.rect(col * GLOBE_CELL_SIZE, row * GLOBE_CELL_SIZE, cellW, cellW).fill(
+          fill,
+        );
       }
     },
     [grid, hoveredCountryId],
@@ -181,26 +166,6 @@ function GlobeHoverBorder({
       }
     },
     [grid, hoveredCountryId],
-  );
-
-  return <pixiGraphics draw={draw} />;
-}
-
-function GlobeBorders({ grid }: { grid: WorldPixelGridResult }) {
-  const draw = useCallback(
-    (g: Graphics) => {
-      g.clear();
-
-      const cellW = GLOBE_CELL_SIZE - 1;
-      const fill = { alpha: 0.4, color: COLOR_WORLD_BORDER };
-
-      for (const cell of grid.boundaryPixels) {
-        const x = cell.col * GLOBE_CELL_SIZE;
-        const y = cell.row * GLOBE_CELL_SIZE;
-        g.rect(x, y, cellW, cellW).fill(fill);
-      }
-    },
-    [grid],
   );
 
   return <pixiGraphics draw={draw} />;
@@ -357,11 +322,9 @@ export default function GlobePixelMap({
         y={HALF}
       >
         <GlobeBackground />
-        <GlobeOceanGrid grid={grid} />
-        <GlobeLandGrid grid={grid} />
-        <GlobeVisitedOverlay grid={grid} hoveredCountryId={hoveredCountryId} />
+        <GlobeBakedLayer grid={grid} />
+        <GlobeHoverOverlay grid={grid} hoveredCountryId={hoveredCountryId} />
         <GlobeHoverBorder grid={grid} hoveredCountryId={hoveredCountryId} />
-        <GlobeBorders grid={grid} />
         <GlobeHoverDetector
           grid={grid}
           onCountryHover={handleCountryHover}

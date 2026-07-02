@@ -9,7 +9,14 @@ import type {
   GlobeRotation,
   WorldPixelGridResult,
 } from "./types";
-import { BIOME_COLORS, GLOBE_CELL_SIZE, GLOBE_SIZE } from "./constants";
+import {
+  BIOME_COLORS,
+  COLOR_VISITED_TINT,
+  COLOR_WORLD_BORDER,
+  GLOBE_CELL_SIZE,
+  GLOBE_SIZE,
+  VISITED_OVERLAY_ALPHA,
+} from "./constants";
 import { buildOceanCells, pixiHexToCss, resolveBiome } from "./utils";
 import { COUNTRY_BIOME_MAP } from "./world-data";
 
@@ -219,7 +226,49 @@ function rasterizeGlobe(
     rows,
   });
 
+  // ── Bake all rotation-dependent cell layers into one canvas ──
+  // Rendered as a single sprite; per-cell Graphics rects rebuilt every
+  // rotation frame cost 100-150ms and froze the drag.
+  const bakedCanvas = new OffscreenCanvas(GLOBE_SIZE, GLOBE_SIZE);
+  const bakedCtx = bakedCanvas.getContext("2d");
+  if (bakedCtx) {
+    const cellW = GLOBE_CELL_SIZE - 1;
+    const cssColorCache = new Map<number, string>();
+    const cssOf = (hex: number): string => {
+      let css = cssColorCache.get(hex);
+      if (!css) {
+        css = pixiHexToCss(hex);
+        cssColorCache.set(hex, css);
+      }
+      return css;
+    };
+    const fillCell = (col: number, row: number, hex: number): void => {
+      bakedCtx.fillStyle = cssOf(hex);
+      bakedCtx.fillRect(
+        col * GLOBE_CELL_SIZE,
+        row * GLOBE_CELL_SIZE,
+        cellW,
+        cellW,
+      );
+    };
+
+    for (const cell of oceanCells) fillCell(cell.col, cell.row, cell.color);
+    for (const cell of cells) fillCell(cell.col, cell.row, cell.color);
+
+    bakedCtx.globalAlpha = VISITED_OVERLAY_ALPHA;
+    for (const cell of cells) {
+      if (cell.visited) fillCell(cell.col, cell.row, COLOR_VISITED_TINT);
+    }
+
+    bakedCtx.globalAlpha = 0.4; // matches previous GlobeBorders layer alpha
+    for (const cell of boundaryPixels) {
+      fillCell(cell.col, cell.row, COLOR_WORLD_BORDER);
+    }
+    bakedCtx.globalAlpha = 1;
+  }
+
   return {
+    bakedCanvas,
     boundaryPixels,
     cells,
     cols,
@@ -248,8 +297,11 @@ export function useGlobePixelGrid(
     let cancelled = false;
 
     (async () => {
+      // 110m here on purpose: the globe re-rasterizes every rotation frame,
+      // and 50m polygons push one pass to 150-190ms (frozen drag). The flat
+      // map rasterizes once on load, so it can afford 50m.
       const topology =
-        (await import("world-atlas/countries-50m.json")) as unknown as Topology<{
+        (await import("world-atlas/countries-110m.json")) as unknown as Topology<{
           countries: GeometryCollection;
           land: GeometryCollection;
         }>;

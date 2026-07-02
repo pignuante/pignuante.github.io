@@ -17,6 +17,13 @@ export interface BoundaryPixel {
 
 /** Rasterized world grid data */
 export interface WorldPixelGridResult {
+  /**
+   * All rotation-dependent cell layers (ocean, land, visited tint, borders)
+   * pre-baked into one canvas. Rendered as a single sprite instead of
+   * tens of thousands of Graphics rects — rebuilding those every rotation
+   * frame froze the globe drag.
+   */
+  bakedCanvas?: OffscreenCanvas;
   boundaryPixels: BoundaryPixel[];
   cells: ColoredPixelCell[];
   cols: number;

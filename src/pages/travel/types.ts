@@ -20,10 +20,11 @@ export interface WorldPixelGridResult {
   boundaryPixels: BoundaryPixel[];
   cells: ColoredPixelCell[];
   cols: number;
-  markers: ProjectedCountryMarker[];
   /** Ocean cells: latitude biome + coast-distance gradient + wave pattern */
   oceanCells?: ColoredPixelCell[];
   rows: number;
+  /** Cell flat index (row * cols + col) → ISO country ID for visited cells only */
+  visitedCountryGrid?: Map<number, string>;
 }
 
 /** Country metadata for biome classification */
@@ -35,14 +36,15 @@ export interface CountryBiomeEntry {
   visited?: boolean;
 }
 
-/** Country marker with projected pixel coordinates */
-export interface ProjectedCountryMarker {
+/** Hover info passed from PixiJS interaction layer to parent */
+export interface CountryHoverInfo {
   id: string;
   name: string;
   nameKo: string;
-  visited: boolean;
-  x: number; // projected canvas-space X
-  y: number; // projected canvas-space Y
+  /** Pointer position in stage-space X */
+  stageX: number;
+  /** Pointer position in stage-space Y */
+  stageY: number;
 }
 
 /** Globe rotation angles in degrees (positive values) */

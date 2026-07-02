@@ -32,22 +32,24 @@ export const VISITED_OVERLAY_ALPHA = 0.18;
 /** Background dot grid color */
 export const COLOR_WORLD_BG_DOT = 0x1c_19_17;
 
-/* ── Country marker constants ── */
+/* ── Country hover highlight constants ── */
 
-/** Marker outer dot radius */
-export const MARKER_DOT_RADIUS = 3;
+/** Hovered visited-country tint overlay alpha (stronger than normal visited) */
+export const HOVER_OVERLAY_ALPHA = 0.35;
 
-/** Marker inner dot radius */
-export const MARKER_DOT_INNER_RADIUS = 1.5;
+/** Hovered country border outline color (warm red at full saturation) */
+export const COLOR_HOVER_BORDER = 0xff_44_44;
 
-/** Marker outer color (warm red, same as visited tint) */
-export const COLOR_MARKER_OUTER = 0xff_6b_6b;
+/** Hovered country border outline alpha */
+export const HOVER_BORDER_ALPHA = 0.6;
 
-/** Marker inner color (white) */
-export const COLOR_MARKER_INNER = 0xff_ff_ff;
-
-/** Hit-test radius multiplier (for hover detection) */
-export const MARKER_HIT_RADIUS_MULTIPLIER = 3;
+/**
+ * Fuzzy hover search radius in cells.
+ * When direct cell hit misses, search within this radius for the nearest
+ * visited country. Helps small countries (e.g. Switzerland, Taiwan) be
+ * easier to hover over. 2 cells = 6px expansion around cursor.
+ */
+export const HOVER_SEARCH_RADIUS = 2;
 
 /* ── Globe constants ── */
 

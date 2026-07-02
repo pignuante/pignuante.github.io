@@ -7,12 +7,11 @@ import type {
   BoundaryPixel,
   ColoredPixelCell,
   GlobeRotation,
-  ProjectedCountryMarker,
   WorldPixelGridResult,
 } from "./types";
 import { BIOME_COLORS, GLOBE_CELL_SIZE, GLOBE_SIZE } from "./constants";
 import { buildOceanCells, pixiHexToCss, resolveBiome } from "./utils";
-import { COUNTRY_BIOME_MAP, COUNTRY_BIOMES } from "./world-data";
+import { COUNTRY_BIOME_MAP } from "./world-data";
 
 /* ── Pure rasterization function (extracted for performance) ── */
 
@@ -32,7 +31,6 @@ const EMPTY_GRID: WorldPixelGridResult = {
   boundaryPixels: [],
   cells: [],
   cols: 0,
-  markers: [],
   rows: 0,
 };
 
@@ -69,7 +67,8 @@ function rasterizeGlobe(
     fillCtx.fill();
   }
 
-  // ── Canvas 2: Visited-country mask (white on transparent) ──
+  // ── Canvas 2: Visited-country ID canvas ──
+  // Each visited country is filled with R = (visitedIndex + 1), 0 = not visited.
   const visitedCanvas = new OffscreenCanvas(GLOBE_SIZE, GLOBE_SIZE);
   const visitedCtx = visitedCanvas.getContext("2d");
   if (!visitedCtx) return EMPTY_GRID;
@@ -78,15 +77,22 @@ function rasterizeGlobe(
     visitedCtx as unknown as CanvasRenderingContext2D,
   );
 
+  /** Visited country index → ISO country ID */
+  const visitedIdLookup: string[] = [];
+  let visitedIndex = 0;
+
   for (const countryFeature of countries.features) {
     const id = countryFeature.id?.toString();
     const entry = id ? COUNTRY_BIOME_MAP.get(id) : undefined;
     if (!entry?.visited) continue;
 
-    visitedCtx.fillStyle = "#ffffff";
+    visitedIdLookup.push(entry.id);
+    const encodedR = visitedIndex + 1;
+    visitedCtx.fillStyle = `rgb(${encodedR},0,0)`;
     visitedCtx.beginPath();
     visitedPathGen(countryFeature);
     visitedCtx.fill();
+    visitedIndex++;
   }
 
   const visitedImageData = visitedCtx.getImageData(
@@ -99,6 +105,7 @@ function rasterizeGlobe(
   // ── Pixel sampling: read biome color per cell ──
   const fillImageData = fillCtx.getImageData(0, 0, GLOBE_SIZE, GLOBE_SIZE);
   const cells: ColoredPixelCell[] = [];
+  const visitedCountryGrid = new Map<number, string>();
   const halfCell = Math.floor(GLOBE_CELL_SIZE / 2);
 
   for (let row = 0; row < rows; row++) {
@@ -117,8 +124,16 @@ function rasterizeGlobe(
 
       const color = (r << 16) | (g << 8) | b;
 
-      // Check visited mask (red channel — white fill = 255)
-      const visited = visitedImageData.data[idx] > 128;
+      // Check visited ID canvas (R channel = visitedIndex + 1, 0 = not visited)
+      const visitedR = visitedImageData.data[idx];
+      const visited = visitedR > 0;
+
+      if (visited) {
+        const countryId = visitedIdLookup[visitedR - 1];
+        if (countryId) {
+          visitedCountryGrid.set(row * cols + col, countryId);
+        }
+      }
 
       cells.push({ col, color, row, ...(visited && { visited: true }) });
     }
@@ -204,47 +219,14 @@ function rasterizeGlobe(
     rows,
   });
 
-  // ── Markers: project centroids for visited countries ──
-  // Filter to front hemisphere only (angular distance < 90° from rotation center)
-  const DEG_TO_RAD = Math.PI / 180;
-  const sinPhi0 = Math.sin(rotation.phi * DEG_TO_RAD);
-  const cosPhi0 = Math.cos(rotation.phi * DEG_TO_RAD);
-  const lambda0Rad = rotation.lambda * DEG_TO_RAD;
-
-  const markers: ProjectedCountryMarker[] = [];
-
-  for (const entry of COUNTRY_BIOMES) {
-    if (!entry.visited) continue;
-
-    const countryFeature = countries.features.find(
-      (f) => f.id?.toString() === entry.id,
-    );
-    if (!countryFeature) continue;
-
-    const centroid = geoCentroid(countryFeature);
-
-    // Great-circle angular distance: cos(d) < 0 → back hemisphere
-    const phi2 = centroid[1] * DEG_TO_RAD;
-    const deltaLambda = centroid[0] * DEG_TO_RAD - lambda0Rad;
-    const cosD =
-      sinPhi0 * Math.sin(phi2) +
-      cosPhi0 * Math.cos(phi2) * Math.cos(deltaLambda);
-    if (cosD < 0) continue;
-
-    const projected = projection(centroid);
-    if (!projected) continue;
-
-    markers.push({
-      id: entry.id,
-      name: entry.name,
-      nameKo: entry.nameKo,
-      visited: true,
-      x: projected[0],
-      y: projected[1],
-    });
-  }
-
-  return { boundaryPixels, cells, cols, markers, oceanCells, rows };
+  return {
+    boundaryPixels,
+    cells,
+    cols,
+    oceanCells,
+    rows,
+    visitedCountryGrid,
+  };
 }
 
 /* ── Hook ── */
@@ -267,7 +249,7 @@ export function useGlobePixelGrid(
 
     (async () => {
       const topology =
-        (await import("world-atlas/countries-110m.json")) as unknown as Topology<{
+        (await import("world-atlas/countries-50m.json")) as unknown as Topology<{
           countries: GeometryCollection;
           land: GeometryCollection;
         }>;

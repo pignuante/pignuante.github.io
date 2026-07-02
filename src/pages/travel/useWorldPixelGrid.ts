@@ -5,7 +5,6 @@ import { feature } from "topojson-client";
 import type {
   BoundaryPixel,
   ColoredPixelCell,
-  ProjectedCountryMarker,
   WorldPixelGridResult,
 } from "./types";
 import {
@@ -16,7 +15,7 @@ import {
   WORLD_MAP_WIDTH,
 } from "./constants";
 import { buildOceanCells, pixiHexToCss, resolveBiome } from "./utils";
-import { COUNTRY_BIOME_MAP, COUNTRY_BIOMES } from "./world-data";
+import { COUNTRY_BIOME_MAP } from "./world-data";
 
 /**
  * Rasterize world-atlas 110m data into a colored pixel grid.
@@ -36,7 +35,7 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
     (async () => {
       // ── Load topology ──
       const topology =
-        (await import("world-atlas/countries-110m.json")) as unknown as Topology<{
+        (await import("world-atlas/countries-50m.json")) as unknown as Topology<{
           countries: GeometryCollection;
           land: GeometryCollection;
         }>;
@@ -77,12 +76,18 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
         fillCtx.fill();
       }
 
-      // ── Canvas 1b: Visited-country mask (white on black) ──
+      // ── Canvas 1b: Visited-country ID canvas ──
+      // Each visited country is filled with a unique encoded color:
+      // R channel = (visitedIndex + 1), so 0 means "not visited".
+      // This allows us to map each pixel back to its country ID.
       const visitedCanvas = new OffscreenCanvas(
         WORLD_MAP_WIDTH,
         WORLD_MAP_HEIGHT,
       );
       const visitedCtx = visitedCanvas.getContext("2d");
+
+      /** Visited country index → ISO country ID */
+      const visitedIdLookup: string[] = [];
 
       if (visitedCtx) {
         const visitedPathGen = geoPath(
@@ -90,15 +95,19 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
           visitedCtx as unknown as CanvasRenderingContext2D,
         );
 
+        let visitedIndex = 0;
         for (const countryFeature of countries.features) {
           const id = countryFeature.id?.toString();
           const entry = id ? COUNTRY_BIOME_MAP.get(id) : undefined;
           if (!entry?.visited) continue;
 
-          visitedCtx.fillStyle = "#ffffff";
+          visitedIdLookup.push(entry.id);
+          const encodedR = visitedIndex + 1; // 1-based to distinguish from transparent
+          visitedCtx.fillStyle = `rgb(${encodedR},0,0)`;
           visitedCtx.beginPath();
           visitedPathGen(countryFeature);
           visitedCtx.fill();
+          visitedIndex++;
         }
       }
 
@@ -119,6 +128,7 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
         WORLD_MAP_HEIGHT,
       );
       const cells: ColoredPixelCell[] = [];
+      const visitedCountryGrid = new Map<number, string>();
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
@@ -136,10 +146,16 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
 
           const color = (r << 16) | (g << 8) | b;
 
-          // Check visited mask (red channel — white fill = 255)
-          const visited = visitedImageData
-            ? visitedImageData.data[idx] > 128
-            : false;
+          // Check visited ID canvas (R channel = visitedIndex + 1, 0 = not visited)
+          const visitedR = visitedImageData ? visitedImageData.data[idx] : 0;
+          const visited = visitedR > 0;
+
+          if (visited) {
+            const countryId = visitedIdLookup[visitedR - 1];
+            if (countryId) {
+              visitedCountryGrid.set(row * cols + col, countryId);
+            }
+          }
 
           cells.push({ col, color, row, ...(visited && { visited: true }) });
         }
@@ -226,34 +242,15 @@ export function useWorldPixelGrid(): WorldPixelGridResult | null {
         rows,
       });
 
-      // ── Markers: project centroids for visited countries ──
-      const markers: ProjectedCountryMarker[] = [];
-
-      for (const entry of COUNTRY_BIOMES) {
-        if (!entry.visited) continue;
-
-        // Find the matching GeoJSON feature by ISO numeric id
-        const countryFeature = countries.features.find(
-          (f) => f.id?.toString() === entry.id,
-        );
-        if (!countryFeature) continue;
-
-        const centroid = geoCentroid(countryFeature);
-        const projected = projection(centroid);
-        if (!projected) continue;
-
-        markers.push({
-          id: entry.id,
-          name: entry.name,
-          nameKo: entry.nameKo,
-          visited: true,
-          x: projected[0],
-          y: projected[1],
-        });
-      }
-
       if (!cancelled) {
-        setResult({ boundaryPixels, cells, cols, markers, oceanCells, rows });
+        setResult({
+          boundaryPixels,
+          cells,
+          cols,
+          oceanCells,
+          rows,
+          visitedCountryGrid,
+        });
       }
     })();
 

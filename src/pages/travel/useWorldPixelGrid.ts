@@ -1,266 +1,67 @@
-import type { GeometryCollection, Topology } from "topojson-specification";
-import { geoCentroid, geoNaturalEarth1, geoPath } from "d3-geo";
+import { geoNaturalEarth1 } from "d3-geo";
 import { useEffect, useState } from "react";
-import { feature } from "topojson-client";
-import type {
-  BoundaryPixel,
-  ColoredPixelCell,
-  ProjectedCountryMarker,
-  WorldPixelGridResult,
-} from "./types";
+import type { WorldPixelGridResult } from "./types";
+import { compositeWorldGrid } from "./composite";
 import {
-  BIOME_COLORS,
   WORLD_CELL_SIZE,
   WORLD_MAP_HEIGHT,
-  WORLD_MAP_INSET,
   WORLD_MAP_WIDTH,
 } from "./constants";
-import { buildOceanCells, pixiHexToCss, resolveBiome } from "./utils";
-import { COUNTRY_BIOME_MAP, COUNTRY_BIOMES } from "./world-data";
+import { useWorldGridData } from "./useWorldGridData";
+
+const GRID_COLS = Math.floor(WORLD_MAP_WIDTH / WORLD_CELL_SIZE);
+const GRID_ROWS = Math.floor(WORLD_MAP_HEIGHT / WORLD_CELL_SIZE);
 
 /**
- * Rasterize world-atlas 110m data into a colored pixel grid.
+ * Flat world map grid hook.
  *
- * 1. Load countries-110m.json (code-split, 105KB)
- * 2. Project with geoNaturalEarth1 fitted to full canvas (minus inset)
- * 3. Fill each country on offscreen canvas with its biome color
- * 4. Sample pixel grid → ColoredPixelCell[]
- * 5. Stroke country boundaries on second canvas → BoundaryPixel[]
+ * Samples the build-time world grid through an inverse NaturalEarth1
+ * projection (fit parameters baked into world-grid-meta.json — identical
+ * framing to the old runtime fitExtent). Composites exactly once; panning
+ * and zooming are sprite/container transforms in WorldPixelMap.
  */
 export function useWorldPixelGrid(): WorldPixelGridResult | null {
+  const data = useWorldGridData();
   const [result, setResult] = useState<WorldPixelGridResult | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
+    if (!data) return;
 
-    (async () => {
-      // ── Load topology ──
-      const topology =
-        (await import("world-atlas/countries-110m.json")) as unknown as Topology<{
-          countries: GeometryCollection;
-          land: GeometryCollection;
-        }>;
+    // Composite off the commit phase (heavy work + avoids sync setState in effect)
+    const raf = requestAnimationFrame(() => {
+      const projection = geoNaturalEarth1()
+        .scale(data.naturalEarthFit.scale)
+        .translate(data.naturalEarthFit.translate);
 
-      const countries = feature(topology, topology.objects.countries);
+      const invert = (px: number, py: number): [number, number] | null => {
+        const lonLat = projection.invert?.([px, py]);
+        // Points outside the map outline invert to out-of-range lon/lat;
+        // compositeWorldGrid range-checks and treats them as outside.
+        return lonLat ? [lonLat[0], lonLat[1]] : null;
+      };
 
-      // ── Projection: Natural Earth 1 fitted to full canvas with minimal inset ──
-      const projection = geoNaturalEarth1().fitExtent(
-        [
-          [WORLD_MAP_INSET, WORLD_MAP_INSET],
-          [
-            WORLD_MAP_WIDTH - WORLD_MAP_INSET,
-            WORLD_MAP_HEIGHT - WORLD_MAP_INSET,
-          ],
-        ],
-        countries,
+      // One screen cell's angular width at the equator, derived numerically
+      // from the fitted projection (≈1.1° for the current framing).
+      const equator = projection([0, 0]);
+      const shifted = equator
+        ? projection.invert?.([equator[0] + WORLD_CELL_SIZE, equator[1]])
+        : null;
+      const cellAngularDeg = shifted ? Math.abs(shifted[0]) : 1.1;
+
+      setResult(
+        compositeWorldGrid({
+          cellAngularDeg,
+          cellSize: WORLD_CELL_SIZE,
+          cols: GRID_COLS,
+          data,
+          invert,
+          rows: GRID_ROWS,
+        }),
       );
+    });
 
-      // ── Canvas 1: Fill each country with its biome color ──
-      const fillCanvas = new OffscreenCanvas(WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT);
-      const fillCtx = fillCanvas.getContext("2d");
-      if (!fillCtx) return;
-
-      // d3-geo typing gap: OffscreenCanvas2D is API-compatible with Canvas2D
-      const pathGen = geoPath(
-        projection,
-        fillCtx as unknown as CanvasRenderingContext2D,
-      );
-
-      for (const countryFeature of countries.features) {
-        const centroid = geoCentroid(countryFeature);
-        const biome = resolveBiome(countryFeature.id?.toString(), centroid[1]);
-        const color = pixiHexToCss(BIOME_COLORS[biome]);
-
-        fillCtx.fillStyle = color;
-        fillCtx.beginPath();
-        pathGen(countryFeature);
-        fillCtx.fill();
-      }
-
-      // ── Canvas 1b: Visited-country mask (white on black) ──
-      const visitedCanvas = new OffscreenCanvas(
-        WORLD_MAP_WIDTH,
-        WORLD_MAP_HEIGHT,
-      );
-      const visitedCtx = visitedCanvas.getContext("2d");
-
-      if (visitedCtx) {
-        const visitedPathGen = geoPath(
-          projection,
-          visitedCtx as unknown as CanvasRenderingContext2D,
-        );
-
-        for (const countryFeature of countries.features) {
-          const id = countryFeature.id?.toString();
-          const entry = id ? COUNTRY_BIOME_MAP.get(id) : undefined;
-          if (!entry?.visited) continue;
-
-          visitedCtx.fillStyle = "#ffffff";
-          visitedCtx.beginPath();
-          visitedPathGen(countryFeature);
-          visitedCtx.fill();
-        }
-      }
-
-      const visitedImageData = visitedCtx?.getImageData(
-        0,
-        0,
-        WORLD_MAP_WIDTH,
-        WORLD_MAP_HEIGHT,
-      );
-
-      // ── Pixel sampling: read biome color per cell ──
-      const cols = Math.floor(WORLD_MAP_WIDTH / WORLD_CELL_SIZE);
-      const rows = Math.floor(WORLD_MAP_HEIGHT / WORLD_CELL_SIZE);
-      const imageData = fillCtx.getImageData(
-        0,
-        0,
-        WORLD_MAP_WIDTH,
-        WORLD_MAP_HEIGHT,
-      );
-      const cells: ColoredPixelCell[] = [];
-
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          const px = col * WORLD_CELL_SIZE + Math.floor(WORLD_CELL_SIZE / 2);
-          const py = row * WORLD_CELL_SIZE + Math.floor(WORLD_CELL_SIZE / 2);
-          const idx = (py * WORLD_MAP_WIDTH + px) * 4;
-
-          const r = imageData.data[idx];
-          const g = imageData.data[idx + 1];
-          const b = imageData.data[idx + 2];
-          const a = imageData.data[idx + 3];
-
-          // Skip transparent (ocean) pixels
-          if (a < 128) continue;
-
-          const color = (r << 16) | (g << 8) | b;
-
-          // Check visited mask (red channel — white fill = 255)
-          const visited = visitedImageData
-            ? visitedImageData.data[idx] > 128
-            : false;
-
-          cells.push({ col, color, row, ...(visited && { visited: true }) });
-        }
-      }
-
-      // Build land set early — used by borders AND ocean
-      const landSet = new Set<number>(
-        cells.map((c: ColoredPixelCell) => c.row * cols + c.col),
-      );
-
-      // ── Canvas 2: Stroke country boundaries ──
-      const borderCanvas = new OffscreenCanvas(
-        WORLD_MAP_WIDTH,
-        WORLD_MAP_HEIGHT,
-      );
-      const borderCtx = borderCanvas.getContext("2d");
-      const boundaryPixels: BoundaryPixel[] = [];
-
-      if (borderCtx) {
-        const borderPathGen = geoPath(
-          projection,
-          borderCtx as unknown as CanvasRenderingContext2D,
-        );
-
-        borderCtx.strokeStyle = "#00ff00";
-        borderCtx.lineWidth = 0.8;
-
-        for (const countryFeature of countries.features) {
-          borderCtx.beginPath();
-          borderPathGen(countryFeature);
-          borderCtx.stroke();
-        }
-
-        const borderImageData = borderCtx.getImageData(
-          0,
-          0,
-          WORLD_MAP_WIDTH,
-          WORLD_MAP_HEIGHT,
-        );
-
-        for (let row = 0; row < rows; row++) {
-          for (let col = 0; col < cols; col++) {
-            if (!landSet.has(row * cols + col)) continue;
-
-            const px = col * WORLD_CELL_SIZE + Math.floor(WORLD_CELL_SIZE / 2);
-            const py = row * WORLD_CELL_SIZE + Math.floor(WORLD_CELL_SIZE / 2);
-            const idx = (py * WORLD_MAP_WIDTH + px) * 4;
-
-            // Green channel > 0 → boundary stroke
-            if (borderImageData.data[idx + 1] > 0) {
-              boundaryPixels.push({ col, row });
-            }
-          }
-        }
-      }
-
-      // ── Ocean cells: latitude biome + coast gradient + wave pattern ──
-      const halfCell = Math.floor(WORLD_CELL_SIZE / 2);
-      const oceanIndices: number[] = [];
-      const oceanLatMap = new Map<number, number>();
-
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          const idx = row * cols + col;
-          if (landSet.has(idx)) continue;
-
-          const px = col * WORLD_CELL_SIZE + halfCell;
-          const py = row * WORLD_CELL_SIZE + halfCell;
-
-          // NaturalEarth1.invert() returns null/NaN outside projection boundary
-          const lonLat = projection.invert?.([px, py]);
-          if (!lonLat || !isFinite(lonLat[0]) || !isFinite(lonLat[1])) continue;
-
-          oceanIndices.push(idx);
-          oceanLatMap.set(idx, Math.abs(lonLat[1]));
-        }
-      }
-
-      const oceanCells = buildOceanCells({
-        cols,
-        landSet,
-        oceanIndices,
-        oceanLatMap,
-        rows,
-      });
-
-      // ── Markers: project centroids for visited countries ──
-      const markers: ProjectedCountryMarker[] = [];
-
-      for (const entry of COUNTRY_BIOMES) {
-        if (!entry.visited) continue;
-
-        // Find the matching GeoJSON feature by ISO numeric id
-        const countryFeature = countries.features.find(
-          (f) => f.id?.toString() === entry.id,
-        );
-        if (!countryFeature) continue;
-
-        const centroid = geoCentroid(countryFeature);
-        const projected = projection(centroid);
-        if (!projected) continue;
-
-        markers.push({
-          id: entry.id,
-          name: entry.name,
-          nameKo: entry.nameKo,
-          visited: true,
-          x: projected[0],
-          y: projected[1],
-        });
-      }
-
-      if (!cancelled) {
-        setResult({ boundaryPixels, cells, cols, markers, oceanCells, rows });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    return () => cancelAnimationFrame(raf);
+  }, [data]);
 
   return result;
 }

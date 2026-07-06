@@ -1,169 +1,15 @@
 import type { Biome, CountryBiomeEntry } from "./types";
+import countryData from "./world-countries.json";
 
 /**
  * Manual biome classification for major countries.
  * Key = ISO 3166-1 numeric code (string).
- * Countries not listed here use latitude-based fallback in useWorldPixelGrid.
+ * Data lives in world-countries.json so the build-time world grid
+ * bake script (scripts/bake-world-grid.mjs) can read the same source.
+ * Countries not listed here use the latitude-based fallback below.
  */
-export const COUNTRY_BIOMES: ReadonlyArray<CountryBiomeEntry> = [
-  // ── East Asia ──
-  { biome: "temperate", id: "156", name: "China", nameKo: "중국" },
-  {
-    biome: "temperate",
-    id: "392",
-    name: "Japan",
-    nameKo: "일본",
-    visited: true,
-  },
-  { biome: "continental", id: "496", name: "Mongolia", nameKo: "몽골" },
-  {
-    biome: "temperate",
-    id: "410",
-    name: "South Korea",
-    nameKo: "대한민국",
-    visited: true,
-  },
-  { biome: "temperate", id: "408", name: "North Korea", nameKo: "북한" },
-  {
-    biome: "temperate",
-    id: "158",
-    name: "Taiwan",
-    nameKo: "대만",
-    visited: true,
-  },
-
-  // ── Southeast Asia ──
-  { biome: "tropical", id: "360", name: "Indonesia", nameKo: "인도네시아" },
-  { biome: "tropical", id: "458", name: "Malaysia", nameKo: "말레이시아" },
-  { biome: "tropical", id: "608", name: "Philippines", nameKo: "필리핀" },
-  { biome: "tropical", id: "702", name: "Singapore", nameKo: "싱가포르" },
-  {
-    biome: "tropical",
-    id: "764",
-    name: "Thailand",
-    nameKo: "태국",
-    visited: true,
-  },
-  { biome: "tropical", id: "704", name: "Vietnam", nameKo: "베트남" },
-  { biome: "tropical", id: "104", name: "Myanmar", nameKo: "미얀마" },
-  { biome: "tropical", id: "116", name: "Cambodia", nameKo: "캄보디아" },
-  { biome: "tropical", id: "418", name: "Laos", nameKo: "라오스" },
-
-  // ── South Asia ──
-  { biome: "tropical", id: "356", name: "India", nameKo: "인도" },
-  { biome: "tropical", id: "050", name: "Bangladesh", nameKo: "방글라데시" },
-  { biome: "tropical", id: "144", name: "Sri Lanka", nameKo: "스리랑카" },
-  { biome: "arid", id: "586", name: "Pakistan", nameKo: "파키스탄" },
-  { biome: "continental", id: "524", name: "Nepal", nameKo: "네팔" },
-
-  // ── Central Asia & Middle East (Arid belt) ──
-  { biome: "arid", id: "682", name: "Saudi Arabia", nameKo: "사우디아라비아" },
-  { biome: "arid", id: "364", name: "Iran", nameKo: "이란" },
-  { biome: "arid", id: "368", name: "Iraq", nameKo: "이라크" },
-  { biome: "arid", id: "784", name: "UAE", nameKo: "아랍에미리트" },
-  { biome: "arid", id: "376", name: "Israel", nameKo: "이스라엘" },
-  { biome: "arid", id: "818", name: "Egypt", nameKo: "이집트" },
-  { biome: "temperate", id: "792", name: "Türkiye", nameKo: "튀르키예" },
-  { biome: "arid", id: "004", name: "Afghanistan", nameKo: "아프가니스탄" },
-  { biome: "arid", id: "398", name: "Kazakhstan", nameKo: "카자흐스탄" },
-  { biome: "arid", id: "795", name: "Turkmenistan", nameKo: "투르크메니스탄" },
-  { biome: "arid", id: "860", name: "Uzbekistan", nameKo: "우즈베키스탄" },
-
-  // ── Europe ──
-  { biome: "temperate", id: "826", name: "United Kingdom", nameKo: "영국" },
-  { biome: "temperate", id: "250", name: "France", nameKo: "프랑스" },
-  { biome: "temperate", id: "276", name: "Germany", nameKo: "독일" },
-  {
-    biome: "temperate",
-    id: "380",
-    name: "Italy",
-    nameKo: "이탈리아",
-    visited: true,
-  },
-  { biome: "temperate", id: "724", name: "Spain", nameKo: "스페인" },
-  { biome: "temperate", id: "620", name: "Portugal", nameKo: "포르투갈" },
-  {
-    biome: "temperate",
-    id: "756",
-    name: "Switzerland",
-    nameKo: "스위스",
-    visited: true,
-  },
-  { biome: "temperate", id: "040", name: "Austria", nameKo: "오스트리아" },
-  { biome: "temperate", id: "528", name: "Netherlands", nameKo: "네덜란드" },
-  { biome: "temperate", id: "056", name: "Belgium", nameKo: "벨기에" },
-  { biome: "continental", id: "616", name: "Poland", nameKo: "폴란드" },
-  { biome: "continental", id: "203", name: "Czechia", nameKo: "체코" },
-  { biome: "continental", id: "348", name: "Hungary", nameKo: "헝가리" },
-  { biome: "continental", id: "642", name: "Romania", nameKo: "루마니아" },
-  { biome: "temperate", id: "300", name: "Greece", nameKo: "그리스" },
-  { biome: "continental", id: "804", name: "Ukraine", nameKo: "우크라이나" },
-  { biome: "continental", id: "643", name: "Russia", nameKo: "러시아" },
-  { biome: "continental", id: "246", name: "Finland", nameKo: "핀란드" },
-  { biome: "continental", id: "752", name: "Sweden", nameKo: "스웨덴" },
-  { biome: "continental", id: "578", name: "Norway", nameKo: "노르웨이" },
-  { biome: "continental", id: "208", name: "Denmark", nameKo: "덴마크" },
-  { biome: "polar", id: "352", name: "Iceland", nameKo: "아이슬란드" },
-  { biome: "temperate", id: "372", name: "Ireland", nameKo: "아일랜드" },
-
-  // ── North America ──
-  {
-    biome: "temperate",
-    id: "840",
-    name: "United States",
-    nameKo: "미국",
-    visited: true,
-  },
-  { biome: "continental", id: "124", name: "Canada", nameKo: "캐나다" },
-  { biome: "arid", id: "484", name: "Mexico", nameKo: "멕시코" },
-  { biome: "tropical", id: "192", name: "Cuba", nameKo: "쿠바" },
-
-  // ── South America ──
-  { biome: "tropical", id: "076", name: "Brazil", nameKo: "브라질" },
-  { biome: "temperate", id: "032", name: "Argentina", nameKo: "아르헨티나" },
-  { biome: "temperate", id: "152", name: "Chile", nameKo: "칠레" },
-  { biome: "tropical", id: "170", name: "Colombia", nameKo: "콜롬비아" },
-  { biome: "tropical", id: "604", name: "Peru", nameKo: "페루" },
-  { biome: "tropical", id: "862", name: "Venezuela", nameKo: "베네수엘라" },
-  { biome: "tropical", id: "218", name: "Ecuador", nameKo: "에콰도르" },
-
-  // ── Africa ──
-  { biome: "arid", id: "012", name: "Algeria", nameKo: "알제리" },
-  { biome: "arid", id: "434", name: "Libya", nameKo: "리비아" },
-  { biome: "arid", id: "736", name: "Sudan", nameKo: "수단" },
-  { biome: "arid", id: "466", name: "Mali", nameKo: "말리" },
-  { biome: "arid", id: "562", name: "Niger", nameKo: "니제르" },
-  { biome: "arid", id: "148", name: "Chad", nameKo: "차드" },
-  { biome: "tropical", id: "566", name: "Nigeria", nameKo: "나이지리아" },
-  { biome: "tropical", id: "180", name: "DR Congo", nameKo: "콩고민주공화국" },
-  { biome: "tropical", id: "404", name: "Kenya", nameKo: "케냐" },
-  { biome: "tropical", id: "834", name: "Tanzania", nameKo: "탄자니아" },
-  { biome: "tropical", id: "231", name: "Ethiopia", nameKo: "에티오피아" },
-  {
-    biome: "temperate",
-    id: "710",
-    name: "South Africa",
-    nameKo: "남아프리카공화국",
-  },
-  { biome: "arid", id: "504", name: "Morocco", nameKo: "모로코" },
-  { biome: "arid", id: "478", name: "Mauritania", nameKo: "모리타니" },
-  { biome: "arid", id: "706", name: "Somalia", nameKo: "소말리아" },
-  { biome: "arid", id: "516", name: "Namibia", nameKo: "나미비아" },
-
-  // ── Oceania ──
-  { biome: "arid", id: "036", name: "Australia", nameKo: "호주" },
-  { biome: "temperate", id: "554", name: "New Zealand", nameKo: "뉴질랜드" },
-  {
-    biome: "tropical",
-    id: "598",
-    name: "Papua New Guinea",
-    nameKo: "파푸아뉴기니",
-  },
-
-  // ── Polar ──
-  { biome: "polar", id: "304", name: "Greenland", nameKo: "그린란드" },
-  { biome: "polar", id: "010", name: "Antarctica", nameKo: "남극" },
-];
+export const COUNTRY_BIOMES: ReadonlyArray<CountryBiomeEntry> =
+  countryData as ReadonlyArray<CountryBiomeEntry>;
 
 /** Quick lookup: country ID → biome entry */
 export const COUNTRY_BIOME_MAP: ReadonlyMap<string, CountryBiomeEntry> =
@@ -172,6 +18,7 @@ export const COUNTRY_BIOME_MAP: ReadonlyMap<string, CountryBiomeEntry> =
 /**
  * Fallback biome classification based on centroid latitude.
  * Used for countries not manually classified in COUNTRY_BIOMES.
+ * Mirrored in scripts/bake-world-grid.mjs — keep the thresholds in sync.
  */
 export function biomeFromLatitude(lat: number): Biome {
   const absLat = Math.abs(lat);

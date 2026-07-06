@@ -1,29 +1,18 @@
 /** Köppen-inspired biome categories for pixel map coloring */
 export type Biome = "arid" | "continental" | "polar" | "temperate" | "tropical";
 
-/** Pixel cell with biome-derived color */
-export interface ColoredPixelCell {
-  col: number;
-  color: number; // PixiJS hex
-  row: number;
-  visited?: boolean;
-}
-
-/** Country boundary pixel (land cells that overlap a border stroke) */
-export interface BoundaryPixel {
-  col: number;
-  row: number;
-}
-
-/** Rasterized world grid data */
+/** Composited screen-cell grid (see composite.ts) */
 export interface WorldPixelGridResult {
-  boundaryPixels: BoundaryPixel[];
-  cells: ColoredPixelCell[];
+  /**
+   * All cell layers (ocean, land, visited tint, borders) baked into one
+   * canvas, rendered as a single sprite. Rebuilding per-cell Graphics
+   * every frame froze dragging — never render cells individually.
+   */
+  bakedCanvas: OffscreenCanvas;
   cols: number;
-  markers: ProjectedCountryMarker[];
-  /** Ocean cells: latitude biome + coast-distance gradient + wave pattern */
-  oceanCells?: ColoredPixelCell[];
   rows: number;
+  /** Cell flat index (row * cols + col) → ISO country ID for visited cells only */
+  visitedCountryGrid: Map<number, string>;
 }
 
 /** Country metadata for biome classification */
@@ -35,14 +24,15 @@ export interface CountryBiomeEntry {
   visited?: boolean;
 }
 
-/** Country marker with projected pixel coordinates */
-export interface ProjectedCountryMarker {
+/** Hover info passed from PixiJS interaction layer to parent */
+export interface CountryHoverInfo {
   id: string;
   name: string;
   nameKo: string;
-  visited: boolean;
-  x: number; // projected canvas-space X
-  y: number; // projected canvas-space Y
+  /** Pointer position in stage-space X */
+  stageX: number;
+  /** Pointer position in stage-space Y */
+  stageY: number;
 }
 
 /** Globe rotation angles in degrees (positive values) */

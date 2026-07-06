@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type {
   Biome,
+  CountryHoverInfo,
   GlobeRotation,
   MapViewMode,
-  ProjectedCountryMarker,
 } from "./travel/types";
 import SparkDivider from "../components/ui/SparkDivider";
 import {
@@ -20,7 +20,6 @@ import { useGlobePixelGrid } from "./travel/useGlobePixelGrid";
 import { useMapCamera } from "./travel/useMapCamera";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
-import { wrapX } from "./travel/utils";
 import WorldPixelMap from "./travel/WorldPixelMap";
 
 /* ── Constants ── */
@@ -44,20 +43,13 @@ const GLOBE_INITIAL_ROTATION: GlobeRotation = {
 interface TooltipState {
   cssX: number;
   cssY: number;
-  marker: ProjectedCountryMarker;
+  nameKo: string;
 }
 
-/** Offset from marker dot to tooltip edge */
+/** Offset from pointer to tooltip edge */
 const TOOLTIP_GAP_PX = 12;
 /** Border width of the canvas wrapper (Tailwind border-4 = 4px) */
 const BORDER_WIDTH_PX = 4;
-
-/** Flat map zoom pivot (center of canvas) */
-const FLAT_PIVOT_X = WORLD_MAP_WIDTH / 2;
-const FLAT_PIVOT_Y = WORLD_MAP_HEIGHT / 2;
-
-/** Globe zoom pivot (center of canvas) */
-const GLOBE_HALF = GLOBE_SIZE / 2;
 
 /* ── Toggle button config ── */
 
@@ -76,6 +68,7 @@ function FlatMapView() {
   const grid = useWorldPixelGrid();
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
 
   const { isDragging, offsetX, offsetY, zoom } = useMapCamera(
     canvasWrapperRef,
@@ -84,48 +77,34 @@ function FlatMapView() {
   );
 
   const isDraggingRef = useRef<boolean>(false);
-  const offsetXRef = useRef<number>(0);
-  const offsetYRef = useRef<number>(0);
-  const zoomRef = useRef<number>(1);
 
-  /** Sync latest state → refs after every render (read by stable handleMarkerHover) */
+  /** Sync latest drag state → ref after every render */
   useEffect(() => {
     isDraggingRef.current = isDragging;
-    offsetXRef.current = offsetX;
-    offsetYRef.current = offsetY;
-    zoomRef.current = zoom;
   });
 
-  const handleMarkerHover = useCallback(
-    (marker: ProjectedCountryMarker | null) => {
-      if (isDraggingRef.current || !marker) {
-        setTooltip(null);
-        return;
-      }
+  const handleCountryHover = useCallback((info: CountryHoverInfo | null) => {
+    if (isDraggingRef.current || !info) {
+      setHoveredCountryId(null);
+      setTooltip(null);
+      return;
+    }
 
-      const canvas = canvasWrapperRef.current?.querySelector("canvas");
-      if (!canvas) return;
+    setHoveredCountryId(info.id);
 
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = rect.width / WORLD_MAP_WIDTH;
-      const scaleY = rect.height / WORLD_MAP_HEIGHT;
+    const canvas = canvasWrapperRef.current?.querySelector("canvas");
+    if (!canvas) return;
 
-      const wrappedX = wrapX(marker.x + offsetXRef.current, WORLD_MAP_WIDTH);
-      const z = zoomRef.current;
-      const pivotY = FLAT_PIVOT_Y + offsetYRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = rect.width / WORLD_MAP_WIDTH;
+    const scaleY = rect.height / WORLD_MAP_HEIGHT;
 
-      // Transform from local (inside zoomed container) → stage → CSS
-      const stageX = (wrappedX - FLAT_PIVOT_X) * z + FLAT_PIVOT_X;
-      const stageY = (marker.y - pivotY) * z + pivotY;
-
-      setTooltip({
-        cssX: stageX * scaleX,
-        cssY: stageY * scaleY,
-        marker,
-      });
-    },
-    [],
-  );
+    setTooltip({
+      cssX: info.stageX * scaleX,
+      cssY: info.stageY * scaleY,
+      nameKo: info.nameKo,
+    });
+  }, []);
 
   return (
     <>
@@ -141,9 +120,10 @@ function FlatMapView() {
           {grid ? (
             <WorldPixelMap
               grid={grid}
+              hoveredCountryId={hoveredCountryId}
               offsetX={offsetX}
               offsetY={offsetY}
-              onMarkerHover={handleMarkerHover}
+              onCountryHover={handleCountryHover}
               zoom={zoom}
             />
           ) : (
@@ -155,7 +135,7 @@ function FlatMapView() {
           )}
         </div>
 
-        {tooltip ? <MarkerTooltip tooltip={tooltip} /> : null}
+        {tooltip ? <CountryTooltip tooltip={tooltip} /> : null}
       </div>
 
       <p
@@ -173,6 +153,7 @@ function FlatMapView() {
 function GlobeMapView() {
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
 
   const { isDragging, rotation } = useGlobeDrag(
     canvasWrapperRef,
@@ -182,39 +163,32 @@ function GlobeMapView() {
   const { zoom } = useZoom(canvasWrapperRef);
 
   const isDraggingRef = useRef<boolean>(false);
-  const zoomRef = useRef<number>(1);
 
   useEffect(() => {
     isDraggingRef.current = isDragging;
-    zoomRef.current = zoom;
   });
 
-  const handleMarkerHover = useCallback(
-    (marker: ProjectedCountryMarker | null) => {
-      if (isDraggingRef.current || !marker) {
-        setTooltip(null);
-        return;
-      }
+  const handleCountryHover = useCallback((info: CountryHoverInfo | null) => {
+    if (isDraggingRef.current || !info) {
+      setHoveredCountryId(null);
+      setTooltip(null);
+      return;
+    }
 
-      const canvas = canvasWrapperRef.current?.querySelector("canvas");
-      if (!canvas) return;
+    setHoveredCountryId(info.id);
 
-      const rect = canvas.getBoundingClientRect();
-      const scale = rect.width / GLOBE_SIZE;
-      const z = zoomRef.current;
+    const canvas = canvasWrapperRef.current?.querySelector("canvas");
+    if (!canvas) return;
 
-      // Transform from local (inside zoomed container) → stage → CSS
-      const stageX = (marker.x - GLOBE_HALF) * z + GLOBE_HALF;
-      const stageY = (marker.y - GLOBE_HALF) * z + GLOBE_HALF;
+    const rect = canvas.getBoundingClientRect();
+    const scale = rect.width / GLOBE_SIZE;
 
-      setTooltip({
-        cssX: stageX * scale,
-        cssY: stageY * scale,
-        marker,
-      });
-    },
-    [],
-  );
+    setTooltip({
+      cssX: info.stageX * scale,
+      cssY: info.stageY * scale,
+      nameKo: info.nameKo,
+    });
+  }, []);
 
   return (
     <>
@@ -237,7 +211,8 @@ function GlobeMapView() {
           {grid ? (
             <GlobePixelMap
               grid={grid}
-              onMarkerHover={handleMarkerHover}
+              hoveredCountryId={hoveredCountryId}
+              onCountryHover={handleCountryHover}
               zoom={zoom}
             />
           ) : (
@@ -249,7 +224,7 @@ function GlobeMapView() {
           )}
         </div>
 
-        {tooltip ? <MarkerTooltip tooltip={tooltip} /> : null}
+        {tooltip ? <CountryTooltip tooltip={tooltip} /> : null}
       </div>
 
       <p
@@ -338,8 +313,8 @@ export default function Travel() {
 
 /* ── HTML Overlay Tooltip (shared) ── */
 
-function MarkerTooltip({ tooltip }: { tooltip: TooltipState }) {
-  const { cssX, cssY, marker } = tooltip;
+function CountryTooltip({ tooltip }: { tooltip: TooltipState }) {
+  const { cssX, cssY, nameKo } = tooltip;
 
   return (
     <div
@@ -351,7 +326,7 @@ function MarkerTooltip({ tooltip }: { tooltip: TooltipState }) {
       }}
     >
       <p className="truncate font-bold text-[var(--text-primary)]">
-        ✦ {marker.nameKo} — 탐험 완료
+        ✦ {nameKo} — 탐험 완료
       </p>
     </div>
   );

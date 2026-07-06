@@ -1,0 +1,9 @@
+# Acknowledged false positives for gitleaks. Format: <commit>:<path>:<rule>:<line>
+# Each entry silences ONE specific finding — real secrets are still detected.
+
+# Code Climate repo_token vendored inside the mermaid.js 7.0.0 library's own
+# .travis.yml (2018). This is third-party code, not ours; the token is a dead
+# public-repo coverage-reporting token from 8 years ago; and it lives only in the
+# archived `legacy-jekyll` branch (the old Jekyll blog), never in shipped code.
+# The security job's full-history scan (fetch-depth: 0) reaches that archived ref.
+dfe85ae1222134e4e987fcc0e4b7177cdd07696d:assets/mermaid-7.0.0/.travis.yml:generic-api-key:13

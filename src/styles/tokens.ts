@@ -1,5 +1,5 @@
 /**
- * AI Scream - Design Tokens (TypeScript)
+ * PignuAnte - Design Tokens (TypeScript)
  *
  * JS-accessible token values for use outside CSS context
  * (e.g., PixiJS canvas rendering, Motion animation configs).

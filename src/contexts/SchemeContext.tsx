@@ -8,7 +8,7 @@ import {
 } from "react";
 import type { ColorScheme } from "../styles/tokens";
 
-const STORAGE_KEY = "ai-scream-scheme";
+const STORAGE_KEY = "pignuante-scheme";
 const VALID_SCHEMES = new Set<ColorScheme>([
   "aurora",
   "cotton",

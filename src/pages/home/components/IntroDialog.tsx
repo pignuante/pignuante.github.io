@@ -45,7 +45,7 @@ export default function IntroDialog({
       <div className="mb-3 flex items-center justify-between gap-2">
         <PixelDialogHeader
           iconColor="var(--surface-elevated)"
-          label="AI Scream"
+          label="PignuAnte"
         />
         {dialogOpen && (
           <button

@@ -64,7 +64,7 @@ export default function Footer() {
           {/* Copyright + GitHub */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-[var(--text-secondary)]">
-              &copy; {YEAR} AI Scream
+              &copy; {YEAR} PignuAnte
             </p>
             <a
               aria-label="GitHub 저장소"

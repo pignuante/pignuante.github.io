@@ -16,7 +16,7 @@ export const PROJECT_SUMMARIES: readonly ProjectSummary[] = [
   {
     links: {
       demoUrl: "https://example.com/pixel-kingdom",
-      repoUrl: "https://github.com/aiscream/pixel-kingdom",
+      repoUrl: "https://github.com/pignuante/pixel-kingdom",
     },
     period: "2025.11 - 2026.01",
     questTier: "MAIN",
@@ -26,7 +26,7 @@ export const PROJECT_SUMMARIES: readonly ProjectSummary[] = [
     status: "LIVE",
     subtitle: "왕국 포털 리빌드",
     summary:
-      "AI Scream 포트폴리오를 RPG 스타일로 재구성한 핵심 리빌드 프로젝트",
+      "PignuAnte 포트폴리오를 RPG 스타일로 재구성한 핵심 리빌드 프로젝트",
     thumbnail: {
       alt: "픽셀 킹덤 포털의 카드형 대시보드 화면",
       caption: "Portal UI",
@@ -35,7 +35,7 @@ export const PROJECT_SUMMARIES: readonly ProjectSummary[] = [
   },
   {
     links: {
-      repoUrl: "https://github.com/aiscream/dungeon-party-planner",
+      repoUrl: "https://github.com/pignuante/dungeon-party-planner",
     },
     period: "2025.06 - 2025.08",
     questTier: "MAIN",

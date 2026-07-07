@@ -68,7 +68,7 @@ export default function Home(): JSX.Element {
         style={{ color: "var(--text-brand)" }}
         variants={titleMotionVariants}
       >
-        ★ AI SCREAM ★
+        ★ PIGNUANTE ★
       </motion.h1>
 
       <motion.p

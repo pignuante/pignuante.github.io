@@ -75,7 +75,7 @@ export default function Navbar() {
           className="font-pixel text-sm font-semibold tracking-tight text-[var(--text-primary)]"
           to="/"
         >
-          AI Scream
+          PignuAnte
         </Link>
 
         {/* Desktop nav */}

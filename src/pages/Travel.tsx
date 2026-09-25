@@ -6,6 +6,7 @@ import type {
   MapViewMode,
 } from "./travel/types";
 import SparkDivider from "../components/ui/SparkDivider";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import {
   BIOME_COLORS_CSS,
   GLOBE_INITIAL_LAMBDA,
@@ -52,6 +53,9 @@ const TOOLTIP_GAP_PX = 12;
 const BORDER_WIDTH_PX = 4;
 
 /* ── Toggle button config ── */
+
+/** Tailwind's sm breakpoint (40rem): below it the globe is the default view. */
+const MOBILE_MAP_QUERY = "(width < 40rem)";
 
 const VIEW_MODE_OPTIONS: ReadonlyArray<{
   icon: string;
@@ -241,22 +245,19 @@ function GlobeMapView() {
 
 export default function Travel() {
   // The flat map is ~1.9:1, so on a phone it shrinks to a thin strip; the
-  // square globe uses the width better there.
-  const [viewMode, setViewMode] = useState<MapViewMode>(() =>
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 639px)").matches
-      ? "globe"
-      : "flat",
-  );
+  // square globe uses the width better there. Until the visitor picks a
+  // view, the default follows the viewport.
+  const isNarrowViewport = useMediaQuery(MOBILE_MAP_QUERY);
+  const [chosenViewMode, setViewMode] = useState<MapViewMode | null>(null);
+  const viewMode: MapViewMode =
+    chosenViewMode ?? (isNarrowViewport ? "globe" : "flat");
 
   return (
     <section
       aria-labelledby="travel-page-title"
-      className="mx-auto max-w-7xl pixel-dot-bg px-6 py-24"
+      className="mx-auto max-w-7xl pixel-dot-bg py-24"
     >
-      {/* The section is wider (max-w-7xl) for the map; keep the header on the
-          same 5xl content column as the other pages so it does not jump. */}
-      <div className="mx-auto max-w-[calc(var(--container-5xl)-3rem)]">
+      <div className="mx-auto max-w-5xl px-6">
         <h1
           className="pixel-glow-pulse font-pixel text-[24px]"
           id="travel-page-title"
@@ -276,7 +277,7 @@ export default function Travel() {
       </div>
 
       {/* View mode toggle */}
-      <div className="mt-6 flex justify-center gap-2">
+      <div className="mt-6 flex justify-center gap-2 px-6">
         {VIEW_MODE_OPTIONS.map(({ icon, label, mode }) => (
           <button
             aria-pressed={viewMode === mode}
@@ -302,7 +303,7 @@ export default function Travel() {
         ))}
       </div>
 
-      <div className="mt-10 flex flex-col items-center">
+      <div className="mt-10 flex flex-col items-center px-6">
         {viewMode === "flat" ? <FlatMapView /> : <GlobeMapView />}
 
         {/* Biome legend — shared across both views */}

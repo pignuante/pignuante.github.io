@@ -65,21 +65,23 @@ export default function Projects(): ReactElement {
 
         {regularMainQuestSummaries.length > 0 ? (
           <ul className="mt-4 grid gap-4 md:grid-cols-2" role="list">
-            {regularMainQuestSummaries.map((project, index) => (
-              <li
-                className={`h-full ${
-                  spansFullRow(index, regularMainQuestSummaries.length)
-                    ? "md:col-span-2"
-                    : ""
-                }`}
-                key={project.slug}
-              >
-                <MainQuestProjectCard
-                  project={project}
-                  wide={spansFullRow(index, regularMainQuestSummaries.length)}
-                />
-              </li>
-            ))}
+            {regularMainQuestSummaries.map((project, index) => {
+              const fillsRow = spansFullRow(
+                index,
+                regularMainQuestSummaries.length,
+              );
+              return (
+                <li
+                  className={`h-full ${fillsRow ? "md:col-span-2" : ""}`}
+                  key={project.slug}
+                >
+                  <MainQuestProjectCard
+                    project={project}
+                    thumbnailVariant={fillsRow ? "hero" : undefined}
+                  />
+                </li>
+              );
+            })}
           </ul>
         ) : null}
       </section>
@@ -96,21 +98,20 @@ export default function Projects(): ReactElement {
           모험가가 홀로 떠난 자유 탐험 기록
         </p>
         <ul className="mt-4 grid gap-4 md:grid-cols-2" role="list">
-          {SIDE_QUEST_SUMMARIES.map((project, index) => (
-            <li
-              className={`h-full ${
-                spansFullRow(index, SIDE_QUEST_SUMMARIES.length)
-                  ? "md:col-span-2"
-                  : ""
-              }`}
-              key={project.slug}
-            >
-              <SideQuestProjectCard
-                project={project}
-                wide={spansFullRow(index, SIDE_QUEST_SUMMARIES.length)}
-              />
-            </li>
-          ))}
+          {SIDE_QUEST_SUMMARIES.map((project, index) => {
+            const fillsRow = spansFullRow(index, SIDE_QUEST_SUMMARIES.length);
+            return (
+              <li
+                className={`h-full ${fillsRow ? "md:col-span-2" : ""}`}
+                key={project.slug}
+              >
+                <SideQuestProjectCard
+                  project={project}
+                  thumbnailVariant={fillsRow ? "hero" : undefined}
+                />
+              </li>
+            );
+          })}
         </ul>
       </section>
     </section>

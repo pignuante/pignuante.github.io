@@ -11,11 +11,6 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const hasKeyNavigated = useRef<boolean>(false);
   const linkRefs = useRef<(HTMLElement | null)[]>([]);
-  const selectedIndexRef = useRef<number>(selectedIndex);
-
-  useEffect(() => {
-    selectedIndexRef.current = selectedIndex;
-  }, [selectedIndex]);
 
   const getFocusedLinkIndex = useCallback((): number => {
     const activeElement = document.activeElement;
@@ -66,23 +61,22 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
       // for focus, so the first arrow press moves it and focuses that link;
       // Enter then works natively on the focused link. Nothing is focused on
       // load, and focus anywhere else (navbar, intro dialog) is left alone.
-      const isIdle =
+      const isBodyFocused =
         document.activeElement === null ||
         document.activeElement === document.body;
 
-      if (focusedIndex < 0 && !isIdle) {
+      if (focusedIndex < 0 && !isBodyFocused) {
         return;
       }
 
       event.preventDefault();
       hasKeyNavigated.current = true;
-      const base = focusedIndex >= 0 ? focusedIndex : selectedIndexRef.current;
-
-      setSelectedIndex(
-        event.key === "ArrowDown"
-          ? (base + 1) % menuLength
-          : (base - 1 + menuLength) % menuLength,
-      );
+      setSelectedIndex((current) => {
+        const baseIndex = focusedIndex >= 0 ? focusedIndex : current;
+        return event.key === "ArrowDown"
+          ? (baseIndex + 1) % menuLength
+          : (baseIndex - 1 + menuLength) % menuLength;
+      });
     };
 
     window.addEventListener("keydown", handleKeyDown);

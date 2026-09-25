@@ -6,26 +6,29 @@ import { type ProjectSummary } from "../types";
 import { ProjectLinkActions } from "./ProjectLinkActions";
 import { ProjectStackList } from "./ProjectStackList";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
-import { ProjectThumbnailSlot } from "./ProjectThumbnailSlot";
+import {
+  ProjectThumbnailSlot,
+  type ProjectThumbnailSlotVariant,
+} from "./ProjectThumbnailSlot";
 
 interface ProjectCardProps {
   project: ProjectSummary;
-  wide?: boolean;
+  thumbnailVariant?: ProjectThumbnailSlotVariant;
 }
 
 interface ProjectCardFrameProps {
   variant: "hero" | "standard";
   questLabel: string;
   project: ProjectSummary;
-  /** Card spans both grid columns; use the hero's wider thumbnail ratio. */
-  wide?: boolean;
+  /** Overrides the thumbnail ratio, e.g. "hero" for a card spanning a row. */
+  thumbnailVariant?: ProjectThumbnailSlotVariant;
 }
 
 function ProjectCardFrame({
   project,
   questLabel,
+  thumbnailVariant,
   variant,
-  wide = false,
 }: ProjectCardFrameProps): ReactElement {
   const detailPath = `/projects/${project.slug}`;
   const headingId = `${project.slug}-title`;
@@ -51,7 +54,7 @@ function ProjectCardFrame({
       <div className="mt-4">
         <ProjectThumbnailSlot
           thumbnail={project.thumbnail}
-          variant={isHeroVariant || wide ? "hero" : "card"}
+          variant={thumbnailVariant ?? (isHeroVariant ? "hero" : "card")}
         />
       </div>
 
@@ -102,14 +105,14 @@ function ProjectCardFrame({
 
 export function MainQuestProjectCard({
   project,
-  wide,
+  thumbnailVariant,
 }: ProjectCardProps): ReactElement {
   return (
     <ProjectCardFrame
       project={project}
       questLabel="MAIN QUEST"
+      thumbnailVariant={thumbnailVariant}
       variant="standard"
-      wide={wide}
     />
   );
 }
@@ -126,14 +129,14 @@ export function MainQuestHeroCard({ project }: ProjectCardProps): ReactElement {
 
 export function SideQuestProjectCard({
   project,
-  wide,
+  thumbnailVariant,
 }: ProjectCardProps): ReactElement {
   return (
     <ProjectCardFrame
       project={project}
       questLabel="SIDE QUEST"
+      thumbnailVariant={thumbnailVariant}
       variant="standard"
-      wide={wide}
     />
   );
 }

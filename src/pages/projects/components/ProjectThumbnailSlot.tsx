@@ -1,7 +1,7 @@
 import { type ReactElement } from "react";
 import { type ProjectThumbnail } from "../types";
 
-type ProjectThumbnailSlotVariant = "card" | "hero";
+export type ProjectThumbnailSlotVariant = "card" | "hero";
 
 interface ProjectThumbnailSlotProps {
   thumbnail: ProjectThumbnail;

@@ -21,7 +21,7 @@ React context providers for shared application state. Providers are wrapped at a
 - Use React 19 `use()` API (not `useContext()`) for consumption
 - `useScheme()` is allowlisted in ESLint `react-refresh/only-export-components`
 - New context hooks must be added to `allowExportNames` in `eslint.config.js`
-- Provider/router wrapping in `App.tsx`: `SchemeProvider` → `BrowserRouter` → `Routes` (`Suspense` is handled in `Layout.tsx`)
+- Provider/router wrapping in `App.tsx`: `SchemeProvider` → `MotionConfig` → `RouterProvider` (data router)
 - `VALID_SCHEMES` in `SchemeContext.tsx` contains all 4 schemes: `"aurora"`, `"cotton"`, `"matcha"`, `"peach"`
 - When adding a new scheme, add it to `VALID_SCHEMES` here AND to `schemeConfig`/`ColorScheme` in `tokens.ts` AND to the regex in `index.html`
 

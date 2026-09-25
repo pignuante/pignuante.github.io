@@ -10,8 +10,8 @@ Last updated: 2026-02-19
 
 ## Route + Architecture Snapshot
 
-- Router (`src/App.tsx`): `SchemeProvider -> BrowserRouter -> Routes -> Route(Layout)` with all pages loaded via `React.lazy()`
-- Route shell (`src/components/layout/Layout.tsx`): shared `Navbar/Footer`, route `Suspense` fallback, keyed `motion.div` transition by `pathname`
+- Router (`src/App.tsx`): `SchemeProvider -> MotionConfig -> RouterProvider` (data router, `createBrowserRouter`); pages load via route `lazy`
+- Route shell (`src/components/layout/Layout.tsx`): `SiteShell` (Navbar/Footer), route-loading bar, `ScrollRestoration`; page changes are view transitions
 - Route status: implemented `/, /about, /projects, /projects/:slug, /colors, /test-css-pixel, *`; placeholder `/travel`
 - Theme state (`src/contexts/SchemeContext.tsx`): React 19 `use()` context hook, `data-scheme` + `localStorage` persistence
 - Token architecture (`src/styles/tokens.css` + `src/styles/tokens.ts`): Primitives -> Schemes -> Semantics -> Pixel System (4 schemes: `aurora`, `cotton`, `matcha`, `peach`)

@@ -22,10 +22,9 @@ Route-level page components. Each file corresponds to a URL path, lazy-loaded in
 
 ### Working In This Directory
 
-- New pages must be added in 3 places:
+- New pages must be added in 2 places:
   1. Create `PageName.tsx` here with `export default function PageName()`
-  2. Add lazy import in `App.tsx`: `const PageName = lazy(() => import("./pages/PageName"))`
-  3. Add `<Route>` in `App.tsx` inside the Layout route
+  2. Add a child to the root route in `App.tsx`: `{ lazy: page(() => import("./pages/PageName")), path: "page-name" }` (route `lazy`, not `React.lazy`)
 - Optionally add to `navItems` array in `Navbar.tsx` for navigation link
 - Static data arrays must be hoisted outside the component function
 - Production pages should use `var()` tokens

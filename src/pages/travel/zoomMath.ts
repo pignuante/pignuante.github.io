@@ -82,14 +82,16 @@ export interface GestureStart {
 }
 
 /**
- * Where a wheel gesture comes to rest: the nearest whole-pixel level, unless
- * that is the level the gesture started from while the zoom did move (one
- * notch is often less than half a level); then one level further in the
- * direction it moved, so a notch never snaps back. The direction is the net
- * movement from the zoom on screen, not the last event (so mixed in/out
- * bursts neither gain nor lose a level) and not the pending level (so a small
- * zoom-in begun while an earlier zoom-in is still animating does not settle
- * outward).
+ * Where a wheel gesture comes to rest, judged by its net movement from the
+ * zoom on screen when it began (not the last event, so mixed in/out bursts
+ * neither gain nor lose a level):
+ *
+ * - Moved in: the nearest whole-pixel level, but at least the first level
+ *   above the zoom on screen (one notch is often less than half a level, and
+ *   must not snap back), and at least the pending level when an earlier
+ *   zoom-in was still animating toward it.
+ * - Moved out: the same, mirrored.
+ * - No net movement: the pending level.
  */
 export function settleZoom(
   raw: number,
@@ -98,17 +100,22 @@ export function settleZoom(
   min: number,
   max: number,
 ): number {
+  if (cellDevicePx === null) return quantizeZoom(raw, null, min, max);
   const nearest = quantizeZoom(raw, cellDevicePx, min, max);
-  if (cellDevicePx === null || nearest !== start.level || raw === start.shown) {
-    return nearest;
+  if (raw === start.shown) {
+    return quantizeZoom(start.level, cellDevicePx, min, max);
   }
-  return quantizeZoom(
-    raw,
-    cellDevicePx,
-    min,
-    max,
-    raw > start.shown ? "in" : "out",
-  );
+  // Levels are m/k; tolerate float noise so a zoom already on a level counts
+  // as that level.
+  const onScreen = start.shown * cellDevicePx;
+  if (raw > start.shown) {
+    const above = (Math.floor(onScreen + 1e-9) + 1) / cellDevicePx;
+    const floor = Math.max(above, start.level);
+    return quantizeZoom(Math.max(nearest, floor), cellDevicePx, min, max);
+  }
+  const below = (Math.ceil(onScreen - 1e-9) - 1) / cellDevicePx;
+  const ceiling = Math.min(below, start.level);
+  return quantizeZoom(Math.min(nearest, ceiling), cellDevicePx, min, max);
 }
 
 /** Multiplicative zoom factor for one wheel event, independent of deltaMode. */

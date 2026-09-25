@@ -225,6 +225,22 @@ export function useMapCamera(
 
   /* ── Wheel handler (zoom + anchor capture) ── */
 
+  /** End the current wheel gesture; returns the level it settles on. */
+  const closeGesture = useCallback((): number => {
+    const start = gestureStartRef.current ?? {
+      level: zoomRawGoalRef.current,
+      shown: zoomRawGoalRef.current,
+    };
+    gestureStartRef.current = null;
+    return settleZoom(
+      zoomRawGoalRef.current,
+      start,
+      baseCellDevicePixelsRef.current,
+      ZOOM_MIN,
+      ZOOM_MAX,
+    );
+  }, []);
+
   /** Bring the zoom to rest on a whole-pixel level (see settleZoom). */
   const settle = useCallback((): void => {
     if (draggingRef.current) {
@@ -233,24 +249,13 @@ export function useMapCamera(
       settleDuringDragRef.current = true;
       return;
     }
-    const start = gestureStartRef.current ?? {
-      level: zoomRawGoalRef.current,
-      shown: zoomRawGoalRef.current,
-    };
-    gestureStartRef.current = null;
-    const settled = settleZoom(
-      zoomRawGoalRef.current,
-      start,
-      baseCellDevicePixelsRef.current,
-      ZOOM_MIN,
-      ZOOM_MAX,
-    );
+    const settled = closeGesture();
     zoomRawGoalRef.current = settled;
     zoomGoalRef.current = settled;
     if (rafRef.current === 0) {
       rafRef.current = requestAnimationFrame(tickRef.current);
     }
-  }, []);
+  }, [closeGesture]);
 
   const handleWheel = useCallback(
     (e: WheelEvent) => {
@@ -265,6 +270,12 @@ export function useMapCamera(
 
       // Proportional zoom factor
       const factor = wheelZoomFactor(e);
+      if (settleDuringDragRef.current) {
+        // A settle parked by a drag still ends its gesture: this burst is a
+        // new one, starting from the level that one settles on.
+        settleDuringDragRef.current = false;
+        zoomRawGoalRef.current = closeGesture();
+      }
       if (gestureStartRef.current === null) {
         // New gesture: remember where it starts (for settleZoom), and
         // accumulate from what is on screen, not from a settle target
@@ -285,9 +296,6 @@ export function useMapCamera(
       zoomGoalRef.current = zoomRawGoalRef.current;
       window.clearTimeout(settleTimerRef.current);
       settleTimerRef.current = window.setTimeout(settle, ZOOM_SETTLE_MS);
-      // This newer timer is the one that decides; drop a settle that was
-      // parked by an earlier drag.
-      settleDuringDragRef.current = false;
 
       // CSS → logical conversion
       const rect = canvas.getBoundingClientRect();
@@ -312,7 +320,7 @@ export function useMapCamera(
         rafRef.current = requestAnimationFrame(tickRef.current);
       }
     },
-    [settle],
+    [closeGesture, settle],
   );
 
   /* ── Pointer handlers (drag) ── */

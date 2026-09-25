@@ -44,7 +44,7 @@ export function ProjectThumbnailSlot({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,var(--surface-elevated),transparent_65%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_0%,transparent_45%,var(--surface-elevated)_45%,var(--surface-elevated)_55%,transparent_55%,transparent_100%)] opacity-70" />
           <figcaption
-            className="absolute bottom-2 left-2 rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface-elevated)] px-2 py-1 font-pixel-body text-[11px]"
+            className="absolute bottom-2 left-2 rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface-elevated)] px-2 py-1 font-pixel-small text-[12px]"
             style={{ color: "var(--text-secondary)" }}
           >
             {thumbnail.caption}

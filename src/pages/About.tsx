@@ -13,7 +13,7 @@ export default function About(): ReactElement {
     >
       <ScrollReveal>
         <h1
-          className="pixel-glow-pulse font-pixel text-base sm:text-lg md:text-2xl"
+          className="pixel-glow-pulse font-pixel text-[24px]"
           id="about-page-title"
           style={{ color: "var(--text-brand)" }}
         >
@@ -21,7 +21,7 @@ export default function About(): ReactElement {
           ABOUT
         </h1>
         <p
-          className="mt-3 font-pixel-body text-sm sm:text-base"
+          className="mt-3 font-pixel-body text-[15px]"
           style={{ color: "var(--text-secondary)" }}
         >
           모험가의 기록

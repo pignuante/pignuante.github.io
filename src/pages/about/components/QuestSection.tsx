@@ -9,7 +9,7 @@ export function QuestSection(): ReactElement {
     <section aria-labelledby="about-quest-heading">
       <ScrollReveal className="mt-12">
         <h2
-          className="mb-8 font-pixel text-xs sm:text-sm"
+          className="mb-8 font-pixel text-[16px]"
           id="about-quest-heading"
           style={{ color: "var(--text-brand)" }}
         >
@@ -50,28 +50,28 @@ export function QuestSection(): ReactElement {
                         className="font-pixel text-[8px] sm:text-[10px]"
                         style={{
                           color: isInProgress
-                            ? "var(--color-brand-500)"
-                            : "var(--color-accent-500)",
+                            ? "var(--text-brand)"
+                            : "var(--text-accent)",
                         }}
                       >
                         [{entry.status}]
                       </span>
                       <span
-                        className="font-pixel-body text-xs"
+                        className="font-pixel-small text-[12px]"
                         style={{ color: "var(--text-tertiary)" }}
                       >
                         {entry.period}
                       </span>
                     </div>
                     <h3
-                      className="mb-1 font-pixel text-[10px] sm:text-xs"
+                      className="mb-1 font-pixel-body text-[15px]"
                       style={{ color: "var(--text-primary)" }}
                     >
                       <span aria-hidden="true">✦ </span>
                       {entry.title}
                     </h3>
                     <p
-                      className="font-pixel-body text-xs leading-relaxed sm:text-sm"
+                      className="font-pixel-small text-[12px] leading-[1.6]"
                       style={{ color: "var(--text-secondary)" }}
                     >
                       {entry.description}

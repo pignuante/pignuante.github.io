@@ -104,12 +104,12 @@ export const JOB_BRANCHES: readonly JobBranch[] = [
 export const JOB_STATUS_STYLES: Readonly<Record<JobStatus, JobStatusStyle>> = {
   COMPLETED: {
     border: "var(--color-accent-300)",
-    color: "var(--color-accent-500)",
+    color: "var(--text-accent)",
     opacity: 1,
   },
   CURRENT: {
     border: "var(--color-brand-400)",
-    color: "var(--color-brand-500)",
+    color: "var(--text-brand)",
     opacity: 1,
   },
   LOCKED: {

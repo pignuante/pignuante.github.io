@@ -51,12 +51,12 @@ export default function IntroDialog({
           <button
             aria-controls="home-intro-dialog-content"
             aria-expanded={dialogOpen}
-            className="cursor-pointer font-pixel-body text-xs"
+            className="cursor-pointer font-pixel-small text-[12px]"
             onClick={onToggle}
             style={{ color: "var(--text-secondary)" }}
             type="button"
           >
-            ▲ 접기
+            <span aria-hidden="true">▲ </span>접기
           </button>
         )}
       </div>
@@ -75,7 +75,7 @@ export default function IntroDialog({
             <p
               aria-atomic="true"
               aria-live="polite"
-              className="font-pixel-body text-sm leading-relaxed whitespace-pre-line"
+              className="font-pixel-body text-[15px] leading-[1.7] whitespace-pre-line"
               style={{ color: "var(--text-primary)" }}
             >
               {displayedText}
@@ -104,7 +104,7 @@ export default function IntroDialog({
             animate={{ opacity: 1 }}
             aria-controls="home-intro-dialog-content"
             aria-expanded={dialogOpen}
-            className="cursor-pointer border-0 bg-transparent p-0 text-left font-pixel-body text-sm"
+            className="cursor-pointer border-0 bg-transparent p-0 text-left font-pixel-body text-[15px]"
             initial={closedDialogAnimation}
             key="closed"
             onClick={onToggle}
@@ -112,7 +112,7 @@ export default function IntroDialog({
             transition={buttonTransition}
             type="button"
           >
-            ▶ 대화를 시작하려면 클릭하세요
+            <span aria-hidden="true">▶ </span>대화를 시작하려면 클릭하세요
             {prefersReducedMotion ? (
               <span aria-hidden="true">...</span>
             ) : (
@@ -134,12 +134,12 @@ export default function IntroDialog({
       {dialogOpen && typingDone && (
         <div className="mt-4 flex justify-end">
           <button
-            className="pixel-btn font-pixel-body text-xs hover:pixel-btn-hover active:pixel-btn-active"
+            className="pixel-btn font-pixel-small text-[12px] hover:pixel-btn-hover active:pixel-btn-active"
             onClick={onToggle}
             style={{ color: "var(--text-primary)" }}
             type="button"
           >
-            ▶ 시작
+            <span aria-hidden="true">▶ </span>시작
           </button>
         </div>
       )}

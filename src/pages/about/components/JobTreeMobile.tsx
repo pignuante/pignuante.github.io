@@ -34,11 +34,11 @@ export function JobTreeMobile({ viewModel }: JobTreeMobileProps): ReactElement {
                 {branchView.branch.icon}
               </span>
               <span
-                className="font-pixel text-[10px]"
+                className="font-pixel-small text-[12px]"
                 style={{
                   color: branchView.isBrand
-                    ? "var(--color-brand-400)"
-                    : "var(--color-accent-400)",
+                    ? "var(--text-brand)"
+                    : "var(--text-accent)",
                 }}
               >
                 {branchView.branch.label}

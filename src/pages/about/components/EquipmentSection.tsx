@@ -10,7 +10,7 @@ export function EquipmentSection(): ReactElement {
     <section aria-labelledby="about-equipment-heading">
       <ScrollReveal className="mt-12">
         <h2
-          className="mb-6 font-pixel text-xs sm:text-sm"
+          className="mb-6 font-pixel text-[16px]"
           id="about-equipment-heading"
           style={{ color: "var(--text-brand)" }}
         >
@@ -25,7 +25,7 @@ export function EquipmentSection(): ReactElement {
           variants={staggerContainer}
         >
           <h3
-            className="mb-3 font-pixel text-[8px] sm:text-[10px]"
+            className="mb-3 font-pixel text-[16px]"
             style={{ color: "var(--text-secondary)" }}
           >
             <span aria-hidden="true">{category.icon} </span>
@@ -39,7 +39,7 @@ export function EquipmentSection(): ReactElement {
                 variants={staggerItem}
               >
                 <p
-                  className="font-pixel-body text-xs sm:text-sm"
+                  className="font-pixel-body text-[15px]"
                   style={{ color: "var(--text-primary)" }}
                 >
                   {skill.label}
@@ -54,7 +54,7 @@ export function EquipmentSection(): ReactElement {
       ))}
       <ScrollReveal className="mt-8" variants={staggerContainer}>
         <h3
-          className="mb-3 font-pixel text-[8px] sm:text-[10px]"
+          className="mb-3 font-pixel text-[16px]"
           style={{ color: "var(--text-secondary)" }}
         >
           <span aria-hidden="true">🎒 </span>
@@ -63,7 +63,7 @@ export function EquipmentSection(): ReactElement {
         <div className="flex flex-wrap gap-2">
           {INVENTORY_ITEMS.map((item) => (
             <motion.span
-              className="inline-flex items-center pixel-card px-3 py-1.5 font-pixel-body text-xs transition-colors duration-150 hover:border-[var(--color-brand-300)]"
+              className="inline-flex items-center pixel-card px-3 py-1.5 font-pixel-small text-[12px] transition-colors duration-150 hover:border-[var(--color-brand-300)]"
               key={item.id}
               style={{ color: "var(--text-primary)" }}
               variants={staggerItem}

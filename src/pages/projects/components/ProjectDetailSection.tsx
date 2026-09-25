@@ -13,12 +13,12 @@ export function ProjectDetailSection({
 }: ProjectDetailSectionProps): ReactElement {
   return (
     <section aria-labelledby={headingId} className="pixel-dialog p-5 sm:p-6">
-      <h2 className="font-pixel text-xs sm:text-sm" id={headingId}>
+      <h2 className="font-pixel text-[16px]" id={headingId}>
         <span aria-hidden="true">▶ </span>
         {heading}
       </h2>
       <p
-        className="mt-3 font-pixel-body text-sm leading-relaxed"
+        className="mt-3 font-pixel-body text-[15px] leading-[1.7]"
         style={{ color: "var(--text-secondary)" }}
       >
         {body}

@@ -76,7 +76,7 @@ export function ProjectLinkActions({
     >
       {externalLinks.map((item) => (
         <a
-          className="inline-flex w-full items-center justify-center gap-1 rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface)] px-3 py-2 font-pixel-body text-xs text-[var(--text-secondary)] transition-colors duration-150 hover:bg-[var(--surface-elevated)] sm:w-auto"
+          className="inline-flex w-full items-center justify-center gap-1 rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface)] px-3 py-2 font-pixel-small text-[12px] text-[var(--text-secondary)] transition-colors duration-150 hover:bg-[var(--surface-elevated)] sm:w-auto"
           href={item.href}
           key={item.key}
           rel="noopener noreferrer"

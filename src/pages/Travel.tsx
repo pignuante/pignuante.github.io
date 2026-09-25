@@ -264,13 +264,15 @@ function GlobeMapView({ visitor }: { visitor: VisitorView }) {
   const here = useMemo<HereMarker | null>(() => {
     if (!visitor.location) return null;
     const [lat, lon] = visitor.location.point;
-    // Hide the pin on the far hemisphere (orthographic clipAngle 90), and a
-    // pin-height early so the bitmap never sticks out past the limb.
+    // Hide the pin on the far hemisphere (orthographic clipAngle 90), and
+    // early enough that the bitmap stays inside the disc: a point at angle a
+    // from the centre projects at radius R·sin(a), so the pin's height h
+    // fits while sin(a) <= 1 - h/R.
+    const radius = GLOBE_SIZE / 2;
     const pinHeight = (PIN_ROWS.length * herePinPixel) / zoom;
-    const limbMargin = Math.asin(Math.min(1, pinHeight / (GLOBE_SIZE / 2)));
+    const angle = geoDistance([lon, lat], [rotation.lambda, rotation.phi]);
     const onFront =
-      geoDistance([lon, lat], [rotation.lambda, rotation.phi]) <
-      Math.PI / 2 - limbMargin;
+      angle < Math.PI / 2 && Math.sin(angle) <= 1 - pinHeight / radius;
     const projected = onFront
       ? createGlobeProjection(rotation.lambda, rotation.phi)([lon, lat])
       : null;
@@ -490,6 +492,7 @@ export default function Travel() {
 const PRECISE_STATUS_TEXT: Partial<Record<PreciseStatus, string>> = {
   denied: "위치 권한이 거부되어 시간대 기준으로 표시해요.",
   locating: "위치를 확인하는 중…",
+  ok: "현재 위치로 옮겼어요. 아주 작은 나라 안이라면 이웃 나라로 표시될 수 있어요.",
   unavailable: "정확한 위치를 가져오지 못했어요.",
 };
 

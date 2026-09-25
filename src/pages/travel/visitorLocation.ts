@@ -78,7 +78,8 @@ export function countryCodeAt(
   const { countries, countryIdx, gridH, gridW } = data;
   const col = Math.min(Math.floor(((lon + 180) / 360) * gridW), gridW - 1);
   const row = Math.min(Math.floor(((90 - lat) / 180) * gridH), gridH - 1);
-  // Longitude cells shrink with latitude; weight them so "nearest" is real.
+  // Longitude cells shrink with latitude; weighting them makes this an
+  // approximately geographic nearest (in whole cells, not great-circle).
   const lonWeight = Math.cos((lat * Math.PI) / 180) ** 2;
 
   let best = 0;

@@ -1,7 +1,13 @@
 import type { Container, Graphics } from "pixi.js";
 import { useTick } from "@pixi/react";
 import { Texture } from "pixi.js";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from "react";
 import type { WorldPixelGridResult } from "./types";
 import {
   COLOR_HERE,
@@ -37,8 +43,11 @@ function drawPin(
   pinPixel: number,
 ): void {
   const width = PIN_ROWS[0].length * pinPixel;
-  const left = tipX - width / 2;
-  const top = tipY - PIN_ROWS.length * pinPixel;
+  // Snap the origin to the pin-pixel grid so every pin pixel lands on the
+  // same sub-pixel phase (no blur from a fractional projected tip).
+  const left = Math.round((tipX - width / 2) / pinPixel) * pinPixel;
+  const top =
+    Math.round((tipY - PIN_ROWS.length * pinPixel) / pinPixel) * pinPixel;
   PIN_ROWS.forEach((row, r) => {
     [...row].forEach((cell, c) => {
       if (cell === ".") return;
@@ -49,7 +58,12 @@ function drawPin(
   });
 }
 
-/** One opaque layer with the visitor country's cells, baked once per grid. */
+/**
+ * One opaque layer with the visitor country's cells, baked once per grid.
+ * Same lifecycle as the map's BakedLayer (memo + destroy on change); not
+ * StrictMode-double-render safe, which is fine while main.tsx keeps
+ * StrictMode off.
+ */
 function useTintTexture(
   grid: WorldPixelGridResult,
   countryIndex: number,
@@ -130,8 +144,9 @@ export function HereOverlay({
   }, []);
   useTick({ callback: breathe, isEnabled: pulse && tint !== null });
   // Without the pulse the tint rests at full strength. (Not an `alpha` prop:
-  // every pan re-render would reset the breathing phase.)
-  useEffect(() => {
+  // every pan re-render would reset the breathing phase.) A layout effect,
+  // so a freshly mounted tint never paints one frame at alpha 1.
+  useLayoutEffect(() => {
     if (!pulse && tintLayerRef.current) {
       tintLayerRef.current.alpha = TINT_ALPHA.max;
     }

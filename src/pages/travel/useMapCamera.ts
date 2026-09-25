@@ -293,7 +293,6 @@ export function useMapCamera(
 
       // Proportional zoom factor
       const factor = wheelZoomFactor(e);
-      userMovedRef.current = true;
       if (settleDuringDragRef.current) {
         // A settle parked by a drag still ends its gesture: this burst is a
         // new one, starting from the level that one settles on.
@@ -311,10 +310,14 @@ export function useMapCamera(
         };
         zoomRawGoalRef.current = zoomCurrentRef.current;
       }
+      const rawBefore = zoomRawGoalRef.current;
       zoomRawGoalRef.current = Math.max(
         ZOOM_MIN,
         Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
       );
+      // Only a wheel that changes the zoom moves the view; one the clamp
+      // holds at a range end (scrolling out at 1x) does not.
+      if (zoomRawGoalRef.current !== rawBefore) userMovedRef.current = true;
       // Follow the wheel continuously; settle on a whole-pixel level once it
       // stops (see ZOOM_SETTLE_MS), around the same cursor anchor.
       zoomGoalRef.current = zoomRawGoalRef.current;

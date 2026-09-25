@@ -23,7 +23,7 @@ export default function Projects(): ReactElement {
     >
       <header>
         <h1
-          className="pixel-glow-pulse font-pixel text-base sm:text-lg md:text-2xl"
+          className="pixel-glow-pulse font-pixel text-[24px]"
           id="projects-page-title"
           style={{ color: "var(--text-brand)" }}
         >
@@ -31,7 +31,7 @@ export default function Projects(): ReactElement {
           QUEST LOG
         </h1>
         <p
-          className="mt-3 font-pixel-body text-sm sm:text-base"
+          className="mt-3 font-pixel-body text-[15px]"
           style={{ color: "var(--text-secondary)" }}
         >
           모험가가 완수한 퀘스트와 진행 중인 임무 기록
@@ -41,15 +41,12 @@ export default function Projects(): ReactElement {
       <SparkDivider className="mt-6" />
 
       <section aria-labelledby="projects-main-quest-title" className="mt-10">
-        <h2
-          className="font-pixel text-sm sm:text-base"
-          id="projects-main-quest-title"
-        >
+        <h2 className="font-pixel text-[16px]" id="projects-main-quest-title">
           <span aria-hidden="true">★ </span>
           Main Quest
         </h2>
         <p
-          className="mt-3 font-pixel-body text-sm"
+          className="mt-3 font-pixel-body text-[15px]"
           style={{ color: "var(--text-secondary)" }}
         >
           길드 게시판에 등록된 공식 의뢰 임무
@@ -73,15 +70,12 @@ export default function Projects(): ReactElement {
       </section>
 
       <section aria-labelledby="projects-side-quest-title" className="mt-10">
-        <h2
-          className="font-pixel text-sm sm:text-base"
-          id="projects-side-quest-title"
-        >
+        <h2 className="font-pixel text-[16px]" id="projects-side-quest-title">
           <span aria-hidden="true">◆ </span>
           Side Quests
         </h2>
         <p
-          className="mt-3 font-pixel-body text-sm"
+          className="mt-3 font-pixel-body text-[15px]"
           style={{ color: "var(--text-secondary)" }}
         >
           모험가가 홀로 떠난 자유 탐험 기록

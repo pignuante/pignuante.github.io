@@ -24,14 +24,14 @@ export default function ProjectDetail(): ReactElement {
       >
         <div className="max-w-2xl pixel-dialog p-6">
           <h1
-            className="font-pixel text-sm"
+            className="font-pixel text-[16px]"
             id="project-detail-not-found-title"
           >
             <span aria-hidden="true">! </span>
             프로젝트를 찾지 못했습니다
           </h1>
           <p
-            className="mt-3 font-pixel-body text-sm"
+            className="mt-3 font-pixel-body text-[15px]"
             style={{ color: "var(--text-secondary)" }}
           >
             요청한 퀘스트 기록이 존재하지 않습니다. 목록으로 돌아가 다른 기록을
@@ -67,7 +67,7 @@ export default function ProjectDetail(): ReactElement {
     >
       <header>
         <Link
-          className="inline-flex font-pixel-body text-xs text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+          className="inline-flex font-pixel-small text-[12px] text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
           to="/projects"
         >
           <span aria-hidden="true">← </span>
@@ -77,14 +77,14 @@ export default function ProjectDetail(): ReactElement {
         <PixelDialogHeader className="mt-4" label={project.subtitle} />
 
         <h1
-          className="mt-3 pixel-glow-pulse font-pixel text-base sm:text-lg md:text-2xl"
+          className="mt-3 pixel-glow-pulse font-pixel text-[24px]"
           id="project-detail-title"
         >
           <span aria-hidden="true">✦ </span>
           {project.title}
         </h1>
         <p
-          className="mt-3 font-pixel-body text-sm sm:text-base"
+          className="mt-3 font-pixel-body text-[15px]"
           style={{ color: "var(--text-secondary)" }}
         >
           {project.summary}
@@ -111,7 +111,7 @@ export default function ProjectDetail(): ReactElement {
 
       <section aria-labelledby="project-detail-stack-heading" className="mt-8">
         <h2
-          className="font-pixel text-sm sm:text-base"
+          className="font-pixel text-[16px]"
           id="project-detail-stack-heading"
         >
           <span aria-hidden="true">▶ </span>
@@ -129,7 +129,7 @@ export default function ProjectDetail(): ReactElement {
         className="mt-8"
       >
         <h2
-          className="font-pixel text-sm sm:text-base"
+          className="font-pixel text-[16px]"
           id="project-detail-highlights-heading"
         >
           <span aria-hidden="true">♦ </span>

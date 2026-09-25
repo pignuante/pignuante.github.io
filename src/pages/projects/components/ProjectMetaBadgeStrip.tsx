@@ -20,13 +20,13 @@ export function ProjectMetaBadgeStrip({
           key={`${badge.label}-${badge.value}`}
         >
           <span
-            className="font-pixel-body text-[11px]"
+            className="font-pixel-small text-[12px]"
             style={{ color: "var(--text-tertiary)" }}
           >
             {badge.label}
           </span>
           <span
-            className="ml-1 font-pixel-body text-xs"
+            className="ml-1 font-pixel-small text-[12px]"
             style={{ color: "var(--text-secondary)" }}
           >
             {badge.value}

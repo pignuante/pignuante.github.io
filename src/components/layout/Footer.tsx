@@ -26,7 +26,7 @@ export default function Footer() {
             <ul className="flex flex-wrap gap-x-6 gap-y-2" role="list">
               {footerLinks.map(({ external, label, path }) => {
                 const active = !external && isActivePath(path, pathname);
-                const linkClass = `flex min-h-[44px] items-center gap-1 text-sm transition-colors ${
+                const linkClass = `flex min-h-[44px] items-center gap-1 text-[15px] transition-colors ${
                   active
                     ? "text-[var(--text-primary)]"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -63,12 +63,12 @@ export default function Footer() {
 
           {/* Copyright + GitHub */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm text-[var(--text-secondary)]">
+            <p className="font-pixel-small text-[12px] text-[var(--text-secondary)]">
               &copy; {YEAR} PignuAnte
             </p>
             <a
               aria-label="GitHub 저장소"
-              className="flex min-h-[44px] min-w-[44px] items-center gap-2 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+              className="flex min-h-[44px] min-w-[44px] items-center gap-2 text-[15px] text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
               href="https://github.com/pignuante"
               rel="noopener noreferrer"
               target="_blank"

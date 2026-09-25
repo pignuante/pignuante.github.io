@@ -18,12 +18,12 @@ const STACK_LIST_VARIANTS: Record<
 > = {
   card: {
     itemClassName:
-      "rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface)] px-2 py-1 font-pixel-body text-[11px]",
+      "rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface)] px-2 py-1 font-pixel-small text-[12px]",
     listClassName: "mt-4 flex flex-wrap gap-2",
   },
   detail: {
     itemClassName:
-      "rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface-elevated)] px-2 py-1 font-pixel-body text-xs",
+      "rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface-elevated)] px-2 py-1 font-pixel-small text-[12px]",
     listClassName: "mt-4 flex flex-wrap gap-2",
   },
 };

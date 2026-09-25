@@ -125,6 +125,7 @@ export default function HomeMenu({
                 }}
               >
                 <span
+                  aria-hidden="true"
                   className={isSelected ? "pixel-arrow-bounce" : ""}
                   style={{
                     opacity: isSelected ? 1 : 0,
@@ -136,7 +137,7 @@ export default function HomeMenu({
                 {item.label}
               </span>
               <span
-                className="font-pixel-body text-xs"
+                className="font-pixel-small text-[12px]"
                 style={{ color: "var(--text-secondary)" }}
               >
                 {item.desc}

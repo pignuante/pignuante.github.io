@@ -22,7 +22,7 @@ export function JobTree(): ReactElement {
   return (
     <>
       <h3
-        className="mb-4 font-pixel text-[8px] sm:text-[10px]"
+        className="mb-4 font-pixel text-[16px]"
         style={{ color: "var(--text-secondary)" }}
       >
         <span aria-hidden="true">⚡ </span>

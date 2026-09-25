@@ -40,8 +40,17 @@
   --color-info: oklch(0.72 0.1 240);
 
   /* -- Typography: Font families ------------------------------------------- */
-  --font-pixel: "Press Start 2P", "NeoDunggeunmo", monospace;
-  --font-pixel-body: "NeoDunggeunmo", monospace;
+  /* PignuPixel14/11 are Galmuri14/11 subsets (scripts/subset-fonts.py).
+   * Pixel faces stay crisp only at their design size or a multiple:
+   * PignuPixel14 = 15px (body), PignuPixel11 = 12px / 24px (labels, Hangul
+   * headings), Press Start 2P = 8px multiples (Latin headings). */
+  --font-pixel: "PixelSpace", "Press Start 2P", "PignuPixel11", monospace;
+  --font-pixel-body: "PignuPixel14", "PignuPixel11", monospace;
+  --font-pixel-small: "PignuPixel11", monospace;
+
+  /* text-xs is pinned to 12px (PignuPixel11 design size) instead of
+   * 0.75rem, which is 10.5px under the 14px mobile root. */
+  --text-xs: 12px;
   --font-mono:
     "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", monospace;
 
@@ -128,6 +137,10 @@
   --color-accent-300: oklch(0.82 0.09 170);
   --color-accent-400: oklch(0.73 0.11 170);
   --color-accent-500: oklch(0.65 0.13 170);
+  --color-accent-100: oklch(0.95 0.03 170);
+  --color-accent-200: oklch(0.9 0.05 170);
+  --color-accent-600: oklch(0.52 0.1 170);
+  --color-accent-700: oklch(0.45 0.09 170);
 
   --shadow-glow: 0 0 20px oklch(0.62 0.15 290 / 0.3);
 }
@@ -148,6 +161,10 @@
   --color-accent-300: oklch(0.84 0.08 85);
   --color-accent-400: oklch(0.75 0.1 85);
   --color-accent-500: oklch(0.68 0.12 85);
+  --color-accent-100: oklch(0.95 0.03 85);
+  --color-accent-200: oklch(0.9 0.05 85);
+  --color-accent-600: oklch(0.52 0.1 85);
+  --color-accent-700: oklch(0.45 0.09 85);
 
   --shadow-glow: 0 0 20px oklch(0.64 0.15 45 / 0.3);
 }
@@ -168,6 +185,10 @@
   --color-accent-300: oklch(0.82 0.08 230);
   --color-accent-400: oklch(0.73 0.1 230);
   --color-accent-500: oklch(0.65 0.12 230);
+  --color-accent-100: oklch(0.95 0.03 230);
+  --color-accent-200: oklch(0.9 0.05 230);
+  --color-accent-600: oklch(0.52 0.1 230);
+  --color-accent-700: oklch(0.45 0.09 230);
 
   --shadow-glow: 0 0 20px oklch(0.63 0.15 350 / 0.3);
 }
@@ -188,6 +209,10 @@
   --color-accent-300: oklch(0.84 0.1 105);
   --color-accent-400: oklch(0.75 0.12 105);
   --color-accent-500: oklch(0.67 0.14 105);
+  --color-accent-100: oklch(0.95 0.03 105);
+  --color-accent-200: oklch(0.9 0.05 105);
+  --color-accent-600: oklch(0.52 0.1 105);
+  --color-accent-700: oklch(0.45 0.09 105);
 
   --shadow-glow: 0 0 20px oklch(0.63 0.15 130 / 0.3);
 }
@@ -207,9 +232,11 @@
   /* -- Text (warm dark tones for ink-on-paper feel) ---------------------- */
   --text-primary: oklch(0.18 0.01 75);
   --text-secondary: oklch(0.44 0.01 55);
-  --text-tertiary: var(--color-neutral-400);
-  --text-brand: var(--color-brand-600);
-  --text-accent: var(--color-accent-500);
+  --text-tertiary: var(--color-neutral-500);
+  /* brand/accent 500–600 are pastel fills; text needs the 700 step to reach
+   * WCAG AA 4.5:1 on white and on the 50–100 tints in every scheme. */
+  --text-brand: var(--color-brand-700);
+  --text-accent: var(--color-accent-700);
 
   /* -- Borders ----------------------------------------------------------- */
   --border-default: var(--color-neutral-200);

@@ -103,8 +103,9 @@ export const pixiColors = {
 /* -- Typography: Pixel Fonts ------------------------------------------------ */
 
 export const pixelFonts = {
-  body: '"NeoDunggeunmo", monospace',
-  heading: '"Press Start 2P", monospace',
+  body: '"PignuPixel14", "PignuPixel11", monospace',
+  heading: '"PixelSpace", "Press Start 2P", "PignuPixel11", monospace',
+  small: '"PignuPixel11", monospace',
 } as const;
 
 /* -- Motion -------------------------------------------------------------- */

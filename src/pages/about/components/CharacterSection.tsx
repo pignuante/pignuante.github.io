@@ -39,7 +39,7 @@ export function CharacterSection(): ReactElement {
               <span
                 className="absolute -right-2 -bottom-2 font-pixel text-[8px]"
                 style={{
-                  backgroundColor: "var(--color-brand-500)",
+                  backgroundColor: "var(--text-brand)",
                   borderRadius: "var(--pixel-border-radius)",
                   boxShadow: "var(--pixel-shadow-sm)",
                   color: "var(--surface)",
@@ -51,7 +51,7 @@ export function CharacterSection(): ReactElement {
             </div>
             <div className="flex-1">
               <h3
-                className="font-pixel text-sm sm:text-base"
+                className="font-pixel text-[16px]"
                 style={{ color: "var(--text-primary)" }}
               >
                 {CHARACTER_INFO.name}
@@ -70,11 +70,11 @@ export function CharacterSection(): ReactElement {
                       {stat.label}
                     </dt>
                     <dd
-                      className="mt-1 font-pixel-body text-xs sm:text-sm"
+                      className="mt-1 font-pixel-body text-[15px]"
                       style={{
                         color:
                           stat.id === "lvl"
-                            ? "var(--color-brand-500)"
+                            ? "var(--text-brand)"
                             : "var(--text-primary)",
                       }}
                     >
@@ -84,7 +84,7 @@ export function CharacterSection(): ReactElement {
                 ))}
               </dl>
               <p
-                className="mt-4 font-pixel-body text-xs leading-relaxed whitespace-pre-line sm:text-sm"
+                className="mt-4 font-pixel-body text-[15px] leading-[1.7] whitespace-normal sm:whitespace-pre-line"
                 style={{ color: "var(--text-primary)" }}
               >
                 {CHARACTER_BIO}

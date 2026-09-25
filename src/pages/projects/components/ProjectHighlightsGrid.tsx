@@ -19,20 +19,20 @@ export function ProjectHighlightsGrid({
       {highlights.map((highlight) => (
         <div className="pixel-card p-4" key={`${slug}-${highlight.id}`}>
           <dt
-            className="font-pixel-body text-[11px]"
+            className="font-pixel-small text-[12px]"
             style={{ color: "var(--text-tertiary)" }}
           >
             {highlight.label}
           </dt>
           <dd
-            className="mt-1 font-pixel text-sm"
+            className="mt-1 font-pixel text-[24px]"
             style={{ color: "var(--text-brand)" }}
           >
             {highlight.value}
           </dd>
           {highlight.description ? (
             <p
-              className="mt-2 font-pixel-body text-xs leading-relaxed"
+              className="mt-2 font-pixel-small text-[12px] leading-[1.6]"
               style={{ color: "var(--text-secondary)" }}
             >
               {highlight.description}

@@ -139,7 +139,7 @@ function FlatMapView() {
       </div>
 
       <p
-        className="mt-2 font-pixel-body text-xs"
+        className="mt-2 font-pixel-small text-[12px]"
         style={{ color: "var(--text-tertiary)" }}
       >
         ← 양피지를 끌어 탐험 · 스크롤로 확대/축소 →
@@ -228,7 +228,7 @@ function GlobeMapView() {
       </div>
 
       <p
-        className="mt-2 font-pixel-body text-xs"
+        className="mt-2 font-pixel-small text-[12px]"
         style={{ color: "var(--text-tertiary)" }}
       >
         수정구를 돌려 세계를 탐험 · 스크롤로 확대/축소
@@ -248,7 +248,7 @@ export default function Travel() {
       className="mx-auto max-w-7xl pixel-dot-bg px-6 py-24"
     >
       <h1
-        className="pixel-glow-pulse font-pixel text-base sm:text-lg md:text-2xl"
+        className="pixel-glow-pulse font-pixel text-[24px]"
         id="travel-page-title"
         style={{ color: "var(--text-brand)" }}
       >
@@ -256,7 +256,7 @@ export default function Travel() {
         WORLD MAP
       </h1>
       <p
-        className="mt-3 font-pixel-body text-sm sm:text-base"
+        className="mt-3 font-pixel-body text-[15px]"
         style={{ color: "var(--text-secondary)" }}
       >
         모험가의 발자취가 새겨진 세계 지도
@@ -269,7 +269,7 @@ export default function Travel() {
         {VIEW_MODE_OPTIONS.map(({ icon, label, mode }) => (
           <button
             aria-pressed={viewMode === mode}
-            className="border-2 px-3 py-1.5 font-pixel-body text-xs transition-colors"
+            className="border-2 px-3 py-1.5 font-pixel-small text-[12px] transition-colors"
             key={mode}
             onClick={() => setViewMode(mode)}
             style={{
@@ -295,7 +295,7 @@ export default function Travel() {
         {viewMode === "flat" ? <FlatMapView /> : <GlobeMapView />}
 
         {/* Biome legend — shared across both views */}
-        <div className="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-2 font-pixel-body text-xs">
+        <div className="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-2 font-pixel-small text-[12px]">
           {BIOME_LEGEND.map(({ biome, label }) => (
             <div className="flex items-center gap-2" key={biome}>
               <span
@@ -318,7 +318,7 @@ function CountryTooltip({ tooltip }: { tooltip: TooltipState }) {
 
   return (
     <div
-      className="pointer-events-none absolute z-10 border-2 border-[var(--border-default)] bg-[var(--surface)] px-3 py-1.5 font-pixel-body text-xs shadow-sm"
+      className="pointer-events-none absolute z-10 border-2 border-[var(--border-default)] bg-[var(--surface)] px-3 py-1.5 font-pixel-small text-[12px] shadow-sm"
       style={{
         left: cssX + BORDER_WIDTH_PX + TOOLTIP_GAP_PX,
         opacity: 0.95,
@@ -326,7 +326,8 @@ function CountryTooltip({ tooltip }: { tooltip: TooltipState }) {
       }}
     >
       <p className="truncate font-bold text-[var(--text-primary)]">
-        ✦ {nameKo} — 탐험 완료
+        <span aria-hidden="true">✦ </span>
+        {nameKo} — 탐험 완료
       </p>
     </div>
   );

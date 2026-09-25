@@ -1,6 +1,36 @@
 @import "tailwindcss";
 @import "./styles/tokens.css";
 
+/* Self-hosted Galmuri subsets, see scripts/subset-fonts.py and
+ * src/assets/fonts/OFL.md */
+@font-face {
+  font-display: swap;
+  font-family: "PignuPixel14";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/PignuPixel14.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "PignuPixel11";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/PignuPixel11.woff2") format("woff2");
+}
+
+/* Press Start 2P's space is a full 1em, which makes Hangul headings (whose
+ * glyphs fall back to PignuPixel11) read as "픽셀   킹덤". This face takes
+ * over only U+0020 at the head of --font-pixel. */
+@font-face {
+  font-display: swap;
+  font-family: "PixelSpace";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/PignuPixel11.woff2") format("woff2");
+  unicode-range: U+0020;
+}
+
 /* =========================================================================
  * AI Scream - Global Styles & Pixel Utilities
  * =========================================================================
@@ -33,6 +63,21 @@ body {
   min-height: 100svh;
   background-color: var(--surface);
   color: var(--text-primary);
+
+  /* Korean: break between words, not inside them. break-word (not
+   * anywhere) keeps min-content sizing unchanged for flex/grid items. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 /* -------------------------------------------------------------------------

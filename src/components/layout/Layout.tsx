@@ -13,7 +13,7 @@ function RouteFallback() {
       className="mx-auto max-w-5xl px-6 py-24"
     >
       <div className="pixel-card p-6">
-        <p className="font-pixel-body text-sm text-[var(--text-secondary)]">
+        <p className="font-pixel-body text-[15px] text-[var(--text-secondary)]">
           페이지를 불러오는 중...
         </p>
       </div>

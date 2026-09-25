@@ -24,13 +24,13 @@ export function JobTreeCard({ node, styles }: JobTreeCardProps): ReactElement {
       }}
     >
       <span
-        className="font-pixel-body text-[10px] sm:text-xs"
+        className="font-pixel-small text-[12px]"
         style={{ color: styles.color }}
       >
         {node.fantasy}
       </span>
       <span
-        className="font-pixel text-[6px] sm:text-[8px]"
+        className="font-pixel-small text-[12px]"
         style={{ color: "var(--text-tertiary)" }}
       >
         {node.real}
@@ -41,8 +41,8 @@ export function JobTreeCard({ node, styles }: JobTreeCardProps): ReactElement {
       {node.status === "CURRENT" ? (
         <span
           aria-hidden="true"
-          className="font-pixel text-[6px]"
-          style={{ color: "var(--color-brand-500)" }}
+          className="font-pixel text-[8px]"
+          style={{ color: "var(--text-brand)" }}
         >
           ▶ NOW
         </span>

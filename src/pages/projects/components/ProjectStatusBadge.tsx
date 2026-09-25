@@ -32,7 +32,7 @@ const STATUS_STYLE_MAP: Record<
     backgroundColor: "var(--color-accent-100)",
     borderColor: "var(--color-accent-300)",
     icon: "[P]",
-    textColor: "var(--color-accent-500)",
+    textColor: "var(--text-accent)",
   },
   LIVE: {
     backgroundColor: "var(--color-brand-100)",
@@ -50,7 +50,7 @@ export function ProjectStatusBadge({
 
   return (
     <p
-      className={`inline-flex items-center gap-1 rounded-[var(--pixel-border-radius)] border px-2 py-1 font-pixel-body text-[11px] ${className ?? ""}`}
+      className={`inline-flex items-center gap-1 rounded-[var(--pixel-border-radius)] border px-2 py-1 font-pixel-small text-[12px] ${className ?? ""}`}
       style={{
         backgroundColor: statusStyle.backgroundColor,
         borderColor: statusStyle.borderColor,

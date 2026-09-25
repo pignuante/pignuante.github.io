@@ -116,20 +116,24 @@ export default function Navbar() {
               <button
                 aria-checked={scheme === s}
                 aria-label={schemeConfig[s].label}
-                className="relative"
+                className="relative flex h-[24px] w-[24px] items-center justify-center"
                 key={s}
                 onClick={() => setScheme(s)}
                 role="radio"
-                style={{
-                  backgroundColor: schemeConfig[s].preview,
-                  height: "16px",
-                  outline:
-                    scheme === s ? "2px solid var(--border-strong)" : "none",
-                  outlineOffset: "-2px",
-                  width: "16px",
-                }}
                 type="button"
-              />
+              >
+                {/* 24px hit area (WCAG 2.2 target size) around a 16px swatch */}
+                <span
+                  aria-hidden="true"
+                  className="block h-[16px] w-[16px]"
+                  style={{
+                    backgroundColor: schemeConfig[s].preview,
+                    outline:
+                      scheme === s ? "2px solid var(--border-strong)" : "none",
+                    outlineOffset: "-2px",
+                  }}
+                />
+              </button>
             ))}
           </div>
         </div>
@@ -280,22 +284,26 @@ export default function Navbar() {
                     <button
                       aria-checked={scheme === s}
                       aria-label={schemeConfig[s].label}
-                      className="relative"
+                      className="relative flex h-[24px] w-[24px] items-center justify-center"
                       key={s}
                       onClick={() => setScheme(s)}
                       role="radio"
-                      style={{
-                        backgroundColor: schemeConfig[s].preview,
-                        height: "16px",
-                        outline:
-                          scheme === s
-                            ? "2px solid var(--border-strong)"
-                            : "none",
-                        outlineOffset: "-2px",
-                        width: "16px",
-                      }}
                       type="button"
-                    />
+                    >
+                      {/* 24px hit area (WCAG 2.2 target size) around a 16px swatch */}
+                      <span
+                        aria-hidden="true"
+                        className="block h-[16px] w-[16px]"
+                        style={{
+                          backgroundColor: schemeConfig[s].preview,
+                          outline:
+                            scheme === s
+                              ? "2px solid var(--border-strong)"
+                              : "none",
+                          outlineOffset: "-2px",
+                        }}
+                      />
+                    </button>
                   ))}
                 </div>
               </div>

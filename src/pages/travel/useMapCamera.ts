@@ -1,7 +1,12 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN } from "./constants";
-import { quantizeZoom, wheelZoomFactor, ZOOM_SETTLE_MS } from "./zoomMath";
+import {
+  quantizeZoom,
+  settleZoom,
+  wheelZoomFactor,
+  ZOOM_SETTLE_MS,
+} from "./zoomMath";
 
 /** Lerp factor per frame — exponential ease-out (~80 % settled in 170 ms @60 fps) */
 const LERP_FACTOR = 0.15;
@@ -95,12 +100,16 @@ export function useMapCamera(
   const zoomGoalRef = useRef(1);
   /** Current interpolated zoom (updated every rAF frame) */
   const zoomCurrentRef = useRef(1);
-  /** Zoom actually rendered last frame (quantized); anchors and drag use it */
+  /** Zoom rendered last frame; anchors and drag use it */
   const zoomShownRef = useRef(1);
-  /** Unquantized wheel accumulator */
+  /** Wheel accumulator; continuous during a gesture, the level at rest */
   const zoomRawGoalRef = useRef(1);
   /** Pending settle-to-whole-pixel timer (0 = none) */
   const settleTimerRef = useRef(0);
+  /** Level the current wheel gesture started from (null between gestures) */
+  const gestureStartRef = useRef<null | number>(null);
+  /** A settle that came due during a drag; applied on pointer up */
+  const settleDuringDragRef = useRef(false);
   const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
 
   /** Authoritative offsetX (updated by both tick and drag) */
@@ -135,6 +144,10 @@ export function useMapCamera(
   useEffect(() => {
     baseCellDevicePixelsRef.current = baseCellDevicePixels;
     // Re-snap the current goal when the cell size changes (resize, DPR).
+    // Cancel a pending settle and restart the accumulator from the new level,
+    // so neither a stale timer nor the old raw value overrides it.
+    window.clearTimeout(settleTimerRef.current);
+    gestureStartRef.current = null;
     // The last wheel anchor refers to the old canvas geometry; drop it so a
     // passive resize does not pan the map.
     anchorRef.current = null;
@@ -146,6 +159,7 @@ export function useMapCamera(
     );
     if (snapped !== zoomGoalRef.current) {
       zoomGoalRef.current = snapped;
+      zoomRawGoalRef.current = snapped;
       if (rafRef.current === 0) {
         rafRef.current = requestAnimationFrame(tickRef.current);
       }
@@ -209,65 +223,79 @@ export function useMapCamera(
 
   /* ── Wheel handler (zoom + anchor capture) ── */
 
-  const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault();
-
-    const el = e.currentTarget as HTMLElement;
-    const canvas = el.querySelector("canvas");
-    if (!canvas) return;
-
-    const W = mapWidthRef.current;
-    const H = mapHeightRef.current;
-
-    // Proportional zoom factor
-    const factor = wheelZoomFactor(e);
-    zoomRawGoalRef.current = Math.max(
+  /** Bring the zoom to rest on a whole-pixel level (see settleZoom). */
+  const settle = useCallback((): void => {
+    if (draggingRef.current) {
+      // Zooming around a dropped wheel anchor would slide the map under the
+      // pointer; finish the settle when the drag ends.
+      settleDuringDragRef.current = true;
+      return;
+    }
+    const start = gestureStartRef.current ?? zoomRawGoalRef.current;
+    gestureStartRef.current = null;
+    const settled = settleZoom(
+      zoomRawGoalRef.current,
+      start,
+      baseCellDevicePixelsRef.current,
       ZOOM_MIN,
-      Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
+      ZOOM_MAX,
     );
-    // Follow the wheel continuously; settle on a whole-pixel level once it
-    // stops (see ZOOM_SETTLE_MS), around the same cursor anchor.
-    zoomGoalRef.current = zoomRawGoalRef.current;
-    const direction = factor > 1 ? "in" : factor < 1 ? "out" : "nearest";
-    window.clearTimeout(settleTimerRef.current);
-    settleTimerRef.current = window.setTimeout(() => {
-      const settled = quantizeZoom(
-        zoomRawGoalRef.current,
-        baseCellDevicePixelsRef.current,
-        ZOOM_MIN,
-        ZOOM_MAX,
-        direction,
-      );
-      zoomRawGoalRef.current = settled;
-      zoomGoalRef.current = settled;
-      if (rafRef.current === 0) {
-        rafRef.current = requestAnimationFrame(tickRef.current);
-      }
-    }, ZOOM_SETTLE_MS);
-
-    // CSS → logical conversion
-    const rect = canvas.getBoundingClientRect();
-    const anchorScreenX = (e.clientX - rect.left) * (W / rect.width);
-    const anchorScreenY = (e.clientY - rect.top) * (H / rect.height);
-
-    // Content anchor Y — computed from CURRENT refs (not React state)
-    const pivotOld = H / 2 + offsetYRef.current;
-    const zCurrent = zoomShownRef.current;
-    const contentAnchorY = (anchorScreenY - pivotOld) / zCurrent + pivotOld;
-
-    anchorRef.current = {
-      contentY: contentAnchorY,
-      offsetXAtCapture: offsetXRef.current,
-      screenX: anchorScreenX,
-      screenY: anchorScreenY,
-      zAtCapture: zCurrent,
-    };
-
-    // Kick rAF if idle
+    zoomRawGoalRef.current = settled;
+    zoomGoalRef.current = settled;
     if (rafRef.current === 0) {
       rafRef.current = requestAnimationFrame(tickRef.current);
     }
   }, []);
+
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      e.preventDefault();
+
+      const el = e.currentTarget as HTMLElement;
+      const canvas = el.querySelector("canvas");
+      if (!canvas) return;
+
+      const W = mapWidthRef.current;
+      const H = mapHeightRef.current;
+
+      // Proportional zoom factor
+      const factor = wheelZoomFactor(e);
+      gestureStartRef.current ??= zoomRawGoalRef.current;
+      zoomRawGoalRef.current = Math.max(
+        ZOOM_MIN,
+        Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
+      );
+      // Follow the wheel continuously; settle on a whole-pixel level once it
+      // stops (see ZOOM_SETTLE_MS), around the same cursor anchor.
+      zoomGoalRef.current = zoomRawGoalRef.current;
+      window.clearTimeout(settleTimerRef.current);
+      settleTimerRef.current = window.setTimeout(settle, ZOOM_SETTLE_MS);
+
+      // CSS → logical conversion
+      const rect = canvas.getBoundingClientRect();
+      const anchorScreenX = (e.clientX - rect.left) * (W / rect.width);
+      const anchorScreenY = (e.clientY - rect.top) * (H / rect.height);
+
+      // Content anchor Y — computed from CURRENT refs (not React state)
+      const pivotOld = H / 2 + offsetYRef.current;
+      const zCurrent = zoomShownRef.current;
+      const contentAnchorY = (anchorScreenY - pivotOld) / zCurrent + pivotOld;
+
+      anchorRef.current = {
+        contentY: contentAnchorY,
+        offsetXAtCapture: offsetXRef.current,
+        screenX: anchorScreenX,
+        screenY: anchorScreenY,
+        zAtCapture: zCurrent,
+      };
+
+      // Kick rAF if idle
+      if (rafRef.current === 0) {
+        rafRef.current = requestAnimationFrame(tickRef.current);
+      }
+    },
+    [settle],
+  );
 
   /* ── Pointer handlers (drag) ── */
 
@@ -319,7 +347,11 @@ export function useMapCamera(
   const handlePointerUp = useCallback(() => {
     draggingRef.current = false;
     setIsDragging(false);
-  }, []);
+    if (settleDuringDragRef.current) {
+      settleDuringDragRef.current = false;
+      settle();
+    }
+  }, [settle]);
 
   /* ── Event binding ── */
 

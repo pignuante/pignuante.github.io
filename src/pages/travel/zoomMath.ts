@@ -8,10 +8,10 @@ import { ZOOM_STEP } from "./constants";
 const MIN_QUANTIZED_CELL_DEVICE_PIXELS = 4;
 
 /**
- * Zoom follows the wheel continuously while it moves, and settles on the
- * nearest whole-pixel level (quantizeZoom) this long after the last event.
- * Snapping every frame made zoom step in 14–25% jumps and ignore small
- * wheel deltas until they added up to half a step.
+ * Zoom follows the wheel continuously while it moves, and settles on a
+ * whole-pixel level (settleZoom) this long after the last event. Snapping
+ * every frame made zoom step in 14–25% jumps and ignore small wheel deltas
+ * until they added up to half a step.
  */
 export const ZOOM_SETTLE_MS = 150;
 
@@ -71,6 +71,34 @@ export function quantizeZoom(
         ? Math.floor(exact + 1e-9)
         : Math.round(exact);
   return Math.max(lowest, Math.min(highest, step)) / cellDevicePx;
+}
+
+/**
+ * Where a wheel gesture comes to rest: the nearest whole-pixel level, unless
+ * that is the level the gesture started from while the zoom did move (one
+ * notch is often less than half a level); then one level further in the
+ * direction it moved, so a notch never snaps back. Deciding by the net
+ * movement, not the last event, keeps mixed in/out bursts from gaining or
+ * losing an extra level.
+ */
+export function settleZoom(
+  raw: number,
+  startLevel: number,
+  cellDevicePx: null | number,
+  min: number,
+  max: number,
+): number {
+  const nearest = quantizeZoom(raw, cellDevicePx, min, max);
+  if (cellDevicePx === null || nearest !== startLevel || raw === startLevel) {
+    return nearest;
+  }
+  return quantizeZoom(
+    raw,
+    cellDevicePx,
+    min,
+    max,
+    raw > startLevel ? "in" : "out",
+  );
 }
 
 /** Multiplicative zoom factor for one wheel event, independent of deltaMode. */

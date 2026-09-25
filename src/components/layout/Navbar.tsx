@@ -279,7 +279,6 @@ export default function Navbar() {
                           className={getNavLinkClass(active, "px-6 py-3")}
                           onClick={() => setIsOpen(false)}
                           to={path}
-                          viewTransition
                         >
                           {label}
                         </Link>

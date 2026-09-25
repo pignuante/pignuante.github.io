@@ -9,18 +9,20 @@ App shell components that wrap every page. Provides the persistent Navbar, route
 
 ## Key Files
 
-| File         | Description                                                                                                                                                                                  |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Layout.tsx` | Root layout — renders Navbar, keyed `motion.div` route wrapper, `Suspense` fallback around `<Outlet />`, and Footer. No `AnimatePresence` route transitions.                                 |
-| `Navbar.tsx` | Pixel-style fixed header with 3px hard-edge border+shadow, nav links, 4-dot color scheme switcher, and mobile hamburger menu with slide-in panel. Consumes `useScheme()` and `isActivePath`. |
-| `Footer.tsx` | RPG pixel-dialog footer — nav links with `▸` prefix, `pixel-divider` `<hr>`, copyright, and GitHub link. Uses `pixel-dialog` utility class and `isActivePath` from `utils/routing`.          |
+| File             | Description                                                                                                                                                                                  |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Layout.tsx`     | Root route component — `SiteShell` around `<Outlet />`, loading bar while route code loads, `ScrollRestoration`; page changes are view transitions (Motion fade only without the API)        |
+| `SiteShell.tsx`  | Navbar + `main` + Footer frame, plus `RouteFallback` / `ShellFallback` (first-load HydrateFallback)                                                                                          |
+| `RouteError.tsx` | Root `ErrorBoundary`: branded error page, reload for a stale chunk after a deploy, no error details                                                                                          |
+| `Navbar.tsx`     | Pixel-style fixed header with 3px hard-edge border+shadow, nav links, 4-dot color scheme switcher, and mobile hamburger menu with slide-in panel. Consumes `useScheme()` and `isActivePath`. |
+| `Footer.tsx`     | RPG pixel-dialog footer — nav links with `▸` prefix, `pixel-divider` `<hr>`, copyright, and GitHub link. Uses `pixel-dialog` utility class and `isActivePath` from `utils/routing`.          |
 
 ## For AI Agents
 
 ### Working In This Directory
 
 - `Layout.tsx` is the route parent — it receives child pages via `<Outlet />`
-- Route content is wrapped with keyed `motion.div` (`key={pathname}`) plus `Suspense` fallback around `<Outlet />`
+- Page changes run as view transitions (`index.css` section 9); `site-header`, `nav-active` and `project-thumb-<slug>` are the named elements, and each name must appear once per page
 - Navbar uses `border-b-[3px] border-[var(--border-strong)] bg-[var(--surface)]` with pixel box-shadow (no glassmorphism)
 - Navbar uses `font-pixel` for brand name, not `font-display`
 - Scheme switcher iterates `schemeConfig` from `styles/tokens.ts` (4 schemes: aurora, cotton, matcha, peach)
@@ -45,7 +47,7 @@ App shell components that wrap every page. Provides the persistent Navbar, route
 
 ### External
 
-- `motion/react` — `motion.div` route wrapper (Layout), `AnimatePresence` + `motion.div` mobile menu transitions (Navbar)
+- `motion/react` — fallback route fade when View Transitions are unsupported (Layout), `AnimatePresence` + `motion.div` mobile menu transitions (Navbar)
 - `react-router` — `Link`, `useLocation`, `Outlet`
 
 <!-- MANUAL: -->

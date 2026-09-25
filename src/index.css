@@ -54,8 +54,6 @@
 
   /* Mobile-first base: 14px */
   font-size: 14px;
-
-  scroll-behavior: smooth;
 }
 
 body {
@@ -405,7 +403,16 @@ textarea,
 @utility pixel-card-glow {
   transition: box-shadow 160ms var(--ease-smooth);
 
-  &:hover,
+  /* Hover only where a pointer hovers: touch browsers keep a sticky hover */
+  @media (hover: hover) {
+    &:hover {
+      box-shadow:
+        var(--pixel-shadow-md),
+        0 0 0 3px var(--color-brand-200),
+        0 0 28px var(--color-brand-300);
+    }
+  }
+
   &:focus-within {
     box-shadow:
       var(--pixel-shadow-md),
@@ -439,4 +446,24 @@ textarea,
   filter: blur(8px);
   animation: backlight-breathe 4s ease-in-out infinite;
   pointer-events: none;
+}
+
+/* Route code loading: a thin bar sweeping under the header. */
+@keyframes loading-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@utility pixel-loading-bar {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-brand-400),
+    transparent
+  );
+  animation: loading-sweep 0.9s steps(12) infinite;
 }

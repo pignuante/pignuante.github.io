@@ -12,7 +12,7 @@ Application source code. Entry point is `main.tsx` which renders `App.tsx` into 
 | File            | Description                                                                          |
 | --------------- | ------------------------------------------------------------------------------------ |
 | `main.tsx`      | Entry point — `createRoot` + `StrictMode`                                            |
-| `App.tsx`       | Router setup with `SchemeProvider` → `BrowserRouter` → lazy route registration       |
+| `App.tsx`       | Data router: `createBrowserRouter` + `RouterProvider`, pages via route `lazy`        |
 | `index.css`     | Tailwind v4 import, base styles, pixel `@utility` patterns (card, btn, dialog, etc.) |
 | `vite-env.d.ts` | Vite client type declarations                                                        |
 
@@ -30,9 +30,9 @@ Application source code. Entry point is `main.tsx` which renders `App.tsx` into 
 
 ### Working In This Directory
 
-- `App.tsx` wraps everything in: `SchemeProvider` → `BrowserRouter` → `Routes`
-- New pages must be lazy-loaded: `const Page = lazy(() => import("./pages/Page"))`
-- New routes go inside the `<Route element={<Layout />}>` parent
+- `App.tsx` wraps everything in: `SchemeProvider` → `MotionConfig` → `RouterProvider` (data router; needed for Link `viewTransition`)
+- New pages load through route `lazy`: `{ lazy: page(() => import("./pages/Page")), path: "page" }` (not `React.lazy`, which would suspend inside a view transition)
+- New routes go in the root route's `children`; the root route has `Component: Layout`, `ErrorBoundary: RouteError`, `HydrateFallback: ShellFallback`
 - Path alias `@/*` maps to `./src/*` (defined in tsconfig)
 
 ### Common Patterns

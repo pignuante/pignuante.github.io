@@ -49,7 +49,7 @@ Personal developer portfolio and travel blog for AI Scream, deployed as a static
 ### Common Patterns
 
 - White-first pixel design (no dark mode)
-- Route-level code splitting with `React.lazy()`; route `Suspense` fallback is handled in `Layout.tsx`
+- Route-level code splitting with data-router route `lazy` (not `React.lazy`); first-load fallback is `ShellFallback`
 - Shared state via Context Provider (React 19 `use()` API)
 - 4-layer token architecture: Primitives → Schemes → Semantics → Pixel System
 - Font tokens: `--font-pixel` (headings) and `--font-pixel-body` (body text)

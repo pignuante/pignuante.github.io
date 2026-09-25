@@ -44,7 +44,7 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4.1.18",
     "topojson-client": "^3.1.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.1",
     "vite": "^8.3.0",
     "world-atlas": "^2.0.2"

@@ -182,7 +182,8 @@ function FlatMapView({ visitor }: { visitor: VisitorView }) {
   // arrives later, unless the visitor has moved the map themselves. A layout
   // effect, so the offset is set before the browser paints. The target is
   // snapped to a whole cell so the grid keeps the phase it has at offset 0
-  // (a fractional offset changes how cell and gap round to device pixels).
+  // (a fractional offset changes how cell and gap round to device pixels);
+  // the price is up to half a cell off the exact point, scaled by zoom.
   const hereX = here?.point
     ? Math.round(here.point.x / WORLD_CELL_SIZE) * WORLD_CELL_SIZE
     : undefined;

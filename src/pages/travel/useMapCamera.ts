@@ -34,6 +34,8 @@ interface MapCameraState {
 
 /** Anchor captured on each wheel event for mouse-position zoom */
 interface ZoomAnchor {
+  /** Set by centerOn: survives a resize re-snap, so the point stays centred */
+  centred?: boolean;
   /** Content-space Y under cursor (computed once, used every rAF frame) */
   contentY: number;
   /** offsetX snapshot at the moment the anchor was captured */
@@ -182,9 +184,10 @@ export function useMapCamera(
     // so neither a stale timer nor the old raw value overrides it.
     window.clearTimeout(settleTimerRef.current);
     gestureStartRef.current = null;
-    // The last wheel anchor refers to the old canvas geometry; drop it so a
-    // passive resize does not pan the map.
-    anchorRef.current = null;
+    // A wheel anchor belongs to a cursor position the visitor has moved on
+    // from; drop it so a passive resize does not pan the map. A centerOn
+    // anchor stays, so the re-snapped zoom keeps its point centred.
+    if (!anchorRef.current?.centred) anchorRef.current = null;
     const snapped = quantizeZoom(
       zoomRawGoalRef.current,
       baseCellDevicePixels,
@@ -410,6 +413,7 @@ export function useMapCamera(
       // A screen-centre anchor: the running tick (if a zoom is still
       // animating) keeps (x, y) centred until the next wheel or drag.
       const anchor: ZoomAnchor = {
+        centred: true,
         contentY: y,
         offsetXAtCapture: wrapMod(W / 2 - x, W),
         screenX: W / 2,

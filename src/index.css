@@ -322,3 +322,37 @@ textarea,
 @utility pixel-twinkle {
   animation: pixel-twinkle 2.4s steps(3) infinite;
 }
+
+/* Current job-tree node: the pixel shadow plus a breathing glow. */
+@keyframes node-glow {
+  0%,
+  100% {
+    box-shadow:
+      var(--pixel-shadow-md),
+      0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: var(--pixel-shadow-md), var(--shadow-glow);
+  }
+}
+
+@utility pixel-node-glow {
+  box-shadow: var(--pixel-shadow-md), var(--shadow-glow);
+  animation: node-glow 2.4s ease-in-out infinite;
+}
+
+/* The same glow for a small marker, without the card's offset shadow. */
+@keyframes marker-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+@utility pixel-marker-glow {
+  box-shadow: var(--shadow-glow);
+  animation: marker-glow 2.4s ease-in-out infinite;
+}

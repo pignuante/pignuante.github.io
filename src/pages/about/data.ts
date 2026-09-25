@@ -49,7 +49,7 @@ export const JOB_TRUNK: JobNode = {
 export const JOB_BRANCHES: readonly JobBranch[] = [
   {
     colorScheme: "brand",
-    icon: "🪄",
+    icon: "wand",
     id: "branch-mage",
     label: "마법사",
     nodes: [
@@ -87,7 +87,7 @@ export const JOB_BRANCHES: readonly JobBranch[] = [
   },
   {
     colorScheme: "accent",
-    icon: "🛡️",
+    icon: "shield",
     id: "branch-warrior",
     label: "전사",
     nodes: [
@@ -105,16 +105,19 @@ export const JOB_STATUS_STYLES: Readonly<Record<JobStatus, JobStatusStyle>> = {
   COMPLETED: {
     border: "var(--color-accent-300)",
     color: "var(--text-accent)",
+    line: "var(--color-accent-400)",
     opacity: 1,
   },
   CURRENT: {
     border: "var(--color-brand-400)",
     color: "var(--text-brand)",
+    line: "var(--color-brand-400)",
     opacity: 1,
   },
   LOCKED: {
-    border: "var(--border-default)",
+    border: "var(--color-neutral-300)",
     color: "var(--text-tertiary)",
+    line: "var(--color-neutral-300)",
     opacity: 0.5,
   },
 };

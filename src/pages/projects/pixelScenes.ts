@@ -2,8 +2,8 @@
  * Pixel-art thumbnail scenes, drawn on a 64x36 grid (16:9).
  *
  * Colours are CSS variables, so every scene follows the active colour scheme.
- * Wider slots (16:7, 16:8) crop top and bottom (`slice`), so the subject of
- * each scene stays within rows 5-31.
+ * Wider slots crop top and bottom (`slice`): 16:7 shows rows 4-31 and 16:8
+ * rows 2-33, so the subject of each scene stays within rows 4-31.
  */
 
 export const PIXEL_SCENE_WIDTH = 64;
@@ -82,7 +82,8 @@ function dottedPath(
     const [x0, y0] = points[i - 1];
     const [x1, y1] = points[i];
     const length = Math.hypot(x1 - x0, y1 - y0);
-    for (let d = carry; d < length; d += step) {
+    let d = carry;
+    for (; d < length; d += step) {
       const t = d / length;
       dots.push([
         Math.round(x0 + (x1 - x0) * t),
@@ -91,8 +92,9 @@ function dottedPath(
         1,
         color,
       ]);
-      carry = d + step - length;
     }
+    // Distance into the next segment where the next dot falls
+    carry = d - length;
   }
   return dots;
 }
@@ -102,8 +104,11 @@ function brickJoints(y0: number, y1: number): PixelRect[] {
   const rects: PixelRect[] = [];
   for (let y = y0, row = 0; y < y1; y += 5, row++) {
     rects.push([0, y, PIXEL_SCENE_WIDTH, 1, "L"]);
+    const jointHeight = Math.min(4, y1 - y - 1);
+    // The last mortar line can sit on the wall's bottom row: no joints.
+    if (jointHeight <= 0) continue;
     for (let x = row % 2 === 0 ? 3 : 7; x < PIXEL_SCENE_WIDTH; x += 8) {
-      rects.push([x, y + 1, 1, 4, "L"]);
+      rects.push([x, y + 1, 1, jointHeight, "L"]);
     }
   }
   return rects;

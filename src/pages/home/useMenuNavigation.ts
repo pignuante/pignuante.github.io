@@ -11,6 +11,11 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const hasKeyNavigated = useRef<boolean>(false);
   const linkRefs = useRef<(HTMLElement | null)[]>([]);
+  const selectedIndexRef = useRef<number>(selectedIndex);
+
+  useEffect(() => {
+    selectedIndexRef.current = selectedIndex;
+  }, [selectedIndex]);
 
   const getFocusedLinkIndex = useCallback((): number => {
     const activeElement = document.activeElement;
@@ -48,7 +53,8 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
     if (menuLength === 0) return;
 
     const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
+      const isArrow = event.key === "ArrowDown" || event.key === "ArrowUp";
+      if (!isArrow && event.key !== "Enter") {
         return;
       }
 
@@ -57,20 +63,35 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
       }
 
       const focusedIndex = getFocusedLinkIndex();
+      // Nothing focused yet (fresh page load): the visible ▸ cursor stands in
+      // for focus, so arrows move it and Enter follows it — without stealing
+      // focus on load. Focus anywhere else (navbar, dialog) is left alone.
+      const isIdle =
+        document.activeElement === null ||
+        document.activeElement === document.body;
 
-      if (focusedIndex < 0) {
+      if (focusedIndex < 0 && !isIdle) {
+        return;
+      }
+
+      if (event.key === "Enter") {
+        // A focused link already handles Enter natively.
+        if (focusedIndex >= 0) return;
+        event.preventDefault();
+        linkRefs.current[selectedIndexRef.current]?.click();
         return;
       }
 
       event.preventDefault();
       hasKeyNavigated.current = true;
+      const fromIndex = focusedIndex >= 0 ? focusedIndex : null;
 
-      if (event.key === "ArrowDown") {
-        setSelectedIndex((focusedIndex + 1) % menuLength);
-        return;
-      }
-
-      setSelectedIndex((focusedIndex - 1 + menuLength) % menuLength);
+      setSelectedIndex((current) => {
+        const base = fromIndex ?? current;
+        return event.key === "ArrowDown"
+          ? (base + 1) % menuLength
+          : (base - 1 + menuLength) % menuLength;
+      });
     };
 
     window.addEventListener("keydown", handleKeyDown);

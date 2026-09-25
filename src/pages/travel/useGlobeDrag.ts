@@ -3,11 +3,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { GlobeRotation } from "./types";
 import { GLOBE_DRAG_SENSITIVITY, GLOBE_SIZE } from "./constants";
 
+/** Options for {@link GlobeDragState.centerOn} */
+export interface CenterOnOptions {
+  /** Leave the view alone once the visitor has rotated the globe */
+  unlessMoved?: boolean;
+}
+
 /** Return type for the globe drag hook */
 interface GlobeDragState {
+  /** Turn the globe so `rotation` faces the viewer */
+  centerOn: (rotation: GlobeRotation, options?: CenterOnOptions) => void;
   isDragging: boolean;
-  /** Turn to `rotation` unless the visitor has already rotated the globe */
-  recenter: (rotation: GlobeRotation) => void;
   rotation: GlobeRotation;
 }
 
@@ -35,7 +41,7 @@ export function useGlobeDrag(
   const lastXRef = useRef(0);
   const lastYRef = useRef(0);
   const scaleRef = useRef(1);
-  /** Set on the first drag move; after that recenter() leaves the view alone */
+  /** Set on the first drag move; centerOn({unlessMoved}) then no-ops */
   const userRotatedRef = useRef(false);
 
   const handlePointerDown = useCallback((e: PointerEvent) => {
@@ -101,9 +107,13 @@ export function useGlobeDrag(
     };
   }, [targetRef, handlePointerDown, handlePointerMove, handlePointerUp]);
 
-  const recenter = useCallback((next: GlobeRotation) => {
-    if (!userRotatedRef.current) setRotation(next);
-  }, []);
+  const centerOn = useCallback(
+    (next: GlobeRotation, options?: CenterOnOptions) => {
+      if (options?.unlessMoved && userRotatedRef.current) return;
+      setRotation(next);
+    },
+    [],
+  );
 
-  return { isDragging, recenter, rotation };
+  return { centerOn, isDragging, rotation };
 }

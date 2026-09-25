@@ -1,6 +1,13 @@
 import { geoDistance, geoNaturalEarth1 } from "d3-geo";
 import { useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import type { HereMarker } from "./travel/HereOverlay";
 import type {
   Biome,
@@ -102,6 +109,40 @@ interface VisitorView {
   pulse: boolean;
 }
 
+/** Globe rotation that puts `[lat, lon]` at the centre of the disc. */
+function rotationFacing([lat, lon]: readonly [number, number]): GlobeRotation {
+  return { lambda: ((lon % 360) + 360) % 360, phi: lat };
+}
+
+/** Hint line under a map, with the "back to my location" button when known. */
+function MapHint({
+  children,
+  onCenter,
+}: {
+  children: string;
+  onCenter: (() => void) | null;
+}) {
+  return (
+    <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+      <p
+        className="font-pixel-small text-[12px]"
+        style={{ color: "var(--text-tertiary)" }}
+      >
+        {children}
+      </p>
+      {onCenter ? (
+        <button
+          className="pixel-btn font-pixel-small text-[12px] hover:pixel-btn-hover active:pixel-btn-active"
+          onClick={onCenter}
+          type="button"
+        >
+          <span aria-hidden="true">📍 </span>내 위치로
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
 /* ── FlatMapView ── */
 
 function FlatMapView({ visitor }: { visitor: VisitorView }) {
@@ -117,7 +158,7 @@ function FlatMapView({ visitor }: { visitor: VisitorView }) {
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
 
-  const { isDragging, offsetX, offsetY, zoom } = useMapCamera(
+  const { centerOn, isDragging, offsetX, offsetY, zoom } = useMapCamera(
     canvasWrapperRef,
     WORLD_MAP_WIDTH,
     WORLD_MAP_HEIGHT,
@@ -135,6 +176,25 @@ function FlatMapView({ visitor }: { visitor: VisitorView }) {
       point: projected ? { x: projected[0], y: projected[1] } : null,
     };
   }, [visitor.countryIndex, visitor.location, worldData]);
+
+  // Open with the visitor's location in the middle (horizontally: at zoom 1
+  // the whole height is already in view), and follow a precise position that
+  // arrives later, unless the visitor has moved the map themselves. A layout
+  // effect, so the offset is set before the browser paints. The target is
+  // snapped to a whole cell so the grid keeps the phase it has at offset 0
+  // (a fractional offset changes how cell and gap round to device pixels).
+  const hereX = here?.point
+    ? Math.round(here.point.x / WORLD_CELL_SIZE) * WORLD_CELL_SIZE
+    : undefined;
+  const hereY = here?.point?.y;
+  useLayoutEffect(() => {
+    if (hereX === undefined || hereY === undefined) return;
+    centerOn(hereX, hereY, { unlessMoved: true });
+  }, [centerOn, hereX, hereY]);
+  const centerOnHere =
+    hereX === undefined || hereY === undefined
+      ? null
+      : () => centerOn(hereX, hereY);
 
   const isDraggingRef = useRef<boolean>(false);
 
@@ -211,12 +271,9 @@ function FlatMapView({ visitor }: { visitor: VisitorView }) {
         {tooltip ? <CountryTooltip tooltip={tooltip} /> : null}
       </div>
 
-      <p
-        className="mt-2 font-pixel-small text-[12px]"
-        style={{ color: "var(--text-tertiary)" }}
-      >
+      <MapHint onCenter={centerOnHere}>
         ← 양피지를 끌어 탐험 · 스크롤로 확대/축소 →
-      </p>
+      </MapHint>
     </div>
   );
 }
@@ -236,12 +293,12 @@ function GlobeMapView({ visitor }: { visitor: VisitorView }) {
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
 
   // Start with the visitor's location facing the viewer.
-  const [initialRotation] = useState<GlobeRotation>(() => {
-    if (!visitor.location) return GLOBE_INITIAL_ROTATION;
-    const [lat, lon] = visitor.location.point;
-    return { lambda: ((lon % 360) + 360) % 360, phi: lat };
-  });
-  const { isDragging, recenter, rotation } = useGlobeDrag(
+  const [initialRotation] = useState<GlobeRotation>(() =>
+    visitor.location
+      ? rotationFacing(visitor.location.point)
+      : GLOBE_INITIAL_ROTATION,
+  );
+  const { centerOn, isDragging, rotation } = useGlobeDrag(
     canvasWrapperRef,
     initialRotation,
   );
@@ -249,9 +306,12 @@ function GlobeMapView({ visitor }: { visitor: VisitorView }) {
   // already rotated the globe themselves.
   useEffect(() => {
     if (visitor.location?.source !== "precise") return;
-    const [lat, lon] = visitor.location.point;
-    recenter({ lambda: ((lon % 360) + 360) % 360, phi: lat });
-  }, [recenter, visitor.location]);
+    centerOn(rotationFacing(visitor.location.point), { unlessMoved: true });
+  }, [centerOn, visitor.location]);
+  const visitorPoint = visitor.location?.point;
+  const centerOnHere = visitorPoint
+    ? () => centerOn(rotationFacing(visitorPoint))
+    : null;
   const grid = useGlobePixelGrid(rotation);
   const { zoom } = useZoom(
     canvasWrapperRef,
@@ -363,12 +423,9 @@ function GlobeMapView({ visitor }: { visitor: VisitorView }) {
         {tooltip ? <CountryTooltip tooltip={tooltip} /> : null}
       </div>
 
-      <p
-        className="mt-2 font-pixel-small text-[12px]"
-        style={{ color: "var(--text-tertiary)" }}
-      >
+      <MapHint onCenter={centerOnHere}>
         수정구를 돌려 세계를 탐험 · 스크롤로 확대/축소
-      </p>
+      </MapHint>
     </div>
   );
 }

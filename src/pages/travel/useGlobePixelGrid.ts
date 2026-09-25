@@ -15,6 +15,14 @@ const GRID_COLS = Math.floor(GLOBE_SIZE / GLOBE_CELL_SIZE);
  */
 const CELL_ANGULAR_DEG = (GLOBE_CELL_SIZE / (GLOBE_SIZE / 2)) * (180 / Math.PI);
 
+/** Orthographic globe projection centred on (lambda, phi), in stage px. */
+export function createGlobeProjection(lambda: number, phi: number) {
+  return geoOrthographic()
+    .clipAngle(90)
+    .rotate([-lambda, -phi, 0])
+    .fitSize([GLOBE_SIZE, GLOBE_SIZE], { type: "Sphere" });
+}
+
 /**
  * Pixel-art globe grid hook.
  *
@@ -37,10 +45,7 @@ export function useGlobePixelGrid(
 
     cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(() => {
-      const projection = geoOrthographic()
-        .clipAngle(90)
-        .rotate([-lambda, -phi, 0])
-        .fitSize([GLOBE_SIZE, GLOBE_SIZE], { type: "Sphere" });
+      const projection = createGlobeProjection(lambda, phi);
 
       const half = GLOBE_SIZE / 2;
       const radiusSq = half * half;

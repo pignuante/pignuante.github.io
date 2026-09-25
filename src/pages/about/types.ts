@@ -3,6 +3,7 @@ import { type ReactNode } from "react";
 
 export type EquipmentCategory = "ARMOR" | "TOOL" | "WEAPON";
 export type JobColorScheme = "accent" | "brand";
+export type JobIcon = "shield" | "wand";
 export type JobStatus = "COMPLETED" | "CURRENT" | "LOCKED";
 export type QuestStatus = "COMPLETED" | "IN PROGRESS";
 
@@ -36,7 +37,7 @@ export interface InventoryItem {
 
 export interface JobBranch {
   colorScheme: JobColorScheme;
-  icon: string;
+  icon: JobIcon;
   id: string;
   label: string;
   nodes: JobNode[];
@@ -52,7 +53,8 @@ export interface JobNode {
 export interface JobStatusStyle {
   border: string;
   color: string;
-  opacity: number;
+  /** Connector colour leading into a node with this status */
+  line: string;
 }
 
 export interface JobTreeNodeViewModel {
@@ -62,6 +64,8 @@ export interface JobTreeNodeViewModel {
 
 export interface JobTreeBranchViewModel {
   branch: JobBranch;
+  /** Nodes with status COMPLETED */
+  completed: number;
   isBrand: boolean;
   nodes: readonly JobTreeNodeViewModel[];
 }

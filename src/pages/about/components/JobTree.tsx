@@ -53,6 +53,8 @@ function createJobTreeBranchViewModel(
 ): JobTreeBranchViewModel {
   return {
     branch,
+    completed: branch.nodes.filter((node) => node.status === "COMPLETED")
+      .length,
     isBrand: branch.colorScheme === "brand",
     nodes: branch.nodes.map((node) =>
       createJobTreeNodeViewModel(statusStyles, node),

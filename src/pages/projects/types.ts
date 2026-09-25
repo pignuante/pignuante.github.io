@@ -1,3 +1,5 @@
+import { type PixelSceneId } from "./pixelScenes";
+
 export interface ProjectLinks {
   demoUrl?: string;
   docsUrl?: string;
@@ -19,6 +21,8 @@ export interface ProjectMetaBadge {
 export interface ProjectThumbnail {
   alt: string;
   caption: string;
+  /** Pixel-art scene drawn when there is no `src` image */
+  scene?: PixelSceneId;
   src?: string;
 }
 

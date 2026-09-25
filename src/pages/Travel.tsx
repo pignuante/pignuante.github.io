@@ -24,6 +24,7 @@ import { useMapCamera } from "./travel/useMapCamera";
 import { usePixelSnappedWidth } from "./travel/usePixelSnappedWidth";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
+import { cellDevicePixels } from "./travel/utils";
 import WorldPixelMap from "./travel/WorldPixelMap";
 
 /* ── Constants ── */
@@ -97,6 +98,7 @@ function FlatMapView() {
     canvasWrapperRef,
     WORLD_MAP_WIDTH,
     WORLD_MAP_HEIGHT,
+    cellDevicePixels(WORLD_CELL_SIZE, snapped?.resolution),
   );
 
   const isDraggingRef = useRef<boolean>(false);
@@ -198,7 +200,10 @@ function GlobeMapView() {
     GLOBE_INITIAL_ROTATION,
   );
   const grid = useGlobePixelGrid(rotation);
-  const { zoom } = useZoom(canvasWrapperRef);
+  const { zoom } = useZoom(
+    canvasWrapperRef,
+    cellDevicePixels(GLOBE_CELL_SIZE, snapped?.resolution),
+  );
 
   const isDraggingRef = useRef<boolean>(false);
 

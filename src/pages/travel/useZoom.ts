@@ -1,6 +1,7 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from "./constants";
+import { quantizeZoom } from "./utils";
 
 /** Return type for the zoom hook */
 interface ZoomState {
@@ -22,10 +23,15 @@ const SNAP_EPSILON = 0.002;
  * - Clamped to [ZOOM_MIN, ZOOM_MAX]
  * - Uses `{ passive: false }` for `preventDefault()` — prevents page scroll
  *
+ * - With `cellPixels`, the goal snaps to levels where a cell spans whole
+ *   device pixels (see quantizeZoom); the wheel still accumulates finely.
+ *
  * @param targetRef - Ref to the DOM element that captures wheel events
+ * @param cellPixels - Device px per cell at zoom 1, or null to zoom freely
  */
 export function useZoom(
   targetRef: RefObject<HTMLDivElement | null>,
+  cellPixels: null | number = null,
 ): ZoomState {
   const [zoom, setZoom] = useState(1);
 
@@ -37,6 +43,26 @@ export function useZoom(
   const rafRef = useRef(0);
   /** Stable ref to the tick function (set once in useEffect) */
   const tickRef = useRef<() => void>(() => {});
+  /** Unquantized wheel accumulator, so small trackpad deltas add up */
+  const rawGoalRef = useRef(1);
+  const cellPixelsRef = useRef(cellPixels);
+
+  useEffect(() => {
+    cellPixelsRef.current = cellPixels;
+    // Re-snap the current goal when the cell size changes (resize, DPR).
+    const snapped = quantizeZoom(
+      rawGoalRef.current,
+      cellPixels,
+      ZOOM_MIN,
+      ZOOM_MAX,
+    );
+    if (snapped !== goalRef.current) {
+      goalRef.current = snapped;
+      if (rafRef.current === 0) {
+        rafRef.current = requestAnimationFrame(tickRef.current);
+      }
+    }
+  }, [cellPixels]);
 
   // Initialize tick function once — it only accesses stable refs
   useEffect(() => {
@@ -67,11 +93,16 @@ export function useZoom(
     // Proportional zoom: deltaY ~100 for mouse wheel, ~1-10 for trackpad
     // Exponent maps scroll magnitude to zoom factor smoothly
     const factor = Math.pow(ZOOM_STEP, -e.deltaY / 100);
-    const next = Math.max(
+    rawGoalRef.current = Math.max(
       ZOOM_MIN,
-      Math.min(ZOOM_MAX, goalRef.current * factor),
+      Math.min(ZOOM_MAX, rawGoalRef.current * factor),
     );
-    goalRef.current = next;
+    goalRef.current = quantizeZoom(
+      rawGoalRef.current,
+      cellPixelsRef.current,
+      ZOOM_MIN,
+      ZOOM_MAX,
+    );
 
     // Start animation loop if not already running
     if (rafRef.current === 0) {

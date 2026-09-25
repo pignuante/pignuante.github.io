@@ -1,6 +1,7 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from "./constants";
+import { quantizeZoom } from "./utils";
 
 /** Lerp factor per frame — exponential ease-out (~80 % settled in 170 ms @60 fps) */
 const LERP_FACTOR = 0.15;
@@ -72,11 +73,14 @@ function wrapMod(v: number, mod: number): number {
  * @param targetRef - Ref to the DOM element that captures pointer / wheel events
  * @param mapWidth  - Logical pixel width of the map (for X-wrapping)
  * @param mapHeight - Logical pixel height of the map (for Y-clamping)
+ * @param cellPixels - Device px per cell at zoom 1; when set, the zoom goal
+ *   snaps to levels where a cell spans whole device pixels (quantizeZoom)
  */
 export function useMapCamera(
   targetRef: RefObject<HTMLDivElement | null>,
   mapWidth: number,
   mapHeight: number,
+  cellPixels: null | number = null,
 ): MapCameraState {
   /* ── React state (drives re-renders) ── */
   const [zoom, setZoom] = useState(1);
@@ -90,6 +94,9 @@ export function useMapCamera(
   const zoomGoalRef = useRef(1);
   /** Current interpolated zoom (updated every rAF frame) */
   const zoomCurrentRef = useRef(1);
+  /** Unquantized wheel accumulator, so small trackpad deltas add up */
+  const zoomRawGoalRef = useRef(1);
+  const cellPixelsRef = useRef(cellPixels);
 
   /** Authoritative offsetX (updated by both tick and drag) */
   const offsetXRef = useRef(0);
@@ -119,6 +126,23 @@ export function useMapCamera(
     mapWidthRef.current = mapWidth;
     mapHeightRef.current = mapHeight;
   }, [mapWidth, mapHeight]);
+
+  useEffect(() => {
+    cellPixelsRef.current = cellPixels;
+    // Re-snap the current goal when the cell size changes (resize, DPR).
+    const snapped = quantizeZoom(
+      zoomRawGoalRef.current,
+      cellPixels,
+      ZOOM_MIN,
+      ZOOM_MAX,
+    );
+    if (snapped !== zoomGoalRef.current) {
+      zoomGoalRef.current = snapped;
+      if (rafRef.current === 0) {
+        rafRef.current = requestAnimationFrame(tickRef.current);
+      }
+    }
+  }, [cellPixels]);
 
   /* ── rAF tick (initialized once, reads only stable refs) ── */
 
@@ -187,11 +211,16 @@ export function useMapCamera(
 
     // Proportional zoom factor
     const factor = Math.pow(ZOOM_STEP, -e.deltaY / 100);
-    const next = Math.max(
+    zoomRawGoalRef.current = Math.max(
       ZOOM_MIN,
-      Math.min(ZOOM_MAX, zoomGoalRef.current * factor),
+      Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
     );
-    zoomGoalRef.current = next;
+    zoomGoalRef.current = quantizeZoom(
+      zoomRawGoalRef.current,
+      cellPixelsRef.current,
+      ZOOM_MIN,
+      ZOOM_MAX,
+    );
 
     // CSS → logical conversion
     const rect = canvas.getBoundingClientRect();

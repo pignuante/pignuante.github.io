@@ -48,3 +48,41 @@ export function oceanColorFromLatitude(absLat: number): number {
   if (absLat < 60) return COLOR_OCEAN_TEMPERATE;
   return COLOR_OCEAN_POLAR;
 }
+
+/**
+ * Device pixels one map cell spans at zoom 1, or null when that is not a
+ * whole number (the canvas width could not be snapped). `cellSize` is the
+ * cell pitch in logical px, `resolution` the renderer resolution.
+ */
+export function cellDevicePixels(
+  cellSize: number,
+  resolution: number | undefined,
+): null | number {
+  if (resolution === undefined) return null;
+  const pixels = cellSize * resolution;
+  return Math.abs(pixels - Math.round(pixels)) < 1e-6
+    ? Math.round(pixels)
+    : null;
+}
+
+/**
+ * Round a zoom level to the nearest m / cellPixels, so a zoomed cell still
+ * spans a whole number of device pixels and the 1px gaps stay even. Without
+ * a whole-pixel cell (cellPixels null) the zoom is returned unchanged.
+ */
+export function quantizeZoom(
+  zoom: number,
+  cellPixels: null | number,
+  min: number,
+  max: number,
+): number {
+  const clamped = Math.max(min, Math.min(max, zoom));
+  if (cellPixels === null) return clamped;
+  const step = Math.round(clamped * cellPixels);
+  return (
+    Math.max(
+      Math.ceil(min * cellPixels),
+      Math.min(Math.floor(max * cellPixels), step),
+    ) / cellPixels
+  );
+}

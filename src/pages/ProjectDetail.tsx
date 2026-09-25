@@ -8,8 +8,13 @@ import { ProjectLinkActions } from "./projects/components/ProjectLinkActions";
 import { ProjectMetaBadgeStrip } from "./projects/components/ProjectMetaBadgeStrip";
 import { ProjectStackList } from "./projects/components/ProjectStackList";
 import { ProjectStatusBadge } from "./projects/components/ProjectStatusBadge";
+import { ProjectThumbnailSlot } from "./projects/components/ProjectThumbnailSlot";
 import { getProjectBySlug } from "./projects/detail-data";
-import { isProjectSlug, type ProjectMetaBadge } from "./projects/types";
+import {
+  isProjectSlug,
+  projectThumbnailTransitionName,
+  type ProjectMetaBadge,
+} from "./projects/types";
 
 export default function ProjectDetail(): ReactElement {
   const { slug } = useParams();
@@ -40,6 +45,7 @@ export default function ProjectDetail(): ReactElement {
           <Link
             className="mt-4 pixel-btn inline-flex text-xs text-[var(--text-primary)]"
             to="/projects"
+            viewTransition
           >
             <span aria-hidden="true">← </span>
             프로젝트 목록으로 이동
@@ -69,10 +75,19 @@ export default function ProjectDetail(): ReactElement {
         <Link
           className="inline-flex font-pixel-small text-[12px] text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
           to="/projects"
+          viewTransition
         >
           <span aria-hidden="true">← </span>
           프로젝트 목록으로
         </Link>
+
+        <div className="mt-4">
+          <ProjectThumbnailSlot
+            thumbnail={project.thumbnail}
+            transitionName={projectThumbnailTransitionName(project.slug)}
+            variant="hero"
+          />
+        </div>
 
         <PixelDialogHeader className="mt-4" label={project.subtitle} />
 

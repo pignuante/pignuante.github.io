@@ -48,6 +48,7 @@ export default function Footer() {
                         aria-current={active ? "page" : undefined}
                         className={linkClass}
                         to={path}
+                        viewTransition
                       >
                         {marker}
                         {label}

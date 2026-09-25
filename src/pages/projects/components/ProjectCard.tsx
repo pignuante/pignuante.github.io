@@ -2,7 +2,7 @@ import { type ReactElement } from "react";
 import { Link } from "react-router";
 import PixelDialogHeader from "../../../components/ui/PixelDialogHeader";
 import SparkDivider from "../../../components/ui/SparkDivider";
-import { type ProjectSummary } from "../types";
+import { projectThumbnailTransitionName, type ProjectSummary } from "../types";
 import { ProjectLinkActions } from "./ProjectLinkActions";
 import { ProjectStackList } from "./ProjectStackList";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
@@ -37,7 +37,7 @@ function ProjectCardFrame({
   return (
     <article
       aria-labelledby={headingId}
-      className={`flex h-full flex-col pixel-card p-5 sm:p-6 ${isHeroVariant ? "md:p-7" : ""}`}
+      className={`flex h-full flex-col pixel-card p-5 pixel-card-glow sm:p-6 ${isHeroVariant ? "md:p-7" : ""}`}
     >
       <PixelDialogHeader label={project.subtitle} />
 
@@ -54,6 +54,7 @@ function ProjectCardFrame({
       <div className="mt-4">
         <ProjectThumbnailSlot
           thumbnail={project.thumbnail}
+          transitionName={projectThumbnailTransitionName(project.slug)}
           variant={thumbnailVariant ?? (isHeroVariant ? "hero" : "card")}
         />
       </div>
@@ -89,6 +90,7 @@ function ProjectCardFrame({
             aria-label={`${project.title} 상세 보기`}
             className="pixel-btn w-full text-center text-xs text-[var(--text-primary)] transition-transform duration-150 hover:-translate-y-0.5 sm:w-auto"
             to={detailPath}
+            viewTransition
           >
             <span aria-hidden="true">▷ </span>
             상세 보기

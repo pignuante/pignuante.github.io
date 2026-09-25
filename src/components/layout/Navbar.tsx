@@ -64,7 +64,11 @@ export default function Navbar() {
   return (
     <header
       className="fixed top-0 z-50 w-full border-b-[3px] border-[var(--border-strong)] bg-[var(--surface)]"
-      style={{ boxShadow: "0 3px 0 0 var(--pixel-shadow-color)" }}
+      style={{
+        boxShadow: "0 3px 0 0 var(--pixel-shadow-color)",
+        // Its own view-transition layer: stays put while the page fades.
+        viewTransitionName: "site-header",
+      }}
     >
       <nav
         aria-label="메인 내비게이션"
@@ -74,6 +78,7 @@ export default function Navbar() {
         <Link
           className="font-pixel text-sm font-semibold tracking-tight text-[var(--text-primary)]"
           to="/"
+          viewTransition
         >
           PignuAnte
         </Link>
@@ -95,10 +100,23 @@ export default function Navbar() {
                   ) : (
                     <Link
                       aria-current={active ? "page" : undefined}
-                      className={getNavLinkClass(active, "px-4 py-2")}
+                      className={`relative ${getNavLinkClass(active, "px-4 py-2")}`}
                       to={path}
+                      viewTransition
                     >
                       {label}
+                      {active ? (
+                        // One element carries this name, so the bar slides
+                        // from the old link to the new one.
+                        <span
+                          aria-hidden="true"
+                          className="absolute right-2 bottom-0 left-2 h-[3px]"
+                          style={{
+                            backgroundColor: "var(--color-brand-500)",
+                            viewTransitionName: "nav-active",
+                          }}
+                        />
+                      ) : null}
                     </Link>
                   )}
                 </li>
@@ -261,6 +279,7 @@ export default function Navbar() {
                           className={getNavLinkClass(active, "px-6 py-3")}
                           onClick={() => setIsOpen(false)}
                           to={path}
+                          viewTransition
                         >
                           {label}
                         </Link>

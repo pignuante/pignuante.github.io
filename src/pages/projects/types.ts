@@ -69,3 +69,8 @@ export interface Project extends ProjectSummary {
   highlights: readonly ProjectHighlight[];
   sections: readonly ProjectSection[];
 }
+
+/** view-transition-name for a project's thumbnail, shared by card and detail */
+export function projectThumbnailTransitionName(slug: ProjectSlug): string {
+  return `project-thumb-${slug}`;
+}

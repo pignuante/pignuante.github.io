@@ -12,6 +12,7 @@ export default function NotFound() {
       <Link
         className="mt-8 rounded-full bg-[var(--interactive-hover)] px-6 py-2 text-sm transition-colors hover:bg-[var(--interactive-active)]"
         to="/"
+        viewTransition
       >
         Go home
       </Link>

@@ -82,7 +82,7 @@ function wrapMod(v: number, mod: number): number {
  * @param baseCellDevicePixels - Device px per cell at zoom 1; when set, zoom
  *   follows the wheel continuously and, ZOOM_SETTLE_MS after the last event,
  *   settles on a level where a cell spans whole device pixels (settleZoom:
- *   nearest, or one level on when the nearest is where the gesture began)
+ *   in the direction it moved, at least one level on where the range allows)
  */
 export function useMapCamera(
   targetRef: RefObject<HTMLDivElement | null>,

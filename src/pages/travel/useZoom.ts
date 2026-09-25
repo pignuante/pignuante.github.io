@@ -31,8 +31,8 @@ const SNAP_EPSILON = 0.002;
  *
  * - With `baseCellDevicePixels`, zoom follows the wheel continuously and,
  *   ZOOM_SETTLE_MS after the last event, settles on a level where a cell
- *   spans whole device pixels (settleZoom: nearest, or one level on when the
- *   nearest is where the gesture began), so the grid is even at rest.
+ *   spans whole device pixels (settleZoom: in the direction it moved, at
+ *   least one level on where the range allows), so the grid is even at rest.
  *
  * @param targetRef - Ref to the DOM element that captures wheel events
  * @param baseCellDevicePixels - Device px per cell at zoom 1, or null to zoom freely

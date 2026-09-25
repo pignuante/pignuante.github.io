@@ -92,6 +92,12 @@ export interface GestureStart {
  *   zoom-in was still animating toward it.
  * - Moved out: the same, mirrored.
  * - No net movement: the pending level.
+ *
+ * At the ends of the zoom range there may be no whole-pixel level further in
+ * the direction moved; the gesture then rests on the outermost level. The
+ * movement is that of the clamped zoom: wheel input past a range end is
+ * dropped, not banked, so at 1x scrolling out and then in zooms in at once
+ * instead of first unwinding the outward scroll.
  */
 export function settleZoom(
   raw: number,
@@ -102,13 +108,17 @@ export function settleZoom(
 ): number {
   if (cellDevicePx === null) return quantizeZoom(raw, null, min, max);
   const nearest = quantizeZoom(raw, cellDevicePx, min, max);
-  if (raw === start.shown) {
+  // Zoom is multiplicative, so a burst whose deltas cancel still leaves
+  // float noise (-20, -30, +50 gives 1.0000000000000002); compare by ratio.
+  // 1e-9 is about 2e-6 px of wheel delta, far below any real input.
+  const net = raw / start.shown - 1;
+  if (Math.abs(net) < 1e-9) {
     return quantizeZoom(start.level, cellDevicePx, min, max);
   }
   // Levels are m/k; tolerate float noise so a zoom already on a level counts
   // as that level.
   const onScreen = start.shown * cellDevicePx;
-  if (raw > start.shown) {
+  if (net > 0) {
     const above = (Math.floor(onScreen + 1e-9) + 1) / cellDevicePx;
     const floor = Math.max(above, start.level);
     return quantizeZoom(Math.max(nearest, floor), cellDevicePx, min, max);

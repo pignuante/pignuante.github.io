@@ -10,18 +10,22 @@ import { ProjectThumbnailSlot } from "./ProjectThumbnailSlot";
 
 interface ProjectCardProps {
   project: ProjectSummary;
+  wide?: boolean;
 }
 
 interface ProjectCardFrameProps {
   variant: "hero" | "standard";
   questLabel: string;
   project: ProjectSummary;
+  /** Card spans both grid columns; use the hero's wider thumbnail ratio. */
+  wide?: boolean;
 }
 
 function ProjectCardFrame({
   project,
   questLabel,
   variant,
+  wide = false,
 }: ProjectCardFrameProps): ReactElement {
   const detailPath = `/projects/${project.slug}`;
   const headingId = `${project.slug}-title`;
@@ -47,7 +51,7 @@ function ProjectCardFrame({
       <div className="mt-4">
         <ProjectThumbnailSlot
           thumbnail={project.thumbnail}
-          variant={isHeroVariant ? "hero" : "card"}
+          variant={isHeroVariant || wide ? "hero" : "card"}
         />
       </div>
 
@@ -98,12 +102,14 @@ function ProjectCardFrame({
 
 export function MainQuestProjectCard({
   project,
+  wide,
 }: ProjectCardProps): ReactElement {
   return (
     <ProjectCardFrame
       project={project}
       questLabel="MAIN QUEST"
       variant="standard"
+      wide={wide}
     />
   );
 }
@@ -120,12 +126,14 @@ export function MainQuestHeroCard({ project }: ProjectCardProps): ReactElement {
 
 export function SideQuestProjectCard({
   project,
+  wide,
 }: ProjectCardProps): ReactElement {
   return (
     <ProjectCardFrame
       project={project}
       questLabel="SIDE QUEST"
       variant="standard"
+      wide={wide}
     />
   );
 }

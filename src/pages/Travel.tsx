@@ -193,7 +193,7 @@ function GlobeMapView() {
   return (
     <>
       <div
-        className="relative max-h-[70vh] max-w-[70vh]"
+        className="relative max-h-[70vh] max-w-[min(100%,70vh)]"
         style={{
           aspectRatio: "1",
           imageRendering: "pixelated",
@@ -240,29 +240,40 @@ function GlobeMapView() {
 /* ── Main page component ── */
 
 export default function Travel() {
-  const [viewMode, setViewMode] = useState<MapViewMode>("flat");
+  // The flat map is ~1.9:1, so on a phone it shrinks to a thin strip; the
+  // square globe uses the width better there.
+  const [viewMode, setViewMode] = useState<MapViewMode>(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 639px)").matches
+      ? "globe"
+      : "flat",
+  );
 
   return (
     <section
       aria-labelledby="travel-page-title"
       className="mx-auto max-w-7xl pixel-dot-bg px-6 py-24"
     >
-      <h1
-        className="pixel-glow-pulse font-pixel text-[24px]"
-        id="travel-page-title"
-        style={{ color: "var(--text-brand)" }}
-      >
-        <span aria-hidden="true">★ </span>
-        WORLD MAP
-      </h1>
-      <p
-        className="mt-3 font-pixel-body text-[15px]"
-        style={{ color: "var(--text-secondary)" }}
-      >
-        모험가의 발자취가 새겨진 세계 지도
-      </p>
+      {/* The section is wider (max-w-7xl) for the map; keep the header on the
+          same 5xl content column as the other pages so it does not jump. */}
+      <div className="mx-auto max-w-[calc(var(--container-5xl)-3rem)]">
+        <h1
+          className="pixel-glow-pulse font-pixel text-[24px]"
+          id="travel-page-title"
+          style={{ color: "var(--text-brand)" }}
+        >
+          <span aria-hidden="true">★ </span>
+          WORLD MAP
+        </h1>
+        <p
+          className="mt-3 font-pixel-body text-[15px]"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          모험가의 발자취가 새겨진 세계 지도
+        </p>
 
-      <SparkDivider className="mt-6" />
+        <SparkDivider className="mt-6" />
+      </div>
 
       {/* View mode toggle */}
       <div className="mt-6 flex justify-center gap-2">

@@ -12,7 +12,7 @@ Route-level page components. Each file corresponds to a URL path, lazy-loaded in
 | File                | Description                                                                                         |
 | ------------------- | --------------------------------------------------------------------------------------------------- |
 | `Home.tsx`          | `/` — Interactive RPG-style landing page (animated menu, keyboard navigation, dialog typing effect) |
-| `About.tsx`         | `/about` — RPG-style profile page (`Character`, `Equipment`, `Quest Log`)                           |
+| `About.tsx`         | `/about` — RPG-style profile page (`Character`, `Equipment`, `Adventure Log`)                       |
 | `Projects.tsx`      | `/projects` — Project list page rendered from dummy summary data                                    |
 | `ProjectDetail.tsx` | `/projects/:slug` — Dynamic project detail page rendered from dummy detail data                     |
 | `Travel.tsx`        | `/travel` — Travel page placeholder (`Pixel world map coming soon.`)                                |

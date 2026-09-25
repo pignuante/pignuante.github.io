@@ -1,7 +1,7 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from "./constants";
-import { quantizeZoom } from "./utils";
+import { ZOOM_MAX, ZOOM_MIN } from "./constants";
+import { quantizeZoom, wheelZoomFactor } from "./zoomMath";
 
 /** Return type for the zoom hook */
 interface ZoomState {
@@ -23,15 +23,16 @@ const SNAP_EPSILON = 0.002;
  * - Clamped to [ZOOM_MIN, ZOOM_MAX]
  * - Uses `{ passive: false }` for `preventDefault()` — prevents page scroll
  *
- * - With `cellPixels`, the goal snaps to levels where a cell spans whole
- *   device pixels (see quantizeZoom); the wheel still accumulates finely.
+ * - With `baseCellDevicePixels`, the goal and every published frame snap to
+ *   levels where a cell spans whole device pixels (quantizeZoom), so the grid
+ *   stays even while animating; the wheel still accumulates finely.
  *
  * @param targetRef - Ref to the DOM element that captures wheel events
- * @param cellPixels - Device px per cell at zoom 1, or null to zoom freely
+ * @param baseCellDevicePixels - Device px per cell at zoom 1, or null to zoom freely
  */
 export function useZoom(
   targetRef: RefObject<HTMLDivElement | null>,
-  cellPixels: null | number = null,
+  baseCellDevicePixels: null | number = null,
 ): ZoomState {
   const [zoom, setZoom] = useState(1);
 
@@ -45,14 +46,14 @@ export function useZoom(
   const tickRef = useRef<() => void>(() => {});
   /** Unquantized wheel accumulator, so small trackpad deltas add up */
   const rawGoalRef = useRef(1);
-  const cellPixelsRef = useRef(cellPixels);
+  const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
 
   useEffect(() => {
-    cellPixelsRef.current = cellPixels;
+    baseCellDevicePixelsRef.current = baseCellDevicePixels;
     // Re-snap the current goal when the cell size changes (resize, DPR).
     const snapped = quantizeZoom(
       rawGoalRef.current,
-      cellPixels,
+      baseCellDevicePixels,
       ZOOM_MIN,
       ZOOM_MAX,
     );
@@ -62,7 +63,7 @@ export function useZoom(
         rafRef.current = requestAnimationFrame(tickRef.current);
       }
     }
-  }, [cellPixels]);
+  }, [baseCellDevicePixels]);
 
   // Initialize tick function once — it only accesses stable refs
   useEffect(() => {
@@ -80,7 +81,10 @@ export function useZoom(
 
       const next = current + diff * LERP_FACTOR;
       currentRef.current = next;
-      setZoom(next);
+      // Publish only whole-pixel levels so the tween itself stays even.
+      setZoom(
+        quantizeZoom(next, baseCellDevicePixelsRef.current, ZOOM_MIN, ZOOM_MAX),
+      );
       rafRef.current = requestAnimationFrame(tick);
     };
 
@@ -90,16 +94,15 @@ export function useZoom(
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
 
-    // Proportional zoom: deltaY ~100 for mouse wheel, ~1-10 for trackpad
-    // Exponent maps scroll magnitude to zoom factor smoothly
-    const factor = Math.pow(ZOOM_STEP, -e.deltaY / 100);
+    // Proportional zoom: ~100px per mouse-wheel notch, ~1-10 for trackpad
+    const factor = wheelZoomFactor(e);
     rawGoalRef.current = Math.max(
       ZOOM_MIN,
       Math.min(ZOOM_MAX, rawGoalRef.current * factor),
     );
     goalRef.current = quantizeZoom(
       rawGoalRef.current,
-      cellPixelsRef.current,
+      baseCellDevicePixelsRef.current,
       ZOOM_MIN,
       ZOOM_MAX,
     );

@@ -1,7 +1,7 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from "./constants";
-import { quantizeZoom } from "./utils";
+import { ZOOM_MAX, ZOOM_MIN } from "./constants";
+import { quantizeZoom, wheelZoomFactor } from "./zoomMath";
 
 /** Lerp factor per frame — exponential ease-out (~80 % settled in 170 ms @60 fps) */
 const LERP_FACTOR = 0.15;
@@ -66,21 +66,22 @@ function wrapMod(v: number, mod: number): number {
  *
  * - Horizontal (X): content-level offset with infinite wrap via modulo.
  * - Vertical (Y): pivot-shift model (`pivotY = H/2 + offsetY`).
- * - Wheel zoom: proportional (`ZOOM_STEP ** (-deltaY/100)`), clamped to
+ * - Wheel zoom: proportional (`wheelZoomFactor`), clamped to
  *   `[ZOOM_MIN, ZOOM_MAX]`, animated via exponential ease-out lerp.
  * - Drag: inverse-zoom-scaled for consistent feel at any zoom level.
  *
  * @param targetRef - Ref to the DOM element that captures pointer / wheel events
  * @param mapWidth  - Logical pixel width of the map (for X-wrapping)
  * @param mapHeight - Logical pixel height of the map (for Y-clamping)
- * @param cellPixels - Device px per cell at zoom 1; when set, the zoom goal
- *   snaps to levels where a cell spans whole device pixels (quantizeZoom)
+ * @param baseCellDevicePixels - Device px per cell at zoom 1; when set, the
+ *   goal and every published frame snap to levels where a cell spans whole
+ *   device pixels (quantizeZoom), so the grid stays even while animating
  */
 export function useMapCamera(
   targetRef: RefObject<HTMLDivElement | null>,
   mapWidth: number,
   mapHeight: number,
-  cellPixels: null | number = null,
+  baseCellDevicePixels: null | number = null,
 ): MapCameraState {
   /* ── React state (drives re-renders) ── */
   const [zoom, setZoom] = useState(1);
@@ -94,9 +95,11 @@ export function useMapCamera(
   const zoomGoalRef = useRef(1);
   /** Current interpolated zoom (updated every rAF frame) */
   const zoomCurrentRef = useRef(1);
+  /** Zoom actually rendered last frame (quantized); anchors and drag use it */
+  const zoomShownRef = useRef(1);
   /** Unquantized wheel accumulator, so small trackpad deltas add up */
   const zoomRawGoalRef = useRef(1);
-  const cellPixelsRef = useRef(cellPixels);
+  const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
 
   /** Authoritative offsetX (updated by both tick and drag) */
   const offsetXRef = useRef(0);
@@ -128,11 +131,14 @@ export function useMapCamera(
   }, [mapWidth, mapHeight]);
 
   useEffect(() => {
-    cellPixelsRef.current = cellPixels;
+    baseCellDevicePixelsRef.current = baseCellDevicePixels;
     // Re-snap the current goal when the cell size changes (resize, DPR).
+    // The last wheel anchor refers to the old canvas geometry; drop it so a
+    // passive resize does not pan the map.
+    anchorRef.current = null;
     const snapped = quantizeZoom(
       zoomRawGoalRef.current,
-      cellPixels,
+      baseCellDevicePixels,
       ZOOM_MIN,
       ZOOM_MAX,
     );
@@ -142,7 +148,7 @@ export function useMapCamera(
         rafRef.current = requestAnimationFrame(tickRef.current);
       }
     }
-  }, [cellPixels]);
+  }, [baseCellDevicePixels]);
 
   /* ── rAF tick (initialized once, reads only stable refs) ── */
 
@@ -158,6 +164,16 @@ export function useMapCamera(
       const snapped = Math.abs(diff) < SNAP_EPSILON;
       const zLerped = snapped ? goal : current + diff * LERP_FACTOR;
       zoomCurrentRef.current = zLerped;
+      // Render only whole-pixel levels so the tween itself stays even.
+      const zShown = snapped
+        ? goal
+        : quantizeZoom(
+            zLerped,
+            baseCellDevicePixelsRef.current,
+            ZOOM_MIN,
+            ZOOM_MAX,
+          );
+      zoomShownRef.current = zShown;
 
       // Compute offsets from anchor (only when not dragging)
       const anchor = anchorRef.current;
@@ -165,24 +181,23 @@ export function useMapCamera(
         // X — absolute from anchor snapshot
         const rawX =
           anchor.offsetXAtCapture +
-          (anchor.screenX - W / 2) * (1 / zLerped - 1 / anchor.zAtCapture);
+          (anchor.screenX - W / 2) * (1 / zShown - 1 / anchor.zAtCapture);
         offsetXRef.current = wrapMod(rawX, W);
 
         // Y — pivot-shift inversion
-        if (Math.abs(zLerped - 1) < SNAP_EPSILON) {
+        if (Math.abs(zShown - 1) < 1e-9) {
           // At z=1 the pivot must be centered — avoid division by zero
           offsetYRef.current = 0;
         } else {
-          const P =
-            (anchor.screenY - anchor.contentY * zLerped) / (1 - zLerped);
-          const limit = clampRange(H, zLerped);
+          const P = (anchor.screenY - anchor.contentY * zShown) / (1 - zShown);
+          const limit = clampRange(H, zShown);
           offsetYRef.current = clamp(P - H / 2, limit);
         }
       }
       // If no anchor: offsets stay wherever they are (drag-controlled or idle)
 
       // Publish to React state
-      setZoom(zLerped);
+      setZoom(zShown);
       setOffsetX(offsetXRef.current);
       setOffsetY(offsetYRef.current);
 
@@ -210,14 +225,14 @@ export function useMapCamera(
     const H = mapHeightRef.current;
 
     // Proportional zoom factor
-    const factor = Math.pow(ZOOM_STEP, -e.deltaY / 100);
+    const factor = wheelZoomFactor(e);
     zoomRawGoalRef.current = Math.max(
       ZOOM_MIN,
       Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
     );
     zoomGoalRef.current = quantizeZoom(
       zoomRawGoalRef.current,
-      cellPixelsRef.current,
+      baseCellDevicePixelsRef.current,
       ZOOM_MIN,
       ZOOM_MAX,
     );
@@ -229,7 +244,7 @@ export function useMapCamera(
 
     // Content anchor Y — computed from CURRENT refs (not React state)
     const pivotOld = H / 2 + offsetYRef.current;
-    const zCurrent = zoomCurrentRef.current;
+    const zCurrent = zoomShownRef.current;
     const contentAnchorY = (anchorScreenY - pivotOld) / zCurrent + pivotOld;
 
     anchorRef.current = {
@@ -277,7 +292,7 @@ export function useMapCamera(
     lastYRef.current = e.clientY;
 
     const scale = scaleRef.current;
-    const z = zoomCurrentRef.current;
+    const z = zoomShownRef.current;
     const W = mapWidthRef.current;
     const H = mapHeightRef.current;
 

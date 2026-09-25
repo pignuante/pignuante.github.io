@@ -24,8 +24,8 @@ import { useMapCamera } from "./travel/useMapCamera";
 import { usePixelSnappedWidth } from "./travel/usePixelSnappedWidth";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
-import { cellDevicePixels } from "./travel/utils";
 import WorldPixelMap from "./travel/WorldPixelMap";
+import { cellDevicePixels } from "./travel/zoomMath";
 
 /* ── Constants ── */
 

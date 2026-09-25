@@ -1,7 +1,7 @@
 import { ZOOM_STEP } from "./constants";
 
 /**
- * Below this many device pixels per cell a zoom step (1/k) is 25% or more,
+ * Below this many device pixels per cell a zoom step (1/k) is over 25%,
  * which feels like a jump rather than a zoom, so zoom stays continuous there
  * and accepts uneven gaps while zoomed.
  */

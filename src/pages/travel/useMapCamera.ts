@@ -1,7 +1,7 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN } from "./constants";
-import { quantizeZoom, wheelZoomFactor } from "./zoomMath";
+import { quantizeZoom, wheelZoomFactor, ZOOM_SETTLE_MS } from "./zoomMath";
 
 /** Lerp factor per frame — exponential ease-out (~80 % settled in 170 ms @60 fps) */
 const LERP_FACTOR = 0.15;
@@ -73,9 +73,9 @@ function wrapMod(v: number, mod: number): number {
  * @param targetRef - Ref to the DOM element that captures pointer / wheel events
  * @param mapWidth  - Logical pixel width of the map (for X-wrapping)
  * @param mapHeight - Logical pixel height of the map (for Y-clamping)
- * @param baseCellDevicePixels - Device px per cell at zoom 1; when set, the
- *   goal and every published frame snap to levels where a cell spans whole
- *   device pixels (quantizeZoom), so the grid stays even while animating
+ * @param baseCellDevicePixels - Device px per cell at zoom 1; when set, zoom
+ *   follows the wheel continuously and, ZOOM_SETTLE_MS after the last event,
+ *   settles on a level where a cell spans whole device pixels (quantizeZoom)
  */
 export function useMapCamera(
   targetRef: RefObject<HTMLDivElement | null>,
@@ -97,8 +97,10 @@ export function useMapCamera(
   const zoomCurrentRef = useRef(1);
   /** Zoom actually rendered last frame (quantized); anchors and drag use it */
   const zoomShownRef = useRef(1);
-  /** Unquantized wheel accumulator, so small trackpad deltas add up */
+  /** Unquantized wheel accumulator */
   const zoomRawGoalRef = useRef(1);
+  /** Pending settle-to-whole-pixel timer (0 = none) */
+  const settleTimerRef = useRef(0);
   const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
 
   /** Authoritative offsetX (updated by both tick and drag) */
@@ -164,15 +166,8 @@ export function useMapCamera(
       const snapped = Math.abs(diff) < SNAP_EPSILON;
       const zLerped = snapped ? goal : current + diff * LERP_FACTOR;
       zoomCurrentRef.current = zLerped;
-      // Render only whole-pixel levels so the tween itself stays even.
-      const zShown = snapped
-        ? goal
-        : quantizeZoom(
-            zLerped,
-            baseCellDevicePixelsRef.current,
-            ZOOM_MIN,
-            ZOOM_MAX,
-          );
+      // Rendered zoom: continuous while animating; whole-pixel once settled.
+      const zShown = zLerped;
       zoomShownRef.current = zShown;
 
       // Compute offsets from anchor (only when not dragging)
@@ -230,12 +225,25 @@ export function useMapCamera(
       ZOOM_MIN,
       Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
     );
-    zoomGoalRef.current = quantizeZoom(
-      zoomRawGoalRef.current,
-      baseCellDevicePixelsRef.current,
-      ZOOM_MIN,
-      ZOOM_MAX,
-    );
+    // Follow the wheel continuously; settle on a whole-pixel level once it
+    // stops (see ZOOM_SETTLE_MS), around the same cursor anchor.
+    zoomGoalRef.current = zoomRawGoalRef.current;
+    const direction = factor > 1 ? "in" : factor < 1 ? "out" : "nearest";
+    window.clearTimeout(settleTimerRef.current);
+    settleTimerRef.current = window.setTimeout(() => {
+      const settled = quantizeZoom(
+        zoomRawGoalRef.current,
+        baseCellDevicePixelsRef.current,
+        ZOOM_MIN,
+        ZOOM_MAX,
+        direction,
+      );
+      zoomRawGoalRef.current = settled;
+      zoomGoalRef.current = settled;
+      if (rafRef.current === 0) {
+        rafRef.current = requestAnimationFrame(tickRef.current);
+      }
+    }, ZOOM_SETTLE_MS);
 
     // CSS → logical conversion
     const rect = canvas.getBoundingClientRect();
@@ -335,6 +343,7 @@ export function useMapCamera(
       el.removeEventListener("pointerup", handlePointerUp);
       el.removeEventListener("pointercancel", handlePointerUp);
       cancelAnimationFrame(rafRef.current);
+      window.clearTimeout(settleTimerRef.current);
     };
   }, [
     targetRef,

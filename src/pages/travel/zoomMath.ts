@@ -7,6 +7,14 @@ import { ZOOM_STEP } from "./constants";
  */
 const MIN_QUANTIZED_CELL_DEVICE_PIXELS = 4;
 
+/**
+ * Zoom follows the wheel continuously while it moves, and settles on the
+ * nearest whole-pixel level (quantizeZoom) this long after the last event.
+ * Snapping every frame made zoom step in 14–25% jumps and ignore small
+ * wheel deltas until they added up to half a step.
+ */
+export const ZOOM_SETTLE_MS = 150;
+
 /** WheelEvent.deltaMode line/page units, converted to pixel-mode deltas. */
 const LINE_HEIGHT_PX = 16;
 const PAGE_HEIGHT_PX = 800;
@@ -29,15 +37,19 @@ export function cellDevicePixels(
 }
 
 /**
- * Round a zoom level to the nearest m / cellDevicePx, so a zoomed cell still
- * spans m whole device pixels and the 1px gaps stay even. With null, or when
- * [min, max] contains no such level, it only clamps.
+ * Round a zoom level to a level m / cellDevicePx, so a zoomed cell spans m
+ * whole device pixels and the 1px gaps stay even. `direction` picks the
+ * level: "nearest", or "in"/"out" to round in the direction the wheel was
+ * moving, so a single notch always lands at least one level further instead
+ * of snapping back. With null, or when [min, max] contains no such level,
+ * it only clamps.
  */
 export function quantizeZoom(
   zoom: number,
   cellDevicePx: null | number,
   min: number,
   max: number,
+  direction: "in" | "nearest" | "out" = "nearest",
 ): number {
   const clamped = Math.max(min, Math.min(max, zoom));
   if (
@@ -50,7 +62,14 @@ export function quantizeZoom(
   const lowest = Math.ceil(min * cellDevicePx);
   const highest = Math.floor(max * cellDevicePx);
   if (lowest > highest) return clamped;
-  const step = Math.round(clamped * cellDevicePx);
+  const exact = clamped * cellDevicePx;
+  // Tolerate float noise so an already-whole level does not move a step.
+  const step =
+    direction === "in"
+      ? Math.ceil(exact - 1e-9)
+      : direction === "out"
+        ? Math.floor(exact + 1e-9)
+        : Math.round(exact);
   return Math.max(lowest, Math.min(highest, step)) / cellDevicePx;
 }
 

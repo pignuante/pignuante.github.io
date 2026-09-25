@@ -1,7 +1,7 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN } from "./constants";
-import { quantizeZoom, wheelZoomFactor } from "./zoomMath";
+import { quantizeZoom, wheelZoomFactor, ZOOM_SETTLE_MS } from "./zoomMath";
 
 /** Return type for the zoom hook */
 interface ZoomState {
@@ -23,9 +23,9 @@ const SNAP_EPSILON = 0.002;
  * - Clamped to [ZOOM_MIN, ZOOM_MAX]
  * - Uses `{ passive: false }` for `preventDefault()` — prevents page scroll
  *
- * - With `baseCellDevicePixels`, the goal and every published frame snap to
- *   levels where a cell spans whole device pixels (quantizeZoom), so the grid
- *   stays even while animating; the wheel still accumulates finely.
+ * - With `baseCellDevicePixels`, zoom follows the wheel continuously and,
+ *   ZOOM_SETTLE_MS after the last event, settles on the nearest level where a
+ *   cell spans whole device pixels (quantizeZoom), so the grid is even at rest.
  *
  * @param targetRef - Ref to the DOM element that captures wheel events
  * @param baseCellDevicePixels - Device px per cell at zoom 1, or null to zoom freely
@@ -44,8 +44,10 @@ export function useZoom(
   const rafRef = useRef(0);
   /** Stable ref to the tick function (set once in useEffect) */
   const tickRef = useRef<() => void>(() => {});
-  /** Unquantized wheel accumulator, so small trackpad deltas add up */
+  /** Unquantized wheel accumulator */
   const rawGoalRef = useRef(1);
+  /** Pending settle-to-whole-pixel timer (0 = none) */
+  const settleTimerRef = useRef(0);
   const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
 
   useEffect(() => {
@@ -81,10 +83,7 @@ export function useZoom(
 
       const next = current + diff * LERP_FACTOR;
       currentRef.current = next;
-      // Publish only whole-pixel levels so the tween itself stays even.
-      setZoom(
-        quantizeZoom(next, baseCellDevicePixelsRef.current, ZOOM_MIN, ZOOM_MAX),
-      );
+      setZoom(next);
       rafRef.current = requestAnimationFrame(tick);
     };
 
@@ -100,12 +99,25 @@ export function useZoom(
       ZOOM_MIN,
       Math.min(ZOOM_MAX, rawGoalRef.current * factor),
     );
-    goalRef.current = quantizeZoom(
-      rawGoalRef.current,
-      baseCellDevicePixelsRef.current,
-      ZOOM_MIN,
-      ZOOM_MAX,
-    );
+    // Follow the wheel continuously; settle on a whole-pixel level once it
+    // stops (see ZOOM_SETTLE_MS).
+    goalRef.current = rawGoalRef.current;
+    const direction = factor > 1 ? "in" : factor < 1 ? "out" : "nearest";
+    window.clearTimeout(settleTimerRef.current);
+    settleTimerRef.current = window.setTimeout(() => {
+      const settled = quantizeZoom(
+        rawGoalRef.current,
+        baseCellDevicePixelsRef.current,
+        ZOOM_MIN,
+        ZOOM_MAX,
+        direction,
+      );
+      rawGoalRef.current = settled;
+      goalRef.current = settled;
+      if (rafRef.current === 0) {
+        rafRef.current = requestAnimationFrame(tickRef.current);
+      }
+    }, ZOOM_SETTLE_MS);
 
     // Start animation loop if not already running
     if (rafRef.current === 0) {
@@ -123,6 +135,7 @@ export function useZoom(
     return () => {
       el.removeEventListener("wheel", handleWheel);
       cancelAnimationFrame(rafRef.current);
+      window.clearTimeout(settleTimerRef.current);
     };
   }, [targetRef, handleWheel]);
 

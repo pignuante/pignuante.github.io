@@ -140,7 +140,7 @@ function FlatMapView() {
         }}
       >
         <div
-          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
+          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!w-full"
           ref={canvasWrapperRef}
           style={{
             cursor: isDragging ? "grabbing" : "grab",
@@ -231,10 +231,12 @@ function GlobeMapView() {
   return (
     <div className="w-full" ref={measureRef}>
       <div
-        className="relative mx-auto max-h-[70vh] max-w-[min(100%,70vh)]"
+        className="relative mx-auto"
         style={{
           aspectRatio: "1",
           imageRendering: "pixelated",
+          maxHeight: `${GLOBE_MAX_VIEWPORT_HEIGHT_RATIO * 100}vh`,
+          maxWidth: `min(100%, ${GLOBE_MAX_VIEWPORT_HEIGHT_RATIO * 100}vh)`,
           width:
             snapped === null
               ? GLOBE_SIZE + 2 * BORDER_WIDTH_PX
@@ -242,7 +244,7 @@ function GlobeMapView() {
         }}
       >
         <div
-          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
+          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!w-full"
           ref={canvasWrapperRef}
           style={{
             cursor: isDragging ? "grabbing" : "grab",

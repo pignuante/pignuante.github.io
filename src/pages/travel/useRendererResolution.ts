@@ -1,5 +1,5 @@
 import type { Application } from "pixi.js";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useLayoutEffect, useRef } from "react";
 
 /**
  * Keeps a Pixi renderer's backing store at `resolution` after init.
@@ -16,7 +16,9 @@ export function useRendererResolution(
   const appRef = useRef<Application | null>(null);
   const latest = useRef({ height, resolution, width });
 
-  useEffect(() => {
+  // Layout effect: the new backing size must land in the same frame as the
+  // new CSS width, or one frame is resampled at the old resolution.
+  useLayoutEffect(() => {
     latest.current = { height, resolution, width };
     appRef.current?.renderer.resize(width, height, resolution);
   }, [height, resolution, width]);

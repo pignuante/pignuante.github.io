@@ -32,8 +32,9 @@ export interface SnappedCanvas {
  * uneven 1px/2px stripes (moiré). This picks the widest canvas width at which
  * a cell spans a whole number of device pixels (k * cells / dpr), plus the
  * renderer resolution that makes the backing store exactly that many device
- * pixels. The browser then never resamples the canvas; scaling happens once,
- * in WebGL with nearest sampling. Compositor resampling looked uneven in a
+ * pixels. On a snapped width the browser then does not resample the canvas;
+ * scaling happens once, in WebGL with nearest sampling. (A fallback width is
+ * not a whole number of device pixels per cell, so it is not exact.) Compositor resampling looked uneven in a
  * desktop browser even at an integer pitch (headless Chrome did not show it).
  *
  * Measured in a layout effect so the first paint already has the final size.

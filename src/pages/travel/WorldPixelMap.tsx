@@ -380,6 +380,7 @@ export default function WorldPixelMap({
           offsetX={offsetX}
           pinPixel={herePinPixel}
           pulse={herePulse}
+          zoom={zoom}
         />
         <HoverDetector
           grid={grid}

@@ -331,6 +331,7 @@ export default function GlobePixelMap({
           here={here}
           pinPixel={herePinPixel}
           pulse={herePulse}
+          zoom={zoom}
         />
         <GlobeHoverDetector
           grid={grid}

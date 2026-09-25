@@ -6,6 +6,8 @@ import { GLOBE_DRAG_SENSITIVITY, GLOBE_SIZE } from "./constants";
 /** Return type for the globe drag hook */
 interface GlobeDragState {
   isDragging: boolean;
+  /** Turn to `rotation` unless the visitor has already rotated the globe */
+  recenter: (rotation: GlobeRotation) => void;
   rotation: GlobeRotation;
 }
 
@@ -33,6 +35,8 @@ export function useGlobeDrag(
   const lastXRef = useRef(0);
   const lastYRef = useRef(0);
   const scaleRef = useRef(1);
+  /** Set on the first drag move; after that recenter() leaves the view alone */
+  const userRotatedRef = useRef(false);
 
   const handlePointerDown = useCallback((e: PointerEvent) => {
     draggingRef.current = true;
@@ -62,6 +66,7 @@ export function useGlobeDrag(
 
     // Use scale cached in handlePointerDown (no layout thrash)
     const scale = scaleRef.current;
+    if (dxCss !== 0 || dyCss !== 0) userRotatedRef.current = true;
 
     setRotation((prev) => {
       const rawLambda = prev.lambda - dxCss * scale * GLOBE_DRAG_SENSITIVITY;
@@ -96,5 +101,9 @@ export function useGlobeDrag(
     };
   }, [targetRef, handlePointerDown, handlePointerMove, handlePointerUp]);
 
-  return { isDragging, rotation };
+  const recenter = useCallback((next: GlobeRotation) => {
+    if (!userRotatedRef.current) setRotation(next);
+  }, []);
+
+  return { isDragging, recenter, rotation };
 }

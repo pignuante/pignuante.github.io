@@ -21,7 +21,7 @@ import {
   WORLD_MAP_WIDTH,
 } from "./travel/constants";
 import GlobePixelMap from "./travel/GlobePixelMap";
-import { pinPixelSize } from "./travel/herePin";
+import { PIN_ROWS, pinPixelSize } from "./travel/herePin";
 import { useGlobeDrag } from "./travel/useGlobeDrag";
 import {
   createGlobeProjection,
@@ -33,7 +33,8 @@ import { useWorldGridData } from "./travel/useWorldGridData";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
 import {
-  countryIndexAt,
+  countryName,
+  gridCountryIndex,
   useVisitorLocation,
   type PreciseStatus,
   type VisitorLocation,
@@ -240,22 +241,36 @@ function GlobeMapView({ visitor }: { visitor: VisitorView }) {
     const [lat, lon] = visitor.location.point;
     return { lambda: ((lon % 360) + 360) % 360, phi: lat };
   });
-  const { isDragging, rotation } = useGlobeDrag(
+  const { isDragging, recenter, rotation } = useGlobeDrag(
     canvasWrapperRef,
     initialRotation,
   );
+  // A precise position arrives later; turn to it unless the visitor has
+  // already rotated the globe themselves.
+  useEffect(() => {
+    if (visitor.location?.source !== "precise") return;
+    const [lat, lon] = visitor.location.point;
+    recenter({ lambda: ((lon % 360) + 360) % 360, phi: lat });
+  }, [recenter, visitor.location]);
   const grid = useGlobePixelGrid(rotation);
   const { zoom } = useZoom(
     canvasWrapperRef,
     cellDevicePixels(GLOBE_CELL_SIZE, snapped?.resolution),
   );
+  const herePinPixel = pinPixelSize(
+    (snapped?.width ?? GLOBE_SIZE) / GLOBE_SIZE,
+  );
 
   const here = useMemo<HereMarker | null>(() => {
     if (!visitor.location) return null;
     const [lat, lon] = visitor.location.point;
-    // Hide the pin on the far hemisphere (orthographic clipAngle 90).
+    // Hide the pin on the far hemisphere (orthographic clipAngle 90), and a
+    // pin-height early so the bitmap never sticks out past the limb.
+    const pinHeight = (PIN_ROWS.length * herePinPixel) / zoom;
+    const limbMargin = Math.asin(Math.min(1, pinHeight / (GLOBE_SIZE / 2)));
     const onFront =
-      geoDistance([lon, lat], [rotation.lambda, rotation.phi]) < Math.PI / 2;
+      geoDistance([lon, lat], [rotation.lambda, rotation.phi]) <
+      Math.PI / 2 - limbMargin;
     const projected = onFront
       ? createGlobeProjection(rotation.lambda, rotation.phi)([lon, lat])
       : null;
@@ -263,7 +278,14 @@ function GlobeMapView({ visitor }: { visitor: VisitorView }) {
       countryIndex: visitor.countryIndex,
       point: projected ? { x: projected[0], y: projected[1] } : null,
     };
-  }, [rotation.lambda, rotation.phi, visitor.countryIndex, visitor.location]);
+  }, [
+    herePinPixel,
+    rotation.lambda,
+    rotation.phi,
+    visitor.countryIndex,
+    visitor.location,
+    zoom,
+  ]);
 
   const isDraggingRef = useRef<boolean>(false);
 
@@ -320,9 +342,7 @@ function GlobeMapView({ visitor }: { visitor: VisitorView }) {
             <GlobePixelMap
               grid={grid}
               here={here}
-              herePinPixel={pinPixelSize(
-                (snapped?.width ?? GLOBE_SIZE) / GLOBE_SIZE,
-              )}
+              herePinPixel={herePinPixel}
               herePulse={visitor.pulse}
               hoveredCountryId={hoveredCountryId}
               onCountryHover={handleCountryHover}
@@ -362,13 +382,20 @@ export default function Travel() {
   const viewMode: MapViewMode =
     chosenViewMode ?? (isNarrowViewport ? "globe" : "flat");
 
-  const { canRequestPrecise, location, preciseStatus, requestPrecise } =
-    useVisitorLocation();
   const worldData = useWorldGridData();
+  const { canRequestPrecise, location, preciseStatus, requestPrecise } =
+    useVisitorLocation(worldData);
   const countryIndex =
-    location && worldData ? countryIndexAt(worldData, location.point) : 0;
-  const country =
-    countryIndex > 0 ? worldData?.countries[countryIndex - 1] : undefined;
+    location && worldData
+      ? gridCountryIndex(worldData, location.countryCode)
+      : 0;
+  // Prefer the map's own Korean name (matches hover tooltips: "호주"), then
+  // the browser's ("HK" -> "홍콩") for places the map data does not name.
+  const visitorCountryName = location?.countryCode
+    ? ((countryIndex > 0
+        ? worldData?.countries[countryIndex - 1].nameKo
+        : undefined) ?? countryName(location.countryCode))
+    : undefined;
   const visitor: VisitorView = {
     countryIndex,
     location,
@@ -448,7 +475,7 @@ export default function Travel() {
 
         <VisitorLocationNote
           canRequestPrecise={canRequestPrecise}
-          countryName={country ? (country.nameKo ?? country.name) : undefined}
+          countryName={visitorCountryName}
           location={location}
           onRequestPrecise={requestPrecise}
           preciseStatus={preciseStatus}
@@ -490,6 +517,7 @@ function VisitorLocationNote({
   return (
     <div className="mt-6 flex flex-col items-center gap-2 text-center">
       <p
+        aria-live="polite"
         className="font-pixel-body text-[15px]"
         style={{ color: "var(--text-primary)" }}
       >

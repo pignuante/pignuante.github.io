@@ -2,6 +2,7 @@ import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN } from "./constants";
 import {
+  type GestureStart,
   quantizeZoom,
   settleZoom,
   wheelZoomFactor,
@@ -54,8 +55,8 @@ export function useZoom(
   const rawGoalRef = useRef(1);
   /** Pending settle-to-whole-pixel timer (0 = none) */
   const settleTimerRef = useRef(0);
-  /** Level the current wheel gesture started from (null between gestures) */
-  const gestureStartRef = useRef<null | number>(null);
+  /** Where the current wheel gesture started (null between gestures) */
+  const gestureStartRef = useRef<GestureStart | null>(null);
   const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
 
   useEffect(() => {
@@ -105,7 +106,10 @@ export function useZoom(
 
   /** Bring the zoom to rest on a whole-pixel level (see settleZoom). */
   const settle = useCallback((): void => {
-    const start = gestureStartRef.current ?? rawGoalRef.current;
+    const start = gestureStartRef.current ?? {
+      level: rawGoalRef.current,
+      shown: rawGoalRef.current,
+    };
     gestureStartRef.current = null;
     const settled = settleZoom(
       rawGoalRef.current,
@@ -128,11 +132,14 @@ export function useZoom(
       // Proportional zoom: ~100px per mouse-wheel notch, ~1-10 for trackpad
       const factor = wheelZoomFactor(e);
       if (gestureStartRef.current === null) {
-        // New gesture: remember the level it starts from (for settleZoom),
-        // and accumulate from what is on screen, not from a settle target
+        // New gesture: remember where it starts (for settleZoom), and
+        // accumulate from what is on screen, not from a settle target
         // the animation has not reached yet; otherwise reversing direction
         // mid-settle would keep zooming the old way for a moment.
-        gestureStartRef.current = rawGoalRef.current;
+        gestureStartRef.current = {
+          level: rawGoalRef.current,
+          shown: currentRef.current,
+        };
         rawGoalRef.current = currentRef.current;
       }
       rawGoalRef.current = Math.max(

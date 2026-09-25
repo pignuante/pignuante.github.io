@@ -2,6 +2,7 @@ import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN } from "./constants";
 import {
+  type GestureStart,
   quantizeZoom,
   settleZoom,
   wheelZoomFactor,
@@ -80,7 +81,8 @@ function wrapMod(v: number, mod: number): number {
  * @param mapHeight - Logical pixel height of the map (for Y-clamping)
  * @param baseCellDevicePixels - Device px per cell at zoom 1; when set, zoom
  *   follows the wheel continuously and, ZOOM_SETTLE_MS after the last event,
- *   settles on a level where a cell spans whole device pixels (settleZoom)
+ *   settles on a level where a cell spans whole device pixels (settleZoom:
+ *   nearest, or one level on when the nearest is where the gesture began)
  */
 export function useMapCamera(
   targetRef: RefObject<HTMLDivElement | null>,
@@ -106,8 +108,8 @@ export function useMapCamera(
   const zoomRawGoalRef = useRef(1);
   /** Pending settle-to-whole-pixel timer (0 = none) */
   const settleTimerRef = useRef(0);
-  /** Level the current wheel gesture started from (null between gestures) */
-  const gestureStartRef = useRef<null | number>(null);
+  /** Where the current wheel gesture started (null between gestures) */
+  const gestureStartRef = useRef<GestureStart | null>(null);
   /** A settle that came due during a drag; applied on pointer up */
   const settleDuringDragRef = useRef(false);
   const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
@@ -231,7 +233,10 @@ export function useMapCamera(
       settleDuringDragRef.current = true;
       return;
     }
-    const start = gestureStartRef.current ?? zoomRawGoalRef.current;
+    const start = gestureStartRef.current ?? {
+      level: zoomRawGoalRef.current,
+      shown: zoomRawGoalRef.current,
+    };
     gestureStartRef.current = null;
     const settled = settleZoom(
       zoomRawGoalRef.current,
@@ -261,11 +266,14 @@ export function useMapCamera(
       // Proportional zoom factor
       const factor = wheelZoomFactor(e);
       if (gestureStartRef.current === null) {
-        // New gesture: remember the level it starts from (for settleZoom),
-        // and accumulate from what is on screen, not from a settle target
+        // New gesture: remember where it starts (for settleZoom), and
+        // accumulate from what is on screen, not from a settle target
         // the animation has not reached yet; otherwise reversing direction
         // mid-settle would keep zooming the old way for a moment.
-        gestureStartRef.current = zoomRawGoalRef.current;
+        gestureStartRef.current = {
+          level: zoomRawGoalRef.current,
+          shown: zoomCurrentRef.current,
+        };
         zoomRawGoalRef.current = zoomCurrentRef.current;
       }
       zoomRawGoalRef.current = Math.max(

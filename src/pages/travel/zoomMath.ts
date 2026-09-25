@@ -73,23 +73,33 @@ export function quantizeZoom(
   return Math.max(lowest, Math.min(highest, step)) / cellDevicePx;
 }
 
+/** Where a wheel gesture began: the level it was heading to, and the zoom on screen. */
+export interface GestureStart {
+  /** Whole-pixel level at rest or still being animated toward */
+  level: number;
+  /** Zoom displayed when the gesture's first event arrived */
+  shown: number;
+}
+
 /**
  * Where a wheel gesture comes to rest: the nearest whole-pixel level, unless
  * that is the level the gesture started from while the zoom did move (one
  * notch is often less than half a level); then one level further in the
- * direction it moved, so a notch never snaps back. Deciding by the net
- * movement, not the last event, keeps mixed in/out bursts from gaining or
- * losing an extra level.
+ * direction it moved, so a notch never snaps back. The direction is the net
+ * movement from the zoom on screen, not the last event (so mixed in/out
+ * bursts neither gain nor lose a level) and not the pending level (so a small
+ * zoom-in begun while an earlier zoom-in is still animating does not settle
+ * outward).
  */
 export function settleZoom(
   raw: number,
-  startLevel: number,
+  start: GestureStart,
   cellDevicePx: null | number,
   min: number,
   max: number,
 ): number {
   const nearest = quantizeZoom(raw, cellDevicePx, min, max);
-  if (cellDevicePx === null || nearest !== startLevel || raw === startLevel) {
+  if (cellDevicePx === null || nearest !== start.level || raw === start.shown) {
     return nearest;
   }
   return quantizeZoom(
@@ -97,7 +107,7 @@ export function settleZoom(
     cellDevicePx,
     min,
     max,
-    raw > startLevel ? "in" : "out",
+    raw > start.shown ? "in" : "out",
   );
 }
 

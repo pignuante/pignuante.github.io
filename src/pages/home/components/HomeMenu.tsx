@@ -73,6 +73,7 @@ function renderDefaultItem({
       ref={itemRef}
       style={style}
       to={item.path}
+      viewTransition
     >
       {children}
     </Link>

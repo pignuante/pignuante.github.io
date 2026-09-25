@@ -54,8 +54,6 @@
 
   /* Mobile-first base: 14px */
   font-size: 14px;
-
-  scroll-behavior: smooth;
 }
 
 body {
@@ -360,4 +358,122 @@ textarea,
 @utility pixel-marker-glow {
   box-shadow: var(--shadow-glow);
   animation: marker-glow 2.4s ease-in-out infinite;
+}
+
+/* -------------------------------------------------------------------------
+ * 9. VIEW TRANSITIONS + LIGHT
+ * ------------------------------------------------------------------------- */
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+::view-transition-old(root) {
+  animation: vt-fade-out 120ms var(--ease-smooth) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-fade-in 200ms var(--ease-smooth) both;
+}
+
+/* Shared elements (thumbnail, nav bar) move with a snappy ease. */
+::view-transition-group(*) {
+  animation-duration: 280ms;
+  animation-timing-function: var(--ease-snappy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Card hover: a hard 3px halo in the scheme colour plus a soft light. */
+@utility pixel-card-glow {
+  transition: box-shadow 160ms var(--ease-smooth);
+
+  /* Hover only where a pointer hovers: touch browsers keep a sticky hover */
+  @media (hover: hover) {
+    &:hover {
+      box-shadow:
+        var(--pixel-shadow-md),
+        0 0 0 3px var(--color-brand-200),
+        0 0 28px var(--color-brand-300);
+    }
+  }
+
+  &:focus-within {
+    box-shadow:
+      var(--pixel-shadow-md),
+      0 0 0 3px var(--color-brand-200),
+      0 0 28px var(--color-brand-300);
+  }
+}
+
+/* A soft scheme-coloured light behind a title. */
+@keyframes backlight-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@utility pixel-backlight {
+  position: absolute;
+  inset: -60% -20%;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side,
+    var(--color-brand-200),
+    var(--color-accent-100) 55%,
+    transparent
+  );
+  opacity: 0.7;
+  filter: blur(8px);
+  animation: backlight-breathe 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Route code loading: a thin bar sweeping under the header. */
+@keyframes loading-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes loading-show {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hidden for the first 150ms, so a fast load does not flash it. */
+@utility pixel-loading-bar {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-brand-400),
+    transparent
+  );
+  opacity: 0;
+  animation:
+    loading-show 1ms 150ms forwards,
+    loading-sweep 0.9s steps(12) infinite;
 }

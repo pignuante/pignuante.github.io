@@ -1,47 +1,53 @@
 import { motion } from "motion/react";
 import { Suspense } from "react";
-import { Outlet, useLocation } from "react-router";
+import {
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+  useNavigation,
+} from "react-router";
 import { duration, easing } from "../../styles/tokens";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
+import { RouteFallback, SiteShell } from "./SiteShell";
 
-function RouteFallback() {
-  return (
-    <section
-      aria-busy="true"
-      aria-live="polite"
-      className="mx-auto max-w-5xl px-6 py-24"
-    >
-      <div className="pixel-card p-6">
-        <p className="font-pixel-body text-[15px] text-[var(--text-secondary)]">
-          페이지를 불러오는 중...
-        </p>
-      </div>
-    </section>
-  );
-}
+/** Browsers with the View Transitions API animate page changes in CSS. */
+const SUPPORTS_VIEW_TRANSITIONS =
+  typeof document !== "undefined" && "startViewTransition" in document;
 
 export default function Layout() {
   const { pathname } = useLocation();
+  // Route code loads before the view transition starts, while the old page
+  // stays up; the bar says something is happening.
+  const loading = useNavigation().state !== "idle";
+
+  const page = (
+    <Suspense fallback={<RouteFallback />}>
+      <Outlet />
+    </Suspense>
+  );
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar />
-
-      <main className="flex-1 pt-16">
+    <SiteShell busy={loading}>
+      {loading ? (
+        <div
+          aria-hidden="true"
+          className="fixed top-16 left-0 z-40 h-[3px] w-full pixel-loading-bar"
+        />
+      ) : null}
+      {SUPPORTS_VIEW_TRANSITIONS ? (
+        page
+      ) : (
+        // No View Transitions API: keep the old Motion fade
         <motion.div
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 4 }}
           key={pathname}
           transition={{ duration: duration.fast, ease: easing.smooth }}
         >
-          <Suspense fallback={<RouteFallback />}>
-            <Outlet />
-          </Suspense>
+          {page}
         </motion.div>
-      </main>
-
-      <Footer />
-    </div>
+      )}
+      {/* New pages open at the top; back/forward restore the old position */}
+      <ScrollRestoration />
+    </SiteShell>
   );
 }

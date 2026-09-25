@@ -60,17 +60,20 @@ export default function Home(): JSX.Element {
 
   return (
     <section className="flex min-h-[calc(100svh-4rem)] flex-col items-center justify-center gap-8 pixel-dot-bg px-6 py-12">
-      {/* ★ Title with glow pulse */}
-      <motion.h1
-        animate="visible"
-        className="pixel-glow-pulse font-pixel text-lg leading-tight tracking-tight sm:text-2xl md:text-4xl"
-        initial="hidden"
-        style={{ color: "var(--text-brand)" }}
-        variants={titleMotionVariants}
-      >
-        <span aria-hidden="true">★ </span>PIGNUANTE
-        <span aria-hidden="true"> ★</span>
-      </motion.h1>
+      {/* ★ Title with glow pulse, lit from behind */}
+      <div className="relative">
+        <span aria-hidden="true" className="pixel-backlight" />
+        <motion.h1
+          animate="visible"
+          className="pixel-glow-pulse font-pixel text-lg leading-tight tracking-tight sm:text-2xl md:text-4xl"
+          initial="hidden"
+          style={{ color: "var(--text-brand)" }}
+          variants={titleMotionVariants}
+        >
+          <span aria-hidden="true">★ </span>PIGNUANTE
+          <span aria-hidden="true"> ★</span>
+        </motion.h1>
+      </div>
 
       <motion.p
         animate="visible"

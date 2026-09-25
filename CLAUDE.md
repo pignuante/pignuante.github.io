@@ -27,7 +27,7 @@ Pre-commit hook (Husky + lint-staged) runs `eslint --fix` and `prettier --write`
 - React 19 + TypeScript 6 + Vite 8 (SWC plugin)
 - Tailwind CSS v4 (`@theme` directive, no tailwind.config — configured in `src/styles/tokens.css`)
 - Motion v12 (page transitions in Layout)
-- React Router 8 (BrowserRouter, route-level lazy loading)
+- React Router 8 (data router: `createBrowserRouter` + `RouterProvider`, route `lazy`)
 - PixiJS 8 + @pixi/react 8 + d3-geo (Travel maps)
 
 ### Key Patterns
@@ -48,12 +48,14 @@ Pre-commit hook (Husky + lint-staged) runs `eslint --fix` and `prettier --write`
 
 **Routing** (`src/App.tsx`):
 
-- All pages lazy-loaded with `React.lazy()` + `Suspense`
+- All pages load via route `lazy` (not `React.lazy`: a suspending page would freeze the old one inside a view transition)
+- Root route: `Component: Layout`, `ErrorBoundary: RouteError`, `HydrateFallback: ShellFallback`
+- Links use `viewTransition`; named transition elements (`site-header`, `nav-active`, `project-thumb-<slug>`) must be unique per page
 - GitHub Pages SPA fallback via `public/404.html` → sessionStorage redirect
 
 **Layout** (`src/components/layout/`):
 
-- `Layout.tsx` — Navbar + AnimatePresence page transition + Footer
+- `Layout.tsx` — `SiteShell` (Navbar + main + Footer) around `<Outlet />`, route-loading bar, `ScrollRestoration`
 - `Navbar.tsx` — pixel-style fixed header with hard-edge border, nav links, 4-dot scheme switcher, and mobile hamburger menu
 - `src/utils/routing.ts` — shared `NavItem` type and `isActivePath()` helper used by Navbar and Footer
 

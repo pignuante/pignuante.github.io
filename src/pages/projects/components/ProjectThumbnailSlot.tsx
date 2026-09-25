@@ -6,6 +6,8 @@ export type ProjectThumbnailSlotVariant = "card" | "hero" | "wide";
 
 interface ProjectThumbnailSlotProps {
   thumbnail: ProjectThumbnail;
+  /** view-transition-name shared by the card and the detail page */
+  transitionName?: string;
   variant?: ProjectThumbnailSlotVariant;
 }
 
@@ -30,6 +32,7 @@ const THUMBNAIL_SLOT_VARIANTS: Record<
 
 export function ProjectThumbnailSlot({
   thumbnail,
+  transitionName,
   variant = "card",
 }: ProjectThumbnailSlotProps): ReactElement {
   const slotVariant = THUMBNAIL_SLOT_VARIANTS[variant];
@@ -37,6 +40,9 @@ export function ProjectThumbnailSlot({
   return (
     <figure
       className={`relative overflow-hidden rounded-[var(--pixel-border-radius)] border border-[var(--border-default)] bg-[var(--surface)] ${slotVariant.className}`}
+      style={
+        transitionName ? { viewTransitionName: transitionName } : undefined
+      }
     >
       {thumbnail.src ? (
         <img

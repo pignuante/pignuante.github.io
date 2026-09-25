@@ -1,15 +1,38 @@
 import { MotionConfig } from "motion/react";
-import { lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { type ComponentType } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "./components/layout/Layout";
+import RouteError from "./components/layout/RouteError";
+import { ShellFallback } from "./components/layout/SiteShell";
 import { SchemeProvider } from "./contexts/SchemeContext";
 
-const About = lazy(() => import("./pages/About"));
-const Home = lazy(() => import("./pages/Home"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
-const Projects = lazy(() => import("./pages/Projects"));
-const Travel = lazy(() => import("./pages/Travel"));
+/** Route-level code splitting the router can await before it navigates. */
+function page(load: () => Promise<{ default: ComponentType }>) {
+  return async () => ({ Component: (await load()).default });
+}
+
+// A data router: view transitions (Link `viewTransition`) only run under
+// RouterProvider, not BrowserRouter. Pages load through route `lazy`, so a
+// navigation waits for the code before the transition starts (React.lazy
+// would suspend inside it and freeze the old page).
+const router = createBrowserRouter([
+  {
+    children: [
+      { index: true, lazy: page(() => import("./pages/Home")) },
+      { lazy: page(() => import("./pages/About")), path: "about" },
+      { lazy: page(() => import("./pages/Projects")), path: "projects" },
+      {
+        lazy: page(() => import("./pages/ProjectDetail")),
+        path: "projects/:slug",
+      },
+      { lazy: page(() => import("./pages/Travel")), path: "travel" },
+      { lazy: page(() => import("./pages/NotFound")), path: "*" },
+    ],
+    Component: Layout,
+    ErrorBoundary: RouteError,
+    HydrateFallback: ShellFallback,
+  },
+]);
 
 export default function App() {
   return (
@@ -17,18 +40,7 @@ export default function App() {
       {/* Motion's JS animations ignore the CSS reduced-motion rule in
           index.css; "user" makes them follow prefers-reduced-motion too. */}
       <MotionConfig reducedMotion="user">
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route element={<Home />} index />
-              <Route element={<About />} path="about" />
-              <Route element={<Projects />} path="projects" />
-              <Route element={<ProjectDetail />} path="projects/:slug" />
-              <Route element={<Travel />} path="travel" />
-              <Route element={<NotFound />} path="*" />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </MotionConfig>
     </SchemeProvider>
   );

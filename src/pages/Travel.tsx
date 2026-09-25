@@ -10,15 +10,18 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import {
   BIOME_COLORS_CSS,
   GLOBE_INITIAL_LAMBDA,
+  GLOBE_CELL_SIZE,
   GLOBE_INITIAL_PHI,
   GLOBE_SIZE,
   WORLD_MAP_HEIGHT,
+  WORLD_CELL_SIZE,
   WORLD_MAP_WIDTH,
 } from "./travel/constants";
 import GlobePixelMap from "./travel/GlobePixelMap";
 import { useGlobeDrag } from "./travel/useGlobeDrag";
 import { useGlobePixelGrid } from "./travel/useGlobePixelGrid";
 import { useMapCamera } from "./travel/useMapCamera";
+import { usePixelSnappedWidth } from "./travel/usePixelSnappedWidth";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
 import WorldPixelMap from "./travel/WorldPixelMap";
@@ -52,6 +55,13 @@ const TOOLTIP_GAP_PX = 12;
 /** Border width of the canvas wrapper (Tailwind border-4 = 4px) */
 const BORDER_WIDTH_PX = 4;
 
+// The flat map fills its column, as before.
+const flatMapMaxWidth = (): number => Infinity;
+// The globe box is capped at 70vh like before. The canvas (inside the border)
+// may reach its full logical size, so a roomy 1x display shows it at 1:1.
+const globeMaxWidth = (): number =>
+  Math.min(GLOBE_SIZE, window.innerHeight * 0.7 - 2 * BORDER_WIDTH_PX);
+
 /* ── Toggle button config ── */
 
 /** Tailwind's sm breakpoint (40rem): below it the globe is the default view. */
@@ -69,6 +79,12 @@ const VIEW_MODE_OPTIONS: ReadonlyArray<{
 /* ── FlatMapView ── */
 
 function FlatMapView() {
+  const measureRef = useRef<HTMLDivElement>(null);
+  const canvasWidth = usePixelSnappedWidth(measureRef, {
+    cells: WORLD_MAP_WIDTH / WORLD_CELL_SIZE,
+    inset: 2 * BORDER_WIDTH_PX,
+    maxWidth: flatMapMaxWidth,
+  });
   const grid = useWorldPixelGrid();
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
@@ -111,8 +127,17 @@ function FlatMapView() {
   }, []);
 
   return (
-    <>
-      <div className="relative" style={{ imageRendering: "pixelated" }}>
+    <div className="w-full" ref={measureRef}>
+      <div
+        className="relative mx-auto"
+        style={{
+          imageRendering: "pixelated",
+          width:
+            canvasWidth === null
+              ? undefined
+              : canvasWidth + 2 * BORDER_WIDTH_PX,
+        }}
+      >
         <div
           className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
           ref={canvasWrapperRef}
@@ -148,13 +173,19 @@ function FlatMapView() {
       >
         ← 양피지를 끌어 탐험 · 스크롤로 확대/축소 →
       </p>
-    </>
+    </div>
   );
 }
 
 /* ── GlobeMapView ── */
 
 function GlobeMapView() {
+  const measureRef = useRef<HTMLDivElement>(null);
+  const canvasWidth = usePixelSnappedWidth(measureRef, {
+    cells: GLOBE_SIZE / GLOBE_CELL_SIZE,
+    inset: 2 * BORDER_WIDTH_PX,
+    maxWidth: globeMaxWidth,
+  });
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
@@ -195,13 +226,16 @@ function GlobeMapView() {
   }, []);
 
   return (
-    <>
+    <div className="w-full" ref={measureRef}>
       <div
-        className="relative max-h-[70vh] max-w-[min(100%,70vh)]"
+        className="relative mx-auto max-w-full"
         style={{
           aspectRatio: "1",
           imageRendering: "pixelated",
-          width: GLOBE_SIZE,
+          width:
+            canvasWidth === null
+              ? GLOBE_SIZE + 2 * BORDER_WIDTH_PX
+              : canvasWidth + 2 * BORDER_WIDTH_PX,
         }}
       >
         <div
@@ -237,7 +271,7 @@ function GlobeMapView() {
       >
         수정구를 돌려 세계를 탐험 · 스크롤로 확대/축소
       </p>
-    </>
+    </div>
   );
 }
 

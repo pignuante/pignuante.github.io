@@ -62,25 +62,35 @@ export function JobTreeDesktop({
           <div style={{ gridColumn: "3", gridRow: `${branchIndex + 1}` }}>
             <JobBranchHeader branchView={branchView} />
           </div>
-          {/* A row wider than the box scrolls here rather than the page */}
-          <ol
-            className="flex items-center overflow-x-auto py-3 pr-3"
+          {/* A row wider than the box scrolls here rather than the page. It is
+              focusable and named so a keyboard can scroll it (Safari does not
+              focus scrollers on its own). */}
+          <div
+            aria-label={`${branchView.branch.label} 경로`}
+            className="flex overflow-x-auto py-3"
+            role="region"
             style={{ gridColumn: "4", gridRow: `${branchIndex + 1}` }}
+            tabIndex={0}
           >
-            {branchView.nodes.map((nodeView, nodeIndex) => (
-              <li className="flex items-center" key={nodeView.node.id}>
-                <span
-                  aria-hidden="true"
-                  className={`h-[3px] ${nodeIndex === 0 ? "w-3" : "w-5"}`}
-                  style={connectorStyle(
-                    nodeView.styles.line,
-                    nodeView.node.status,
-                  )}
-                />
-                <JobTreeCard node={nodeView.node} styles={nodeView.styles} />
-              </li>
-            ))}
-          </ol>
+            <ol className="flex items-center">
+              {branchView.nodes.map((nodeView, nodeIndex) => (
+                <li className="flex items-center" key={nodeView.node.id}>
+                  <span
+                    aria-hidden="true"
+                    className={`h-[3px] ${nodeIndex === 0 ? "w-3" : "w-5"}`}
+                    style={connectorStyle(
+                      nodeView.styles.line,
+                      nodeView.node.status,
+                    )}
+                  />
+                  <JobTreeCard node={nodeView.node} styles={nodeView.styles} />
+                </li>
+              ))}
+            </ol>
+            {/* End room for the last card's shadow: WebKit can leave a flex
+                scroller's end padding out of the scroll area. */}
+            <span aria-hidden="true" className="w-3 flex-shrink-0" />
+          </div>
         </div>
       ))}
     </div>

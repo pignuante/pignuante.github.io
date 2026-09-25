@@ -80,7 +80,7 @@ function wrapMod(v: number, mod: number): number {
  * @param mapHeight - Logical pixel height of the map (for Y-clamping)
  * @param baseCellDevicePixels - Device px per cell at zoom 1; when set, zoom
  *   follows the wheel continuously and, ZOOM_SETTLE_MS after the last event,
- *   settles on a level where a cell spans whole device pixels (quantizeZoom)
+ *   settles on a level where a cell spans whole device pixels (settleZoom)
  */
 export function useMapCamera(
   targetRef: RefObject<HTMLDivElement | null>,
@@ -260,7 +260,14 @@ export function useMapCamera(
 
       // Proportional zoom factor
       const factor = wheelZoomFactor(e);
-      gestureStartRef.current ??= zoomRawGoalRef.current;
+      if (gestureStartRef.current === null) {
+        // New gesture: remember the level it starts from (for settleZoom),
+        // and accumulate from what is on screen, not from a settle target
+        // the animation has not reached yet; otherwise reversing direction
+        // mid-settle would keep zooming the old way for a moment.
+        gestureStartRef.current = zoomRawGoalRef.current;
+        zoomRawGoalRef.current = zoomCurrentRef.current;
+      }
       zoomRawGoalRef.current = Math.max(
         ZOOM_MIN,
         Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
@@ -270,6 +277,9 @@ export function useMapCamera(
       zoomGoalRef.current = zoomRawGoalRef.current;
       window.clearTimeout(settleTimerRef.current);
       settleTimerRef.current = window.setTimeout(settle, ZOOM_SETTLE_MS);
+      // This newer timer is the one that decides; drop a settle that was
+      // parked by an earlier drag.
+      settleDuringDragRef.current = false;
 
       // CSS → logical conversion
       const rect = canvas.getBoundingClientRect();

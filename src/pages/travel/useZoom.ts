@@ -29,8 +29,9 @@ const SNAP_EPSILON = 0.002;
  * - Uses `{ passive: false }` for `preventDefault()` — prevents page scroll
  *
  * - With `baseCellDevicePixels`, zoom follows the wheel continuously and,
- *   ZOOM_SETTLE_MS after the last event, settles on the nearest level where a
- *   cell spans whole device pixels (quantizeZoom), so the grid is even at rest.
+ *   ZOOM_SETTLE_MS after the last event, settles on a level where a cell
+ *   spans whole device pixels (settleZoom: nearest, or one level on when the
+ *   nearest is where the gesture began), so the grid is even at rest.
  *
  * @param targetRef - Ref to the DOM element that captures wheel events
  * @param baseCellDevicePixels - Device px per cell at zoom 1, or null to zoom freely
@@ -126,7 +127,14 @@ export function useZoom(
 
       // Proportional zoom: ~100px per mouse-wheel notch, ~1-10 for trackpad
       const factor = wheelZoomFactor(e);
-      gestureStartRef.current ??= rawGoalRef.current;
+      if (gestureStartRef.current === null) {
+        // New gesture: remember the level it starts from (for settleZoom),
+        // and accumulate from what is on screen, not from a settle target
+        // the animation has not reached yet; otherwise reversing direction
+        // mid-settle would keep zooming the old way for a moment.
+        gestureStartRef.current = rawGoalRef.current;
+        rawGoalRef.current = currentRef.current;
+      }
       rawGoalRef.current = Math.max(
         ZOOM_MIN,
         Math.min(ZOOM_MAX, rawGoalRef.current * factor),

@@ -14,6 +14,7 @@ import {
   WORLD_MAP_HEIGHT,
   WORLD_MAP_WIDTH,
 } from "./constants";
+import { HereOverlay, type HereMarker } from "./HereOverlay";
 import { useRendererResolution } from "./useRendererResolution";
 import { wrapX } from "./utils";
 import { COUNTRY_BIOME_MAP } from "./world-data";
@@ -300,6 +301,12 @@ function HoverDetector({
 
 /* ── Props ── */
 interface WorldPixelMapProps {
+  /** Visitor "you are here" marker; null hides it */
+  here?: HereMarker | null;
+  /** Logical px per visitor-pin pixel (see pinPixelSize) */
+  herePinPixel?: number;
+  /** Animate the visitor country tint (false for reduced motion) */
+  herePulse?: boolean;
   /** Renderer backing-store scale; defaults to devicePixelRatio. */
   resolution?: number;
   grid: WorldPixelGridResult;
@@ -313,6 +320,9 @@ interface WorldPixelMapProps {
 /* ── Main component ── */
 export default function WorldPixelMap({
   grid,
+  here = null,
+  herePinPixel = 2,
+  herePulse = false,
   hoveredCountryId = null,
   offsetX = 0,
   offsetY = 0,
@@ -361,6 +371,16 @@ export default function WorldPixelMap({
           grid={grid}
           hoveredCountryId={hoveredCountryId}
           offsetX={offsetX}
+        />
+        <HereOverlay
+          cellSize={WORLD_CELL_SIZE}
+          grid={grid}
+          here={here}
+          mapWidth={WORLD_MAP_WIDTH}
+          offsetX={offsetX}
+          pinPixel={herePinPixel}
+          pulse={herePulse}
+          zoom={zoom}
         />
         <HoverDetector
           grid={grid}

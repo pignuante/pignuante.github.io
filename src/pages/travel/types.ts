@@ -11,6 +11,8 @@ export interface WorldPixelGridResult {
   bakedCanvas: OffscreenCanvas;
   cols: number;
   rows: number;
+  /** Cell flat index → 1-based world-grid country index (0 ocean, -1 outside) */
+  screenCountry: Int16Array;
   /** Cell flat index (row * cols + col) → ISO country ID for visited cells only */
   visitedCountryGrid: Map<number, string>;
 }

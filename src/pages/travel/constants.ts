@@ -40,6 +40,11 @@ export const HOVER_OVERLAY_ALPHA = 0.35;
 /** Hovered country border outline color (warm red at full saturation) */
 export const COLOR_HOVER_BORDER = 0xff_44_44;
 
+/** Visitor "you are here" pin and country tint (distinct from visited red) */
+export const COLOR_HERE = 0xf5_a6_23;
+export const COLOR_HERE_OUTLINE = 0x3a_2a_12;
+export const COLOR_HERE_HIGHLIGHT = 0xff_f6_e0;
+
 /** Hovered country border outline alpha */
 export const HOVER_BORDER_ALPHA = 0.6;
 

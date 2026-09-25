@@ -15,6 +15,7 @@ import {
   HOVER_BORDER_ALPHA,
   HOVER_SEARCH_RADIUS,
 } from "./constants";
+import { HereOverlay, type HereMarker } from "./HereOverlay";
 import { useRendererResolution } from "./useRendererResolution";
 import { COUNTRY_BIOME_MAP } from "./world-data";
 
@@ -272,6 +273,12 @@ function GlobeOutline() {
 
 /* ── Props ── */
 interface GlobePixelMapProps {
+  /** Visitor "you are here" marker; null hides it */
+  here?: HereMarker | null;
+  /** Logical px per visitor-pin pixel (see pinPixelSize) */
+  herePinPixel?: number;
+  /** Animate the visitor country tint (false for reduced motion) */
+  herePulse?: boolean;
   /** Renderer backing-store scale; defaults to devicePixelRatio. */
   resolution?: number;
   grid: WorldPixelGridResult;
@@ -283,6 +290,9 @@ interface GlobePixelMapProps {
 /* ── Main component ── */
 export default function GlobePixelMap({
   grid,
+  here = null,
+  herePinPixel = 2,
+  herePulse = false,
   hoveredCountryId = null,
   onCountryHover,
   resolution = window.devicePixelRatio,
@@ -315,6 +325,14 @@ export default function GlobePixelMap({
         <GlobeBakedLayer grid={grid} />
         <GlobeHoverOverlay grid={grid} hoveredCountryId={hoveredCountryId} />
         <GlobeHoverBorder grid={grid} hoveredCountryId={hoveredCountryId} />
+        <HereOverlay
+          cellSize={GLOBE_CELL_SIZE}
+          grid={grid}
+          here={here}
+          pinPixel={herePinPixel}
+          pulse={herePulse}
+          zoom={zoom}
+        />
         <GlobeHoverDetector
           grid={grid}
           onCountryHover={handleCountryHover}

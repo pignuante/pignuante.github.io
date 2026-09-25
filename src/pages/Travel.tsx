@@ -1,4 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { geoDistance, geoNaturalEarth1 } from "d3-geo";
+import { useReducedMotion } from "motion/react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import type { HereMarker } from "./travel/HereOverlay";
 import type {
   Biome,
   CountryHoverInfo,
@@ -18,12 +28,24 @@ import {
   WORLD_MAP_WIDTH,
 } from "./travel/constants";
 import GlobePixelMap from "./travel/GlobePixelMap";
+import { PIN_ROWS, pinPixelSize } from "./travel/herePin";
 import { useGlobeDrag } from "./travel/useGlobeDrag";
-import { useGlobePixelGrid } from "./travel/useGlobePixelGrid";
+import {
+  createGlobeProjection,
+  useGlobePixelGrid,
+} from "./travel/useGlobePixelGrid";
 import { useMapCamera } from "./travel/useMapCamera";
 import { usePixelSnappedWidth } from "./travel/usePixelSnappedWidth";
+import { useWorldGridData } from "./travel/useWorldGridData";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
+import {
+  countryName,
+  gridCountryIndex,
+  useVisitorLocation,
+  type PreciseStatus,
+  type VisitorLocation,
+} from "./travel/visitorLocation";
 import WorldPixelMap from "./travel/WorldPixelMap";
 import { cellDevicePixels } from "./travel/zoomMath";
 
@@ -80,9 +102,50 @@ const VIEW_MODE_OPTIONS: ReadonlyArray<{
   { icon: "🔮", label: "수정구", mode: "globe" },
 ];
 
+/** What both map views need to draw the visitor pin */
+interface VisitorView {
+  countryIndex: number;
+  location: null | VisitorLocation;
+  pulse: boolean;
+}
+
+/** Globe rotation that puts `[lat, lon]` at the centre of the disc. */
+function rotationFacing([lat, lon]: readonly [number, number]): GlobeRotation {
+  return { lambda: ((lon % 360) + 360) % 360, phi: lat };
+}
+
+/** Hint line under a map, with the "back to my location" button when known. */
+function MapHint({
+  children,
+  onCenter,
+}: {
+  children: string;
+  onCenter: (() => void) | null;
+}) {
+  return (
+    <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+      <p
+        className="font-pixel-small text-[12px]"
+        style={{ color: "var(--text-tertiary)" }}
+      >
+        {children}
+      </p>
+      {onCenter ? (
+        <button
+          className="pixel-btn font-pixel-small text-[12px] hover:pixel-btn-hover active:pixel-btn-active"
+          onClick={onCenter}
+          type="button"
+        >
+          <span aria-hidden="true">📍 </span>내 위치로
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
 /* ── FlatMapView ── */
 
-function FlatMapView() {
+function FlatMapView({ visitor }: { visitor: VisitorView }) {
   const measureRef = useRef<HTMLDivElement>(null);
   const snapped = usePixelSnappedWidth(measureRef, {
     cells: WORLD_MAP_WIDTH / WORLD_CELL_SIZE,
@@ -90,16 +153,49 @@ function FlatMapView() {
     logicalWidth: WORLD_MAP_WIDTH,
   });
   const grid = useWorldPixelGrid();
+  const worldData = useWorldGridData();
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
 
-  const { isDragging, offsetX, offsetY, zoom } = useMapCamera(
+  const { centerOn, isDragging, offsetX, offsetY, zoom } = useMapCamera(
     canvasWrapperRef,
     WORLD_MAP_WIDTH,
     WORLD_MAP_HEIGHT,
     cellDevicePixels(WORLD_CELL_SIZE, snapped?.resolution),
   );
+
+  const here = useMemo<HereMarker | null>(() => {
+    if (!visitor.location || !worldData) return null;
+    const [lat, lon] = visitor.location.point;
+    const projected = geoNaturalEarth1()
+      .scale(worldData.naturalEarthFit.scale)
+      .translate(worldData.naturalEarthFit.translate)([lon, lat]);
+    return {
+      countryIndex: visitor.countryIndex,
+      point: projected ? { x: projected[0], y: projected[1] } : null,
+    };
+  }, [visitor.countryIndex, visitor.location, worldData]);
+
+  // Open with the visitor's location in the middle (horizontally: at zoom 1
+  // the whole height is already in view), and follow a precise position that
+  // arrives later, unless the visitor has moved the map themselves. A layout
+  // effect, so the offset is set before the browser paints. The target is
+  // snapped to a whole cell so the grid keeps the phase it has at offset 0
+  // (a fractional offset changes how cell and gap round to device pixels);
+  // the price is up to half a cell off the exact point, scaled by zoom.
+  const hereX = here?.point
+    ? Math.round(here.point.x / WORLD_CELL_SIZE) * WORLD_CELL_SIZE
+    : undefined;
+  const hereY = here?.point?.y;
+  useLayoutEffect(() => {
+    if (hereX === undefined || hereY === undefined) return;
+    centerOn(hereX, hereY, { unlessMoved: true });
+  }, [centerOn, hereX, hereY]);
+  const centerOnHere =
+    hereX === undefined || hereY === undefined
+      ? null
+      : () => centerOn(hereX, hereY);
 
   const isDraggingRef = useRef<boolean>(false);
 
@@ -152,6 +248,11 @@ function FlatMapView() {
           {grid ? (
             <WorldPixelMap
               grid={grid}
+              here={here}
+              herePinPixel={pinPixelSize(
+                (snapped?.width ?? WORLD_MAP_WIDTH) / WORLD_MAP_WIDTH,
+              )}
+              herePulse={visitor.pulse}
               hoveredCountryId={hoveredCountryId}
               offsetX={offsetX}
               offsetY={offsetY}
@@ -171,19 +272,16 @@ function FlatMapView() {
         {tooltip ? <CountryTooltip tooltip={tooltip} /> : null}
       </div>
 
-      <p
-        className="mt-2 font-pixel-small text-[12px]"
-        style={{ color: "var(--text-tertiary)" }}
-      >
+      <MapHint onCenter={centerOnHere}>
         ← 양피지를 끌어 탐험 · 스크롤로 확대/축소 →
-      </p>
+      </MapHint>
     </div>
   );
 }
 
 /* ── GlobeMapView ── */
 
-function GlobeMapView() {
+function GlobeMapView({ visitor }: { visitor: VisitorView }) {
   const measureRef = useRef<HTMLDivElement>(null);
   const snapped = usePixelSnappedWidth(measureRef, {
     cells: GLOBE_SIZE / GLOBE_CELL_SIZE,
@@ -195,15 +293,62 @@ function GlobeMapView() {
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
 
-  const { isDragging, rotation } = useGlobeDrag(
-    canvasWrapperRef,
-    GLOBE_INITIAL_ROTATION,
+  // Start with the visitor's location facing the viewer.
+  const [initialRotation] = useState<GlobeRotation>(() =>
+    visitor.location
+      ? rotationFacing(visitor.location.point)
+      : GLOBE_INITIAL_ROTATION,
   );
+  const { centerOn, isDragging, rotation } = useGlobeDrag(
+    canvasWrapperRef,
+    initialRotation,
+  );
+  // A precise position arrives later; turn to it unless the visitor has
+  // already rotated the globe themselves.
+  useEffect(() => {
+    if (visitor.location?.source !== "precise") return;
+    centerOn(rotationFacing(visitor.location.point), { unlessMoved: true });
+  }, [centerOn, visitor.location]);
+  const visitorPoint = visitor.location?.point;
+  const centerOnHere = visitorPoint
+    ? () => centerOn(rotationFacing(visitorPoint))
+    : null;
   const grid = useGlobePixelGrid(rotation);
   const { zoom } = useZoom(
     canvasWrapperRef,
     cellDevicePixels(GLOBE_CELL_SIZE, snapped?.resolution),
   );
+  const herePinPixel = pinPixelSize(
+    (snapped?.width ?? GLOBE_SIZE) / GLOBE_SIZE,
+  );
+
+  const here = useMemo<HereMarker | null>(() => {
+    if (!visitor.location) return null;
+    const [lat, lon] = visitor.location.point;
+    // Hide the pin on the far hemisphere (orthographic clipAngle 90), and
+    // early enough that the bitmap stays inside the disc: a point at angle a
+    // from the centre projects at radius R·sin(a), so the pin's height h
+    // fits while sin(a) <= 1 - h/R.
+    const radius = GLOBE_SIZE / 2;
+    const pinHeight = (PIN_ROWS.length * herePinPixel) / zoom;
+    const angle = geoDistance([lon, lat], [rotation.lambda, rotation.phi]);
+    const onFront =
+      angle < Math.PI / 2 && Math.sin(angle) <= 1 - pinHeight / radius;
+    const projected = onFront
+      ? createGlobeProjection(rotation.lambda, rotation.phi)([lon, lat])
+      : null;
+    return {
+      countryIndex: visitor.countryIndex,
+      point: projected ? { x: projected[0], y: projected[1] } : null,
+    };
+  }, [
+    herePinPixel,
+    rotation.lambda,
+    rotation.phi,
+    visitor.countryIndex,
+    visitor.location,
+    zoom,
+  ]);
 
   const isDraggingRef = useRef<boolean>(false);
 
@@ -259,6 +404,9 @@ function GlobeMapView() {
           {grid ? (
             <GlobePixelMap
               grid={grid}
+              here={here}
+              herePinPixel={herePinPixel}
+              herePulse={visitor.pulse}
               hoveredCountryId={hoveredCountryId}
               onCountryHover={handleCountryHover}
               resolution={snapped?.resolution}
@@ -276,12 +424,9 @@ function GlobeMapView() {
         {tooltip ? <CountryTooltip tooltip={tooltip} /> : null}
       </div>
 
-      <p
-        className="mt-2 font-pixel-small text-[12px]"
-        style={{ color: "var(--text-tertiary)" }}
-      >
+      <MapHint onCenter={centerOnHere}>
         수정구를 돌려 세계를 탐험 · 스크롤로 확대/축소
-      </p>
+      </MapHint>
     </div>
   );
 }
@@ -296,6 +441,26 @@ export default function Travel() {
   const [chosenViewMode, setViewMode] = useState<MapViewMode | null>(null);
   const viewMode: MapViewMode =
     chosenViewMode ?? (isNarrowViewport ? "globe" : "flat");
+
+  const worldData = useWorldGridData();
+  const { canRequestPrecise, location, preciseStatus, requestPrecise } =
+    useVisitorLocation(worldData);
+  const countryIndex =
+    location && worldData
+      ? gridCountryIndex(worldData, location.countryCode)
+      : 0;
+  // Prefer the map's own Korean name (matches hover tooltips: "호주"), then
+  // the browser's ("HK" -> "홍콩") for places the map data does not name.
+  const visitorCountryName = location?.countryCode
+    ? ((countryIndex > 0
+        ? worldData?.countries[countryIndex - 1].nameKo
+        : undefined) ?? countryName(location.countryCode))
+    : undefined;
+  const visitor: VisitorView = {
+    countryIndex,
+    location,
+    pulse: !useReducedMotion(),
+  };
 
   return (
     <section
@@ -349,7 +514,11 @@ export default function Travel() {
       </div>
 
       <div className="mt-10 flex flex-col items-center px-6">
-        {viewMode === "flat" ? <FlatMapView /> : <GlobeMapView />}
+        {viewMode === "flat" ? (
+          <FlatMapView visitor={visitor} />
+        ) : (
+          <GlobeMapView visitor={visitor} />
+        )}
 
         {/* Biome legend — shared across both views */}
         <div className="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-2 font-pixel-small text-[12px]">
@@ -363,12 +532,79 @@ export default function Travel() {
             </div>
           ))}
         </div>
+
+        <VisitorLocationNote
+          canRequestPrecise={canRequestPrecise}
+          countryName={visitorCountryName}
+          location={location}
+          onRequestPrecise={requestPrecise}
+          preciseStatus={preciseStatus}
+        />
       </div>
     </section>
   );
 }
 
 /* ── HTML Overlay Tooltip (shared) ── */
+
+const PRECISE_STATUS_TEXT: Partial<Record<PreciseStatus, string>> = {
+  denied: "위치 권한이 거부되어 시간대 기준으로 표시해요.",
+  locating: "위치를 확인하는 중…",
+  ok: "현재 위치로 옮겼어요. 아주 작은 나라는 지도 격자에서 이웃 나라로 표시될 수 있어요.",
+  unavailable: "정확한 위치를 가져오지 못했어요.",
+};
+
+/** "You are here" line under the maps, plus the opt-in precise button. */
+function VisitorLocationNote({
+  canRequestPrecise,
+  countryName,
+  location,
+  onRequestPrecise,
+  preciseStatus,
+}: {
+  canRequestPrecise: boolean;
+  countryName: string | undefined;
+  location: null | VisitorLocation;
+  onRequestPrecise: () => void;
+  preciseStatus: PreciseStatus;
+}) {
+  const where = location
+    ? `${countryName ?? "바다 위 어딘가"} · ${
+        location.source === "precise" ? "현재 위치 기준" : "시간대 기준"
+      }`
+    : "시간대로는 위치를 알 수 없어요";
+  const statusText = PRECISE_STATUS_TEXT[preciseStatus];
+
+  return (
+    <div className="mt-6 flex flex-col items-center gap-2 text-center">
+      <p
+        aria-live="polite"
+        className="font-pixel-body text-[15px]"
+        style={{ color: "var(--text-primary)" }}
+      >
+        <span aria-hidden="true">📍 </span>지금 접속 위치: {where}
+      </p>
+      {canRequestPrecise && location?.source !== "precise" ? (
+        <button
+          className="pixel-btn font-pixel-small text-[12px] hover:pixel-btn-hover active:pixel-btn-active"
+          disabled={preciseStatus === "locating"}
+          onClick={onRequestPrecise}
+          type="button"
+        >
+          정확한 위치 보기
+        </button>
+      ) : null}
+      <p
+        aria-live="polite"
+        className="font-pixel-small text-[12px]"
+        style={{ color: "var(--text-secondary)" }}
+      >
+        {statusText ??
+          "위치는 이 브라우저 안에서만 쓰이고 저장하거나 보내지 않아요."}
+      </p>
+    </div>
+  );
+}
 
 function CountryTooltip({ tooltip }: { tooltip: TooltipState }) {
   const { cssX, cssY, nameKo } = tooltip;

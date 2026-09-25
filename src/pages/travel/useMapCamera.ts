@@ -17,7 +17,15 @@ const SNAP_EPSILON = 0.002;
 
 /* ── Types ── */
 
+/** Options for {@link MapCameraState.centerOn} */
+export interface CenterOnOptions {
+  /** Leave the view alone once the visitor has dragged or zoomed it */
+  unlessMoved?: boolean;
+}
+
 interface MapCameraState {
+  /** Put content point (x, y) at the centre of the view, at the current zoom */
+  centerOn: (x: number, y: number, options?: CenterOnOptions) => void;
   isDragging: boolean;
   offsetX: number;
   offsetY: number;
@@ -26,6 +34,8 @@ interface MapCameraState {
 
 /** Anchor captured on each wheel event for mouse-position zoom */
 interface ZoomAnchor {
+  /** Set by centerOn: survives a resize re-snap, so the point stays centred */
+  centred?: boolean;
   /** Content-space Y under cursor (computed once, used every rAF frame) */
   contentY: number;
   /** offsetX snapshot at the moment the anchor was captured */
@@ -61,6 +71,26 @@ function wrapMod(v: number, mod: number): number {
   return ((v % mod) + mod) % mod;
 }
 
+/** Offsets that keep `anchor`'s content point under its screen point at zoom `z`. */
+function offsetsForAnchor(
+  anchor: ZoomAnchor,
+  z: number,
+  W: number,
+  H: number,
+): { x: number; y: number } {
+  // X — absolute from anchor snapshot
+  const x = wrapMod(
+    anchor.offsetXAtCapture +
+      (anchor.screenX - W / 2) * (1 / z - 1 / anchor.zAtCapture),
+    W,
+  );
+  // Y — pivot-shift inversion; at z=1 the pivot must be centred (and the
+  // formula would divide by zero)
+  if (Math.abs(z - 1) < 1e-9) return { x, y: 0 };
+  const P = (anchor.screenY - anchor.contentY * z) / (1 - z);
+  return { x, y: clamp(P - H / 2, clampRange(H, z)) };
+}
+
 /* ── Hook ── */
 
 /**
@@ -75,6 +105,8 @@ function wrapMod(v: number, mod: number): number {
  * - Wheel zoom: proportional (`wheelZoomFactor`), clamped to
  *   `[ZOOM_MIN, ZOOM_MAX]`, animated via exponential ease-out lerp.
  * - Drag: inverse-zoom-scaled for consistent feel at any zoom level.
+ * - centerOn: pans a content point to the centre; it stays centred through a
+ *   zoom animation still in flight, until the next wheel event or drag.
  *
  * @param targetRef - Ref to the DOM element that captures pointer / wheel events
  * @param mapWidth  - Logical pixel width of the map (for X-wrapping)
@@ -133,6 +165,8 @@ export function useMapCamera(
   const lastYRef = useRef(0);
   /** CSS-to-logical scale captured once per drag start */
   const scaleRef = useRef(1);
+  /** Set once the visitor drags or zooms; centerOn({unlessMoved}) then no-ops */
+  const userMovedRef = useRef(false);
 
   /** Keep map dimensions accessible to callbacks without re-creating them */
   const mapWidthRef = useRef(mapWidth);
@@ -150,9 +184,10 @@ export function useMapCamera(
     // so neither a stale timer nor the old raw value overrides it.
     window.clearTimeout(settleTimerRef.current);
     gestureStartRef.current = null;
-    // The last wheel anchor refers to the old canvas geometry; drop it so a
-    // passive resize does not pan the map.
-    anchorRef.current = null;
+    // A wheel anchor belongs to a cursor position the visitor has moved on
+    // from; drop it so a passive resize does not pan the map. A centerOn
+    // anchor stays, so the re-snapped zoom keeps its point centred.
+    if (!anchorRef.current?.centred) anchorRef.current = null;
     const snapped = quantizeZoom(
       zoomRawGoalRef.current,
       baseCellDevicePixels,
@@ -189,21 +224,9 @@ export function useMapCamera(
       // Compute offsets from anchor (only when not dragging)
       const anchor = anchorRef.current;
       if (anchor && !draggingRef.current) {
-        // X — absolute from anchor snapshot
-        const rawX =
-          anchor.offsetXAtCapture +
-          (anchor.screenX - W / 2) * (1 / zShown - 1 / anchor.zAtCapture);
-        offsetXRef.current = wrapMod(rawX, W);
-
-        // Y — pivot-shift inversion
-        if (Math.abs(zShown - 1) < 1e-9) {
-          // At z=1 the pivot must be centered — avoid division by zero
-          offsetYRef.current = 0;
-        } else {
-          const P = (anchor.screenY - anchor.contentY * zShown) / (1 - zShown);
-          const limit = clampRange(H, zShown);
-          offsetYRef.current = clamp(P - H / 2, limit);
-        }
+        const next = offsetsForAnchor(anchor, zShown, W, H);
+        offsetXRef.current = next.x;
+        offsetYRef.current = next.y;
       }
       // If no anchor: offsets stay wherever they are (drag-controlled or idle)
 
@@ -287,10 +310,14 @@ export function useMapCamera(
         };
         zoomRawGoalRef.current = zoomCurrentRef.current;
       }
+      const rawBefore = zoomRawGoalRef.current;
       zoomRawGoalRef.current = Math.max(
         ZOOM_MIN,
         Math.min(ZOOM_MAX, zoomRawGoalRef.current * factor),
       );
+      // Only a wheel that changes the zoom moves the view; one the clamp
+      // holds at a range end (scrolling out at 1x) does not.
+      if (zoomRawGoalRef.current !== rawBefore) userMovedRef.current = true;
       // Follow the wheel continuously; settle on a whole-pixel level once it
       // stops (see ZOOM_SETTLE_MS), around the same cursor anchor.
       zoomGoalRef.current = zoomRawGoalRef.current;
@@ -357,6 +384,7 @@ export function useMapCamera(
     const z = zoomShownRef.current;
     const W = mapWidthRef.current;
     const H = mapHeightRef.current;
+    if (dxCss !== 0 || dyCss !== 0) userMovedRef.current = true;
 
     // X — infinite wrap
     const nextX = offsetXRef.current + (dxCss * scale) / z;
@@ -378,6 +406,33 @@ export function useMapCamera(
       settle();
     }
   }, [settle]);
+
+  const centerOn = useCallback(
+    (x: number, y: number, options?: CenterOnOptions): void => {
+      if (options?.unlessMoved && userMovedRef.current) return;
+      const W = mapWidthRef.current;
+      const H = mapHeightRef.current;
+      const z = zoomShownRef.current;
+      // A screen-centre anchor: the running tick (if a zoom is still
+      // animating) keeps (x, y) centred until the next wheel or drag.
+      const anchor: ZoomAnchor = {
+        centred: true,
+        contentY: y,
+        offsetXAtCapture: wrapMod(W / 2 - x, W),
+        screenX: W / 2,
+        screenY: H / 2,
+        zAtCapture: z,
+      };
+      anchorRef.current = anchor;
+      // Apply now, not on the next rAF frame (the tick may be idle).
+      const next = offsetsForAnchor(anchor, z, W, H);
+      offsetXRef.current = next.x;
+      offsetYRef.current = next.y;
+      setOffsetX(next.x);
+      setOffsetY(next.y);
+    },
+    [],
+  );
 
   /* ── Event binding ── */
 
@@ -416,5 +471,5 @@ export function useMapCamera(
   const maxY = clampRange(mapHeight, zoom);
   const clampedOffsetY = clamp(offsetY, maxY);
 
-  return { isDragging, offsetX, offsetY: clampedOffsetY, zoom };
+  return { centerOn, isDragging, offsetX, offsetY: clampedOffsetY, zoom };
 }

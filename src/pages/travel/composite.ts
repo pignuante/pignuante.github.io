@@ -32,6 +32,11 @@ export interface CompositeResult {
   bakedCanvas: OffscreenCanvas;
   cols: number;
   rows: number;
+  /**
+   * Cell flat index → 1-based world-grid country index (0 ocean, -1 outside
+   * the map), for overlays that follow any country (e.g. the visitor pin).
+   */
+  screenCountry: Int16Array;
   /** Cell flat index → ISO country ID, visited countries only (hover lookup) */
   visitedCountryGrid: Map<number, string>;
 }
@@ -96,7 +101,9 @@ export function compositeWorldGrid({
   const bakedCanvas = new OffscreenCanvas(cols * cellSize, rows * cellSize);
   const ctx = bakedCanvas.getContext("2d");
   const visitedCountryGrid = new Map<number, string>();
-  if (!ctx) return { bakedCanvas, cols, rows, visitedCountryGrid };
+  if (!ctx) {
+    return { bakedCanvas, cols, rows, screenCountry, visitedCountryGrid };
+  }
 
   const cellW = cellSize - 1;
   const cssColorCache = new Map<number, string>();
@@ -160,7 +167,7 @@ export function compositeWorldGrid({
   }
   ctx.globalAlpha = 1;
 
-  return { bakedCanvas, cols, rows, visitedCountryGrid };
+  return { bakedCanvas, cols, rows, screenCountry, visitedCountryGrid };
 }
 
 /** Neighbor differs when it is another country or the ocean (not outside the projection) */

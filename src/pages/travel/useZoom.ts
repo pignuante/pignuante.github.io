@@ -1,7 +1,13 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ZOOM_MAX, ZOOM_MIN } from "./constants";
-import { quantizeZoom, wheelZoomFactor } from "./zoomMath";
+import {
+  type GestureStart,
+  quantizeZoom,
+  settleZoom,
+  wheelZoomFactor,
+  ZOOM_SETTLE_MS,
+} from "./zoomMath";
 
 /** Return type for the zoom hook */
 interface ZoomState {
@@ -23,9 +29,10 @@ const SNAP_EPSILON = 0.002;
  * - Clamped to [ZOOM_MIN, ZOOM_MAX]
  * - Uses `{ passive: false }` for `preventDefault()` — prevents page scroll
  *
- * - With `baseCellDevicePixels`, the goal and every published frame snap to
- *   levels where a cell spans whole device pixels (quantizeZoom), so the grid
- *   stays even while animating; the wheel still accumulates finely.
+ * - With `baseCellDevicePixels`, zoom follows the wheel continuously and,
+ *   ZOOM_SETTLE_MS after the last event, settles on a level where a cell
+ *   spans whole device pixels (settleZoom: in the direction it moved, at
+ *   least one level on where the range allows), so the grid is even at rest.
  *
  * @param targetRef - Ref to the DOM element that captures wheel events
  * @param baseCellDevicePixels - Device px per cell at zoom 1, or null to zoom freely
@@ -44,13 +51,21 @@ export function useZoom(
   const rafRef = useRef(0);
   /** Stable ref to the tick function (set once in useEffect) */
   const tickRef = useRef<() => void>(() => {});
-  /** Unquantized wheel accumulator, so small trackpad deltas add up */
+  /** Wheel accumulator; continuous during a gesture, the level at rest */
   const rawGoalRef = useRef(1);
+  /** Pending settle-to-whole-pixel timer (0 = none) */
+  const settleTimerRef = useRef(0);
+  /** Where the current wheel gesture started (null between gestures) */
+  const gestureStartRef = useRef<GestureStart | null>(null);
   const baseCellDevicePixelsRef = useRef(baseCellDevicePixels);
 
   useEffect(() => {
     baseCellDevicePixelsRef.current = baseCellDevicePixels;
     // Re-snap the current goal when the cell size changes (resize, DPR).
+    // Cancel a pending settle and restart the accumulator from the new level,
+    // so neither a stale timer nor the old raw value overrides it.
+    window.clearTimeout(settleTimerRef.current);
+    gestureStartRef.current = null;
     const snapped = quantizeZoom(
       rawGoalRef.current,
       baseCellDevicePixels,
@@ -59,6 +74,7 @@ export function useZoom(
     );
     if (snapped !== goalRef.current) {
       goalRef.current = snapped;
+      rawGoalRef.current = snapped;
       if (rafRef.current === 0) {
         rafRef.current = requestAnimationFrame(tickRef.current);
       }
@@ -81,37 +97,68 @@ export function useZoom(
 
       const next = current + diff * LERP_FACTOR;
       currentRef.current = next;
-      // Publish only whole-pixel levels so the tween itself stays even.
-      setZoom(
-        quantizeZoom(next, baseCellDevicePixelsRef.current, ZOOM_MIN, ZOOM_MAX),
-      );
+      setZoom(next);
       rafRef.current = requestAnimationFrame(tick);
     };
 
     tickRef.current = tick;
   }, []);
 
-  const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault();
-
-    // Proportional zoom: ~100px per mouse-wheel notch, ~1-10 for trackpad
-    const factor = wheelZoomFactor(e);
-    rawGoalRef.current = Math.max(
-      ZOOM_MIN,
-      Math.min(ZOOM_MAX, rawGoalRef.current * factor),
-    );
-    goalRef.current = quantizeZoom(
+  /** Bring the zoom to rest on a whole-pixel level (see settleZoom). */
+  const settle = useCallback((): void => {
+    const start = gestureStartRef.current ?? {
+      level: rawGoalRef.current,
+      shown: rawGoalRef.current,
+    };
+    gestureStartRef.current = null;
+    const settled = settleZoom(
       rawGoalRef.current,
+      start,
       baseCellDevicePixelsRef.current,
       ZOOM_MIN,
       ZOOM_MAX,
     );
-
-    // Start animation loop if not already running
+    rawGoalRef.current = settled;
+    goalRef.current = settled;
     if (rafRef.current === 0) {
       rafRef.current = requestAnimationFrame(tickRef.current);
     }
   }, []);
+
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      e.preventDefault();
+
+      // Proportional zoom: ~100px per mouse-wheel notch, ~1-10 for trackpad
+      const factor = wheelZoomFactor(e);
+      if (gestureStartRef.current === null) {
+        // New gesture: remember where it starts (for settleZoom), and
+        // accumulate from what is on screen, not from a settle target
+        // the animation has not reached yet; otherwise reversing direction
+        // mid-settle would keep zooming the old way for a moment.
+        gestureStartRef.current = {
+          level: rawGoalRef.current,
+          shown: currentRef.current,
+        };
+        rawGoalRef.current = currentRef.current;
+      }
+      rawGoalRef.current = Math.max(
+        ZOOM_MIN,
+        Math.min(ZOOM_MAX, rawGoalRef.current * factor),
+      );
+      // Follow the wheel continuously; settle on a whole-pixel level once it
+      // stops (see ZOOM_SETTLE_MS).
+      goalRef.current = rawGoalRef.current;
+      window.clearTimeout(settleTimerRef.current);
+      settleTimerRef.current = window.setTimeout(settle, ZOOM_SETTLE_MS);
+
+      // Start animation loop if not already running
+      if (rafRef.current === 0) {
+        rafRef.current = requestAnimationFrame(tickRef.current);
+      }
+    },
+    [settle],
+  );
 
   useEffect(() => {
     const el = targetRef.current;
@@ -123,6 +170,7 @@ export function useZoom(
     return () => {
       el.removeEventListener("wheel", handleWheel);
       cancelAnimationFrame(rafRef.current);
+      window.clearTimeout(settleTimerRef.current);
     };
   }, [targetRef, handleWheel]);
 

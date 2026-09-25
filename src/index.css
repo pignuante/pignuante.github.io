@@ -279,3 +279,46 @@ textarea,
 @utility pixel-arrow-bounce {
   animation: arrow-bounce 1s ease-in-out infinite;
 }
+
+/* Two-frame flame: frame a shows at rest (and under reduced motion, where
+   the animation ends at once), frame b only while animating. */
+@keyframes pixel-flicker {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@utility pixel-flicker-a {
+  animation: pixel-flicker 0.6s steps(1) infinite;
+}
+
+@keyframes pixel-flicker-b {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@utility pixel-flicker-b {
+  opacity: 0;
+  animation: pixel-flicker-b 0.6s steps(1) infinite;
+}
+
+@keyframes pixel-twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@utility pixel-twinkle {
+  animation: pixel-twinkle 2.4s steps(3) infinite;
+}

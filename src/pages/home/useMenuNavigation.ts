@@ -53,8 +53,7 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
     if (menuLength === 0) return;
 
     const handleKeyDown = (event: KeyboardEvent): void => {
-      const isArrow = event.key === "ArrowDown" || event.key === "ArrowUp";
-      if (!isArrow && event.key !== "Enter") {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
         return;
       }
 
@@ -64,8 +63,9 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
 
       const focusedIndex = getFocusedLinkIndex();
       // Nothing focused yet (fresh page load): the visible ▸ cursor stands in
-      // for focus, so arrows move it and Enter follows it — without stealing
-      // focus on load. Focus anywhere else (navbar, dialog) is left alone.
+      // for focus, so the first arrow press moves it and focuses that link;
+      // Enter then works natively on the focused link. Nothing is focused on
+      // load, and focus anywhere else (navbar, intro dialog) is left alone.
       const isIdle =
         document.activeElement === null ||
         document.activeElement === document.body;
@@ -74,24 +74,15 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
         return;
       }
 
-      if (event.key === "Enter") {
-        // A focused link already handles Enter natively.
-        if (focusedIndex >= 0) return;
-        event.preventDefault();
-        linkRefs.current[selectedIndexRef.current]?.click();
-        return;
-      }
-
       event.preventDefault();
       hasKeyNavigated.current = true;
-      const fromIndex = focusedIndex >= 0 ? focusedIndex : null;
+      const base = focusedIndex >= 0 ? focusedIndex : selectedIndexRef.current;
 
-      setSelectedIndex((current) => {
-        const base = fromIndex ?? current;
-        return event.key === "ArrowDown"
+      setSelectedIndex(
+        event.key === "ArrowDown"
           ? (base + 1) % menuLength
-          : (base - 1 + menuLength) % menuLength;
-      });
+          : (base - 1 + menuLength) % menuLength,
+      );
     };
 
     window.addEventListener("keydown", handleKeyDown);

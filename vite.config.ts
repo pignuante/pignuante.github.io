@@ -15,20 +15,30 @@ function publicDirectoryIndex(): Plugin {
     apply: "serve",
     configureServer(server) {
       const publicDir = server.config.publicDir;
+      if (!publicDir) return;
       server.middlewares.use((req, res, next) => {
-        const [pathname, query = ""] = (req.url ?? "/").split("?");
+        const url = req.url ?? "/";
+        const queryStart = url.indexOf("?");
+        const pathname = queryStart < 0 ? url : url.slice(0, queryStart);
+        const search = queryStart < 0 ? "" : url.slice(queryStart);
         if (pathname === "/" || /\.[^/]+$/.test(pathname)) return next();
-        const dir = resolve(publicDir, `.${decodeURIComponent(pathname)}`);
+        let decoded: string;
+        try {
+          decoded = decodeURIComponent(pathname);
+        } catch {
+          return next(); // malformed %-escape: let Vite handle it
+        }
+        const dir = resolve(publicDir, `.${decoded}`);
         // Stay inside public/ ("/../" must not probe the filesystem).
         if (!dir.startsWith(publicDir + sep)) return next();
         if (!existsSync(resolve(dir, "index.html"))) return next();
         if (!pathname.endsWith("/")) {
           res.statusCode = 301;
-          res.setHeader("Location", `${pathname}/${query ? `?${query}` : ""}`);
+          res.setHeader("Location", `${pathname}/${search}`);
           res.end();
           return;
         }
-        req.url = `${pathname}index.html${query ? `?${query}` : ""}`;
+        req.url = `${pathname}index.html${search}`;
         next();
       });
     },

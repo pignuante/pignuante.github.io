@@ -57,20 +57,26 @@ export function useMenuNavigation(menuLength: number): UseMenuNavigationReturn {
       }
 
       const focusedIndex = getFocusedLinkIndex();
+      // Nothing focused yet (fresh page load): the visible ▸ cursor stands in
+      // for focus, so the first arrow press moves it and focuses that link;
+      // Enter then works natively on the focused link. Nothing is focused on
+      // load, and focus anywhere else (navbar, intro dialog) is left alone.
+      const isBodyFocused =
+        document.activeElement === null ||
+        document.activeElement === document.body;
 
-      if (focusedIndex < 0) {
+      if (focusedIndex < 0 && !isBodyFocused) {
         return;
       }
 
       event.preventDefault();
       hasKeyNavigated.current = true;
-
-      if (event.key === "ArrowDown") {
-        setSelectedIndex((focusedIndex + 1) % menuLength);
-        return;
-      }
-
-      setSelectedIndex((focusedIndex - 1 + menuLength) % menuLength);
+      setSelectedIndex((current) => {
+        const baseIndex = focusedIndex >= 0 ? focusedIndex : current;
+        return event.key === "ArrowDown"
+          ? (baseIndex + 1) % menuLength
+          : (baseIndex - 1 + menuLength) % menuLength;
+      });
     };
 
     window.addEventListener("keydown", handleKeyDown);

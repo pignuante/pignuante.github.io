@@ -6,21 +6,26 @@ import type {
   MapViewMode,
 } from "./travel/types";
 import SparkDivider from "../components/ui/SparkDivider";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import {
   BIOME_COLORS_CSS,
   GLOBE_INITIAL_LAMBDA,
+  GLOBE_CELL_SIZE,
   GLOBE_INITIAL_PHI,
   GLOBE_SIZE,
   WORLD_MAP_HEIGHT,
+  WORLD_CELL_SIZE,
   WORLD_MAP_WIDTH,
 } from "./travel/constants";
 import GlobePixelMap from "./travel/GlobePixelMap";
 import { useGlobeDrag } from "./travel/useGlobeDrag";
 import { useGlobePixelGrid } from "./travel/useGlobePixelGrid";
 import { useMapCamera } from "./travel/useMapCamera";
+import { usePixelSnappedWidth } from "./travel/usePixelSnappedWidth";
 import { useWorldPixelGrid } from "./travel/useWorldPixelGrid";
 import { useZoom } from "./travel/useZoom";
 import WorldPixelMap from "./travel/WorldPixelMap";
+import { cellDevicePixels } from "./travel/zoomMath";
 
 /* ── Constants ── */
 
@@ -51,7 +56,20 @@ const TOOLTIP_GAP_PX = 12;
 /** Border width of the canvas wrapper (Tailwind border-4 = 4px) */
 const BORDER_WIDTH_PX = 4;
 
+/** The globe box is at most this share of the viewport height. */
+const GLOBE_MAX_VIEWPORT_HEIGHT_RATIO = 0.7;
+// The canvas (inside the border) may reach its full logical size, so a roomy
+// 1x display shows the globe at 1:1.
+const globeMaxWidth = (): number =>
+  Math.min(
+    GLOBE_SIZE,
+    window.innerHeight * GLOBE_MAX_VIEWPORT_HEIGHT_RATIO - 2 * BORDER_WIDTH_PX,
+  );
+
 /* ── Toggle button config ── */
+
+/** Tailwind's sm breakpoint (40rem): below it the globe is the default view. */
+const MOBILE_MAP_QUERY = "(width < 40rem)";
 
 const VIEW_MODE_OPTIONS: ReadonlyArray<{
   icon: string;
@@ -65,6 +83,12 @@ const VIEW_MODE_OPTIONS: ReadonlyArray<{
 /* ── FlatMapView ── */
 
 function FlatMapView() {
+  const measureRef = useRef<HTMLDivElement>(null);
+  const snapped = usePixelSnappedWidth(measureRef, {
+    cells: WORLD_MAP_WIDTH / WORLD_CELL_SIZE,
+    inset: 2 * BORDER_WIDTH_PX,
+    logicalWidth: WORLD_MAP_WIDTH,
+  });
   const grid = useWorldPixelGrid();
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
@@ -74,6 +98,7 @@ function FlatMapView() {
     canvasWrapperRef,
     WORLD_MAP_WIDTH,
     WORLD_MAP_HEIGHT,
+    cellDevicePixels(WORLD_CELL_SIZE, snapped?.resolution),
   );
 
   const isDraggingRef = useRef<boolean>(false);
@@ -107,10 +132,17 @@ function FlatMapView() {
   }, []);
 
   return (
-    <>
-      <div className="relative" style={{ imageRendering: "pixelated" }}>
+    <div className="w-full" ref={measureRef}>
+      <div
+        className="relative mx-auto"
+        style={{
+          imageRendering: "pixelated",
+          width:
+            snapped === null ? undefined : snapped.width + 2 * BORDER_WIDTH_PX,
+        }}
+      >
         <div
-          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
+          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!w-full"
           ref={canvasWrapperRef}
           style={{
             cursor: isDragging ? "grabbing" : "grab",
@@ -124,6 +156,7 @@ function FlatMapView() {
               offsetX={offsetX}
               offsetY={offsetY}
               onCountryHover={handleCountryHover}
+              resolution={snapped?.resolution}
               zoom={zoom}
             />
           ) : (
@@ -144,13 +177,20 @@ function FlatMapView() {
       >
         ← 양피지를 끌어 탐험 · 스크롤로 확대/축소 →
       </p>
-    </>
+    </div>
   );
 }
 
 /* ── GlobeMapView ── */
 
 function GlobeMapView() {
+  const measureRef = useRef<HTMLDivElement>(null);
+  const snapped = usePixelSnappedWidth(measureRef, {
+    cells: GLOBE_SIZE / GLOBE_CELL_SIZE,
+    inset: 2 * BORDER_WIDTH_PX,
+    logicalWidth: GLOBE_SIZE,
+    maxWidth: globeMaxWidth,
+  });
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
@@ -160,7 +200,10 @@ function GlobeMapView() {
     GLOBE_INITIAL_ROTATION,
   );
   const grid = useGlobePixelGrid(rotation);
-  const { zoom } = useZoom(canvasWrapperRef);
+  const { zoom } = useZoom(
+    canvasWrapperRef,
+    cellDevicePixels(GLOBE_CELL_SIZE, snapped?.resolution),
+  );
 
   const isDraggingRef = useRef<boolean>(false);
 
@@ -191,17 +234,22 @@ function GlobeMapView() {
   }, []);
 
   return (
-    <>
+    <div className="w-full" ref={measureRef}>
       <div
-        className="relative max-h-[70vh] max-w-[70vh]"
+        className="relative mx-auto"
         style={{
           aspectRatio: "1",
           imageRendering: "pixelated",
-          width: GLOBE_SIZE,
+          maxHeight: `${GLOBE_MAX_VIEWPORT_HEIGHT_RATIO * 100}vh`,
+          maxWidth: `min(100%, ${GLOBE_MAX_VIEWPORT_HEIGHT_RATIO * 100}vh)`,
+          width:
+            snapped === null
+              ? GLOBE_SIZE + 2 * BORDER_WIDTH_PX
+              : snapped.width + 2 * BORDER_WIDTH_PX,
         }}
       >
         <div
-          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!max-w-full"
+          className="overflow-hidden border-4 border-[var(--border-default)] [&_canvas]:!h-auto [&_canvas]:!w-full"
           ref={canvasWrapperRef}
           style={{
             cursor: isDragging ? "grabbing" : "grab",
@@ -213,6 +261,7 @@ function GlobeMapView() {
               grid={grid}
               hoveredCountryId={hoveredCountryId}
               onCountryHover={handleCountryHover}
+              resolution={snapped?.resolution}
               zoom={zoom}
             />
           ) : (
@@ -233,39 +282,47 @@ function GlobeMapView() {
       >
         수정구를 돌려 세계를 탐험 · 스크롤로 확대/축소
       </p>
-    </>
+    </div>
   );
 }
 
 /* ── Main page component ── */
 
 export default function Travel() {
-  const [viewMode, setViewMode] = useState<MapViewMode>("flat");
+  // The flat map is ~1.9:1, so on a phone it shrinks to a thin strip; the
+  // square globe uses the width better there. Until the visitor picks a
+  // view, the default follows the viewport.
+  const isNarrowViewport = useMediaQuery(MOBILE_MAP_QUERY);
+  const [chosenViewMode, setViewMode] = useState<MapViewMode | null>(null);
+  const viewMode: MapViewMode =
+    chosenViewMode ?? (isNarrowViewport ? "globe" : "flat");
 
   return (
     <section
       aria-labelledby="travel-page-title"
-      className="mx-auto max-w-7xl pixel-dot-bg px-6 py-24"
+      className="mx-auto max-w-7xl pixel-dot-bg py-24"
     >
-      <h1
-        className="pixel-glow-pulse font-pixel text-[24px]"
-        id="travel-page-title"
-        style={{ color: "var(--text-brand)" }}
-      >
-        <span aria-hidden="true">★ </span>
-        WORLD MAP
-      </h1>
-      <p
-        className="mt-3 font-pixel-body text-[15px]"
-        style={{ color: "var(--text-secondary)" }}
-      >
-        모험가의 발자취가 새겨진 세계 지도
-      </p>
+      <div className="mx-auto max-w-5xl px-6">
+        <h1
+          className="pixel-glow-pulse font-pixel text-[24px]"
+          id="travel-page-title"
+          style={{ color: "var(--text-brand)" }}
+        >
+          <span aria-hidden="true">★ </span>
+          WORLD MAP
+        </h1>
+        <p
+          className="mt-3 font-pixel-body text-[15px]"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          모험가의 발자취가 새겨진 세계 지도
+        </p>
 
-      <SparkDivider className="mt-6" />
+        <SparkDivider className="mt-6" />
+      </div>
 
       {/* View mode toggle */}
-      <div className="mt-6 flex justify-center gap-2">
+      <div className="mt-6 flex justify-center gap-2 px-6">
         {VIEW_MODE_OPTIONS.map(({ icon, label, mode }) => (
           <button
             aria-pressed={viewMode === mode}
@@ -291,7 +348,7 @@ export default function Travel() {
         ))}
       </div>
 
-      <div className="mt-10 flex flex-col items-center">
+      <div className="mt-10 flex flex-col items-center px-6">
         {viewMode === "flat" ? <FlatMapView /> : <GlobeMapView />}
 
         {/* Biome legend — shared across both views */}

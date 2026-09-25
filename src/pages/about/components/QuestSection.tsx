@@ -14,7 +14,7 @@ export function QuestSection(): ReactElement {
           style={{ color: "var(--text-brand)" }}
         >
           <span aria-hidden="true">▶ </span>
-          QUEST LOG
+          ADVENTURE LOG
         </h2>
       </ScrollReveal>
       <ScrollReveal variants={staggerContainer}>

@@ -5,6 +5,7 @@ import {
   type Transition,
   useReducedMotion,
 } from "motion/react";
+import { useCallback, useRef } from "react";
 import PixelDialogHeader from "../../../components/ui/PixelDialogHeader";
 import { duration, easing } from "../../../styles/tokens";
 
@@ -27,6 +28,19 @@ export default function IntroDialog({
   typingDone,
 }: IntroDialogProps): JSX.Element {
   const prefersReducedMotion = useReducedMotion() ?? false;
+  // Every toggle unmounts the button that was pressed, which drops focus to
+  // <body>. Hand it to the control that replaces it instead.
+  const restoreFocusRef = useRef(false);
+  const handleToggle = useCallback((): void => {
+    restoreFocusRef.current = true;
+    onToggle();
+  }, [onToggle]);
+  const focusOnMount = useCallback((element: HTMLElement | null): void => {
+    if (element && restoreFocusRef.current) {
+      restoreFocusRef.current = false;
+      element.focus();
+    }
+  }, []);
   const contentTransition: Transition = prefersReducedMotion
     ? { duration: 0 }
     : { duration: duration.normal, ease: easing.smooth };
@@ -52,7 +66,8 @@ export default function IntroDialog({
             aria-controls="home-intro-dialog-content"
             aria-expanded={dialogOpen}
             className="cursor-pointer font-pixel-small text-[12px]"
-            onClick={onToggle}
+            onClick={handleToggle}
+            ref={focusOnMount}
             style={{ color: "var(--text-secondary)" }}
             type="button"
           >
@@ -107,7 +122,8 @@ export default function IntroDialog({
             className="cursor-pointer border-0 bg-transparent p-0 text-left font-pixel-body text-[15px]"
             initial={closedDialogAnimation}
             key="closed"
-            onClick={onToggle}
+            onClick={handleToggle}
+            ref={focusOnMount}
             style={{ color: "var(--text-secondary)" }}
             transition={buttonTransition}
             type="button"
@@ -135,7 +151,7 @@ export default function IntroDialog({
         <div className="mt-4 flex justify-end">
           <button
             className="pixel-btn font-pixel-small text-[12px] hover:pixel-btn-hover active:pixel-btn-active"
-            onClick={onToggle}
+            onClick={handleToggle}
             style={{ color: "var(--text-primary)" }}
             type="button"
           >

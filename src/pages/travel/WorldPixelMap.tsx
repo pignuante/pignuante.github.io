@@ -14,6 +14,7 @@ import {
   WORLD_MAP_HEIGHT,
   WORLD_MAP_WIDTH,
 } from "./constants";
+import { useRendererResolution } from "./useRendererResolution";
 import { wrapX } from "./utils";
 import { COUNTRY_BIOME_MAP } from "./world-data";
 
@@ -299,6 +300,8 @@ function HoverDetector({
 
 /* ── Props ── */
 interface WorldPixelMapProps {
+  /** Renderer backing-store scale; defaults to devicePixelRatio. */
+  resolution?: number;
   grid: WorldPixelGridResult;
   hoveredCountryId?: string | null;
   offsetX?: number;
@@ -314,8 +317,14 @@ export default function WorldPixelMap({
   offsetX = 0,
   offsetY = 0,
   onCountryHover,
+  resolution = window.devicePixelRatio,
   zoom = 1,
 }: WorldPixelMapProps) {
+  const handleInit = useRendererResolution(
+    WORLD_MAP_WIDTH,
+    WORLD_MAP_HEIGHT,
+    resolution,
+  );
   const handleCountryHover = useCallback(
     (info: CountryHoverInfo | null) => {
       onCountryHover?.(info);
@@ -331,7 +340,8 @@ export default function WorldPixelMap({
       antialias={false}
       backgroundColor={0xfa_fa_f9}
       height={WORLD_MAP_HEIGHT}
-      resolution={window.devicePixelRatio}
+      onInit={handleInit}
+      resolution={resolution}
       width={WORLD_MAP_WIDTH}
     >
       <pixiContainer

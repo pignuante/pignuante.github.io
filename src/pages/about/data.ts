@@ -106,19 +106,16 @@ export const JOB_STATUS_STYLES: Readonly<Record<JobStatus, JobStatusStyle>> = {
     border: "var(--color-accent-300)",
     color: "var(--text-accent)",
     line: "var(--color-accent-400)",
-    opacity: 1,
   },
   CURRENT: {
     border: "var(--color-brand-400)",
     color: "var(--text-brand)",
     line: "var(--color-brand-400)",
-    opacity: 1,
   },
   LOCKED: {
     border: "var(--color-neutral-300)",
     color: "var(--text-tertiary)",
     line: "var(--color-neutral-300)",
-    opacity: 0.5,
   },
 };
 

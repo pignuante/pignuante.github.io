@@ -21,7 +21,7 @@ export function JobTreeDesktop({
     <div
       className="hidden items-center gap-y-3 pb-2 lg:grid"
       style={{
-        gridTemplateColumns: "auto 1.5rem 8rem 1fr",
+        gridTemplateColumns: "auto 1.5rem 8rem minmax(0, 1fr)",
         gridTemplateRows: `repeat(${branches.length}, auto)`,
       }}
     >
@@ -62,8 +62,9 @@ export function JobTreeDesktop({
           <div style={{ gridColumn: "3", gridRow: `${branchIndex + 1}` }}>
             <JobBranchHeader branchView={branchView} />
           </div>
+          {/* A row wider than the box scrolls here rather than the page */}
           <ol
-            className="flex items-center"
+            className="flex items-center overflow-x-auto py-3 pr-3"
             style={{ gridColumn: "4", gridRow: `${branchIndex + 1}` }}
           >
             {branchView.nodes.map((nodeView, nodeIndex) => (

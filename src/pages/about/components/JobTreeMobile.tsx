@@ -51,7 +51,6 @@ export function JobTreeMobile({ viewModel }: JobTreeMobileProps): ReactElement {
                     <li
                       className="relative flex items-center gap-2 py-1 pl-5"
                       key={node.id}
-                      style={{ opacity: styles.opacity }}
                     >
                       {nodeIndex > 0 ? (
                         <span

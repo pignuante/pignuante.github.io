@@ -323,7 +323,8 @@ textarea,
   animation: pixel-twinkle 2.4s steps(3) infinite;
 }
 
-/* Current job-tree node: the pixel shadow plus a breathing glow. */
+/* Current job-tree node: the pixel shadow plus a breathing 3px halo (hard
+   edged, so it stays inside the row's padding when the row scrolls). */
 @keyframes node-glow {
   0%,
   100% {
@@ -332,12 +333,16 @@ textarea,
       0 0 0 0 transparent;
   }
   50% {
-    box-shadow: var(--pixel-shadow-md), var(--shadow-glow);
+    box-shadow:
+      var(--pixel-shadow-md),
+      0 0 0 3px var(--color-brand-200);
   }
 }
 
 @utility pixel-node-glow {
-  box-shadow: var(--pixel-shadow-md), var(--shadow-glow);
+  box-shadow:
+    var(--pixel-shadow-md),
+    0 0 0 3px var(--color-brand-200);
   animation: node-glow 2.4s ease-in-out infinite;
 }
 

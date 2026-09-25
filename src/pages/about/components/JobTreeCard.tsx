@@ -16,7 +16,6 @@ export function JobTreeCard({ node, styles }: JobTreeCardProps): ReactElement {
       style={{
         borderColor: styles.border,
         borderStyle: node.status === "LOCKED" ? "dashed" : undefined,
-        opacity: styles.opacity,
       }}
     >
       {node.status === "COMPLETED" ? (
@@ -24,7 +23,7 @@ export function JobTreeCard({ node, styles }: JobTreeCardProps): ReactElement {
           aria-hidden="true"
           className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center font-pixel-small text-[10px] leading-none"
           style={{
-            backgroundColor: "var(--color-accent-400)",
+            backgroundColor: "var(--text-accent)",
             color: "var(--surface-elevated)",
           }}
         >

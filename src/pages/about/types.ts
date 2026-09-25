@@ -55,7 +55,6 @@ export interface JobStatusStyle {
   color: string;
   /** Connector colour leading into a node with this status */
   line: string;
-  opacity: number;
 }
 
 export interface JobTreeNodeViewModel {

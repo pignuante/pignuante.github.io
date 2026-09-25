@@ -1,6 +1,7 @@
-import { type ReactElement } from "react";
+import { type ReactElement, useRef } from "react";
+import { useOverflowX } from "../../../hooks/useOverflowX";
 import { connectorStyle } from "../jobTreeStyle";
-import { type JobTreeViewModel } from "../types";
+import { type JobTreeBranchViewModel, type JobTreeViewModel } from "../types";
 import { JobTreeCard } from "./JobTreeCard";
 import { JobBranchHeader } from "./JobTreeParts";
 
@@ -62,37 +63,53 @@ export function JobTreeDesktop({
           <div style={{ gridColumn: "3", gridRow: `${branchIndex + 1}` }}>
             <JobBranchHeader branchView={branchView} />
           </div>
-          {/* A row wider than the box scrolls here rather than the page. It is
-              focusable and named so a keyboard can scroll it (Safari does not
-              focus scrollers on its own). */}
-          <div
-            aria-label={`${branchView.branch.label} 경로`}
-            className="flex overflow-x-auto py-3"
-            role="region"
-            style={{ gridColumn: "4", gridRow: `${branchIndex + 1}` }}
-            tabIndex={0}
-          >
-            <ol className="flex items-center">
-              {branchView.nodes.map((nodeView, nodeIndex) => (
-                <li className="flex items-center" key={nodeView.node.id}>
-                  <span
-                    aria-hidden="true"
-                    className={`h-[3px] ${nodeIndex === 0 ? "w-3" : "w-5"}`}
-                    style={connectorStyle(
-                      nodeView.styles.line,
-                      nodeView.node.status,
-                    )}
-                  />
-                  <JobTreeCard node={nodeView.node} styles={nodeView.styles} />
-                </li>
-              ))}
-            </ol>
-            {/* End room for the last card's shadow: WebKit can leave a flex
-                scroller's end padding out of the scroll area. */}
-            <span aria-hidden="true" className="w-3 flex-shrink-0" />
-          </div>
+          <JobBranchRow branchView={branchView} gridRow={branchIndex + 1} />
         </div>
       ))}
+    </div>
+  );
+}
+
+/**
+ * One branch's nodes. A row wider than the box scrolls here rather than the
+ * page; only then is it a named, focusable region, so a keyboard can scroll
+ * it (Safari does not focus scrollers on its own) without adding a dead tab
+ * stop when everything fits.
+ */
+function JobBranchRow({
+  branchView,
+  gridRow,
+}: {
+  branchView: JobTreeBranchViewModel;
+  gridRow: number;
+}): ReactElement {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const overflows = useOverflowX(scrollerRef);
+
+  return (
+    <div
+      aria-label={overflows ? `${branchView.branch.label} 경로` : undefined}
+      className="flex overflow-x-auto py-3"
+      ref={scrollerRef}
+      role={overflows ? "region" : undefined}
+      style={{ gridColumn: "4", gridRow: `${gridRow}` }}
+      tabIndex={overflows ? 0 : undefined}
+    >
+      <ol className="flex items-center">
+        {branchView.nodes.map((nodeView, nodeIndex) => (
+          <li className="flex items-center" key={nodeView.node.id}>
+            <span
+              aria-hidden="true"
+              className={`h-[3px] ${nodeIndex === 0 ? "w-3" : "w-5"}`}
+              style={connectorStyle(nodeView.styles.line, nodeView.node.status)}
+            />
+            <JobTreeCard node={nodeView.node} styles={nodeView.styles} />
+          </li>
+        ))}
+      </ol>
+      {/* End room for the last card's shadow: WebKit can leave a flex
+          scroller's end padding out of the scroll area. */}
+      <span aria-hidden="true" className="w-3 flex-shrink-0" />
     </div>
   );
 }

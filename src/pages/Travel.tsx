@@ -492,7 +492,7 @@ export default function Travel() {
 const PRECISE_STATUS_TEXT: Partial<Record<PreciseStatus, string>> = {
   denied: "위치 권한이 거부되어 시간대 기준으로 표시해요.",
   locating: "위치를 확인하는 중…",
-  ok: "현재 위치로 옮겼어요. 아주 작은 나라 안이라면 이웃 나라로 표시될 수 있어요.",
+  ok: "현재 위치로 옮겼어요. 아주 작은 나라는 지도 격자에서 이웃 나라로 표시될 수 있어요.",
   unavailable: "정확한 위치를 가져오지 못했어요.",
 };
 

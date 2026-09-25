@@ -15,6 +15,7 @@ import {
   HOVER_BORDER_ALPHA,
   HOVER_SEARCH_RADIUS,
 } from "./constants";
+import { useRendererResolution } from "./useRendererResolution";
 import { COUNTRY_BIOME_MAP } from "./world-data";
 
 // Register PixiJS components for @pixi/react
@@ -271,6 +272,8 @@ function GlobeOutline() {
 
 /* ── Props ── */
 interface GlobePixelMapProps {
+  /** Renderer backing-store scale; defaults to devicePixelRatio. */
+  resolution?: number;
   grid: WorldPixelGridResult;
   hoveredCountryId?: string | null;
   onCountryHover?: (info: CountryHoverInfo | null) => void;
@@ -282,8 +285,10 @@ export default function GlobePixelMap({
   grid,
   hoveredCountryId = null,
   onCountryHover,
+  resolution = window.devicePixelRatio,
   zoom = 1,
 }: GlobePixelMapProps) {
+  const handleInit = useRendererResolution(GLOBE_SIZE, GLOBE_SIZE, resolution);
   const handleCountryHover = useCallback(
     (info: CountryHoverInfo | null) => {
       onCountryHover?.(info);
@@ -296,7 +301,8 @@ export default function GlobePixelMap({
       antialias={false}
       backgroundColor={0xfa_fa_f9}
       height={GLOBE_SIZE}
-      resolution={window.devicePixelRatio}
+      onInit={handleInit}
+      resolution={resolution}
       width={GLOBE_SIZE}
     >
       <pixiContainer

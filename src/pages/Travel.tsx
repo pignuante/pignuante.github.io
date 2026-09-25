@@ -55,12 +55,15 @@ const TOOLTIP_GAP_PX = 12;
 /** Border width of the canvas wrapper (Tailwind border-4 = 4px) */
 const BORDER_WIDTH_PX = 4;
 
-// The flat map fills its column, as before.
-const flatMapMaxWidth = (): number => Infinity;
-// The globe box is capped at 70vh like before. The canvas (inside the border)
-// may reach its full logical size, so a roomy 1x display shows it at 1:1.
+/** The globe box is at most this share of the viewport height. */
+const GLOBE_MAX_VIEWPORT_HEIGHT_RATIO = 0.7;
+// The canvas (inside the border) may reach its full logical size, so a roomy
+// 1x display shows the globe at 1:1.
 const globeMaxWidth = (): number =>
-  Math.min(GLOBE_SIZE, window.innerHeight * 0.7 - 2 * BORDER_WIDTH_PX);
+  Math.min(
+    GLOBE_SIZE,
+    window.innerHeight * GLOBE_MAX_VIEWPORT_HEIGHT_RATIO - 2 * BORDER_WIDTH_PX,
+  );
 
 /* ── Toggle button config ── */
 
@@ -80,10 +83,10 @@ const VIEW_MODE_OPTIONS: ReadonlyArray<{
 
 function FlatMapView() {
   const measureRef = useRef<HTMLDivElement>(null);
-  const canvasWidth = usePixelSnappedWidth(measureRef, {
+  const snapped = usePixelSnappedWidth(measureRef, {
     cells: WORLD_MAP_WIDTH / WORLD_CELL_SIZE,
     inset: 2 * BORDER_WIDTH_PX,
-    maxWidth: flatMapMaxWidth,
+    logicalWidth: WORLD_MAP_WIDTH,
   });
   const grid = useWorldPixelGrid();
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
@@ -133,9 +136,7 @@ function FlatMapView() {
         style={{
           imageRendering: "pixelated",
           width:
-            canvasWidth === null
-              ? undefined
-              : canvasWidth + 2 * BORDER_WIDTH_PX,
+            snapped === null ? undefined : snapped.width + 2 * BORDER_WIDTH_PX,
         }}
       >
         <div
@@ -153,6 +154,7 @@ function FlatMapView() {
               offsetX={offsetX}
               offsetY={offsetY}
               onCountryHover={handleCountryHover}
+              resolution={snapped?.resolution}
               zoom={zoom}
             />
           ) : (
@@ -181,9 +183,10 @@ function FlatMapView() {
 
 function GlobeMapView() {
   const measureRef = useRef<HTMLDivElement>(null);
-  const canvasWidth = usePixelSnappedWidth(measureRef, {
+  const snapped = usePixelSnappedWidth(measureRef, {
     cells: GLOBE_SIZE / GLOBE_CELL_SIZE,
     inset: 2 * BORDER_WIDTH_PX,
+    logicalWidth: GLOBE_SIZE,
     maxWidth: globeMaxWidth,
   });
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
@@ -228,14 +231,14 @@ function GlobeMapView() {
   return (
     <div className="w-full" ref={measureRef}>
       <div
-        className="relative mx-auto max-w-full"
+        className="relative mx-auto max-h-[70vh] max-w-[min(100%,70vh)]"
         style={{
           aspectRatio: "1",
           imageRendering: "pixelated",
           width:
-            canvasWidth === null
+            snapped === null
               ? GLOBE_SIZE + 2 * BORDER_WIDTH_PX
-              : canvasWidth + 2 * BORDER_WIDTH_PX,
+              : snapped.width + 2 * BORDER_WIDTH_PX,
         }}
       >
         <div
@@ -251,6 +254,7 @@ function GlobeMapView() {
               grid={grid}
               hoveredCountryId={hoveredCountryId}
               onCountryHover={handleCountryHover}
+              resolution={snapped?.resolution}
               zoom={zoom}
             />
           ) : (

@@ -20,7 +20,7 @@ interface ProjectCardFrameProps {
   variant: "hero" | "standard";
   questLabel: string;
   project: ProjectSummary;
-  /** Overrides the thumbnail ratio, e.g. "hero" for a card spanning a row. */
+  /** Overrides the thumbnail ratio, e.g. "wide" for a card spanning a row. */
   thumbnailVariant?: ProjectThumbnailSlotVariant;
 }
 

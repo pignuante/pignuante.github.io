@@ -1,7 +1,7 @@
 import { type ReactElement } from "react";
 import { type ProjectThumbnail } from "../types";
 
-export type ProjectThumbnailSlotVariant = "card" | "hero";
+export type ProjectThumbnailSlotVariant = "card" | "hero" | "wide";
 
 interface ProjectThumbnailSlotProps {
   thumbnail: ProjectThumbnail;
@@ -19,6 +19,11 @@ const THUMBNAIL_SLOT_VARIANTS: Record<
   },
   hero: {
     className: "aspect-[16/8] sm:aspect-[16/7]",
+  },
+  // A card that spans both columns of the md grid; single-column below md,
+  // so it keeps the card ratio there.
+  wide: {
+    className: "aspect-[16/9] md:aspect-[16/7]",
   },
 };
 

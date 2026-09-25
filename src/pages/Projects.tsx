@@ -77,7 +77,7 @@ export default function Projects(): ReactElement {
                 >
                   <MainQuestProjectCard
                     project={project}
-                    thumbnailVariant={fillsRow ? "hero" : undefined}
+                    thumbnailVariant={fillsRow ? "wide" : undefined}
                   />
                 </li>
               );
@@ -107,7 +107,7 @@ export default function Projects(): ReactElement {
               >
                 <SideQuestProjectCard
                   project={project}
-                  thumbnailVariant={fillsRow ? "hero" : undefined}
+                  thumbnailVariant={fillsRow ? "wide" : undefined}
                 />
               </li>
             );
